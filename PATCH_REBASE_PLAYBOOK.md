@@ -453,8 +453,19 @@ git rm BUG_AUDIT_*.md LIMITATIONS.md PATCH_REBASE_PLAYBOOK.md \
        SESSION_REPORT_*.md SPRINT_PHASE.md \
        STAGE5_TEST_CHECKLIST.md UPGRADE_26.1.2_PROGRESS.md
 
-# 4. 单独 commit（不要和其它改动混在一起）
-git commit -m "Strip dev-only documentation for public release"
+# 3b. 清理 fork-only 的构建配置（让 master 面对 LeavesMC 上游时是干净的）：
+#     - build.gradle.kts: leavesweight version 从 "2.1.0-SNAPSHOT" 改成 "2.1.0"
+#     - settings.gradle.kts: 删除 mavenLocal() 那一行
+#     - .github/workflows/test.yml: 删除 "Check out leavesweight fork" + "Publish leavesweight to mavenLocal" 两个 step
+#   这三处在 upgrade-26.1 上保留是为了 fork CI 能 publishToMavenLocal 一份 SNAPSHOT；
+#   master 必须用正式版 + 官方 repo，否则 LeavesMC 的 maintainer 看了 PR 一脸懵逼。
+# 操作：
+#   sed -i '' 's/"2.1.0-SNAPSHOT"/"2.1.0"/' build.gradle.kts
+#   sed -i '' '/mavenLocal()/d' settings.gradle.kts
+#   # test.yml 手动删 "Check out leavesweight fork" 到 "Publish leavesweight to mavenLocal" 之间的 8 行
+
+# 4. 单独 commit
+git commit -m "Strip dev-only documentation and fork-only build config for public release"
 
 # 5. 合并 master
 git checkout master

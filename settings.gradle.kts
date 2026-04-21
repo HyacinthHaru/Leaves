@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        mavenLocal() // Leaves - for local leavesweight SNAPSHOT while 2.1.0 is in PR; removed on master
         gradlePluginPortal()
         maven("https://repo.leavesmc.org/snapshots/")
         maven("https://repo.papermc.io/repository/maven-public/")
