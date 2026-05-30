@@ -28,14 +28,14 @@ jobs:
           git config --global user.name "LeavesMC Test CI"
           git config --global core.excludesfile "$HOME/.gitignore_global"
           printf '.DS_Store\n._*\n' > "$HOME/.gitignore_global"
-      # Dev-only step: while leavesweight 2.1.0 is in PR, pull from HyacinthHaru's fork
+      # Dev-only step: while leavesweight 2.2.0 is in PR, pull from HyacinthHaru's fork
       # and publish to mavenLocal. Removed on master (PR target) — see PATCH_REBASE_PLAYBOOK §十一.
       - name: Check out leavesweight fork
         if: github.repository == 'HyacinthHaru/Leaves'
         uses: actions/checkout@v4
         with:
           repository: HyacinthHaru/leavesweight
-          ref: main
+          ref: feat/paper-26.1-support
           path: leavesweight-src
       - name: Publish leavesweight to mavenLocal
         if: github.repository == 'HyacinthHaru/Leaves'

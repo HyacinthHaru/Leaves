@@ -4,7 +4,7 @@ import java.util.Locale
 
 plugins {
     java
-    id("org.leavesmc.leavesweight.patcher") version "2.1.0-SNAPSHOT" // Leaves - pin to SNAPSHOT while leavesweight 2.1.0 is in PR; flipped to "2.1.0" on master
+    id("org.leavesmc.leavesweight.patcher") version "2.2.0-SNAPSHOT" // Leaves - pin to SNAPSHOT while leavesweight 2.2.0 is in PR; flipped to "2.2.0" on master
 }
 
 subprojects {
