@@ -5,10 +5,10 @@ Subject: [PATCH] MC Technical Survival Mode
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index b53e12c60ac80cf5f3b1df58ea757e39735dd6c6..4207be7a0421d800300c15278ff31e69f8a2f3d1 100644
+index 87cf5dacb2a3c1641b56fbba355ba7d9f891261d..552270074fa3f9c7d81b7af75358b36a6576fe2f 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1817,7 +1817,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1791,7 +1791,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      public boolean isInvulnerableTo(final ServerLevel level, final DamageSource source) {
          // Paper start - disable player cramming
          return (super.isInvulnerableTo(level, source) || this.isChangingDimension() && !source.is(DamageTypes.ENDER_PEARL) || !this.connection.hasClientLoaded())
@@ -18,20 +18,20 @@ index b53e12c60ac80cf5f3b1df58ea757e39735dd6c6..4207be7a0421d800300c15278ff31e69
      }
  
 diff --git a/net/minecraft/world/entity/ai/behavior/AcquirePoi.java b/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-index a8f2b22436ff0f4bff06b2c5cf01375da755cfde..aac5f36407268f2a72fabbdcbcdce78633fa9fb8 100644
+index 2940dbc31a20eb49e24418ec84b73f2bfbdcfc32..7115dbb6782475b9ea4d33eaf890b40eb51d5f2f 100644
 --- a/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 +++ b/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-@@ -74,7 +74,7 @@ public class AcquirePoi {
-                                 return false;
-                             } else {
-                                 nextScheduledStart.setValue(timestamp + 20L + random.nextInt(20));
--                                if (level.paperConfig().entities.behavior.stuckEntityPoiRetryDelay.enabled() && body.getNavigation().isStuck()) nextScheduledStart.add(level.paperConfig().entities.behavior.stuckEntityPoiRetryDelay.intValue()); // Paper - Next stuck check delay config
-+                                if (!org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode && level.paperConfig().entities.behavior.stuckEntityPoiRetryDelay.enabled() && body.getNavigation().isStuck()) nextScheduledStart.add(level.paperConfig().entities.behavior.stuckEntityPoiRetryDelay.intValue()); // Paper - Next stuck check delay config // Leaves - mc technical survival mode
-                                 PoiManager poiManager = level.getPoiManager();
-                                 batchCache.long2ObjectEntrySet().removeIf(entry -> !entry.getValue().isStillValid(timestamp));
-                                 Predicate<BlockPos> cacheTest = pos -> {
+@@ -78,7 +78,7 @@ public class AcquirePoi {
+                         }
+ 
+                         nextScheduledStart.setValue(timestamp + 20L + random.nextInt(20));
+-                        if (level.paperConfig().entities.behavior.stuckEntityPoiRetryDelay.enabled() && body.getNavigation().isStuck()) nextScheduledStart.add(level.paperConfig().entities.behavior.stuckEntityPoiRetryDelay.intValue()); // Paper - Next stuck check delay config
++                        if (!org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode && level.paperConfig().entities.behavior.stuckEntityPoiRetryDelay.enabled() && body.getNavigation().isStuck()) nextScheduledStart.add(level.paperConfig().entities.behavior.stuckEntityPoiRetryDelay.intValue()); // Paper - Next stuck check delay config // Leaves - mc technical survival mode
+                         PoiManager poiManager = level.getPoiManager();
+                         batchCache.long2ObjectEntrySet().removeIf(entry -> !entry.getValue().isStillValid(timestamp));
+                         Predicate<BlockPos> cacheTest = pos -> {
 diff --git a/net/minecraft/world/entity/boss/enderdragon/EndCrystal.java b/net/minecraft/world/entity/boss/enderdragon/EndCrystal.java
-index b45208810c5e1623fc8d0f77a2b42d448fc8912b..f15b617b7ffd326f08801f73b404167d7722e738 100644
+index 471b33333c32e49076fd4cc169d01da4a92f3101..edbaf908a1ae2dc532662b65794391a9cde89fee 100644
 --- a/net/minecraft/world/entity/boss/enderdragon/EndCrystal.java
 +++ b/net/minecraft/world/entity/boss/enderdragon/EndCrystal.java
 @@ -65,7 +65,7 @@ public class EndCrystal extends Entity {
@@ -44,7 +44,7 @@ index b45208810c5e1623fc8d0f77a2b42d448fc8912b..f15b617b7ffd326f08801f73b404167d
                  || ((ServerLevel) this.level()).getDragonFight() == null
                  || ((ServerLevel) this.level()).getDragonFight().respawnStage == null
 diff --git a/net/minecraft/world/entity/item/PrimedTnt.java b/net/minecraft/world/entity/item/PrimedTnt.java
-index 6b2dbe20b893e7812e89f92644960a1d1bc1614f..4f539b127f2b33710fffe51b8bf93ac9116c5134 100644
+index 4a1088cdc312b9066fe0cdb9937a13c9be56c283..ba3f839e98ee1601a37169cbfe8b545acac63486 100644
 --- a/net/minecraft/world/entity/item/PrimedTnt.java
 +++ b/net/minecraft/world/entity/item/PrimedTnt.java
 @@ -101,7 +101,7 @@ public class PrimedTnt extends Entity implements TraceableEntity {
@@ -57,7 +57,7 @@ index 6b2dbe20b893e7812e89f92644960a1d1bc1614f..4f539b127f2b33710fffe51b8bf93ac9
          this.applyGravity();
          this.move(MoverType.SELF, this.getDeltaMovement());
 diff --git a/net/minecraft/world/level/NaturalSpawner.java b/net/minecraft/world/level/NaturalSpawner.java
-index 427573fc142c107d3fcc2be9000316221039ba4c..185c6c4f438dfe7336c5631302ba96e54432cff3 100644
+index 9764163a32b0389afa50ba093d0647de04d5119e..4f08a4eeafaaa4ac7db078019cab15232b3ba6c8 100644
 --- a/net/minecraft/world/level/NaturalSpawner.java
 +++ b/net/minecraft/world/level/NaturalSpawner.java
 @@ -90,7 +90,7 @@ public final class NaturalSpawner {
@@ -70,10 +70,10 @@ index 427573fc142c107d3fcc2be9000316221039ba4c..185c6c4f438dfe7336c5631302ba96e5
                              entity.spawnReason == org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.CHUNK_GEN)) {
                          continue;
 diff --git a/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java b/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
-index 2e0b384ec38fc0d8bd07bd6b2f866a1f0fc36ac4..44b627198ab0e14ee2765890b92a5dcfd0d6d732 100644
+index d2aa5ef709781e0cea99883ce8deab340d4adee0..b29056655c503355b2dd73ccd65b0a6cfd1f518a 100644
 --- a/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
-@@ -331,7 +331,7 @@ public class BeehiveBlockEntity extends BlockEntity {
+@@ -322,7 +322,7 @@ public class BeehiveBlockEntity extends BlockEntity {
                      iterator.remove();
                  }
                  // Paper start - Fix bees aging inside; use exitTickCounter to keep actual bee life
@@ -83,7 +83,7 @@ index 2e0b384ec38fc0d8bd07bd6b2f866a1f0fc36ac4..44b627198ab0e14ee2765890b92a5dcf
                  }
                  // Paper end - Fix bees aging inside; use exitTickCounter to keep actual bee life
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index f7bed1e588e0eedb4cb92a60a47518079bd46761..7e77dd398f124a18b39ac6fa82f520d371705142 100644
+index 064ef5c59b52344bdc0ab6f4df46e17669f576c3..fb4a587dd30f93bb28c12ceb9b562a050a86e984 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -261,7 +261,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen

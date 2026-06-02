@@ -5,10 +5,10 @@ Subject: [PATCH] Fix SculkCatalyst exp skip
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 8fad9a4b55b32bee6fef42f959136e37802f03be..f4a4896061884ef6e86f3d7589f4c6b6ad84dc5f 100644
+index 343bd53f2b9e2df4546110fdbcdba8ada0dd69c4..8a53a7d733cca5e9be903255d7af05522dc6ce3a 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1222,7 +1222,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1198,7 +1198,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          }
  
          // SPIGOT-5478 must be called manually now
@@ -17,7 +17,7 @@ index 8fad9a4b55b32bee6fef42f959136e37802f03be..f4a4896061884ef6e86f3d7589f4c6b6
          // we clean the player's inventory after the EntityDeathEvent is called so plugins can get the exact state of the inventory.
          if (!event.getKeepInventory()) {
              // Paper start - PlayerDeathEvent#getItemsToKeep
-@@ -1269,6 +1269,15 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1245,6 +1245,15 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          this.connection.markClientUnloadedAfterDeath();
      }
  
@@ -34,7 +34,7 @@ index 8fad9a4b55b32bee6fef42f959136e37802f03be..f4a4896061884ef6e86f3d7589f4c6b6
          AABB aabb = new AABB(this.blockPosition()).inflate(32.0, 10.0, 32.0);
          this.level()
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 4e5ee2f63aebd824844c762f6192677793fc63f6..051c51397f87b052b2eb3ee32d753449b8583bcb 100644
+index d87978777a5ac76a34682240282f119af1a58886..7bc07a621a07280b7a728c349934d345338e4ef0 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -282,6 +282,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
@@ -45,7 +45,7 @@ index 4e5ee2f63aebd824844c762f6192677793fc63f6..051c51397f87b052b2eb3ee32d753449
      public List<DefaultDrop> drops = new java.util.ArrayList<>(); // Paper - Restore vanilla drops behavior
      public final org.bukkit.craftbukkit.attribute.CraftAttributeMap craftAttributes;
      public boolean collides = true;
-@@ -1872,6 +1873,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -1878,6 +1879,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
                          sourceEntity.killedEntity((ServerLevel)this.level(), this, source);
                      }
                      this.gameEvent(GameEvent.ENTITY_DIE);
@@ -53,7 +53,7 @@ index 4e5ee2f63aebd824844c762f6192677793fc63f6..051c51397f87b052b2eb3ee32d753449
                  } else {
                      this.dead = false;
                      this.setHealth((float) deathEvent.getReviveHealth());
-@@ -1948,7 +1950,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -1954,7 +1956,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          this.drops = new java.util.ArrayList<>();
          // this.dropEquipment(level); // CraftBukkit - moved up
          // CraftBukkit end
@@ -62,7 +62,7 @@ index 4e5ee2f63aebd824844c762f6192677793fc63f6..051c51397f87b052b2eb3ee32d753449
          return deathEvent; // Paper
      }
  
-@@ -1962,7 +1964,9 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -1968,7 +1970,9 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
                  this.isAlwaysExperienceDropper()
                      || this.lastHurtByPlayerMemoryTime > 0 && this.shouldDropExperience() && level.getGameRules().get(GameRules.MOB_DROPS)
              )) {

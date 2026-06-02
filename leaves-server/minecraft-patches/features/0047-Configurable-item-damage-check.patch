@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable item damage check
 
 
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index 54d67c847c1de9ee216cedb0527136f50223ea2d..63c25557dde82fb22dc6997953beeea8e72b8f44 100644
+index 1d08ac66271a441811a157ed6619b14bf58c403f..8900743ac8bffe5865f55c3e886e89fa216f05b8 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
 @@ -592,11 +592,11 @@ public final class ItemStack implements DataComponentHolder, ItemInstance {

@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable vanilla random
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 8cf7c481c2dcc840adca8da4ce0cebcf7b691735..f883c4d515e31ab1f9f2c00f293d04942fc217f2 100644
+index 8924675bc062e86df93d63aacd2f0589c03b352d..55611b488b7e420b8fc8a717222577d050517bf0 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -299,7 +299,7 @@ public abstract class Entity
@@ -18,7 +18,7 @@ index 8cf7c481c2dcc840adca8da4ce0cebcf7b691735..f883c4d515e31ab1f9f2c00f293d0494
      private int remainingFireTicks;
      private final EntityFluidInteraction fluidInteraction = new EntityFluidInteraction(Set.of(FluidTags.WATER, FluidTags.LAVA));
 diff --git a/net/minecraft/world/entity/animal/squid/Squid.java b/net/minecraft/world/entity/animal/squid/Squid.java
-index a0dacdd92a55df9d08111c6861d09c9c6dee0213..d283e552f0ff391d01a4bd1115f92212ce9d65d4 100644
+index 637cdcf459aaf78dc381d8a990b0e2c571c06de8..492cb7411d3cae18786ba9835c122f94b73f57e5 100644
 --- a/net/minecraft/world/entity/animal/squid/Squid.java
 +++ b/net/minecraft/world/entity/animal/squid/Squid.java
 @@ -51,7 +51,7 @@ public class Squid extends AgeableWaterCreature {
@@ -31,7 +31,7 @@ index a0dacdd92a55df9d08111c6861d09c9c6dee0213..d283e552f0ff391d01a4bd1115f92212
      }
  
 diff --git a/net/minecraft/world/entity/item/ItemEntity.java b/net/minecraft/world/entity/item/ItemEntity.java
-index 86c2ee506423ae26d2f6e40aa82e6d52ca7163ea..0000000000000000000000000000000000000000 100644
+index b4384bc4518a58f275a8635a8b918d1f2b95ac11..c8530aa2282352794ae3512bba303b8a19540f04 100644
 --- a/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/net/minecraft/world/entity/item/ItemEntity.java
 @@ -64,7 +64,13 @@ public class ItemEntity extends Entity implements TraceableEntity {
@@ -50,7 +50,7 @@ index 86c2ee506423ae26d2f6e40aa82e6d52ca7163ea..00000000000000000000000000000000
  
      public ItemEntity(
 diff --git a/net/minecraft/world/entity/item/PrimedTnt.java b/net/minecraft/world/entity/item/PrimedTnt.java
-index 7970c6f9189059e8fc0391709159ef395c56708c..0000000000000000000000000000000000000000 100644
+index 7970c6f9189059e8fc0391709159ef395c56708c..4a1088cdc312b9066fe0cdb9937a13c9be56c283 100644
 --- a/net/minecraft/world/entity/item/PrimedTnt.java
 +++ b/net/minecraft/world/entity/item/PrimedTnt.java
 @@ -69,7 +69,7 @@ public class PrimedTnt extends Entity implements TraceableEntity {

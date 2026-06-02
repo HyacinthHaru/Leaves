@@ -5,10 +5,10 @@ Subject: [PATCH] Renewable sponges
 
 
 diff --git a/net/minecraft/world/entity/monster/Guardian.java b/net/minecraft/world/entity/monster/Guardian.java
-index b13aa1d5d175a05a856d55dc09b3c7c4265b1834..0000000000000000000000000000000000000000 100644
+index 39c7c9d7b92872b013fe4dbf68dafd02ecab3ab9..c67584b3db57760cd782c3b1dbbb3777600a1e1f 100644
 --- a/net/minecraft/world/entity/monster/Guardian.java
 +++ b/net/minecraft/world/entity/monster/Guardian.java
-@@ -442,6 +442,28 @@ public class Guardian extends Monster {
+@@ -444,6 +444,28 @@ public class Guardian extends Monster {
          }
      }
  

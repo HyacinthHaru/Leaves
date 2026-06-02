@@ -5,7 +5,7 @@ Subject: [PATCH] Fix minecraft hopper not work without player
 
 
 diff --git a/net/minecraft/world/entity/vehicle/minecart/MinecartHopper.java b/net/minecraft/world/entity/vehicle/minecart/MinecartHopper.java
-index 06ab7c48b18c03af494ab10fc2b584cefc776749..289307ca95212e51a65825beb0f2b1bf82565fcb 100644
+index 445c5cafad71028171c1f261939661775dd7f2bd..2db1ce5a62ac82f82a7f61f9df32abb134676a53 100644
 --- a/net/minecraft/world/entity/vehicle/minecart/MinecartHopper.java
 +++ b/net/minecraft/world/entity/vehicle/minecart/MinecartHopper.java
 @@ -102,6 +102,13 @@ public class MinecartHopper extends AbstractMinecartContainer implements Hopper

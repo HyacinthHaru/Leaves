@@ -6,7 +6,7 @@ Subject: [PATCH] Syncmatica Protocol
 This patch is Powered by Syncmatica(https://github.com/End-Tech/syncmatica)
 
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index fe6e148322e920989ac3ffc3c10de95d782265f9..8fbf1f4fe72ddde8ccd059589905d1bd400e3dd7 100644
+index 810b352503cdf56091ec6340ad72edde238fe359..4c0fddd591bfb3400fbd5f5864e7611797af1f4c 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -339,9 +339,12 @@ public class ServerGamePacketListenerImpl

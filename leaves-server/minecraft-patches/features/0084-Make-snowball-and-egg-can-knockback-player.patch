@@ -5,10 +5,10 @@ Subject: [PATCH] Make snowball and egg can knockback player
 
 
 diff --git a/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java b/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
-index 43bfa179a8363a1dedd8de083479b7a56965c918..fe5572d9ae5e3ca1c7a30ef511b733b39eaf63f7 100644
+index 6e828818909df2b31349398639257b7a6f89fcd5..e57f447054cd553257e4f8bceb924b48551050d2 100644
 --- a/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
 +++ b/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
-@@ -58,6 +58,12 @@ public class Snowball extends ThrowableItemProjectile {
+@@ -56,6 +56,12 @@ public class Snowball extends ThrowableItemProjectile {
          Entity entity = hitResult.getEntity();
          int damage = entity instanceof Blaze ? 3 : 0;
          entity.hurt(this.damageSources().thrown(this, this.getOwner()), damage);

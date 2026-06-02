@@ -5,13 +5,13 @@ Subject: [PATCH] Return nether portal fix
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index f4a4896061884ef6e86f3d7589f4c6b6ad84dc5f..4b51abd51759a1a4b30e3c454c30beac18fdf001 100644
+index 8a53a7d733cca5e9be903255d7af05522dc6ce3a..5500c3efc711b340b62a7abb524e74017c3c0bc3 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1608,6 +1608,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
-                 org.bukkit.event.player.PlayerChangedWorldEvent changeEvent = new org.bukkit.event.player.PlayerChangedWorldEvent(this.getBukkitEntity(), oldLevel.getWorld());
-                 this.level().getCraftServer().getPluginManager().callEvent(changeEvent);
-                 // CraftBukkit end
+@@ -1591,6 +1591,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+         org.bukkit.event.player.PlayerChangedWorldEvent changeEvent = new org.bukkit.event.player.PlayerChangedWorldEvent(this.getBukkitEntity(), oldLevel.getWorld());
+         this.level().getCraftServer().getPluginManager().callEvent(changeEvent);
+         // CraftBukkit end
 +                // Leaves start - nether portal fix
 +                if (org.leavesmc.leaves.LeavesConfig.modify.netherPortalFix) {
 +                    final net.minecraft.resources.ResourceKey<Level> fromDim = oldLevel.dimension();
@@ -25,14 +25,14 @@ index f4a4896061884ef6e86f3d7589f4c6b6ad84dc5f..4b51abd51759a1a4b30e3c454c30beac
 +                    }
 +                }
 +                // Leaves end - nether portal fix
-                 // Paper start - Reset shield blocking on dimension change
-                 if (this.isBlocking()) {
-                     this.stopUsingItem();
+         // Paper start - Reset shield blocking on dimension change
+         if (this.isBlocking()) {
+             this.stopUsingItem();
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 517f0f715c010135e19942c71906532bd55ba083..69d63e431218d06b99df720aeb328af763780d03 100644
+index 6da0a82a8cf2ac0b662231b5454428f6a0631e1e..b4369ff5a2d8e36c24bda015fbcdf5c95ecce5df 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -699,6 +699,18 @@ public abstract class PlayerList {
+@@ -695,6 +695,18 @@ public abstract class PlayerList {
          // It's possible for respawn to be in a diff dimension
          if (fromLevel != level) {
              new org.bukkit.event.player.PlayerChangedWorldEvent(player.getBukkitEntity(), fromLevel.getWorld()).callEvent();
@@ -52,7 +52,7 @@ index 517f0f715c010135e19942c71906532bd55ba083..69d63e431218d06b99df720aeb328af7
          }
  
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 051c51397f87b052b2eb3ee32d753449b8583bcb..df38eb2678a77682b24afd0fd363104ff6fb822a 100644
+index 7bc07a621a07280b7a728c349934d345338e4ef0..a328dc8191e8c8e212eadc4f2ea269ec86cfcf85 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -261,7 +261,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
@@ -65,7 +65,7 @@ index 051c51397f87b052b2eb3ee32d753449b8583bcb..df38eb2678a77682b24afd0fd363104f
      private @Nullable DamageSource lastDamageSource;
      private long lastDamageStamp;
 diff --git a/net/minecraft/world/level/block/NetherPortalBlock.java b/net/minecraft/world/level/block/NetherPortalBlock.java
-index 55436fbbd43f8f5359dedebd56684c3ce5119563..f91f31abfc699aab883bf5fc68ba81566453637a 100644
+index 2838123f1e8fe538c36ff3707e39f7a4657ba0de..0f3518e864c3917a0b9b173beff37af16fc0dace 100644
 --- a/net/minecraft/world/level/block/NetherPortalBlock.java
 +++ b/net/minecraft/world/level/block/NetherPortalBlock.java
 @@ -188,7 +188,18 @@ public class NetherPortalBlock extends Block implements Portal {

@@ -5,7 +5,7 @@ Subject: [PATCH] Vanilla portal handle
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index fd7ff66d5e1263e83b7ef5501523a6512a8e701d..8f93252c3c5fd9a77c7c3ac97d814f87ada4f773 100644
+index 6b2e71febce509d3eb8aa4f53a8454d3007adb19..1b7bdbb122543660bc8aee386ef7ecf6c77b904f 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -863,6 +863,7 @@ public abstract class Entity
@@ -26,7 +26,7 @@ index fd7ff66d5e1263e83b7ef5501523a6512a8e701d..8f93252c3c5fd9a77c7c3ac97d814f87
              this.spawnSprintParticle();
          }
 diff --git a/net/minecraft/world/entity/vehicle/minecart/AbstractMinecart.java b/net/minecraft/world/entity/vehicle/minecart/AbstractMinecart.java
-index 7ba197b9bda1f98e24882be40d78fabb0db9d36b..d7ec7b1632880160544331c0deb6c19419d3006e 100644
+index 1c043c1136fc42e888125047ed73b1dc32276183..28ee5a62cfd584707c879e74ff87792db208eca9 100644
 --- a/net/minecraft/world/entity/vehicle/minecart/AbstractMinecart.java
 +++ b/net/minecraft/world/entity/vehicle/minecart/AbstractMinecart.java
 @@ -307,7 +307,7 @@ public abstract class AbstractMinecart extends VehicleEntity {

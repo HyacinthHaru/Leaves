@@ -5,10 +5,10 @@ Subject: [PATCH] PCA sync protocol
 
 
 diff --git a/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java b/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
-index 7a637867d7ab9f40b44a88d93541f43dac98292a..c2e86970bbb8c26e23baef32444bbb21f43d2ee4 100644
+index 1be6668ceb49a62d35549f6352d2972c578091df..e9bd63b69b47d26edfc445fa6383d62f68179671 100644
 --- a/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
-@@ -339,6 +339,11 @@ public class BeehiveBlockEntity extends BlockEntity {
+@@ -330,6 +330,11 @@ public class BeehiveBlockEntity extends BlockEntity {
                  if (releaseOccupant(level, pos, state, data.toOccupant(), null, releaseStatus, savedFlowerPos)) {
                      changed = true;
                      iterator.remove();
@@ -20,7 +20,7 @@ index 7a637867d7ab9f40b44a88d93541f43dac98292a..c2e86970bbb8c26e23baef32444bbb21
                  }
                  // Paper start - Fix bees aging inside; use exitTickCounter to keep actual bee life
                  else if (!org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode && level.paperConfig().entities.behavior.cooldownFailedBeehiveReleases) { // Leaves - mc technical survival mode
-@@ -370,6 +375,11 @@ public class BeehiveBlockEntity extends BlockEntity {
+@@ -361,6 +366,11 @@ public class BeehiveBlockEntity extends BlockEntity {
          input.read("bees", BeehiveBlockEntity.Occupant.LIST_CODEC).orElse(List.of()).forEach(this::storeBee);
          this.savedFlowerPos = input.read("flower_pos", BlockPos.CODEC).orElse(null);
          this.maxBees = input.getIntOr("Bukkit.MaxEntities", MAX_OCCUPANTS); // Paper - persist max bukkit occupants
@@ -33,18 +33,18 @@ index 7a637867d7ab9f40b44a88d93541f43dac98292a..c2e86970bbb8c26e23baef32444bbb21
  
      @Override
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index bb7712ae397a701c80af77cee6ae7ff389e85daf..b8e91084613a4ccc691e9a5082978f0d3f8cd750 100644
+index 7e0ad2f17297c21d3e5149214928505bd5bf3bfe..0aa3d7a8948be2a8512cb762855488b93b429b71 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -236,6 +236,11 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
-                     }
-                     // Leaves end - Wool hopper counter
-                     setChanged(level, pos, state);
+@@ -237,6 +237,11 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+                 }
+                 // Leaves end - Wool hopper counter
+                 setChanged(level, pos, state);
 +                    // Leaves start - pca
 +                    if (org.leavesmc.leaves.LeavesConfig.protocol.pca.enable) {
 +                        org.leavesmc.leaves.protocol.PcaSyncProtocol.syncBlockEntityToClient(entity);
 +                    }
 +                    // Leaves end - pca
-                     return true;
-                 }
+                 return true;
              }
+         }

@@ -5,10 +5,10 @@ Subject: [PATCH] Bedrock break list
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index bcaab44a2420fcfe5ec0852ec66ea0a4aaf74f71..7723281c7b5605c520da8d86b8f7843ef4c2b504 100644
+index 19d1264c893907576f39d5d02525c7b497f5bbd3..7e45c2bbe8cfb18695d50406710a77cfa2119d1d 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1867,6 +1867,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1871,6 +1871,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
          profiler.popPush("server gui refresh");
  
@@ -38,7 +38,7 @@ index 9bf09b888425e491072864265c8de3885154a0ba..4e400a24c0a5968223c7cd4874bd4d1e
              this.stopTrackingObjective(objective);
          }
 diff --git a/net/minecraft/world/level/block/piston/PistonBaseBlock.java b/net/minecraft/world/level/block/piston/PistonBaseBlock.java
-index a2bc07a8348c5d7f30aafa0344d66715c89994b0..c0847fcd32c90c9b4d6c268eb85506a90695ba69 100644
+index 869a3f9c212b739c91e1f10ac7697ce097d05655..8e60d158618e45b03eac9a01abe0777e359cf0bc 100644
 --- a/net/minecraft/world/level/block/piston/PistonBaseBlock.java
 +++ b/net/minecraft/world/level/block/piston/PistonBaseBlock.java
 @@ -75,6 +75,11 @@ public class PistonBaseBlock extends DirectionalBlock {

@@ -5,7 +5,7 @@ Subject: [PATCH] Vanilla hopper
 
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 76473f7e9ae2c50ebf1eb0320b8824ed92568f0f..ffd54d51052ec228a56a2be26760b0934f341164 100644
+index 700c3e2852704644b088231ed02a57cc961477d4..800fa31ee7d2f79762bbccb9dd5f361d76cf1f88 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -271,36 +271,55 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen

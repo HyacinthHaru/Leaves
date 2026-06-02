@@ -5,7 +5,7 @@ Subject: [PATCH] RNG Fishing
 
 
 diff --git a/net/minecraft/world/entity/projectile/FishingHook.java b/net/minecraft/world/entity/projectile/FishingHook.java
-index bbfd9db9363e2fa35a1be95c466e1b758d6efb61..5f8711b3d6ffcbd9ecfedec90ff09e6e0ddfa228 100644
+index 3e29bd82521b18a493f9b5b5b23cdb9c03cc94ba..5a359f75098922cf9f4a20a0b69479ec89f2f5f6 100644
 --- a/net/minecraft/world/entity/projectile/FishingHook.java
 +++ b/net/minecraft/world/entity/projectile/FishingHook.java
 @@ -522,7 +522,7 @@ public class FishingHook extends Projectile {

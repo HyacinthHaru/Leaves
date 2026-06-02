@@ -16,7 +16,7 @@ index 48f6671ecabfd5a8c9f8151ccb59f9ea9dc201ac..fe3f45494a946136fdec333841925acd
 +    <T> void compact(net.minecraft.world.level.chunk.Palette<T> srcPalette, net.minecraft.world.level.chunk.Palette<T> dstPalette, short[] out, net.minecraft.world.level.chunk.PalettedContainer<T> resizeHandler); // Leaves - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/util/SimpleBitStorage.java b/net/minecraft/util/SimpleBitStorage.java
-index 5e0e33cdbd590e5aee8044f49a562434c230a426..45dd5d856cb4a65655d474240f034c658d5c59f9 100644
+index 851363603a3f8180f841c6f1b08dbac2db70f97a..738dd4eb25208d853ca89ee78046b41b5bb45a91 100644
 --- a/net/minecraft/util/SimpleBitStorage.java
 +++ b/net/minecraft/util/SimpleBitStorage.java
 @@ -465,4 +465,35 @@ public class SimpleBitStorage implements BitStorage {
@@ -56,7 +56,7 @@ index 5e0e33cdbd590e5aee8044f49a562434c230a426..45dd5d856cb4a65655d474240f034c65
 +    // Leaves end - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/util/ZeroBitStorage.java b/net/minecraft/util/ZeroBitStorage.java
-index eb2fa32cff6824c14f865c8731df7d082122f62b..12ab6017718bedad931cca04c0b1bfbc99dc78e8 100644
+index 3666c3efd188508153b6482db425648e3ca77dc7..e316c2e206f0972b6bda614249079f78db874654 100644
 --- a/net/minecraft/util/ZeroBitStorage.java
 +++ b/net/minecraft/util/ZeroBitStorage.java
 @@ -80,4 +80,6 @@ public class ZeroBitStorage implements BitStorage {
@@ -67,7 +67,7 @@ index eb2fa32cff6824c14f865c8731df7d082122f62b..12ab6017718bedad931cca04c0b1bfbc
 +    @Override public <T> void compact(net.minecraft.world.level.chunk.Palette<T> srcPalette, net.minecraft.world.level.chunk.Palette<T> dstPalette, short[] out, net.minecraft.world.level.chunk.PalettedContainer<T> resizeHandler) {} // Leaves - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/world/level/chunk/PalettedContainer.java b/net/minecraft/world/level/chunk/PalettedContainer.java
-index 09111c50cb34b643b7717f107a6f5bf6953bf0b2..c986309aaa54f1a92dc1d9f3e03c9f7627b00e49 100644
+index 66a05adab494f8674f0636f8b34533f8ef640028..2ab0063351980b8a3f4341982ad18a2dd2683c0f 100644
 --- a/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/net/minecraft/world/level/chunk/PalettedContainer.java
 @@ -23,6 +23,22 @@ import net.minecraft.util.ZeroBitStorage;
@@ -93,7 +93,7 @@ index 09111c50cb34b643b7717f107a6f5bf6953bf0b2..c986309aaa54f1a92dc1d9f3e03c9f76
      private static final int MIN_PALETTE_BITS = 0;
      public volatile PalettedContainer.Data<T> data; // Paper - optimise collisions - public
      private final Strategy<T> strategy;
-@@ -351,6 +367,45 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -348,6 +364,45 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
      public synchronized PalettedContainerRO.PackedData<T> pack(final Strategy<T> strategy) { // Paper - synchronize
          this.acquire();
  
@@ -136,10 +136,10 @@ index 09111c50cb34b643b7717f107a6f5bf6953bf0b2..c986309aaa54f1a92dc1d9f3e03c9f76
 +            return new PalettedContainerRO.PackedData<>(fsElements, fsData);
 +        }
 +        // Leaves end - Gale - Lithium - faster chunk serialization
-         PalettedContainerRO.PackedData var14;
          try {
              BitStorage currentStorage = this.data.storage;
-@@ -423,13 +478,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+             Palette<T> currentPalette = this.data.palette;
+@@ -417,13 +472,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
  
      @Override
      public void count(final PalettedContainer.CountConsumer<T> output) {

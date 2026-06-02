@@ -6,7 +6,7 @@ Subject: [PATCH] Check frozen ticks before landing block
 This patch is Powered by Gale(https://github.com/GaleMC/Gale)
 
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 6169cd74b9dec2900d8b75740cbbd391a37fd9de..428982842a0c18aa3894c50af9e90d76d6ab416e 100644
+index 7246787ca43bbc30c3fb080799b346f8db773e3f..cf5d9ae73f756cd497760b8db5325c10a6ca9084 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -538,10 +538,10 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin

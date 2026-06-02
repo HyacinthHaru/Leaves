@@ -5,15 +5,15 @@ Subject: [PATCH] Disable check out-of-order command
 
 
 diff --git a/net/minecraft/network/chat/SignedMessageChain.java b/net/minecraft/network/chat/SignedMessageChain.java
-index 99a8a8b5cb65bd94d9496ddb6ff11b8a67f3a870..25fb3eaa30d9bf1e12de33b84f1aabf4c337e818 100644
+index 9395c6a58ba37fb00c492065b8045f54de0a2246..0e86909d6c56eceda449656428aa8adfd8c3b370 100644
 --- a/net/minecraft/network/chat/SignedMessageChain.java
 +++ b/net/minecraft/network/chat/SignedMessageChain.java
 @@ -49,7 +49,7 @@ public class SignedMessageChain {
-                     SignedMessageLink link = SignedMessageChain.this.nextLink;
-                     if (link == null) {
-                         throw new SignedMessageChain.DecodeException(SignedMessageChain.DecodeException.CHAIN_BROKEN);
--                    } else if (body.timeStamp().isBefore(SignedMessageChain.this.lastTimeStamp)) {
-+                    } else if (!org.leavesmc.leaves.LeavesConfig.modify.disableCheckOutOfOrderCommand && body.timeStamp().isBefore(SignedMessageChain.this.lastTimeStamp)) { // Leaves - disable check to support Velocity
-                         this.setChainBroken();
-                         throw new SignedMessageChain.DecodeException(SignedMessageChain.DecodeException.OUT_OF_ORDER_CHAT, org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event causes
-                     } else {
+                     throw new SignedMessageChain.DecodeException(SignedMessageChain.DecodeException.CHAIN_BROKEN);
+                 }
+ 
+-                if (body.timeStamp().isBefore(SignedMessageChain.this.lastTimeStamp)) {
++                if (!org.leavesmc.leaves.LeavesConfig.modify.disableCheckOutOfOrderCommand && body.timeStamp().isBefore(SignedMessageChain.this.lastTimeStamp)) { // Leaves - disable check to support Velocity
+                     this.setChainBroken();
+                     throw new SignedMessageChain.DecodeException(SignedMessageChain.DecodeException.OUT_OF_ORDER_CHAT, org.bukkit.event.player.PlayerKickEvent.Cause.OUT_OF_ORDER_CHAT); // Paper - kick event causes
+                 }

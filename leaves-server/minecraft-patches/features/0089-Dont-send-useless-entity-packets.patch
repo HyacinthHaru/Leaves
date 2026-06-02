@@ -5,7 +5,7 @@ Subject: [PATCH] Dont send useless entity packets
 
 
 diff --git a/net/minecraft/server/level/ServerEntity.java b/net/minecraft/server/level/ServerEntity.java
-index aa45b00f39a816860d9f8a7e90103b73c0b3b613..987d35ae6beb5001c61c27e88cb5e43b73947e74 100644
+index 997c5bd1302207a538d007954d0b70587d209527..558399993913184148e924de0892cc3fd5c71ed2 100644
 --- a/net/minecraft/server/level/ServerEntity.java
 +++ b/net/minecraft/server/level/ServerEntity.java
 @@ -194,6 +194,11 @@ public class ServerEntity {

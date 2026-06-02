@@ -5,7 +5,7 @@ Subject: [PATCH] Do not tick Arrow life regardless
 
 
 diff --git a/net/minecraft/world/entity/projectile/arrow/AbstractArrow.java b/net/minecraft/world/entity/projectile/arrow/AbstractArrow.java
-index 6ac6e7cb688ce85f731a0a3be81be4beb38767cb..c5664d824a276e43715733af4172dcb6dad35d14 100644
+index 183c4a883d94ffada295d7450f94f9ff9f1ea048..53596f2c871f09b90e50e6ce48775603ab16e54c 100644
 --- a/net/minecraft/world/entity/projectile/arrow/AbstractArrow.java
 +++ b/net/minecraft/world/entity/projectile/arrow/AbstractArrow.java
 @@ -229,8 +229,10 @@ public abstract class AbstractArrow extends Projectile {

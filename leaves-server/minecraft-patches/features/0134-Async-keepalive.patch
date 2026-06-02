@@ -5,7 +5,7 @@ Subject: [PATCH] Async keepalive
 
 
 diff --git a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index 61e3220cfaebe10f7b0b697e48ace64aedaf4d50..926b20784a685d028672bebc9bea3bdcf8c73b0f 100644
+index 5cf25ed690dc06a60a95116b755b590274ea954f..70169ade74ec0ca43912971bfd769189c22965ee 100644
 --- a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -46,6 +46,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
@@ -16,7 +16,7 @@ index 61e3220cfaebe10f7b0b697e48ace64aedaf4d50..926b20784a685d028672bebc9bea3bdc
      private volatile boolean suspendFlushingOnServerThread = false;
      // CraftBukkit start
      public final org.bukkit.craftbukkit.CraftServer cserver;
-@@ -73,6 +74,8 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -72,6 +73,8 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
          this.keepAlive = cookie.keepAlive();
          // Paper end
          this.profile = cookie.gameProfile(); // Leaves - protocol core
@@ -25,7 +25,7 @@ index 61e3220cfaebe10f7b0b697e48ace64aedaf4d50..926b20784a685d028672bebc9bea3bdc
      }
  
      // Paper start - configuration phase API
-@@ -90,6 +93,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -89,6 +92,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
  
      @Override
      public void onDisconnect(final DisconnectionDetails details) {
@@ -33,7 +33,7 @@ index 61e3220cfaebe10f7b0b697e48ace64aedaf4d50..926b20784a685d028672bebc9bea3bdc
          if (this.isSingleplayerOwner()) {
              LOGGER.info("Stopping singleplayer server as player logged out");
              this.server.halt(false);
-@@ -104,6 +108,13 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -103,6 +107,13 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
  
      @Override
      public void handleKeepAlive(final ServerboundKeepAlivePacket packet) {
@@ -47,7 +47,7 @@ index 61e3220cfaebe10f7b0b697e48ace64aedaf4d50..926b20784a685d028672bebc9bea3bdc
          // Paper start - improve keepalives
          long now = System.nanoTime();
          io.papermc.paper.util.KeepAlive.PendingKeepAlive pending = this.keepAlive.pendingKeepAlives.peek();
-@@ -141,6 +152,28 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -134,6 +145,28 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
          // Paper end - improve keepalives
      }
  
@@ -76,7 +76,7 @@ index 61e3220cfaebe10f7b0b697e48ace64aedaf4d50..926b20784a685d028672bebc9bea3bdc
      @Override
      public void handlePong(final ServerboundPongPacket serverboundPongPacket) {
      }
-@@ -278,6 +311,13 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -271,6 +304,13 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
      protected void keepConnectionAlive() {
          Profiler.get().push("keepAlive");
          long now = Util.getMillis();
@@ -88,15 +88,15 @@ index 61e3220cfaebe10f7b0b697e48ace64aedaf4d50..926b20784a685d028672bebc9bea3bdc
 +        }
 +        // Leaves end - async keepalive
          // Paper start - improve keepalives
-         if (this.checkIfClosed(now) && !this.processedDisconnect) {
+         if (this.checkIfClosed(now)) {
              long currTime = System.nanoTime();
-@@ -301,6 +341,29 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -294,6 +334,29 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
          Profiler.get().pop();
      }
  
 +    // Leaves start - async keepalive
 +    public void keepConnectionAliveAsync(long currentTimeNs, long currentTimeMs) {
-+        if (this.closed || this.processedDisconnect || !this.connection.isConnected()) {
++        if (this.closed || !this.connection.isConnected()) {
 +            return;
 +        }
 +

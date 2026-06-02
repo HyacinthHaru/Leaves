@@ -5,7 +5,7 @@ Subject: [PATCH] Cache ignite odds
 
 
 diff --git a/net/minecraft/world/level/block/FireBlock.java b/net/minecraft/world/level/block/FireBlock.java
-index 2abd6fbcb7cfc14f503485f646a7192bf628edb3..6fcbf2c3ae6dd1cfe88b1f2c5cb62f0669d7184f 100644
+index 5602bdde7fc5dc10ec9281dcc52a817a3944c252..6fcbf2c3ae6dd1cfe88b1f2c5cb62f0669d7184f 100644
 --- a/net/minecraft/world/level/block/FireBlock.java
 +++ b/net/minecraft/world/level/block/FireBlock.java
 @@ -202,6 +202,7 @@ public class FireBlock extends BaseFireBlock {
@@ -36,12 +36,12 @@ index 2abd6fbcb7cfc14f503485f646a7192bf628edb3..6fcbf2c3ae6dd1cfe88b1f2c5cb62f06
 +    private int getIgniteOdds(final LevelReader level, final BlockPos pos, @org.jetbrains.annotations.Nullable final Object2IntOpenHashMap<BlockPos> cache) {
          if (!level.isEmptyBlock(pos)) {
              return 0;
-         } else {
-             int odds = 0;
+-        }
++        } else {
++            int odds = 0;
  
-             for (Direction direction : Direction.values()) {
--                BlockState blockState = level.getBlockState(pos.relative(direction));
--                odds = Math.max(this.getIgniteOdds(blockState), odds);
+-        int odds = 0;
++            for (Direction direction : Direction.values()) {
 +                if (cache != null) {
 +                    odds = Math.max(cache.computeIfAbsent(pos, key -> {
 +                        BlockState blockState = level.getBlockState(pos.relative(direction));
@@ -51,10 +51,15 @@ index 2abd6fbcb7cfc14f503485f646a7192bf628edb3..6fcbf2c3ae6dd1cfe88b1f2c5cb62f06
 +                    BlockState blockState = level.getBlockState(pos.relative(direction));
 +                    odds = Math.max(this.getIgniteOdds(blockState), odds);
 +                }
-             }
++            }
  
-             return odds;
+-        for (Direction direction : Direction.values()) {
+-            BlockState blockState = level.getBlockState(pos.relative(direction));
+-            odds = Math.max(this.getIgniteOdds(blockState), odds);
++            return odds;
          }
+-
+-        return odds;
      }
 +    // Leaves end - cache ignite odds
  

@@ -5,10 +5,10 @@ Subject: [PATCH] Do not check NaN values in entities
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index d3b6291149af95a0a7256674288be5c5a49c896b..fd7ff66d5e1263e83b7ef5501523a6512a8e701d 100644
+index 4b9b05d6d5c74bbd92169f14f06e936690c90f4a..6b2e71febce509d3eb8aa4f53a8454d3007adb19 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -2579,9 +2579,11 @@ public abstract class Entity
+@@ -2581,9 +2581,11 @@ public abstract class Entity
              }
              } // CraftBukkit
  
@@ -20,7 +20,7 @@ index d3b6291149af95a0a7256674288be5c5a49c896b..fd7ff66d5e1263e83b7ef5501523a651
              if (Float.isNaN(this.yRot)) {
                  this.yRot = 0;
              }
-@@ -2589,7 +2591,9 @@ public abstract class Entity
+@@ -2591,7 +2593,9 @@ public abstract class Entity
              if (Float.isNaN(this.xRot)) {
                  this.xRot = 0;
              }

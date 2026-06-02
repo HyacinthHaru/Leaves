@@ -5,7 +5,7 @@ Subject: [PATCH] Allow grindstone overstacking
 
 
 diff --git a/net/minecraft/world/SimpleContainer.java b/net/minecraft/world/SimpleContainer.java
-index 049c6ab6472415479435f2caab0444c3cbd33902..2b8e4d39ea16f8f8e32f60c9480c9c6719fa7523 100644
+index 8cff3f5fd8e2c1bde8fc6066c42b29535e0ad258..f83877e92f5d0c67ad90d61d39f8cb80e8db0cca 100644
 --- a/net/minecraft/world/SimpleContainer.java
 +++ b/net/minecraft/world/SimpleContainer.java
 @@ -193,6 +193,12 @@ public class SimpleContainer implements Container, StackedContentsCompatible {
@@ -22,10 +22,10 @@ index 049c6ab6472415479435f2caab0444c3cbd33902..2b8e4d39ea16f8f8e32f60c9480c9c67
          this.setChanged();
      }
 diff --git a/net/minecraft/world/entity/vehicle/ContainerEntity.java b/net/minecraft/world/entity/vehicle/ContainerEntity.java
-index 42716cf2c864eba50628dc64c59ab29c1d51dc9b..c30fcfd84924a15622577e48ebc7e9934f172f6a 100644
+index 15692744697043ab68a7247534614afac8f781f8..0ffb5fb16d0a0bc529bcca9d8beae569edfc6d71 100644
 --- a/net/minecraft/world/entity/vehicle/ContainerEntity.java
 +++ b/net/minecraft/world/entity/vehicle/ContainerEntity.java
-@@ -161,6 +161,11 @@ public interface ContainerEntity extends Container, MenuProvider {
+@@ -160,6 +160,11 @@ public interface ContainerEntity extends Container, MenuProvider {
      default void setChestVehicleItem(final int slot, final ItemStack itemStack) {
          this.unpackChestVehicleLootTable(null);
          this.getItemStacks().set(slot, itemStack);
@@ -38,10 +38,10 @@ index 42716cf2c864eba50628dc64c59ab29c1d51dc9b..c30fcfd84924a15622577e48ebc7e993
      }
  
 diff --git a/net/minecraft/world/inventory/AbstractContainerMenu.java b/net/minecraft/world/inventory/AbstractContainerMenu.java
-index ca62fec639b71dd3eaf8b2b18d7bcd75733f3de3..d2439de25b83db20f22acba4a9170551e758326a 100644
+index 4d953d4b3f6ba9b6b5c4fde6e07ba2603487bf4e..03dfef15b6fc81d4f4653cbeda41819189776a8c 100644
 --- a/net/minecraft/world/inventory/AbstractContainerMenu.java
 +++ b/net/minecraft/world/inventory/AbstractContainerMenu.java
-@@ -602,7 +602,7 @@ public abstract class AbstractContainerMenu {
+@@ -601,7 +601,7 @@ public abstract class AbstractContainerMenu {
                  } else if (targetItemStack.isEmpty()) {
                      if (target.mayPlace(source)) {
                          int maxStackSize = target.getMaxStackSize(source);
@@ -50,7 +50,7 @@ index ca62fec639b71dd3eaf8b2b18d7bcd75733f3de3..d2439de25b83db20f22acba4a9170551
                              target.setByPlayer(source.split(maxStackSize));
                          } else {
                              inventory.setItem(buttonNum, ItemStack.EMPTY);
-@@ -611,7 +611,7 @@ public abstract class AbstractContainerMenu {
+@@ -610,7 +610,7 @@ public abstract class AbstractContainerMenu {
                      }
                  } else if (target.mayPickup(player) && target.mayPlace(source)) {
                      int maxStackSize = target.getMaxStackSize(source);
@@ -59,7 +59,7 @@ index ca62fec639b71dd3eaf8b2b18d7bcd75733f3de3..d2439de25b83db20f22acba4a9170551
                          target.setByPlayer(source.split(maxStackSize));
                          target.onTake(player, targetItemStack);
                          if (!inventory.add(targetItemStack)) {
-@@ -768,6 +768,10 @@ public abstract class AbstractContainerMenu {
+@@ -763,6 +763,10 @@ public abstract class AbstractContainerMenu {
          return this.moveItemStackTo(itemStack, startSlot, endSlot, backwards, false);
      }
      protected boolean moveItemStackTo(ItemStack itemStack, final int startSlot, final int endSlot, final boolean backwards, final boolean isCheck) { // Paper - Add PlayerTradeEvent and PlayerPurchaseEvent - non-final itemStack
@@ -70,14 +70,14 @@ index ca62fec639b71dd3eaf8b2b18d7bcd75733f3de3..d2439de25b83db20f22acba4a9170551
          if (isCheck) {
              itemStack = itemStack.copy();
          }
-@@ -832,6 +836,14 @@ public abstract class AbstractContainerMenu {
+@@ -827,6 +831,14 @@ public abstract class AbstractContainerMenu {
                  // Paper end - Add PlayerTradeEvent and PlayerPurchaseEvent
-                 if (targetx.isEmpty() && slotx.mayPlace(itemStack)) {
-                     int maxStackSize = slotx.getMaxStackSize(itemStack);
+                 if (target.isEmpty() && slot.mayPlace(itemStack)) {
+                     int maxStackSize = slot.getMaxStackSize(itemStack);
 +                    // Leaves start - Add force move
 +                    if (forceMove) {
-+                        slotx.setByPlayer(itemStack.split(itemStack.getCount()));
-+                        slotx.setChanged();
++                        slot.setByPlayer(itemStack.split(itemStack.getCount()));
++                        slot.setChanged();
 +                        anythingChanged = true;
 +                        break;
 +                    }
@@ -86,19 +86,19 @@ index ca62fec639b71dd3eaf8b2b18d7bcd75733f3de3..d2439de25b83db20f22acba4a9170551
                      if (isCheck) {
                          itemStack.shrink(Math.min(itemStack.getCount(), maxStackSize));
 diff --git a/net/minecraft/world/inventory/GrindstoneMenu.java b/net/minecraft/world/inventory/GrindstoneMenu.java
-index 945ffd3b7f3dc5c5bf6b35d015b3da0736342c8b..67ae3d359329bd61b430bfa1bad1b729eb29b0be 100644
+index e074c3f28599f650fab9bda25b69c596d6129781..04362beb334985e1ef9d407adb3b0374c6a019a7 100644
 --- a/net/minecraft/world/inventory/GrindstoneMenu.java
 +++ b/net/minecraft/world/inventory/GrindstoneMenu.java
-@@ -192,7 +192,7 @@ public class GrindstoneMenu extends AbstractContainerMenu {
-             int remaining = remaining1 + remaining2 + durability * 5 / 100;
-             int count = 1;
-             if (!input.isDamageableItem()) {
--                if (input.getMaxStackSize() < 2 || !ItemStack.matches(input, additional)) {
-+                if (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.allowGrindstoneOverstacking && input.getMaxStackSize() < 2 || !ItemStack.matches(input, additional)) { // Leaves - allowGrindstoneOverstacking
-                     return ItemStack.EMPTY;
-                 }
+@@ -182,7 +182,7 @@ public class GrindstoneMenu extends AbstractContainerMenu {
+         int remaining = remaining1 + remaining2 + durability * 5 / 100;
+         int count = 1;
+         if (!input.isDamageableItem()) {
+-            if (input.getMaxStackSize() < 2 || !ItemStack.matches(input, additional)) {
++            if (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.allowGrindstoneOverstacking && input.getMaxStackSize() < 2 || !ItemStack.matches(input, additional)) { // Leaves - allowGrindstoneOverstacking
+                 return ItemStack.EMPTY;
+             }
  
-@@ -263,7 +263,7 @@ public class GrindstoneMenu extends AbstractContainerMenu {
+@@ -252,7 +252,7 @@ public class GrindstoneMenu extends AbstractContainerMenu {
              ItemStack input = this.repairSlots.getItem(0);
              ItemStack additional = this.repairSlots.getItem(1);
              if (slotIndex == 2) {
@@ -108,10 +108,10 @@ index 945ffd3b7f3dc5c5bf6b35d015b3da0736342c8b..67ae3d359329bd61b430bfa1bad1b729
                  }
  
 diff --git a/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java b/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-index 6f45d9314d7cc91a3d4c23657a88f06d322f894b..6fd8aad7ac8e1b5c621cf80d076ba39fb8d00d37 100644
+index 97b69ca8025321d4ffbdca80e593348b014a73d6..f6d97d4cbf071e4ddccdd3fef537e6a7a741b26a 100644
 --- a/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-@@ -395,7 +395,11 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
+@@ -392,7 +392,11 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
          ItemStack oldStack = this.items.get(slot);
          boolean same = !itemStack.isEmpty() && ItemStack.isSameItemSameComponents(oldStack, itemStack);
          this.items.set(slot, itemStack);
@@ -125,7 +125,7 @@ index 6f45d9314d7cc91a3d4c23657a88f06d322f894b..6fd8aad7ac8e1b5c621cf80d076ba39f
              this.cookingTotalTime = getTotalCookTime(serverLevel, this, this.recipeType, this.cookSpeedMultiplier); // Paper - cook speed multiplier API
              this.cookingTimer = 0;
 diff --git a/net/minecraft/world/level/block/entity/BaseContainerBlockEntity.java b/net/minecraft/world/level/block/entity/BaseContainerBlockEntity.java
-index 24f052faf4fe7e7de9f9723f26c6d0da03e88028..9837cc652ef3f6a8b7e2debafb5b6127b8e12257 100644
+index a0f2e2356cf81f14783c00394e0f4177a81cedab..9974ec443d4342baa69985e4cf38fad160299ebd 100644
 --- a/net/minecraft/world/level/block/entity/BaseContainerBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/BaseContainerBlockEntity.java
 @@ -124,6 +124,12 @@ public abstract class BaseContainerBlockEntity extends BlockEntity implements Co
@@ -142,7 +142,7 @@ index 24f052faf4fe7e7de9f9723f26c6d0da03e88028..9837cc652ef3f6a8b7e2debafb5b6127
          this.setChanged();
      }
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index cdebec900b5a5f36aeb8e8e2d3b725ed885bd0f8..365f0154ce8734f7d2581a367af25a7da1ff6b00 100644
+index 88bdd463096294487d42bebdd245daa6cffcede9..4fdfb42689b2fe6c3aa7d150f2fe910c1f18f09f 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -114,6 +114,11 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen

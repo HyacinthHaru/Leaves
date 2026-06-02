@@ -5,10 +5,10 @@ Subject: [PATCH] Alternative block placement Protocol
 
 
 diff --git a/net/minecraft/world/item/BlockItem.java b/net/minecraft/world/item/BlockItem.java
-index 54ecf4c118ffd5d20d65d13dcc8c99abed87cd9c..8dfe237a01ec026fdee388f3e8b8387830bfafd4 100644
+index 96fdde858610a8e01821072aef377e1e2d9232a1..de73e9e278f626c7c7cc5eb52e4c3e2570f6c231 100644
 --- a/net/minecraft/world/item/BlockItem.java
 +++ b/net/minecraft/world/item/BlockItem.java
-@@ -152,7 +152,7 @@ public class BlockItem extends Item {
+@@ -154,7 +154,7 @@ public class BlockItem extends Item {
      }
  
      protected @Nullable BlockState getPlacementState(final BlockPlaceContext context) {
@@ -39,10 +39,10 @@ index 0d6f5941e2e9d8007cf3b30a51994a03d40b2449..0e9a48c5cacbe2dd97af1b4e994eb695
                      stateForPlacement = possibleState;
                      break;
 diff --git a/net/minecraft/world/level/block/Block.java b/net/minecraft/world/level/block/Block.java
-index 070dd284188936ec791f13371757700d164104bf..23a3d0f23375e2aa59c9b709971a4018c0de012c 100644
+index 70960c3c280eedc3624f20139a52d5d4961d6217..124834b62c059d642a86cd159c4136b518c02c18 100644
 --- a/net/minecraft/world/level/block/Block.java
 +++ b/net/minecraft/world/level/block/Block.java
-@@ -516,6 +516,33 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -520,6 +520,33 @@ public class Block extends BlockBehaviour implements ItemLike {
      public void stepOn(final Level level, final BlockPos pos, final BlockState onState, final Entity entity) {
      }
  

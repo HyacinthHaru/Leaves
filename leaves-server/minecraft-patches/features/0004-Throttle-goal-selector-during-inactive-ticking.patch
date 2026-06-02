@@ -6,7 +6,7 @@ Subject: [PATCH] Throttle goal selector during inactive ticking
 This patch is Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
 
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index 5bbb5cbb51953399c7bce547cd6968eb3c6bd130..0000000000000000000000000000000000000000 100644
+index ea144213f5ac2f813c9007113e4066a3295a7f76..3bbf67d96f687b7275a4e496f0d25018ff4890c7 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
 @@ -211,12 +211,14 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs

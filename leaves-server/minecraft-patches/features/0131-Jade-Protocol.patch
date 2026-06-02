@@ -5,10 +5,10 @@ Subject: [PATCH] Jade Protocol
 
 
 diff --git a/net/minecraft/world/entity/animal/armadillo/Armadillo.java b/net/minecraft/world/entity/animal/armadillo/Armadillo.java
-index 03ec05a860781f85e58055d6f58893963781bd97..c15f0a3d419fea50d4349fa864e83bf7fee78b9f 100644
+index 14491f7136266a738bbc463731d0785bcce2b4cd..2a72a46ffa748d3b6ff7eb712a57ec344733f87b 100644
 --- a/net/minecraft/world/entity/animal/armadillo/Armadillo.java
 +++ b/net/minecraft/world/entity/animal/armadillo/Armadillo.java
-@@ -72,7 +72,7 @@ public class Armadillo extends Animal {
+@@ -71,7 +71,7 @@ public class Armadillo extends Animal {
      public final AnimationState rollOutAnimationState = new AnimationState();
      public final AnimationState rollUpAnimationState = new AnimationState();
      public final AnimationState peekAnimationState = new AnimationState();

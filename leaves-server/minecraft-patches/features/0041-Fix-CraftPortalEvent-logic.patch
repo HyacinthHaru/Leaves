@@ -5,19 +5,19 @@ Subject: [PATCH] Fix CraftPortalEvent logic
 
 
 diff --git a/net/minecraft/world/level/block/EndPortalBlock.java b/net/minecraft/world/level/block/EndPortalBlock.java
-index fcf0f6cf9211a5453353d2fb44e0f94d72efc2e5..18eb614be694a3af4443a7e18feea5f788b893a6 100644
+index 6a656113e5206552dbca5de3fa24f788dddbb8e7..8d0e97647946509af5f536f7856b68a68fa6f9a4 100644
 --- a/net/minecraft/world/level/block/EndPortalBlock.java
 +++ b/net/minecraft/world/level/block/EndPortalBlock.java
-@@ -115,10 +115,10 @@ public class EndPortalBlock extends BaseEntityBlock implements Portal {
-             }
+@@ -116,10 +116,10 @@ public class EndPortalBlock extends BaseEntityBlock implements Portal {
+         }
  
-             // CraftBukkit start
--            relatives.removeAll(Relative.ROTATION); // remove relative rotation flags to simplify event mutation
+         // CraftBukkit start
+-        relatives.removeAll(Relative.ROTATION); // remove relative rotation flags to simplify event mutation
 +            // relatives.removeAll(Relative.ROTATION); // remove relative rotation flags to simplify event mutation // Leaves - no
-             float absoluteYaw = !fromEnd ? yRot : entity.getYRot() + yRot;
-             float absolutePitch = entity.getXRot() + xRot;
--            org.bukkit.craftbukkit.event.PortalEventResult result = org.bukkit.craftbukkit.event.CraftEventFactory.handlePortalEvents(entity, org.bukkit.craftbukkit.util.CraftLocation.toBukkit(spawnPos, newLevel, absoluteYaw, absolutePitch), org.bukkit.PortalType.ENDER, 0, 0);
+         float absoluteYaw = !fromEnd ? yRot : entity.getYRot() + yRot;
+         float absolutePitch = entity.getXRot() + xRot;
+-        org.bukkit.craftbukkit.event.PortalEventResult result = org.bukkit.craftbukkit.event.CraftEventFactory.handlePortalEvents(entity, org.bukkit.craftbukkit.util.CraftLocation.toBukkit(spawnPos, newLevel, absoluteYaw, absolutePitch), org.bukkit.PortalType.ENDER, 0, 0);
 +            org.bukkit.craftbukkit.event.PortalEventResult result = org.bukkit.craftbukkit.event.CraftEventFactory.handlePortalEvents(entity, org.bukkit.craftbukkit.util.CraftLocation.toBukkit(spawnPos, newLevel.getWorld(), absoluteYaw, 0.0F), org.bukkit.PortalType.ENDER, 0, 0);
-             if (result == null) {
-                 return null;
-             }
+         if (result == null) {
+             return null;
+         }

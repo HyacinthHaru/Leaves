@@ -5,7 +5,7 @@ Subject: [PATCH] Old hopper suckin behavior
 
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 085ed0eecc47cf9c0fa9fc26b3f7b8522610a941..f7bed1e588e0eedb4cb92a60a47518079bd46761 100644
+index ce6b64e00a0a13ebdceda56d975d79f60c26b86d..064ef5c59b52344bdc0ab6f4df46e17669f576c3 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -492,8 +492,8 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen

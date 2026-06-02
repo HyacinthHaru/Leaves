@@ -5,7 +5,7 @@ Subject: [PATCH] Make Item tick vanilla
 
 
 diff --git a/net/minecraft/world/entity/item/ItemEntity.java b/net/minecraft/world/entity/item/ItemEntity.java
-index b11b59d80e37d272770ab51a63028fdddfe800d6..ec5710dcad7a7b43adcc56ef82576e6ca8ea6ba0 100644
+index 974d1d7b283aace71f0ea8ef07ba68a17b75af8a..121e18a1825666e19a4e885735caf7b13040e64a 100644
 --- a/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/net/minecraft/world/entity/item/ItemEntity.java
 @@ -127,6 +127,9 @@ public class ItemEntity extends Entity implements TraceableEntity {

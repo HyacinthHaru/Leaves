@@ -5,7 +5,7 @@ Subject: [PATCH] Leaves Protocol Core
 
 
 diff --git a/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java b/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java
-index e9f86409bf9351e85ed31e747d9350dbf0cc441f..1f8f4d979d8766d6ba385f74cf8fcf8eea6c56c7 100644
+index 812649b85290068af1ccea2ca69afa1817e14427..3e471fcd63c6e79546a7a29f331c8249ef09bef8 100644
 --- a/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java
 +++ b/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java
 @@ -40,13 +40,22 @@ public interface CustomPacketPayload {
@@ -33,10 +33,10 @@ index e9f86409bf9351e85ed31e747d9350dbf0cc441f..1f8f4d979d8766d6ba385f74cf8fcf8e
          };
      }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 7723281c7b5605c520da8d86b8f7843ef4c2b504..81176d67cb4ffbbc96143512f2c111b725c3d510 100644
+index 7e45c2bbe8cfb18695d50406710a77cfa2119d1d..f5caa85af6e13b4d80a7a0b624cdc31a9885cc2b 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1867,6 +1867,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1871,6 +1871,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
          profiler.popPush("server gui refresh");
  
@@ -46,10 +46,10 @@ index 7723281c7b5605c520da8d86b8f7843ef4c2b504..81176d67cb4ffbbc96143512f2c111b7
  
          for (Runnable tickable : this.tickables) {
 diff --git a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index 7f16e6df7e2d3c78f717f9f560beb4a49b2d3ec1..61e3220cfaebe10f7b0b697e48ace64aedaf4d50 100644
+index cdcbc2df12a660f62ed31159ecc899cb628a361f..5cf25ed690dc06a60a95116b755b590274ea954f 100644
 --- a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-@@ -58,6 +58,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -57,6 +57,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
      public @Nullable String playerBrand;
      public final java.util.Set<String> pluginMessagerChannels;
      // Paper end - retain certain values
@@ -57,7 +57,7 @@ index 7f16e6df7e2d3c78f717f9f560beb4a49b2d3ec1..61e3220cfaebe10f7b0b697e48ace64a
  
      public ServerCommonPacketListenerImpl(final MinecraftServer server, final Connection connection, final CommonListenerCookie cookie) {
          this.server = server;
-@@ -71,6 +72,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -70,6 +71,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
          this.pluginMessagerChannels = cookie.channels();
          this.keepAlive = cookie.keepAlive();
          // Paper end
@@ -65,7 +65,7 @@ index 7f16e6df7e2d3c78f717f9f560beb4a49b2d3ec1..61e3220cfaebe10f7b0b697e48ace64a
      }
  
      // Paper start - configuration phase API
-@@ -150,6 +152,18 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -143,6 +145,18 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
  
      @Override
      public void handleCustomPayload(final ServerboundCustomPayloadPacket packet) {
@@ -84,7 +84,7 @@ index 7f16e6df7e2d3c78f717f9f560beb4a49b2d3ec1..61e3220cfaebe10f7b0b697e48ace64a
          // Paper start
          if (!(packet.payload() instanceof final net.minecraft.network.protocol.common.custom.DiscardedPayload discardedPayload)) {
              return;
-@@ -209,6 +223,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -202,6 +216,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
          final String channel = new String(data, from, length, java.nio.charset.StandardCharsets.US_ASCII);
          if (register) {
              bridge.addChannel(channel);
@@ -93,10 +93,10 @@ index 7f16e6df7e2d3c78f717f9f560beb4a49b2d3ec1..61e3220cfaebe10f7b0b697e48ace64a
              bridge.removeChannel(channel);
          }
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index aa5e707ba748ec492e940a4b7911fbed9afe3f42..e52e02388a0e8db070b04452ee757530541b4bd8 100644
+index 20020759ed5cdefa87ae13814ce5a844f13e4a88..8d433c6140241984a57f809cc1698161782360f3 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -253,6 +253,8 @@ public abstract class PlayerList {
+@@ -252,6 +252,8 @@ public abstract class PlayerList {
              return;
          }
  
@@ -105,7 +105,7 @@ index aa5e707ba748ec492e940a4b7911fbed9afe3f42..e52e02388a0e8db070b04452ee757530
          final net.kyori.adventure.text.Component jm = playerJoinEvent.joinMessage();
  
          if (jm != null && !jm.equals(net.kyori.adventure.text.Component.empty())) { // Paper - Adventure
-@@ -443,6 +445,7 @@ public abstract class PlayerList {
+@@ -438,6 +440,7 @@ public abstract class PlayerList {
          return this.remove(player, net.kyori.adventure.text.Component.translatable("multiplayer.player.left", net.kyori.adventure.text.format.NamedTextColor.YELLOW, io.papermc.paper.configuration.GlobalConfiguration.get().messages.useDisplayNameInQuitMessage ? player.getBukkitEntity().displayName() : io.papermc.paper.adventure.PaperAdventure.asAdventure(player.getDisplayName())));
      }
      public net.kyori.adventure.text.@Nullable Component remove(final ServerPlayer player, final net.kyori.adventure.text.Component leaveMessage) {
@@ -113,7 +113,7 @@ index aa5e707ba748ec492e940a4b7911fbed9afe3f42..e52e02388a0e8db070b04452ee757530
          // Paper end - Fix kick event leave message not being sent
          ServerLevel level = player.level();
          player.awardStat(Stats.LEAVE_GAME);
-@@ -1311,6 +1314,7 @@ public abstract class PlayerList {
+@@ -1307,6 +1310,7 @@ public abstract class PlayerList {
              player.connection.send(recipes);
              player.getRecipeBook().sendInitialRecipeBook(player);
          }

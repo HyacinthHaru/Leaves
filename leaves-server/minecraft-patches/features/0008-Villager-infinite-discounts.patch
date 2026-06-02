@@ -5,7 +5,7 @@ Subject: [PATCH] Villager infinite discounts
 
 
 diff --git a/net/minecraft/world/entity/ai/gossip/GossipType.java b/net/minecraft/world/entity/ai/gossip/GossipType.java
-index 32548e375202452c5f5ec89fec8a82d62252e823..b8a05c113e8b228c904e952f6ab2b4c38694dc3e 100644
+index f5e02819debed6be1f43d379a6e7bd17bc6d71a6..9b7cb1e2a7187840c5e9bcbd676bc5d10622748d 100644
 --- a/net/minecraft/world/entity/ai/gossip/GossipType.java
 +++ b/net/minecraft/world/entity/ai/gossip/GossipType.java
 @@ -15,9 +15,9 @@ public enum GossipType implements StringRepresentable {
@@ -19,4 +19,4 @@ index 32548e375202452c5f5ec89fec8a82d62252e823..b8a05c113e8b228c904e952f6ab2b4c3
 +    public int decayPerTransfer; // Leaves - not final
      public static final Codec<GossipType> CODEC = StringRepresentable.fromEnum(GossipType::values);
  
-     private GossipType(final String id, final int weight, final int max, final int decayPerDay, final int decayPerTransfer) {
+     GossipType(final String id, final int weight, final int max, final int decayPerDay, final int decayPerTransfer) {

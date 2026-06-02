@@ -21,7 +21,7 @@ index f58b10c7dec0d2b7dc2b3d1198539b74d13038f3..ee49b2bdf1bbf6a53940099d1b84a99b
              if (raid == null || raid.getRaidOmenLevel() < raid.getMaxRaidOmenLevel()) {
                  player.addEffect(new MobEffectInstance(MobEffects.RAID_OMEN, 600, amplification));
 diff --git a/net/minecraft/world/entity/raid/Raid.java b/net/minecraft/world/entity/raid/Raid.java
-index 130cc6769c8a21ea0a0eabacacf77d9ef5e0dbb4..0000000000000000000000000000000000000000 100644
+index bd40c5fecbf449d0774b3ce68c471916fc494154..4c97c5d5f9e47bb53b49e0f87a5998a993bed312 100644
 --- a/net/minecraft/world/entity/raid/Raid.java
 +++ b/net/minecraft/world/entity/raid/Raid.java
 @@ -261,7 +261,7 @@ public class Raid {
@@ -32,7 +32,7 @@ index 130cc6769c8a21ea0a0eabacacf77d9ef5e0dbb4..00000000000000000000000000000000
 +        MobEffectInstance effect = player.getEffect(org.leavesmc.leaves.LeavesConfig.modify.oldMC.oldRaidBehavior ? MobEffects.BAD_OMEN : MobEffects.RAID_OMEN); // Leaves - old Raid Behavior
          if (effect == null) {
              return false;
-         } else {
+         }
 @@ -338,7 +338,13 @@ public class Raid {
                          }
  
@@ -126,7 +126,7 @@ index 130cc6769c8a21ea0a0eabacacf77d9ef5e0dbb4..00000000000000000000000000000000
 +    // Leaves end - old FindSpawnPosition
  }
 diff --git a/net/minecraft/world/entity/raid/Raider.java b/net/minecraft/world/entity/raid/Raider.java
-index 72fda1b1a5cd26f98828c130a52835cc6213aed4..0000000000000000000000000000000000000000 100644
+index cf689dae6978577970e39bf3004be551b4908cd1..474e5de382b3d1e485d9ea988c143689e72f39ab 100644
 --- a/net/minecraft/world/entity/raid/Raider.java
 +++ b/net/minecraft/world/entity/raid/Raider.java
 @@ -128,6 +128,42 @@ public abstract class Raider extends PatrollingMonster {

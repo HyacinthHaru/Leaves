@@ -5,7 +5,7 @@ Subject: [PATCH] Disable vault blacklist
 
 
 diff --git a/net/minecraft/world/level/block/entity/vault/VaultServerData.java b/net/minecraft/world/level/block/entity/vault/VaultServerData.java
-index 334a3df34fcde4d0f3fc1a3584c360eea6f0bb36..2e8446ad7d197dc81eeb8f10f75ec67277c275f4 100644
+index f732f660d6a7639bbdc2b35f0a8d9c828b07a418..d4fbc7e6c03c3d6bf27f7640f1d9420f9231a3bd 100644
 --- a/net/minecraft/world/level/block/entity/vault/VaultServerData.java
 +++ b/net/minecraft/world/level/block/entity/vault/VaultServerData.java
 @@ -57,7 +57,7 @@ public class VaultServerData {

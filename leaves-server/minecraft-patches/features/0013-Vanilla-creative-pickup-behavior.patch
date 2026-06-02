@@ -5,7 +5,7 @@ Subject: [PATCH] Vanilla creative pickup behavior
 
 
 diff --git a/net/minecraft/world/entity/player/Inventory.java b/net/minecraft/world/entity/player/Inventory.java
-index da8bab81e135a9b240fbeac0e9e1d2aa12c6212d..0ca8888289a91fc966e6fb49d1b1f73ef76ad345 100644
+index cd7714dffcd7e7b6d96d18a97e65fd0914a739d1..41da024938152275335927b40a48639faf9fa774 100644
 --- a/net/minecraft/world/entity/player/Inventory.java
 +++ b/net/minecraft/world/entity/player/Inventory.java
 @@ -175,6 +175,13 @@ public class Inventory implements Container, Nameable {

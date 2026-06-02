@@ -5,10 +5,10 @@ Subject: [PATCH] Force minecraft command
 
 
 diff --git a/net/minecraft/commands/Commands.java b/net/minecraft/commands/Commands.java
-index a882caec9d4ad21605eaafeb2872786eef5c3031..7e18ff87675f700908a2c9c9b9e44f43fa874663 100644
+index 01a9a01db6908c2f6c511be4628f518ce6a16de7..14a55006a2c6adf0e0cf7f984b60531895fb0257 100644
 --- a/net/minecraft/commands/Commands.java
 +++ b/net/minecraft/commands/Commands.java
-@@ -187,7 +187,21 @@ public class Commands {
+@@ -186,7 +186,21 @@ public class Commands {
              return !requirement.test(this.noPermissionSource);
          }
      };

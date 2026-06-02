@@ -5,10 +5,11 @@ Subject: [PATCH] Sound update suppression
 
 
 diff --git a/net/minecraft/world/entity/animal/equine/AbstractHorse.java b/net/minecraft/world/entity/animal/equine/AbstractHorse.java
-index b1d309a66abb9dc8ac69e4195e4987de576d6c98..0000000000000000000000000000000000000000 100644
+index 52fc3d9600a7bd256647fbbfc1e460ca2b10a424..eb11277ae0c6e2613452887a27f1d89d7b7e49c8 100644
 --- a/net/minecraft/world/entity/animal/equine/AbstractHorse.java
 +++ b/net/minecraft/world/entity/animal/equine/AbstractHorse.java
-@@ -302,6 +302,16 @@ public abstract class AbstractHorse extends Animal implements PlayerRideableJump
+@@ -300,7 +300,17 @@ public abstract class AbstractHorse extends Animal implements PlayerRideableJump
+ 
      public void createInventory() {
          SimpleContainer old = this.inventory;
 -        this.inventory = new SimpleContainer(this.getInventorySize(), (org.bukkit.entity.AbstractHorse) this.getBukkitEntity()); // CraftBukkit
@@ -27,10 +28,10 @@ index b1d309a66abb9dc8ac69e4195e4987de576d6c98..00000000000000000000000000000000
              int max = Math.min(old.getContainerSize(), this.inventory.getContainerSize());
  
 diff --git a/net/minecraft/world/entity/npc/villager/AbstractVillager.java b/net/minecraft/world/entity/npc/villager/AbstractVillager.java
-index e846948eced1a5a370e35f8ee5427be67f03a6ed..0000000000000000000000000000000000000000 100644
+index d68cc8ae9e2b5e2350fa226bcf8ed519579ce0c1..0754c74d99e472747e98ca111cce7958b4f289a9 100644
 --- a/net/minecraft/world/entity/npc/villager/AbstractVillager.java
 +++ b/net/minecraft/world/entity/npc/villager/AbstractVillager.java
-@@ -56,8 +56,18 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
+@@ -56,7 +56,17 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
      private static final EntityDataAccessor<Integer> DATA_UNHAPPY_COUNTER = SynchedEntityData.defineId(AbstractVillager.class, EntityDataSerializers.INT);
      private @Nullable Player tradingPlayer;
      protected @Nullable MerchantOffers offers;
@@ -49,9 +50,8 @@ index e846948eced1a5a370e35f8ee5427be67f03a6ed..00000000000000000000000000000000
      protected boolean voidTrade = false; // Leaves - force void trade
  
      public AbstractVillager(final EntityType<? extends AbstractVillager> type, final Level level) {
-         super(type, level);
 diff --git a/net/minecraft/world/entity/vehicle/minecart/AbstractMinecartContainer.java b/net/minecraft/world/entity/vehicle/minecart/AbstractMinecartContainer.java
-index e5265cda843fe245d572b63c71c5dd14d87539d2..1bbe9563121eefe3e6ee461759e0c7002cc4fa87 100644
+index 91d699adfbfa211db85734a6406d690aed5f0324..918b20be69b9961b3d9c0f1d4f8d0866e33a2745 100644
 --- a/net/minecraft/world/entity/vehicle/minecart/AbstractMinecartContainer.java
 +++ b/net/minecraft/world/entity/vehicle/minecart/AbstractMinecartContainer.java
 @@ -66,6 +66,11 @@ public abstract class AbstractMinecartContainer extends AbstractMinecart impleme
@@ -67,7 +67,7 @@ index e5265cda843fe245d572b63c71c5dd14d87539d2..1bbe9563121eefe3e6ee461759e0c700
  
      @Override
 diff --git a/net/minecraft/world/level/block/SculkSensorBlock.java b/net/minecraft/world/level/block/SculkSensorBlock.java
-index fe9e7dcb5724f346cf1daf3fbc5f55be54a08445..dac45327faec7f14536559c75185d2986cccdb8d 100644
+index 2bbce50d9dd0ca65f9e3bc90c8de098473039bc5..18f73b844ba96c38e0a6d6ebe0381032553c8972 100644
 --- a/net/minecraft/world/level/block/SculkSensorBlock.java
 +++ b/net/minecraft/world/level/block/SculkSensorBlock.java
 @@ -97,7 +97,7 @@ public class SculkSensorBlock extends BaseEntityBlock implements SimpleWaterlogg
@@ -96,10 +96,10 @@ index fe9e7dcb5724f346cf1daf3fbc5f55be54a08445..dac45327faec7f14536559c75185d298
          return state.getBlock() instanceof SculkSensorBlock && getPhase(state) == SculkSensorPhase.INACTIVE; // Paper - Check for a valid type
      }
 diff --git a/net/minecraft/world/level/block/entity/SculkSensorBlockEntity.java b/net/minecraft/world/level/block/entity/SculkSensorBlockEntity.java
-index d15b0656d7be07f3e49a433758dd692f1b62e195..26bbfb1522aab81aa4d4abf7692deb80a0a0bcc1 100644
+index a1adc346a229eb05e45843a6315622b24f11dda9..d1f677fd087aa7e88e55699e3431004782f55b37 100644
 --- a/net/minecraft/world/level/block/entity/SculkSensorBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/SculkSensorBlockEntity.java
-@@ -118,7 +118,7 @@ public class SculkSensorBlockEntity extends BlockEntity implements GameEventList
+@@ -115,7 +115,7 @@ public class SculkSensorBlockEntity extends BlockEntity implements GameEventList
          ) {
              return (!pos.equals(this.blockPos) || !event.is(GameEvent.BLOCK_DESTROY) && !event.is(GameEvent.BLOCK_PLACE))
                  && VibrationSystem.getGameEventFrequency(event) != 0
@@ -108,7 +108,7 @@ index d15b0656d7be07f3e49a433758dd692f1b62e195..26bbfb1522aab81aa4d4abf7692deb80
          }
  
          @Override
-@@ -131,7 +131,7 @@ public class SculkSensorBlockEntity extends BlockEntity implements GameEventList
+@@ -128,7 +128,7 @@ public class SculkSensorBlockEntity extends BlockEntity implements GameEventList
              final float receivingDistance
          ) {
              BlockState state = SculkSensorBlockEntity.this.getBlockState();

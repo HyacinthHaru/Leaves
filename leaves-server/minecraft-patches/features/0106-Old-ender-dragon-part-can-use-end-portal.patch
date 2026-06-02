@@ -5,7 +5,7 @@ Subject: [PATCH] Old ender dragon part can use end portal
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 7e555311acdff7a11c474cea4c86fcb9b9493d99..0000000000000000000000000000000000000000 100644
+index 3934a79a04c60fb1d492030b8eb74f9a75699089..8924675bc062e86df93d63aacd2f0589c03b352d 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -204,7 +204,7 @@ public abstract class Entity
@@ -17,7 +17,7 @@ index 7e555311acdff7a11c474cea4c86fcb9b9493d99..00000000000000000000000000000000
  
      public org.bukkit.craftbukkit.entity.CraftEntity getBukkitEntity() {
          if (this.bukkitEntity == null) {
-@@ -4054,7 +4054,7 @@ public abstract class Entity
+@@ -4055,7 +4055,7 @@ public abstract class Entity
  
      public @Nullable Entity teleport(TeleportTransition transition) { // Paper - remove param final
          // Paper start - Fix item duplication and teleport issues
@@ -26,16 +26,16 @@ index 7e555311acdff7a11c474cea4c86fcb9b9493d99..00000000000000000000000000000000
              LOGGER.warn("Illegal Entity Teleport {} to {}:{}", this, transition.newLevel(), transition.position(), new Throwable());
              return null;
          }
-@@ -4170,7 +4170,7 @@ public abstract class Entity
-             newEntity.restoreFrom(this);
-             this.removeAfterChangingDimensions();
-             newEntity.teleportSetPosition(PositionMoveRotation.of(this), PositionMoveRotation.of(transition), transition.relatives());
--            if (this.inWorld) newLevel.addDuringTeleport(newEntity); // CraftBukkit - Don't spawn the new entity if the current entity isn't spawned
+@@ -4172,7 +4172,7 @@ public abstract class Entity
+         newEntity.restoreFrom(this);
+         this.removeAfterChangingDimensions();
+         newEntity.teleportSetPosition(PositionMoveRotation.of(this), PositionMoveRotation.of(transition), transition.relatives());
+-        if (this.inWorld) newLevel.addDuringTeleport(newEntity); // CraftBukkit - Don't spawn the new entity if the current entity isn't spawned
 +            if (this.inWorld || (this instanceof net.minecraft.world.entity.boss.enderdragon.EnderDragonPart && org.leavesmc.leaves.LeavesConfig.modify.oldMC.enderDragonPartCanUseEndPortal)) newLevel.addDuringTeleport(newEntity); // CraftBukkit - Don't spawn the new entity if the current entity isn't spawned // Leaves - ender dragon part can use end portal
  
-             for (Entity newPassenger : newPassengers) {
-                 newPassenger.startRiding(newEntity, true, false);
-@@ -4284,6 +4284,7 @@ public abstract class Entity
+         for (Entity newPassenger : newPassengers) {
+             newPassenger.startRiding(newEntity, true, false);
+@@ -4285,6 +4285,7 @@ public abstract class Entity
      }
  
      public boolean canTeleport(final Level from, final Level to) {
@@ -44,10 +44,10 @@ index 7e555311acdff7a11c474cea4c86fcb9b9493d99..00000000000000000000000000000000
          if (!this.isAlive() || !this.valid) return false; // Paper - Fix item duplication and teleport issues
          if (from.dimension() == Level.END && to.dimension() == Level.OVERWORLD) {
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index 47048ff1b2d73235bf806389a65ebfc16b11c23d..0000000000000000000000000000000000000000 100644
+index 85cc3228091ba769e79297c924549a7daaf1fff8..df73fdd8affd0a20c1ca456b02c8f31a872f25d4 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
-@@ -403,6 +403,16 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
+@@ -404,6 +404,16 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
          if (!this.level().isClientSide() && this.tickCount % 5 == 0) {
              this.updateControlFlags();
          }

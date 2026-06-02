@@ -5,10 +5,10 @@ Subject: [PATCH] Vanilla player display name
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 3f16fb522ea9adf0a8eeddae68859a5baaf48eeb..8fad9a4b55b32bee6fef42f959136e37802f03be 100644
+index 8bdea2bd3e059ed3bcf4ee90bbd13d974f7ebeef..343bd53f2b9e2df4546110fdbcdba8ada0dd69c4 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -499,7 +499,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -480,7 +480,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          this.object = null;
          // CraftBukkit start
          this.displayName = this.getScoreboardName();
@@ -18,10 +18,10 @@ index 3f16fb522ea9adf0a8eeddae68859a5baaf48eeb..8fad9a4b55b32bee6fef42f959136e37
          this.maxHealthCache = this.getMaxHealth();
          // CraftBukkit end
 diff --git a/net/minecraft/world/scores/Scoreboard.java b/net/minecraft/world/scores/Scoreboard.java
-index 3013937e4b458cd46b6f3e72ce46692a43511423..b426a79af610b0db9f2ab732ef32ebf2c8796114 100644
+index 5cd65073793152967484ba9b92326eb6ede69805..ba22490e62a93e9c64078a47092d55053d72c648 100644
 --- a/net/minecraft/world/scores/Scoreboard.java
 +++ b/net/minecraft/world/scores/Scoreboard.java
-@@ -279,6 +279,16 @@ public class Scoreboard {
+@@ -275,6 +275,16 @@ public class Scoreboard {
          }
  
          this.teamsByPlayer.put(player, team);
@@ -38,18 +38,18 @@ index 3013937e4b458cd46b6f3e72ce46692a43511423..b426a79af610b0db9f2ab732ef32ebf2
          return team.getPlayers().add(player);
      }
  
-@@ -298,6 +308,14 @@ public class Scoreboard {
-         } else {
-             this.teamsByPlayer.remove(player);
-             team.getPlayers().remove(player);
-+            // Leaves start - vanilla display name
-+            if (org.leavesmc.leaves.LeavesConfig.fix.vanillaDisplayName) {
-+                net.minecraft.server.level.ServerPlayer serverPlayer = net.minecraft.server.MinecraftServer.getServer().getPlayerList().getPlayerByName(player);
-+                if (serverPlayer != null) {
-+                    serverPlayer.adventure$displayName = io.papermc.paper.adventure.PaperAdventure.asAdventure(serverPlayer.getDisplayName());
-+                }
+@@ -295,6 +305,14 @@ public class Scoreboard {
+ 
+         this.teamsByPlayer.remove(player);
+         team.getPlayers().remove(player);
++        // Leaves start - vanilla display name
++        if (org.leavesmc.leaves.LeavesConfig.fix.vanillaDisplayName) {
++            net.minecraft.server.level.ServerPlayer serverPlayer = net.minecraft.server.MinecraftServer.getServer().getPlayerList().getPlayerByName(player);
++            if (serverPlayer != null) {
++                serverPlayer.adventure$displayName = io.papermc.paper.adventure.PaperAdventure.asAdventure(serverPlayer.getDisplayName());
 +            }
-+            // Leaves end - vanilla display name
-         }
++        }
++        // Leaves end - vanilla display name
      }
  
+     public Collection<String> getTeamNames() {

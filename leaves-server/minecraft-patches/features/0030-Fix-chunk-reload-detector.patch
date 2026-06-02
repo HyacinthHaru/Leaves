@@ -5,7 +5,7 @@ Subject: [PATCH] Fix chunk reload detector
 
 
 diff --git a/net/minecraft/server/level/ServerEntity.java b/net/minecraft/server/level/ServerEntity.java
-index 19bb751d3e9c347fe2446412f85c9f28ec8212e6..aa45b00f39a816860d9f8a7e90103b73c0b3b613 100644
+index 5fad52157fc22755196ce9eaddaa2bc23c5bb86b..997c5bd1302207a538d007954d0b70587d209527 100644
 --- a/net/minecraft/server/level/ServerEntity.java
 +++ b/net/minecraft/server/level/ServerEntity.java
 @@ -352,7 +352,7 @@ public class ServerEntity {

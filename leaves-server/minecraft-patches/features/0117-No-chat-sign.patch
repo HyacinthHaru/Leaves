@@ -72,7 +72,7 @@ index a3dc386fb5900f24d9eb3a84ad24e60fa0328bd6..eb00b83be6f2c0fe1fed5e5858ef4488
      }
  }
 diff --git a/net/minecraft/network/protocol/status/ServerStatus.java b/net/minecraft/network/protocol/status/ServerStatus.java
-index a76e0acae9728e5f2a92ced6e58128b0ea6414f4..ca0095384af9f8ba9499b11a026b9706a8db5058 100644
+index 5eb7d46bf0d84720662125711fa7b544e9299446..d0c9d71b6bb05ae6d5b463f4d0847a75205b6c0c 100644
 --- a/net/minecraft/network/protocol/status/ServerStatus.java
 +++ b/net/minecraft/network/protocol/status/ServerStatus.java
 @@ -19,7 +19,8 @@ public record ServerStatus(
@@ -106,10 +106,10 @@ index a76e0acae9728e5f2a92ced6e58128b0ea6414f4..ca0095384af9f8ba9499b11a026b9706
          private static final String PREFIX = "data:image/png;base64,";
          public static final Codec<ServerStatus.Favicon> CODEC = Codec.STRING.comapFlatMap(string -> {
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index d126f3b61e40bb0fef12f7d5b82e9ca3fc23641f..2c3aa2c89b6bb990f0e55ff7bccc7fb9a8116bed 100644
+index 44839c4ab704716d84645bf3516975178e7acd6c..e08642a986e9a5c6db1bafea882e672e4b3671d1 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -804,7 +804,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -805,7 +805,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          // Paper start - Add setting for proxy online mode status
          return properties.enforceSecureProfile
              && io.papermc.paper.configuration.GlobalConfiguration.get().proxies.isProxyOnlineMode()
@@ -119,10 +119,10 @@ index d126f3b61e40bb0fef12f7d5b82e9ca3fc23641f..2c3aa2c89b6bb990f0e55ff7bccc7fb9
      }
  
 diff --git a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index d9b6f3826e2126d339e926afed782f6d0e890508..7f16e6df7e2d3c78f717f9f560beb4a49b2d3ec1 100644
+index 8b194a59f79eea32c9e7a46227034942f6a6e816..cdcbc2df12a660f62ed31159ecc899cb628a361f 100644
 --- a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-@@ -308,10 +308,25 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -301,10 +301,25 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
      }
  
      public void send(final Packet<?> packet) {
@@ -148,13 +148,13 @@ index d9b6f3826e2126d339e926afed782f6d0e890508..7f16e6df7e2d3c78f717f9f560beb4a4
 +        }
 +        // Leaves end - no ClientboundPlayerChatHeaderPacket and rebuild ClientboundPlayerChatPacket
          // CraftBukkit start
-         if (packet == null || this.processedDisconnect) { // Spigot
+         if (packet == null) {
              return;
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 69d63e431218d06b99df720aeb328af763780d03..aa5e707ba748ec492e940a4b7911fbed9afe3f42 100644
+index b4369ff5a2d8e36c24bda015fbcdf5c95ecce5df..20020759ed5cdefa87ae13814ce5a844f13e4a88 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -1178,7 +1178,7 @@ public abstract class PlayerList {
+@@ -1174,7 +1174,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(final PlayerChatMessage message) {

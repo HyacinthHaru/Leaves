@@ -5,7 +5,7 @@ Subject: [PATCH] Modify end void rings generation
 
 
 diff --git a/net/minecraft/world/level/levelgen/DensityFunctions.java b/net/minecraft/world/level/levelgen/DensityFunctions.java
-index 985bb77d065c96cc11e9191bace21cbed15f14f1..965e945a45fca12d49581155b30a374891e6f266 100644
+index a10f05b75635477ff1d604a8265716b1f29ecd76..31f9ec5284c5f294253b2b9c19059981fbdf3a3e 100644
 --- a/net/minecraft/world/level/levelgen/DensityFunctions.java
 +++ b/net/minecraft/world/level/levelgen/DensityFunctions.java
 @@ -554,7 +554,7 @@ public final class DensityFunctions {

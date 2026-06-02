@@ -5,7 +5,7 @@ Subject: [PATCH] Force Void Trade
 
 
 diff --git a/net/minecraft/world/entity/npc/villager/AbstractVillager.java b/net/minecraft/world/entity/npc/villager/AbstractVillager.java
-index b5247d45159898cd6ede425a4a99db8439a105b6..e846948eced1a5a370e35f8ee5427be67f03a6ed 100644
+index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519579ce0c1 100644
 --- a/net/minecraft/world/entity/npc/villager/AbstractVillager.java
 +++ b/net/minecraft/world/entity/npc/villager/AbstractVillager.java
 @@ -57,6 +57,7 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
@@ -72,10 +72,10 @@ index b5247d45159898cd6ede425a4a99db8439a105b6..e846948eced1a5a370e35f8ee5427be6
      public void die(final DamageSource source) {
          super.die(source);
 diff --git a/net/minecraft/world/entity/npc/villager/Villager.java b/net/minecraft/world/entity/npc/villager/Villager.java
-index f481fd661440f77c98940cbde4a8b95818e4a22c..952f6bb64a417b83171d753f5924d8c7003f9156 100644
+index e4ba6e200e85f4e226d6a3e68db734f277b89226..5ba17ee4f048a6bb109a7706fe1adfe3de152e59 100644
 --- a/net/minecraft/world/entity/npc/villager/Villager.java
 +++ b/net/minecraft/world/entity/npc/villager/Villager.java
-@@ -359,6 +359,7 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
+@@ -361,6 +361,7 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
      }
  
      private void startTrading(final Player player) {
@@ -83,7 +83,7 @@ index f481fd661440f77c98940cbde4a8b95818e4a22c..952f6bb64a417b83171d753f5924d8c7
          this.updateSpecialPrices(player);
          this.setTradingPlayer(player);
          this.openTradingScreen(player, this.getDisplayName(), this.getVillagerData().level());
-@@ -610,8 +611,12 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
+@@ -612,8 +613,12 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
      @Override
      protected void rewardTradeXp(final MerchantOffer offer) {
          int popXp = 3 + this.random.nextInt(4);
@@ -99,10 +99,10 @@ index f481fd661440f77c98940cbde4a8b95818e4a22c..952f6bb64a417b83171d753f5924d8c7
              this.updateMerchantTimer = 40;
              this.increaseProfessionLevelOnUpdate = true;
 diff --git a/net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader.java b/net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader.java
-index 4c7fad3444dd8718e31bda8a8ab2efdaf0a736a1..d95c6687476a854780ad0b0720940c2c68428583 100644
+index 104bf115e9cbd10bb2801ece34a6879b452edf63..11662a8f0945db2e0daf45695a9313189aa06a7e 100644
 --- a/net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader.java
 +++ b/net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader.java
-@@ -121,6 +121,7 @@ public class WanderingTrader extends AbstractVillager implements Consumable.Over
+@@ -120,6 +120,7 @@ public class WanderingTrader extends AbstractVillager implements Consumable.Over
                      return InteractionResult.CONSUME;
                  }
  
@@ -124,7 +124,7 @@ index 7fcc2c2ad603699e176bb95559e51134174ecc20..8aa48fd5be819af44ce1ac4f5e101a9a
      private int merchantLevel;
      private boolean showProgressBar;
 diff --git a/net/minecraft/world/item/trading/MerchantOffer.java b/net/minecraft/world/item/trading/MerchantOffer.java
-index 006e8400349131faadc946fe3f5bd9ea8180019e..7e1cee0a598b7ea5710b011c3d76c40567963997 100644
+index 7e605e64aa386aadfa8ffc135d955f5b4a3f4381..ca76581c33f8d8d996deed0a714db82163fc36bb 100644
 --- a/net/minecraft/world/item/trading/MerchantOffer.java
 +++ b/net/minecraft/world/item/trading/MerchantOffer.java
 @@ -39,6 +39,7 @@ public class MerchantOffer {

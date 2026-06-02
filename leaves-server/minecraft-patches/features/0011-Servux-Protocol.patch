@@ -5,7 +5,7 @@ Subject: [PATCH] Servux Protocol
 
 
 diff --git a/net/minecraft/server/ServerTickRateManager.java b/net/minecraft/server/ServerTickRateManager.java
-index 8d0f810100a4eac65831913feeb9a9eeb0e6006a..a714017fd7b69c0c1d71724cd4524f46c8d1cba8 100644
+index eeb2f88723b37bb3cada04bf3098dd46f0ed7316..36ccd875ebb8f13b28731fb99420beb77b977216 100644
 --- a/net/minecraft/server/ServerTickRateManager.java
 +++ b/net/minecraft/server/ServerTickRateManager.java
 @@ -133,4 +133,10 @@ public class ServerTickRateManager extends TickRateManager {
@@ -20,10 +20,10 @@ index 8d0f810100a4eac65831913feeb9a9eeb0e6006a..a714017fd7b69c0c1d71724cd4524f46
 +    // Leaves end - servux
  }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 3f02da2014ed8e4169f4bb819b4d9e61154b7b06..c2531d2b08fa3d4179d5b30ca02d9d3f08a11dcc 100644
+index 229ff740e0418a05d824a67401ae6f105b4c3642..367fda045997efde4a2a12f93cc6dc066691cd14 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2342,9 +2342,21 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2351,9 +2351,21 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
          // Paper end
      }
  

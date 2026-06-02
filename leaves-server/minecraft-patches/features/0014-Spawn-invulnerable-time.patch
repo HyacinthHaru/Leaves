@@ -5,10 +5,10 @@ Subject: [PATCH] Spawn invulnerable time
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 06b938013f9dbee4fb3b86979d5a42f28a0ea33e..3f16fb522ea9adf0a8eeddae68859a5baaf48eeb 100644
+index 60ff8173750b57aa05bb19a3dd1c744f870f59a5..8bdea2bd3e059ed3bcf4ee90bbd13d974f7ebeef 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -242,6 +242,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -241,6 +241,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      private int lastSentFood = -99999999;
      private boolean lastFoodSaturationZero = true;
      public int lastSentExp = -99999999;
@@ -16,7 +16,7 @@ index 06b938013f9dbee4fb3b86979d5a42f28a0ea33e..3f16fb522ea9adf0a8eeddae68859a5b
      private ChatVisiblity chatVisibility = ChatVisiblity.FULL;
      public ParticleStatus particleStatus = ParticleStatus.ALL;
      private boolean canChatColor = true;
-@@ -745,6 +746,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -726,6 +727,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          this.connection.tickClientLoadTimeout();
          this.gameMode.tick();
          this.wardenSpawnTracker.tick();
@@ -24,17 +24,18 @@ index 06b938013f9dbee4fb3b86979d5a42f28a0ea33e..3f16fb522ea9adf0a8eeddae68859a5b
          if (this.invulnerableTime > 0) {
              this.invulnerableTime--;
          }
-@@ -1311,6 +1313,13 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
-         if (this.isInvulnerableTo(level, source)) {
+@@ -1288,6 +1290,14 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
              return false;
-         } else {
-+            // Leaves start - spawn invulnerable time
-+            if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.spawnInvulnerableTime) {
-+                if (this.spawnInvulnerableTime > 0 && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-+                    return false;
-+                }
+         }
+ 
++        // Leaves start - spawn invulnerable time
++        if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.spawnInvulnerableTime) {
++            if (this.spawnInvulnerableTime > 0 && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) {
++                return false;
 +            }
-+            // Leaves end - spawn invulnerable time
-             Entity entity = source.getEntity();
-             if (!( // Paper - split the if statement. If below statement is false, hurtServer would not have been evaluated. Return false.
-                 !(entity instanceof Player playerx && !this.canHarmPlayer(playerx))
++        }
++        // Leaves end - spawn invulnerable time
++
+         Entity entity = source.getEntity();
+         if (!( // Paper - split the if statement. If below statement is false, hurtServer would not have been evaluated. Return false.
+             !(entity instanceof Player player && !this.canHarmPlayer(player))

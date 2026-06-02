@@ -5,7 +5,7 @@ Subject: [PATCH] Leaves Utils
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index b7f3736745ab72a2d2da44aeb83192d815f18232..99545261274c8712fc3d2dbef7fe3d377564ecc0 100644
+index 55611b488b7e420b8fc8a717222577d050517bf0..56904278e2da3fa6875dc26d636513ca29c4a47f 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -388,6 +388,7 @@ public abstract class Entity
@@ -16,23 +16,23 @@ index b7f3736745ab72a2d2da44aeb83192d815f18232..99545261274c8712fc3d2dbef7fe3d37
  
      public void inactiveTick() {
      }
-@@ -2719,6 +2720,7 @@ public abstract class Entity
+@@ -2720,6 +2721,7 @@ public abstract class Entity
                  output.putBoolean("Paper.FreezeLock", true);
              }
              // Paper end
 +            output.store("Leaves.Data", net.minecraft.nbt.CompoundTag.CODEC, leavesData); // Leaves - leaves ex data
-         } catch (Throwable var7) {
-             CrashReport report = CrashReport.forThrowable(var7, "Saving entity NBT");
+         } catch (Throwable t) {
+             CrashReport report = CrashReport.forThrowable(t, "Saving entity NBT");
              CrashReportCategory category = report.addCategory("Entity being saved");
-@@ -2841,6 +2843,7 @@ public abstract class Entity
+@@ -2843,6 +2845,7 @@ public abstract class Entity
              }
              freezeLocked = input.getBooleanOr("Paper.FreezeLock", false);
              // Paper end
 +            leavesData = input.read("Leaves.Data", net.minecraft.nbt.CompoundTag.CODEC).orElse(new net.minecraft.nbt.CompoundTag());
-         } catch (Throwable var7) {
-             CrashReport report = CrashReport.forThrowable(var7, "Loading entity NBT");
+         } catch (Throwable t) {
+             CrashReport report = CrashReport.forThrowable(t, "Loading entity NBT");
              CrashReportCategory category = report.addCategory("Entity being loaded");
-@@ -4626,7 +4629,7 @@ public abstract class Entity
+@@ -4627,7 +4630,7 @@ public abstract class Entity
          return this.is(EntityTypeTags.DEFLECTS_PROJECTILES) ? ProjectileDeflection.REVERSE : ProjectileDeflection.NONE;
      }
  
@@ -41,7 +41,7 @@ index b7f3736745ab72a2d2da44aeb83192d815f18232..99545261274c8712fc3d2dbef7fe3d37
          return null;
      }
  
-@@ -5439,4 +5442,10 @@ public abstract class Entity
+@@ -5440,4 +5443,10 @@ public abstract class Entity
          return ((ServerLevel) this.level()).isPositionEntityTicking(this.blockPosition());
      }
      // Paper end - Expose entity id counter
@@ -53,10 +53,10 @@ index b7f3736745ab72a2d2da44aeb83192d815f18232..99545261274c8712fc3d2dbef7fe3d37
 +    // Leaves end - leaves ex data
  }
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index bf0c4e8e4828d82e91fbafc8f428aa14c00c9cc6..d76ffe05817973defd98c3bb6f06909d2c62a3f6 100644
+index 1d78eca5e060668baf5c41ec4a76dfdd94b7ee83..961bc61685e2b6f6d38aeb770018beb634378427 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -927,7 +927,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -928,7 +928,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
      }
  
      @Override
@@ -79,10 +79,10 @@ index a82be0511b6381a2e9ee32f9f5ba1cca123b0835..ecb3073113bdef133932df14ae67d20f
      default Difficulty getDifficulty() {
          return this.getLevelData().getDifficulty();
 diff --git a/net/minecraft/world/level/block/Block.java b/net/minecraft/world/level/block/Block.java
-index 41aab9a526be77b400bed7a74614eceec95345b5..070dd284188936ec791f13371757700d164104bf 100644
+index a8625939a4220050990b09097d5e3bfd2d8473d5..70960c3c280eedc3624f20139a52d5d4961d6217 100644
 --- a/net/minecraft/world/level/block/Block.java
 +++ b/net/minecraft/world/level/block/Block.java
-@@ -695,6 +695,13 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -699,6 +699,13 @@ public class Block extends BlockBehaviour implements ItemLike {
      }
      // CraftBukkit end
  
@@ -97,10 +97,10 @@ index 41aab9a526be77b400bed7a74614eceec95345b5..070dd284188936ec791f13371757700d
          @Override
          public boolean equals(final Object o) {
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index ca77680b645c352456744b148e0ff4ac31b05aa2..d76c4a485eb0d2ddeddfd73654eef63363d37c2e 100644
+index 7093613a09a79d7ffce34f1cb54ec2605c5af384..6be4d5c7801937e865788e08789de2814c6fa19d 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
-@@ -781,7 +781,7 @@ public abstract class BlockBehaviour implements FeatureElement {
+@@ -785,7 +785,7 @@ public abstract class BlockBehaviour implements FeatureElement {
          }
  
          public PushReaction getPistonPushReaction() {

@@ -5,10 +5,10 @@ Subject: [PATCH] Bring back LivingEntity effect CME
 
 
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 2de9c51d669575f50a20067a8b9ccfa68f66eb73..6169cd74b9dec2900d8b75740cbbd391a37fd9de 100644
+index 315684bce811d96ff913441705eadd68cb0425d7..7246787ca43bbc30c3fb080799b346f8db773e3f 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -1157,7 +1157,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -1161,7 +1161,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      public boolean addEffect(final MobEffectInstance newEffect, final @Nullable Entity source, final EntityPotionEffectEvent.Cause cause, final boolean fireEvent) {
          // Paper end - Don't fire sync event during generation
          // org.spigotmc.AsyncCatcher.catchOp("effect add"); // Spigot // Paper - move to API

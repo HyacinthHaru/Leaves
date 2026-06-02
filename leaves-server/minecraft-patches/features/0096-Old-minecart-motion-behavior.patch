@@ -5,10 +5,10 @@ Subject: [PATCH] Old minecart motion behavior
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 8f93252c3c5fd9a77c7c3ac97d814f87ada4f773..da7f08092805c08b5a35ea06ed489090529c1428 100644
+index 1b7bdbb122543660bc8aee386ef7ecf6c77b904f..31a15cd9a7b6ca4404945c3122f0061dce9c4644 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -4191,7 +4191,7 @@ public abstract class Entity
+@@ -4192,7 +4192,7 @@ public abstract class Entity
                  transition.relatives().contains(Relative.Y) ? 0.0 : passengerOffset.y(),
                  transition.relatives().contains(Relative.Z) ? 0.0 : passengerOffset.z()
              );
@@ -18,7 +18,7 @@ index 8f93252c3c5fd9a77c7c3ac97d814f87ada4f773..da7f08092805c08b5a35ea06ed489090
  
      private void sendTeleportTransitionToRidingPlayers(final TeleportTransition transition) {
 diff --git a/net/minecraft/world/level/block/NetherPortalBlock.java b/net/minecraft/world/level/block/NetherPortalBlock.java
-index b66aa14aea47e3b10c3e28cf25a64be550a8f5e0..55436fbbd43f8f5359dedebd56684c3ce5119563 100644
+index 14cca8dae351481328c689d4227d36c00f279b42..2838123f1e8fe538c36ff3707e39f7a4657ba0de 100644
 --- a/net/minecraft/world/level/block/NetherPortalBlock.java
 +++ b/net/minecraft/world/level/block/NetherPortalBlock.java
 @@ -261,7 +261,17 @@ public class NetherPortalBlock extends Block implements Portal {

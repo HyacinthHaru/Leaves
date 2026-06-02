@@ -5,13 +5,13 @@ Subject: [PATCH] Container open passthrough
 
 
 diff --git a/net/minecraft/world/entity/decoration/ItemFrame.java b/net/minecraft/world/entity/decoration/ItemFrame.java
-index 898f64de427b84cbf9b0e5198098f8e2e9040928..2efd2c47192eb7b8fe4171d830af6daa58cab592 100644
+index 9cc2af3db862fdfa45a67ef4b9c49581d7d69d36..47b20e61a32f68df7344f6376a820aba6fe3885a 100644
 --- a/net/minecraft/world/entity/decoration/ItemFrame.java
 +++ b/net/minecraft/world/entity/decoration/ItemFrame.java
-@@ -392,6 +392,16 @@ public class ItemFrame extends HangingEntity {
-         if (this.fixed) {
-             return InteractionResult.PASS;
-         } else if (!player.level().isClientSide()) {
+@@ -396,6 +396,16 @@ public class ItemFrame extends HangingEntity {
+         }
+ 
+         if (!player.level().isClientSide()) {
 +            // Leaves start - itemFrameContainerPassthrough
 +            if (org.leavesmc.leaves.LeavesConfig.modify.containerPassthrough && !player.isShiftKeyDown() && (frameHasItem || !hasHeldItem)) {
 +                BlockPos behindPos = this.pos.relative(this.getDirection().getOpposite());

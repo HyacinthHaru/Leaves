@@ -5,10 +5,10 @@ Subject: [PATCH] Can disable LivingEntity aiStep alive check
 
 
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 6a0ebbdfcc0bc07915574c1cf87463e82213ca7e..b87576911f99c04f473e29265ede981502bbba8f 100644
+index 358ff4330102a058c86d8209374d8cb9dd18b6ad..265ec8507fbca4dfd14f229c906baab455cf2895 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -3433,7 +3433,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3428,7 +3428,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              }
          }
  

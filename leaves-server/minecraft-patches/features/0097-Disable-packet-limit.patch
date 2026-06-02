@@ -5,25 +5,25 @@ Subject: [PATCH] Disable packet limit
 
 
 diff --git a/net/minecraft/network/Connection.java b/net/minecraft/network/Connection.java
-index d7ed1621709c491525daaf7adc8e9f0d781c93e1..4e0d4b18f693fdffd2e431f836776754e11d07c2 100644
+index 0f06d509125e72ec11d263d0d5c2179d65f6d8dd..f86eb7eac87830452b36e60e8c23d4da5f0030bf 100644
 --- a/net/minecraft/network/Connection.java
 +++ b/net/minecraft/network/Connection.java
 @@ -221,8 +221,8 @@ public class Connection extends SimpleChannelInboundHandler<Packet<?>> {
-                 if (this.stopReadingPackets) {
-                     return;
-                 }
--                if (this.allPacketCounts != null ||
--                    io.papermc.paper.configuration.GlobalConfiguration.get().packetLimiter.overrides.containsKey(packet.getClass())) {
+             if (this.stopReadingPackets) {
+                 return;
+             }
+-            if (this.allPacketCounts != null ||
+-                io.papermc.paper.configuration.GlobalConfiguration.get().packetLimiter.overrides.containsKey(packet.getClass())) {
 +                if (!org.leavesmc.leaves.LeavesConfig.modify.disablePacketLimit && (this.allPacketCounts != null || // Leaves - can disable
 +                    io.papermc.paper.configuration.GlobalConfiguration.get().packetLimiter.overrides.containsKey(packet.getClass()))) { // Leaves - can disable
-                     long time = System.nanoTime();
-                     synchronized (PACKET_LIMIT_LOCK) {
-                         if (this.allPacketCounts != null) {
+                 long time = System.nanoTime();
+                 synchronized (PACKET_LIMIT_LOCK) {
+                     if (this.allPacketCounts != null) {
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 5a49f2c8b46adbdf547708cdd0e59d053bada273..a6e0c9cf4d3f780c2d173a5961840d6eafde164a 100644
+index 3a9c568fe3ce1fd45678294c05785f5e18e19906..1af46d2fa1564ed5f516c8c32d50521758a68473 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -845,7 +845,7 @@ public class ServerGamePacketListenerImpl
+@@ -844,7 +844,7 @@ public class ServerGamePacketListenerImpl
      public void handleCustomCommandSuggestions(final ServerboundCommandSuggestionPacket packet) {
          // PacketUtils.ensureRunningOnSameThread(packet, this, this.player.level()); // Paper - AsyncTabCompleteEvent; run this async
          // CraftBukkit start
@@ -32,7 +32,7 @@ index 5a49f2c8b46adbdf547708cdd0e59d053bada273..a6e0c9cf4d3f780c2d173a5961840d6e
              this.disconnectAsync(Component.translatable("disconnect.spam"), org.bukkit.event.player.PlayerKickEvent.Cause.SPAM); // Paper - Kick event cause // Paper - add proper async disconnect
              return;
          }
-@@ -2097,6 +2097,7 @@ public class ServerGamePacketListenerImpl
+@@ -2098,6 +2098,7 @@ public class ServerGamePacketListenerImpl
      private long lastLimitedPacket = -1;
  
      private boolean checkLimit(long timestamp) {
@@ -40,7 +40,7 @@ index 5a49f2c8b46adbdf547708cdd0e59d053bada273..a6e0c9cf4d3f780c2d173a5961840d6e
          if (!io.papermc.paper.configuration.GlobalConfiguration.get().spamLimiter.incomingPacketThreshold.enabled()) {
              return true;
          }
-@@ -2659,6 +2660,7 @@ public class ServerGamePacketListenerImpl
+@@ -2653,6 +2654,7 @@ public class ServerGamePacketListenerImpl
  
      // Spigot start - spam exclusions
      private void detectRateSpam(String message) {
@@ -48,7 +48,7 @@ index 5a49f2c8b46adbdf547708cdd0e59d053bada273..a6e0c9cf4d3f780c2d173a5961840d6e
          // CraftBukkit start - replaced with thread safe throttle
          if (org.spigotmc.SpigotConfig.enableSpamExclusions) {
              for (String exclude : org.spigotmc.SpigotConfig.spamExclusions) {
-@@ -3407,7 +3409,7 @@ public class ServerGamePacketListenerImpl
+@@ -3401,7 +3403,7 @@ public class ServerGamePacketListenerImpl
      @Override
      public void handlePlaceRecipe(final ServerboundPlaceRecipePacket packet) {
          // Paper start - auto recipe limit

@@ -5,7 +5,7 @@ Subject: [PATCH] Fast exp orb absorb
 
 
 diff --git a/net/minecraft/world/entity/ExperienceOrb.java b/net/minecraft/world/entity/ExperienceOrb.java
-index e302c6198d71782b524391329aa5c89d2b3e0ccf..e33a049210f24e0fffe64e9af3fcfa5c1cddbfb4 100644
+index 73a29d7d40e092be8264679c7f30e5aa8b8fb393..2dec6737baeca497d91125e1d6eb419cf8ae832b 100644
 --- a/net/minecraft/world/entity/ExperienceOrb.java
 +++ b/net/minecraft/world/entity/ExperienceOrb.java
 @@ -352,6 +352,20 @@ public class ExperienceOrb extends Entity {

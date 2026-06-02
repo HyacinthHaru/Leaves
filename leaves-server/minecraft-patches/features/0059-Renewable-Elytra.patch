@@ -6,10 +6,10 @@ Subject: [PATCH] Renewable Elytra
 This patch is Powered by Carpet-TIS-Addition(https://github.com/plusls/Carpet-TIS-Addition)
 
 diff --git a/net/minecraft/world/entity/monster/Phantom.java b/net/minecraft/world/entity/monster/Phantom.java
-index 61ca77cceeacf0c4ebecf3bb66c4eb99c62033d2..b8cacbc901127ed12bd35cd92153f04a99a90750 100644
+index 6cc9c6c04985a0b63ee509659ffe6dbe2921915e..3218438c476a11ffcd3f03a9e5ac2c1492b80305 100644
 --- a/net/minecraft/world/entity/monster/Phantom.java
 +++ b/net/minecraft/world/entity/monster/Phantom.java
-@@ -229,6 +229,20 @@ public class Phantom extends Mob implements Enemy {
+@@ -228,6 +228,20 @@ public class Phantom extends Mob implements Enemy {
          return targetConditions.test(level, this, target);
      }
  
@@ -27,6 +27,6 @@ index 61ca77cceeacf0c4ebecf3bb66c4eb99c62033d2..b8cacbc901127ed12bd35cd92153f04a
 +    }
 +    // Leaves end - renewable elytra
 +
-     private static enum AttackPhase {
+     private enum AttackPhase {
          CIRCLE,
          SWOOP;

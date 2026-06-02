@@ -5,7 +5,7 @@ Subject: [PATCH] Elytra aeronautics no chunk load
 
 
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
-index 455e77bee02fb2d0907bf6f895fef99c186ac9bc..bc54bc33a2577b63c3964de71665ed6b8035b674 100644
+index 42ec67c53c35189838ce4767c2be620e05108159..5999fcd903a1573e784564f02240495805d028bc 100644
 --- a/net/minecraft/server/level/ChunkMap.java
 +++ b/net/minecraft/server/level/ChunkMap.java
 @@ -891,7 +891,8 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
@@ -27,12 +27,12 @@ index 455e77bee02fb2d0907bf6f895fef99c186ac9bc..bc54bc33a2577b63c3964de71665ed6b
  
          SectionPos oldSection = player.getLastSectionPos();
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index c2531d2b08fa3d4179d5b30ca02d9d3f08a11dcc..bd9fe0207a145411572a4038d7a39b233ab00b3c 100644
+index 367fda045997efde4a2a12f93cc6dc066691cd14..460c5da8c5805c064cb8ac0502280831403cad5e 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -886,6 +886,10 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
-                     }
+@@ -894,6 +894,10 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
                  );
+             if (this.paperConfig().unsupportedSettings.ticking.blockEntities) { // Paper - option to disable ticking
              profiler.popPush("blockEntities");
 +            if (org.leavesmc.leaves.LeavesConfig.modify.elytraAeronautics.enableNoChunkLoad) {
 +                org.leavesmc.leaves.util.ElytraAeronauticsHelper.tick(this);
@@ -40,12 +40,12 @@ index c2531d2b08fa3d4179d5b30ca02d9d3f08a11dcc..bd9fe0207a145411572a4038d7a39b23
 +            // Leaves end - elytra aeronautics
              this.tickBlockEntities();
              profiler.pop();
-         }
+             } // Paper - option to disable ticking
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 8fbf1f4fe72ddde8ccd059589905d1bd400e3dd7..404b88d30778d07745368b14e739e91fb4a95cda 100644
+index 4c0fddd591bfb3400fbd5f5864e7611797af1f4c..0499685b94b3b5038408849a2269209a66b6a85f 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -610,7 +610,7 @@ public class ServerGamePacketListenerImpl
+@@ -609,7 +609,7 @@ public class ServerGamePacketListenerImpl
                  speed *= 2f; // TODO: Get the speed of the vehicle instead of the player
  
                  // Paper start - Prevent moving into unloaded chunks
@@ -54,7 +54,7 @@ index 8fbf1f4fe72ddde8ccd059589905d1bd400e3dd7..404b88d30778d07745368b14e739e91f
                      !level.areChunksLoadedForMove(this.player.getBoundingBox().expandTowards(new Vec3(targetX, targetY, targetZ).subtract(this.player.position()))) ||
                          !level.areChunksLoadedForMove(vehicle.getBoundingBox().expandTowards(new Vec3(targetX, targetY, targetZ).subtract(vehicle.position())))
                  )) {
-@@ -1662,6 +1662,7 @@ public class ServerGamePacketListenerImpl
+@@ -1661,6 +1661,7 @@ public class ServerGamePacketListenerImpl
                                          allowMovement = !this.hasNewCollision(level, this.player, oldAABB, newBox);
                                      } // else: no collision at all detected, why do we care?
                                  }
@@ -63,7 +63,7 @@ index 8fbf1f4fe72ddde8ccd059589905d1bd400e3dd7..404b88d30778d07745368b14e739e91f
                                  if (!allowMovement) {
                                      io.papermc.paper.event.player.PlayerFailMoveEvent event = fireFailMove(io.papermc.paper.event.player.PlayerFailMoveEvent.FailReason.CLIPPED_INTO_BLOCK,
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 9cd46a8619e575a865f4d00ce71d249c9b028b2f..d54a056d0df512de3f97e3f36f567e624329eba8 100644
+index 74a2b3dcd303b25e9c26f3e4d4220b390b32f1d5..3a61568adbeac265e4e1c60dfa55e1b3def45fd1 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1159,7 +1159,13 @@ public abstract class Entity
@@ -81,7 +81,7 @@ index 9cd46a8619e575a865f4d00ce71d249c9b028b2f..d54a056d0df512de3f97e3f36f567e62
              ProfilerFiller profiler = Profiler.get();
              profiler.push("move");
              if (this.stuckSpeedMultiplier.lengthSqr() > 1.0E-7) {
-@@ -2219,6 +2225,7 @@ public abstract class Entity
+@@ -2221,6 +2227,7 @@ public abstract class Entity
          this.yo = y;
          this.zo = cz;
          this.setPos(cx, y, cz);
@@ -90,10 +90,10 @@ index 9cd46a8619e575a865f4d00ce71d249c9b028b2f..d54a056d0df512de3f97e3f36f567e62
      }
  
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index b87576911f99c04f473e29265ede981502bbba8f..2de9c51d669575f50a20067a8b9ccfa68f66eb73 100644
+index 265ec8507fbca4dfd14f229c906baab455cf2895..315684bce811d96ff913441705eadd68cb0425d7 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -3476,6 +3476,11 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3471,6 +3471,11 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              this.fallFlyTicks++;
          } else {
              this.fallFlyTicks = 0;
@@ -106,10 +106,10 @@ index b87576911f99c04f473e29265ede981502bbba8f..2de9c51d669575f50a20067a8b9ccfa6
  
          if (this.isSleeping()) {
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index d9c0bc84fa7f43af3c6187cf6ba543e4416cbe7d..87913244e95d039db92e1b8dd61fcab1a30d664c 100644
+index 78b9f4c307b4736204f0b65718b9583c0ca09292..12be2bf7620746a04d2ea52e42c3ba15964e8abd 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
-@@ -174,6 +174,7 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -173,6 +173,7 @@ public abstract class Player extends Avatar implements ContainerUser {
      public float hurtDir;
      public boolean affectsSpawning = true; // Paper - Affects Spawning API
      public net.kyori.adventure.util.TriState flyingFallDamage = net.kyori.adventure.util.TriState.NOT_SET; // Paper - flying fall damage
@@ -131,7 +131,7 @@ index c9f7e68abccbc6b894a66b675952c973e22af8e6..f37836d81a0bfffb0d6ff83d36867396
          Fireworks fireworks = sourceItemStack.get(DataComponents.FIREWORKS);
          return fireworks != null ? fireworks.explosions() : List.of();
 diff --git a/net/minecraft/world/item/FireworkRocketItem.java b/net/minecraft/world/item/FireworkRocketItem.java
-index c17607cb1fd5403f17a64b4218571e669b840a2e..42528adf14f4742b6ff6f2293ed37e9a29358857 100644
+index b3443ff2d06af328493046e723efc11d299a2824..897f3e8750fec11ea665681d86e1126b84cca252 100644
 --- a/net/minecraft/world/item/FireworkRocketItem.java
 +++ b/net/minecraft/world/item/FireworkRocketItem.java
 @@ -65,6 +65,24 @@ public class FireworkRocketItem extends Item implements ProjectileItem {

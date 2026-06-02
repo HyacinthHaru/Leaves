@@ -5,7 +5,7 @@ Subject: [PATCH] Old Throwable Projectile tick order
 
 
 diff --git a/net/minecraft/world/entity/projectile/ThrowableProjectile.java b/net/minecraft/world/entity/projectile/ThrowableProjectile.java
-index cbcc8679cf4854c50f17c4a6fb87a34fceb7339d..f253054dcc8746cb2b71f8d908b06065b31483c7 100644
+index 799165c7e09b151c929fa386c33c6985aedb54d3..ba1c1ac480986fda74d0cf566056e81d6bab9326 100644
 --- a/net/minecraft/world/entity/projectile/ThrowableProjectile.java
 +++ b/net/minecraft/world/entity/projectile/ThrowableProjectile.java
 @@ -45,6 +45,26 @@ public abstract class ThrowableProjectile extends Projectile {

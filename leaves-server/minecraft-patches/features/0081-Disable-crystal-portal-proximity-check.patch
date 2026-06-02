@@ -5,20 +5,20 @@ Subject: [PATCH] Disable crystal-portal proximity check
 
 
 diff --git a/net/minecraft/world/item/EndCrystalItem.java b/net/minecraft/world/item/EndCrystalItem.java
-index 1eca60c5a3e1eeb6f44edbb81fe1af011edd8732..873361c11e013ecc580b769f201247f7f0016a3a 100644
+index eaf7b3f7e9b8135e0ebc1aa7f764f58b45dd3aa5..d28f2d6fda7fcb6018fa19fd0939bcf49eb869ad 100644
 --- a/net/minecraft/world/item/EndCrystalItem.java
 +++ b/net/minecraft/world/item/EndCrystalItem.java
-@@ -51,7 +51,7 @@ public class EndCrystalItem extends Item {
-                         level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, above);
-                         EnderDragonFight fight = ((ServerLevel)level).getDragonFight();
-                         if (fight != null) {
--                            fight.tryRespawn(above); // Paper - Perf: Do crystal-portal proximity check before entity lookup
+@@ -54,7 +54,7 @@ public class EndCrystalItem extends Item {
+             level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, above);
+             EnderDragonFight fight = ((ServerLevel)level).getDragonFight();
+             if (fight != null) {
+-                fight.tryRespawn(above); // Paper - Perf: Do crystal-portal proximity check before entity lookup
 +                            fight.tryRespawn(); // fight.tryRespawn(above); // Paper - Perf: Do crystal-portal proximity check before entity lookup // Leaves - disable crystal-portal proximity check
-                         }
-                     }
+             }
+         }
  
 diff --git a/net/minecraft/world/level/dimension/end/EnderDragonFight.java b/net/minecraft/world/level/dimension/end/EnderDragonFight.java
-index 7f0f5ce66dd0bc4a6e86d0534546c402c601fde2..fcb532263732232dbc225fa8dbf070cf41096191 100644
+index 6cfaf75e92d194fe4ad1d404bc12ddec5ca18b8a..0f17bf4ba7cd2b2c8ac4d3b446cff371799d4b8e 100644
 --- a/net/minecraft/world/level/dimension/end/EnderDragonFight.java
 +++ b/net/minecraft/world/level/dimension/end/EnderDragonFight.java
 @@ -554,12 +554,14 @@ public class EnderDragonFight extends SavedData {

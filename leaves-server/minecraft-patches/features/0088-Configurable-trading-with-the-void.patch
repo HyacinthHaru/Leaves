@@ -5,10 +5,10 @@ Subject: [PATCH] Configurable trading with the void
 
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 7b0bbe9a2c90b3800f1af496fa9d4c09100a182a..586001234db08760951c77f771fe40612e3b4282 100644
+index 513fd86a3adf8ef5a78caf8df79a125fd9d2e4e9..a8aaddf5727e3083a575e93d02557f6308b298ee 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2943,7 +2943,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2947,7 +2947,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              // Spigot start
              if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder && (!(entity instanceof ServerPlayer) || entity.getRemovalReason() != Entity.RemovalReason.KILLED)) { // SPIGOT-6876: closeInventory clears death message
                  // Paper start - Fix merchant inventory not closing on entity removal
@@ -18,10 +18,10 @@ index 7b0bbe9a2c90b3800f1af496fa9d4c09100a182a..586001234db08760951c77f771fe4061
                  }
                  // Paper end - Fix merchant inventory not closing on entity removal
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 1d31d63406c2d25221a1f1c0313ee96979d46ed2..517f0f715c010135e19942c71906532bd55ba083 100644
+index 129ace5200aa2c376bb43ca0e6d20935631f8b0a..6da0a82a8cf2ac0b662231b5454428f6a0631e1e 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -484,7 +484,7 @@ public abstract class PlayerList {
+@@ -478,7 +478,7 @@ public abstract class PlayerList {
                  player.stopRiding();
                  vehicle.getPassengersAndSelf().forEach(e -> {
                      // Paper start - Fix villager boat exploit
