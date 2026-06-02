@@ -730,7 +730,7 @@ index 199789d56d22fcb1b77ebd56805cc28aa5a5ab0a..00000000000000000000000000000000
 -}
 diff --git a/src/main/java/co/aikar/timings/TimingHistory.java b/src/main/java/co/aikar/timings/TimingHistory.java
 deleted file mode 100644
-index 19bb744a4d894962e6e7d49222a0d1d8db63c870..0000000000000000000000000000000000000000
+index 89bd9555d0c96b7bc1703b522cf4ee8d259131e6..0000000000000000000000000000000000000000
 --- a/src/main/java/co/aikar/timings/TimingHistory.java
 +++ /dev/null
 @@ -1,356 +0,0 @@
@@ -870,7 +870,7 @@ index 19bb744a4d894962e6e7d49222a0d1d8db63c870..00000000000000000000000000000000
 -                    }
 -                }
 -                return pair(
--                    worldMap.get(world.getKey().toString()),
+-                    worldMap.get(world.key().asString()),
 -                    toArrayMapper(regions.values(),new Function<RegionData, Object>() {
 -                        @NotNull
 -                        @Override
