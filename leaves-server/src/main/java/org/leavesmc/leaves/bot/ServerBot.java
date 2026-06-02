@@ -40,6 +40,7 @@ import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
@@ -123,6 +124,7 @@ public class ServerBot extends ServerPlayer {
         this.notSleepTicks = 0;
         this.fauxSleeping = LeavesConfig.modify.fakeplayer.inGame.canSkipSleep;
         this.getBukkitEntity().setSimulationDistance(LeavesConfig.modify.fakeplayer.inGame.getSimulationDistance(this));
+        // Leaves - Paper 26.1: setClientLoaded is no longer on ServerPlayer; bots have no real client so this is a no-op
     }
 
     @Override
@@ -348,7 +350,7 @@ public class ServerBot extends ServerPlayer {
     }
 
     @Override
-    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand) {
+    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand, @NotNull net.minecraft.world.phys.Vec3 location) { // Leaves - Paper 26.1: Entity#interact now takes Vec3
         if (LeavesConfig.modify.fakeplayer.canOpenInventory) {
             if (player instanceof ServerPlayer player1 && player.getMainHandItem().isEmpty()) {
                 BotInventoryOpenEvent event = new BotInventoryOpenEvent(this.getBukkitEntity(), player1.getBukkitEntity());
@@ -359,7 +361,7 @@ public class ServerBot extends ServerPlayer {
                 }
             }
         }
-        return super.interact(player, hand);
+        return super.interact(player, hand, location);
     }
 
     @Override
@@ -502,7 +504,7 @@ public class ServerBot extends ServerPlayer {
 
     @Override
     public void die(@NotNull DamageSource damageSource) {
-        boolean flag = this.level().getGameRules().get(GameRules.SHOW_DEATH_MESSAGES);
+        boolean flag = this.level().getGameRules().get(GameRules.SHOW_DEATH_MESSAGES); // Leaves - Paper 26.1: RULE_SHOWDEATHMESSAGES -> SHOW_DEATH_MESSAGES, getBoolean -> get
         Component defaultMessage = this.getCombatTracker().getDeathMessage();
 
         BotDeathEvent event = new BotDeathEvent(this.getBukkitEntity(), PaperAdventure.asAdventure(defaultMessage), flag);
@@ -524,7 +526,7 @@ public class ServerBot extends ServerPlayer {
 
         // TODO: separate die and remove logic, call super.die here
         this.removeEntitiesOnShoulder();
-        if (this.level().getGameRules().get(GameRules.FORGIVE_DEAD_PLAYERS)) {
+        if (this.level().getGameRules().get(GameRules.FORGIVE_DEAD_PLAYERS)) { // Leaves - Paper 26.1: RULE_FORGIVE_DEAD_PLAYERS -> FORGIVE_DEAD_PLAYERS, getBoolean -> get
             this.tellNeutralMobsThatIDied();
         }
         getServer().getBotList().removeBot(this, BotRemoveEvent.RemoveReason.DEATH, null, false, false);

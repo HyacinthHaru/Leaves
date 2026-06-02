@@ -142,22 +142,23 @@ public class ServuxHudDataProtocol implements LeavesProtocol {
         nbt.putString("id", HudDataPayload.CHANNEL.toString());
         nbt.putString("servux", ServuxProtocol.SERVUX_STRING);
 
-        if (level.serverLevelData.isRaining() && level.serverLevelData.getRainTime() > -1) {
-            nbt.putInt("SetRaining", level.serverLevelData.getRainTime());
+        final net.minecraft.world.level.saveddata.WeatherData weatherData = level.getWeatherData(); // Leaves - Paper 26.1: weather moved to WeatherData
+        if (weatherData.isRaining() && weatherData.getRainTime() > -1) {
+            nbt.putInt("SetRaining", weatherData.getRainTime());
             nbt.putBoolean("isRaining", true);
         } else {
             nbt.putBoolean("isRaining", false);
         }
 
-        if (level.serverLevelData.isThundering() && level.serverLevelData.getThunderTime() > -1) {
-            nbt.putInt("SetThundering", level.serverLevelData.getThunderTime());
+        if (weatherData.isThundering() && weatherData.getThunderTime() > -1) {
+            nbt.putInt("SetThundering", weatherData.getThunderTime());
             nbt.putBoolean("isThundering", true);
         } else {
             nbt.putBoolean("isThundering", false);
         }
 
-        if (level.serverLevelData.getClearWeatherTime() > -1) {
-            nbt.putInt("SetClear", level.serverLevelData.getClearWeatherTime());
+        if (weatherData.getClearWeatherTime() > -1) {
+            nbt.putInt("SetClear", weatherData.getClearWeatherTime());
         }
 
         sendPacket(player, new HudDataPayload(HudDataPayloadType.PACKET_S2C_WEATHER_TICK, nbt));

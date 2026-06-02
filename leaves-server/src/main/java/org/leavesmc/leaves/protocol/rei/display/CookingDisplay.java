@@ -41,7 +41,7 @@ public abstract class CookingDisplay extends Display {
     public CookingDisplay(RecipeHolder<? extends AbstractCookingRecipe> recipe) {
         this(
             List.of(EntryIngredient.ofIngredient(recipe.value().input())),
-            List.of(EntryIngredient.of(recipe.value().assemble(new SingleRecipeInput(ItemStack.EMPTY), CraftRegistry.getMinecraftRegistry()))),
+            List.of(EntryIngredient.of(recipe.value().assemble(new SingleRecipeInput(ItemStack.EMPTY)))), // Leaves - Paper 26.1: assemble no longer takes RegistryAccess
             recipe.id().identifier(),
             recipe.value().experience(),
             recipe.value().cookingTime()

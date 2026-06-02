@@ -1,5 +1,6 @@
 package org.leavesmc.leaves.network;
 
+import net.minecraft.util.Util;
 import net.minecraft.network.Connection;
 import net.minecraft.server.network.ServerCommonPacketListenerImpl;
 import net.minecraft.util.Util;
@@ -50,7 +51,7 @@ public final class AsyncKeepaliveManager {
         for (ServerCommonPacketListenerImpl listener : ACTIVE_LISTENERS.values()) {
             try {
                 listener.keepConnectionAliveAsync(currentTimeNs, currentTimeMs);
-                if (!listener.connection.isConnected() || listener.processedDisconnect) {
+                if (!listener.connection.isConnected()) {
                     ACTIVE_LISTENERS.remove(listener.connection, listener);
                 }
             } catch (Throwable throwable) {

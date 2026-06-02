@@ -40,7 +40,7 @@ public class ShapedDisplay extends CraftingDisplay {
     public ShapedDisplay(@NotNull RecipeHolder<ShapedRecipe> recipeHolder) {
         super(
             ofIngredient(recipeHolder.value()),
-            List.of(EntryIngredient.of(recipeHolder.value().assemble(CraftingInput.EMPTY, CraftRegistry.getMinecraftRegistry()))),
+            List.of(EntryIngredient.of(recipeHolder.value().assemble(CraftingInput.EMPTY))), // Leaves - Paper 26.1: assemble no longer takes RegistryAccess
             recipeHolder.id().identifier()
         );
         this.width = recipeHolder.value().getWidth();

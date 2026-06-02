@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Sat, 25 Jun 2022 19:54:23 +0800
+Subject: [PATCH] Stick can change ArmorStand arm status
+
+
+diff --git a/net/minecraft/world/entity/decoration/ArmorStand.java b/net/minecraft/world/entity/decoration/ArmorStand.java
+index f42fd10847a1dfbcbb2790aa90da4a49585e25a8..11f15d4c9a0c4e9e4fd115bddcd947e8b5fa5b47 100644
+--- a/net/minecraft/world/entity/decoration/ArmorStand.java
++++ b/net/minecraft/world/entity/decoration/ArmorStand.java
+@@ -236,6 +236,13 @@ public class ArmorStand extends LivingEntity {
+                 return InteractionResult.SUCCESS_SERVER;
+             }
+         } else {
++                // Leaves start - stick can change ArmorStand arm status
++                if (org.leavesmc.leaves.LeavesConfig.modify.stickChangeArmorStandArmStatus && itemStack.is(Items.STICK) && player.isShiftKeyDown()) {
++                    setShowArms(!showArms());
++                    return InteractionResult.FAIL;
++                }
++                // Leaves end - stick can change ArmorStand arm status
++
+             if (this.isDisabled(itemInHandSlot)) {
+                 return InteractionResult.FAIL;
+             }

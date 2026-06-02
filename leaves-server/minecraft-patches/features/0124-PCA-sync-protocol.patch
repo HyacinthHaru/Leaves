@@ -1,0 +1,50 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Mon, 3 Feb 2025 13:17:03 +0800
+Subject: [PATCH] PCA sync protocol
+
+
+diff --git a/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java b/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
+index 1be6668ceb49a62d35549f6352d2972c578091df..e9bd63b69b47d26edfc445fa6383d62f68179671 100644
+--- a/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
++++ b/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
+@@ -330,6 +330,11 @@ public class BeehiveBlockEntity extends BlockEntity {
+                 if (releaseOccupant(level, pos, state, data.toOccupant(), null, releaseStatus, savedFlowerPos)) {
+                     changed = true;
+                     iterator.remove();
++                    // Leaves start - pca
++                    if (org.leavesmc.leaves.LeavesConfig.protocol.pca.enable) {
++                        org.leavesmc.leaves.protocol.PcaSyncProtocol.syncBlockEntityToClient(java.util.Objects.requireNonNull(level.getBlockEntity(pos)));
++                    }
++                    // Leaves end - pca
+                 }
+                 // Paper start - Fix bees aging inside; use exitTickCounter to keep actual bee life
+                 else if (!org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode && level.paperConfig().entities.behavior.cooldownFailedBeehiveReleases) { // Leaves - mc technical survival mode
+@@ -361,6 +366,11 @@ public class BeehiveBlockEntity extends BlockEntity {
+         input.read("bees", BeehiveBlockEntity.Occupant.LIST_CODEC).orElse(List.of()).forEach(this::storeBee);
+         this.savedFlowerPos = input.read("flower_pos", BlockPos.CODEC).orElse(null);
+         this.maxBees = input.getIntOr("Bukkit.MaxEntities", MAX_OCCUPANTS); // Paper - persist max bukkit occupants
++        // Leaves start - pca
++        if (org.leavesmc.leaves.LeavesConfig.protocol.pca.enable) {
++            org.leavesmc.leaves.protocol.PcaSyncProtocol.syncBlockEntityToClient(this);
++        }
++        // Leaves end - pca
+     }
+ 
+     @Override
+diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+index d1d613e64784af9798f246c09d3be529b6b4eb54..7a29c9815d11fb096662debb37f229c51a4384b8 100644
+--- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
++++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+@@ -232,6 +232,11 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+                 }
+                 // Leaves end - Wool hopper counter
+                 setChanged(level, pos, state);
++                    // Leaves start - pca
++                    if (org.leavesmc.leaves.LeavesConfig.protocol.pca.enable) {
++                        org.leavesmc.leaves.protocol.PcaSyncProtocol.syncBlockEntityToClient(entity);
++                    }
++                    // Leaves end - pca
+                 return true;
+             }
+         }

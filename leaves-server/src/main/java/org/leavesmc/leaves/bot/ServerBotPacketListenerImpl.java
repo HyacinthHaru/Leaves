@@ -30,13 +30,17 @@ public class ServerBotPacketListenerImpl extends ServerGamePacketListenerImpl {
         return true;
     }
 
+    // Leaves - Paper 26.1: ServerPlayer#isInvulnerableTo now consults
+    // connection.hasClientLoaded(). Bots never send a client-loaded packet,
+    // so the default impl would return false forever (timer never decrements
+    // because we override tick() as a no-op), making bots permanently invulnerable.
     @Override
-    public void tick() {
+    public boolean hasClientLoaded() {
+        return true;
     }
 
     @Override
-    public boolean hasClientLoaded() {
-        return true; // Don't kick me out!
+    public void tick() {
     }
 
     public static class BotConnection extends Connection {

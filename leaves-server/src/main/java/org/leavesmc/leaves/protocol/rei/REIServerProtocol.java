@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import io.netty.buffer.Unpooled;
 import net.minecraft.ChatFormatting;
+import net.minecraft.util.Util;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -138,11 +139,18 @@ public class REIServerProtocol implements LeavesProtocol {
             switch (holder.value()) {
                 case ShapedRecipe ignored -> builder.add(new ShapedDisplay((RecipeHolder) holder));
                 case ShapelessRecipe ignored -> builder.add(new ShapelessDisplay((RecipeHolder) holder));
+                // Leaves start - Paper 26.1: map_cloning is a TransmuteRecipe but the client expects a
+                // shapeless-style display (filled map + empty map → 2 filled maps). Match by identifier
+                // before the generic TransmuteRecipe case to route correctly.
+                case TransmuteRecipe ignored when "minecraft:map_cloning".equals(holder.id().identifier().toString()) ->
+                    builder.addAll(Display.ofMapCloningRecipe((RecipeHolder) holder));
+                // Leaves end
                 case TransmuteRecipe ignored -> builder.addAll(Display.ofTransmuteRecipe((RecipeHolder) holder));
-                case TippedArrowRecipe ignored -> builder.addAll(Display.ofTippedArrowRecipe((RecipeHolder) holder));
                 case FireworkRocketRecipe ignored -> builder.addAll(Display.ofFireworkRocketRecipe((RecipeHolder) holder));
-                case MapCloningRecipe ignored -> builder.addAll(Display.ofMapCloningRecipe((RecipeHolder) holder));
-                // ignore ArmorDyeRecipe, BannerDuplicateRecipe, BookCloningRecipe, ShieldDecorationRecipe
+                // Leaves - Paper 26.1: tipped_arrow is now an ImbueRecipe (replaced the removed TippedArrowRecipe class).
+                // ImbueRecipe is currently only used for tipped_arrow so a plain type match is safe.
+                case ImbueRecipe ignored -> builder.addAll(Display.ofTippedArrowRecipe((RecipeHolder) holder));
+                // ignore ArmorDyeRecipe, BannerDuplicateRecipe, BookCloningRecipe, ShieldDecorationRecipe, RepairItemRecipe
                 default -> {
                 }
             }
@@ -194,7 +202,7 @@ public class REIServerProtocol implements LeavesProtocol {
             }
         } else if (channel.equals("ci_msg")) {
             // cheat rei-client into using "delete_item" packet
-            if (!MinecraftServer.getServer().getProfilePermissions(player.nameAndId()).level().isEqualOrHigherThan(PermissionLevel.MODERATORS)) {
+            if (!MinecraftServer.getServer().getProfilePermissions(player.nameAndId()).level().isEqualOrHigherThan(net.minecraft.server.permissions.PermissionLevel.MODERATORS)) { // Leaves - Paper 26.1: getProfilePermissions returns LevelBasedPermissionSet
                 player.getBukkitEntity().sendOpLevel((byte) 1);
             }
         }
@@ -234,7 +242,7 @@ public class REIServerProtocol implements LeavesProtocol {
                 });
                 */
             } else {
-                player.displayClientMessage(Component.translatable("text.rei.failed_cheat_items"), false);
+                player.sendSystemMessage(Component.translatable("text.rei.failed_cheat_items"), false); // Leaves - Paper 26.1: displayClientMessage removed, use sendSystemMessage
             }
         };
         inboundTransform(player, CREATE_ITEMS_PACKET, buf, consumer);
@@ -293,7 +301,7 @@ public class REIServerProtocol implements LeavesProtocol {
                 });
                 */
             } else {
-                player.displayClientMessage(Component.translatable("text.rei.failed_cheat_items"), false);
+                player.sendSystemMessage(Component.translatable("text.rei.failed_cheat_items"), false); // Leaves - Paper 26.1: displayClientMessage removed, use sendSystemMessage
             }
         };
         inboundTransform(player, CREATE_ITEMS_HOTBAR_PACKET, buf, consumer);
@@ -367,7 +375,7 @@ public class REIServerProtocol implements LeavesProtocol {
         if (player.getBukkitEntity().hasPermission(CHEAT_PERMISSION)) {
             return true;
         }
-        player.displayClientMessage(Component.translatable("text.rei.no_permission_cheat").withStyle(ChatFormatting.RED), false);
+        player.sendSystemMessage(Component.translatable("text.rei.no_permission_cheat").withStyle(ChatFormatting.RED), false); // Leaves - Paper 26.1: displayClientMessage removed, use sendSystemMessage
         return false;
     }
 
