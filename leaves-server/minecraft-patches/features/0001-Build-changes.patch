@@ -18,7 +18,7 @@ index 4a3f07daad8b48eaf3bea02bdacbfb0670dddf90..e1e032e709193b5a8008d69b748bc54b
      private static final org.slf4j.Logger LOGGER = com.mojang.logging.LogUtils.getLogger();
  
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index cc35c6271c98615a486422d0490145227626bd85..01922963a6469f2dd93cf71a612b3df0a11f1bf1 100644
+index cc35c6271c98615a486422d0490145227626bd85..0cb304ea1f1a232c0fd714d15417e0e674e5bcc6 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -1317,7 +1317,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -30,3 +30,12 @@ index cc35c6271c98615a486422d0490145227626bd85..01922963a6469f2dd93cf71a612b3df0
                  LOGGER.info("*************************************************************************************");
              }
              // Paper end - Add onboarding message for initial server start
+@@ -1973,7 +1973,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+     }
+ 
+     public String getServerModName() {
+-        return io.papermc.paper.ServerBuildInfo.buildInfo().brandName(); // Paper
++        return org.leavesmc.leaves.LeavesConfig.mics.serverModName; // Leaves - Custom // Paper
+     }
+ 
+     public ServerClockManager clockManager() {

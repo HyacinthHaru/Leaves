@@ -1,0 +1,123 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Sun, 2 Feb 2025 13:08:32 +0800
+Subject: [PATCH] Leaves Protocol Core
+
+
+diff --git a/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java b/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java
+index 812649b85290068af1ccea2ca69afa1817e14427..3e471fcd63c6e79546a7a29f331c8249ef09bef8 100644
+--- a/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java
++++ b/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java
+@@ -40,13 +40,22 @@ public interface CustomPacketPayload {
+ 
+             @Override
+             public void encode(final B output, final CustomPacketPayload value) {
++                // Leaves start - protocol core
++                if (value instanceof org.leavesmc.leaves.protocol.core.LeavesCustomPayload payload) {
++                    org.leavesmc.leaves.protocol.core.LeavesProtocolManager.encode(output, payload);
++                    return;
++                }
++                // Leaves end - protocol core
+                 this.writeCap(output, value.type(), value);
+             }
+ 
+             @Override
+             public CustomPacketPayload decode(final B input) {
+                 Identifier identifier = input.readIdentifier();
+-                return (CustomPacketPayload)this.findCodec(identifier).decode(input);
++                // Leaves start - protocol core
++                var payload = org.leavesmc.leaves.protocol.core.LeavesProtocolManager.decode(identifier, input);
++                return java.util.Objects.requireNonNullElseGet(payload, () -> (CustomPacketPayload) this.findCodec(identifier).decode(input));
++                // Leaves end - protocol core
+             }
+         };
+     }
+diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
+index 8e0701df2968cadbf7836f150306ab5209497fd3..7a33035594fda3374d8789ca50c7139d5172c99b 100644
+--- a/net/minecraft/server/MinecraftServer.java
++++ b/net/minecraft/server/MinecraftServer.java
+@@ -1871,6 +1871,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+ 
+         profiler.popPush("server gui refresh");
+ 
++        org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handleTick(this.tickCount); // Leaves - protocol
++
+         for (Runnable tickable : this.tickables) {
+             tickable.run();
+         }
+diff --git a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
+index 8b194a59f79eea32c9e7a46227034942f6a6e816..e9fdf2db4a41eaa268252ce5d2f8a7e1a553e06d 100644
+--- a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
++++ b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
+@@ -57,6 +57,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+     public @Nullable String playerBrand;
+     public final java.util.Set<String> pluginMessagerChannels;
+     // Paper end - retain certain values
++    public final GameProfile profile; // Leaves - protocol core
+ 
+     public ServerCommonPacketListenerImpl(final MinecraftServer server, final Connection connection, final CommonListenerCookie cookie) {
+         this.server = server;
+@@ -70,6 +71,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+         this.pluginMessagerChannels = cookie.channels();
+         this.keepAlive = cookie.keepAlive();
+         // Paper end
++        this.profile = cookie.gameProfile(); // Leaves - protocol core
+     }
+ 
+     // Paper start - configuration phase API
+@@ -143,6 +145,18 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+ 
+     @Override
+     public void handleCustomPayload(final ServerboundCustomPayloadPacket packet) {
++        // Leaves start - protocol
++        if (packet.payload() instanceof org.leavesmc.leaves.protocol.core.LeavesCustomPayload leavesPayload) {
++            org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePayload(org.leavesmc.leaves.protocol.core.ProtocolUtils.createSelector(this), leavesPayload);
++            return;
++        }
++        if (packet.payload() instanceof net.minecraft.network.protocol.common.custom.DiscardedPayload(net.minecraft.resources.Identifier id, byte[] data)) {
++            if (org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handleBytebuf(org.leavesmc.leaves.protocol.core.ProtocolUtils.createSelector(this), id, io.netty.buffer.Unpooled.wrappedBuffer(data))) {
++                return;
++            }
++        }
++        // Leaves end - protocol
++
+         // Paper start
+         if (!(packet.payload() instanceof final net.minecraft.network.protocol.common.custom.DiscardedPayload discardedPayload)) {
+             return;
+@@ -202,6 +216,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+         final String channel = new String(data, from, length, java.nio.charset.StandardCharsets.US_ASCII);
+         if (register) {
+             bridge.addChannel(channel);
++            org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handleMinecraftRegister(channel, org.leavesmc.leaves.protocol.core.ProtocolUtils.createSelector(this)); // Leaves - protocol
+         } else {
+             bridge.removeChannel(channel);
+         }
+diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
+index 5bea5dcdaf8ee0a38cd8587a55845e940d8f4cac..bb49f5914b4a3d686821f1989af7a44c4e256c92 100644
+--- a/net/minecraft/server/players/PlayerList.java
++++ b/net/minecraft/server/players/PlayerList.java
+@@ -245,6 +245,8 @@ public abstract class PlayerList {
+             return;
+         }
+ 
++        org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePlayerJoin(player); // Leaves - protocol
++
+         final net.kyori.adventure.text.Component jm = playerJoinEvent.joinMessage();
+ 
+         if (jm != null && !jm.equals(net.kyori.adventure.text.Component.empty())) { // Paper - Adventure
+@@ -431,6 +433,7 @@ public abstract class PlayerList {
+         return this.remove(player, net.kyori.adventure.text.Component.translatable("multiplayer.player.left", net.kyori.adventure.text.format.NamedTextColor.YELLOW, io.papermc.paper.configuration.GlobalConfiguration.get().messages.useDisplayNameInQuitMessage ? player.getBukkitEntity().displayName() : io.papermc.paper.adventure.PaperAdventure.asAdventure(player.getDisplayName())));
+     }
+     public net.kyori.adventure.text.@Nullable Component remove(final ServerPlayer player, final net.kyori.adventure.text.Component leaveMessage) {
++        org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePlayerLeave(player); // Leaves - protocol
+         // Paper end - Fix kick event leave message not being sent
+         ServerLevel level = player.level();
+         player.awardStat(Stats.LEAVE_GAME);
+@@ -1288,6 +1291,7 @@ public abstract class PlayerList {
+             player.connection.send(recipes);
+             player.getRecipeBook().sendInitialRecipeBook(player);
+         }
++        org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handleDataPackReload(); // Leaves - protocol core
+     }
+ 
+     public boolean isAllowCommandsForAllPlayers() {

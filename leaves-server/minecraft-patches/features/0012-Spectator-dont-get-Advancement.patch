@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Sat, 25 Jun 2022 18:04:35 +0800
+Subject: [PATCH] Spectator dont get Advancement
+
+
+diff --git a/net/minecraft/server/PlayerAdvancements.java b/net/minecraft/server/PlayerAdvancements.java
+index f2536d631b041c01b98fa60c50cffbe1623ca327..562b444743c3cdcb9f27f55627d5e0eff5717f67 100644
+--- a/net/minecraft/server/PlayerAdvancements.java
++++ b/net/minecraft/server/PlayerAdvancements.java
+@@ -173,6 +173,11 @@ public class PlayerAdvancements {
+             return false;
+         }
+         // Leaves end - bot can't get advancement
++        // Leaves start - spectator don't get advancement
++        if (org.leavesmc.leaves.LeavesConfig.modify.spectatorDontGetAdvancement && player.gameMode.getGameModeForPlayer() == net.minecraft.world.level.GameType.SPECTATOR) {
++            return false;
++        }
++        // Leaves end - spectator don't get advancement
+         boolean result = false;
+         AdvancementProgress progress = this.getOrStartProgress(holder);
+         boolean wasDone = progress.isDone();

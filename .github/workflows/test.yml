@@ -29,7 +29,6 @@ jobs:
       - name: Apply Patches
         run: ./gradlew applyAllPatches
       - name: Create Leavesclip Jar
-        # Leaves - Paper 26.1: 服务端已全量 Mojang-mapped,任务由 createMojmapLeavesclipJar 改名
         run: ./gradlew createLeavesclipJar
       - name: Move Jar
         run: |
@@ -38,7 +37,6 @@ jobs:
           }
           
           jarName="leaves-$(prop mcVersion).jar"
-          # Leaves - Paper 26.1: jar 文件名不再带 -mojmap 后缀
           mv leaves-server/build/libs/leaves-leavesclip-"$(prop version)".jar "$jarName"
           echo "jar=$jarName" >> "$GITHUB_ENV"
       - name: Upload Artifact
