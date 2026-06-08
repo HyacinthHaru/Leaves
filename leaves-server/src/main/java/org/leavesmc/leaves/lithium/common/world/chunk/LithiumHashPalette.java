@@ -39,7 +39,7 @@ public final class LithiumHashPalette<T> extends HashMapPalette<T> implements Pa
     private int size = 0;
 
     private LithiumHashPalette(int indexBits, T[] entries, Reference2IntOpenHashMap<T> table, int size) {
-        super(size);
+        super(size, true);
         this.indexBits = indexBits;
         this.entries = entries;
         this.table = table;
@@ -56,7 +56,7 @@ public final class LithiumHashPalette<T> extends HashMapPalette<T> implements Pa
 
     @SuppressWarnings("unchecked")
     public LithiumHashPalette(int bits) {
-        super(bits);
+        super(bits, true);
         this.indexBits = bits;
 
         int capacity = 1 << bits;
@@ -66,6 +66,12 @@ public final class LithiumHashPalette<T> extends HashMapPalette<T> implements Pa
         this.table.defaultReturnValue(ABSENT_VALUE);
     }
 
+    // Leaves start - Leaf - Sync moonrise changes
+    @Override
+    public T[] moonrise$getRawPalette(final FastPaletteData<T> container) {
+        return this.entries;
+    }
+    // Leaves end - Leaf - Sync moonrise changes
 
     @Override
     public int idFor(T obj, PaletteResize<T> paletteResize) {

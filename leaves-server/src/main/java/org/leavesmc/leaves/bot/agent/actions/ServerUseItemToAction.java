@@ -34,7 +34,6 @@ public class ServerUseItemToAction extends AbstractUseBotAction<ServerUseItemToA
 
         Vec3 vec3 = hitResult.getLocation().subtract(entity.getX(), entity.getY(), entity.getZ());
         bot.updateItemInHand(hand);
-        // Leaves - Paper 26.1: Entity#interactAt merged into Entity#interact(Player, InteractionHand, Vec3); Player#interactOn also takes Vec3
         InteractionResult interactionResult = entity.interact(bot, hand, vec3);
         if (!interactionResult.consumesAction()) {
             interactionResult = bot.interactOn(hitResult.getEntity(), hand, vec3);

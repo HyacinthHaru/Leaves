@@ -63,7 +63,6 @@ public interface FertilizableCoral extends BonemealableBlock {
         if (!coral.placeFeature(worldIn, random, pos, properBlock)) {
             worldIn.setBlock(pos, blockUnder, 3);
         } else {
-            // Leaves - Paper 26.1: Level.random is protected; BlockState.getBlockHolder() -> typeHolder()
             if (worldIn.getRandom().nextInt(10) == 0) {
                 BlockPos randomPos = pos.offset(worldIn.getRandom().nextInt(16) - 8, worldIn.getRandom().nextInt(8), worldIn.getRandom().nextInt(16) - 8);
                 if (coralBlocks.contains(worldIn.getBlockState(randomPos).typeHolder())) {

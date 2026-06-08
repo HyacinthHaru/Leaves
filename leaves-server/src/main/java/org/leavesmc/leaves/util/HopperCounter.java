@@ -16,7 +16,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.BlockItem;
@@ -285,7 +284,6 @@ public class HopperCounter {
             return TextColor.color(appropriateColor(DEFAULTS.get(item).defaultMapColor().col));
         }
         if (item instanceof DyeItem) {
-            // Leaves - Paper 26.1: DyeItem#getDyeColor() removed, color now lives in DataComponents.DYE
             DyeColor dyeColor = item.components().get(DataComponents.DYE);
             if (dyeColor != null) {
                 return TextColor.color(appropriateColor(dyeColor.getMapColor().col));

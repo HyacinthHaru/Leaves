@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.saveddata.WeatherData;
 import org.jetbrains.annotations.NotNull;
 import org.leavesmc.leaves.LeavesConfig;
 import org.leavesmc.leaves.protocol.core.LeavesCustomPayload;
@@ -142,7 +143,7 @@ public class ServuxHudDataProtocol implements LeavesProtocol {
         nbt.putString("id", HudDataPayload.CHANNEL.toString());
         nbt.putString("servux", ServuxProtocol.SERVUX_STRING);
 
-        final net.minecraft.world.level.saveddata.WeatherData weatherData = level.getWeatherData(); // Leaves - Paper 26.1: weather moved to WeatherData
+        final WeatherData weatherData = level.getWeatherData();
         if (weatherData.isRaining() && weatherData.getRainTime() > -1) {
             nbt.putInt("SetRaining", weatherData.getRainTime());
             nbt.putBoolean("isRaining", true);

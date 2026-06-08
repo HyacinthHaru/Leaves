@@ -18,6 +18,7 @@
 package org.leavesmc.leaves.lithium.common.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.TickingBlockEntity;
@@ -47,8 +48,7 @@ public record SleepUntilTimeBlockEntityTickInvoker(BlockEntity sleepingBlockEnti
 
     @Override
     public String getType() {
-        // Leaves - Paper 26.1: BlockEntityType.getKey() removed, use registry directly
         //noinspection ConstantConditions
-        return net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(this.sleepingBlockEntity.getType()).toString();
+        return BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(this.sleepingBlockEntity.getType()).toString();
     }
 }

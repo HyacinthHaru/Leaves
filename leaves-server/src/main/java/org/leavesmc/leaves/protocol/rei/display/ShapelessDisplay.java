@@ -38,7 +38,7 @@ public class ShapelessDisplay extends CraftingDisplay {
     public ShapelessDisplay(@NotNull RecipeHolder<ShapelessRecipe> recipeHolder) {
         this(
             recipeHolder.value().placementInfo().ingredients().stream().map(EntryIngredient::ofIngredient).toList(),
-            List.of(EntryIngredient.of(recipeHolder.value().assemble(CraftingInput.EMPTY))), // Leaves - Paper 26.1: assemble no longer takes RegistryAccess
+            List.of(EntryIngredient.of(recipeHolder.value().assemble(CraftingInput.EMPTY))),
             recipeHolder.id().identifier()
         );
     }

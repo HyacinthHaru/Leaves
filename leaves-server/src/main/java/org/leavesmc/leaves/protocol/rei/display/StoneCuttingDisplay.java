@@ -38,7 +38,7 @@ public class StoneCuttingDisplay extends Display {
     public StoneCuttingDisplay(RecipeHolder<StonecutterRecipe> recipeHolder) {
         this(
             List.of(EntryIngredient.ofIngredient(recipeHolder.value().input())),
-            List.of(EntryIngredient.of(recipeHolder.value().assemble(new SingleRecipeInput(ItemStack.EMPTY)))), // Leaves - Paper 26.1: assemble no longer takes RegistryAccess
+            List.of(EntryIngredient.of(recipeHolder.value().assemble(new SingleRecipeInput(ItemStack.EMPTY)))),
             recipeHolder.id().identifier()
         );
     }

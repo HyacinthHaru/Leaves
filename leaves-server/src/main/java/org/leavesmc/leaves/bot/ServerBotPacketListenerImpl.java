@@ -30,10 +30,7 @@ public class ServerBotPacketListenerImpl extends ServerGamePacketListenerImpl {
         return true;
     }
 
-    // Leaves - Paper 26.1: ServerPlayer#isInvulnerableTo now consults
-    // connection.hasClientLoaded(). Bots never send a client-loaded packet,
-    // so the default impl would return false forever (timer never decrements
-    // because we override tick() as a no-op), making bots permanently invulnerable.
+    // Leaves - bots never send a client-loaded packet; report loaded so the spawn-invulnerability timer (isInvulnerableTo) isn't stuck on
     @Override
     public boolean hasClientLoaded() {
         return true;
