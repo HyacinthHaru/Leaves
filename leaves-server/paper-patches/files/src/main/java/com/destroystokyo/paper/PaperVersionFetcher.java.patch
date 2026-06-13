@@ -1,6 +1,6 @@
 --- a/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
 +++ b/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
-@@ -217,10 +_,16 @@
+@@ -223,10 +_,16 @@
          }
      }
  
@@ -19,7 +19,7 @@
              connection.setConnectTimeout(5000);
              connection.setReadTimeout(5000);
              connection.setRequestProperty("User-Agent", PaperVersionFetcher.USER_AGENT);
-@@ -244,7 +_,7 @@
+@@ -250,7 +_,7 @@
          }
      }
  

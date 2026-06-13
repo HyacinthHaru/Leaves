@@ -106,39 +106,18 @@ index 74ffdc823e66fc5ec027c4b7c462382bcbfe2be2..f38f8e5851ec65a8f3f98018d55de74e
      private static final String BUILD_DEV = "DEV";
  
 diff --git a/src/main/java/io/papermc/paper/command/PaperVersionCommand.java b/src/main/java/io/papermc/paper/command/PaperVersionCommand.java
-index bfacb856623b5cb6af4f1b65ee89200cdfb1ef13..a427a962ea90b089bef1a8177b187f4ba1063582 100644
+index 5f17c295e2158b93ed6f77012c0ac5507ac88284..9ab0adabc7bcf4fdfc9cf65371cfa3ee3244ab06 100644
 --- a/src/main/java/io/papermc/paper/command/PaperVersionCommand.java
 +++ b/src/main/java/io/papermc/paper/command/PaperVersionCommand.java
-@@ -24,7 +24,6 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
- import net.minecraft.server.MinecraftServer;
- import org.bukkit.Bukkit;
- import org.bukkit.command.CommandSender;
--import org.bukkit.craftbukkit.util.CraftMagicNumbers;
- import org.bukkit.plugin.Plugin;
- import org.bukkit.util.StringUtil;
- import org.jspecify.annotations.NullMarked;
-@@ -45,7 +44,7 @@ public class PaperVersionCommand {
+@@ -45,7 +45,7 @@ public class PaperVersionCommand {
      private static final Component FAILED_TO_FETCH = Component.text("Could not fetch version information!", NamedTextColor.RED);
      private static final Component FETCHING = Component.text("Checking version, please wait...", NamedTextColor.WHITE, TextDecoration.ITALIC);
  
--    private final VersionFetcher versionFetcher = CraftMagicNumbers.INSTANCE.getVersionFetcher();
+-    private final VersionFetcher versionFetcher = InternalAPIBridge.get().getVersionFetcher();
 +    private final VersionFetcher versionFetcher = new org.leavesmc.leaves.util.LeavesVersionFetcher(); // Leaves - build change
      private CompletableFuture<ComputedVersion> computedVersion = CompletableFuture.completedFuture(new ComputedVersion(Component.empty(), -1)); // Precompute-- someday move that stuff out of bukkit
  
      public static LiteralCommandNode<CommandSourceStack> create() {
-diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 3f903315d3c0b31a06fe90406f290b828967991b..1c5ac3df3922ddd3816aede4f37f8529e3ac9de4 100644
---- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-+++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -489,7 +489,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
- 
-     @Override
-     public com.destroystokyo.paper.util.VersionFetcher getVersionFetcher() {
--        return new com.destroystokyo.paper.PaperVersionFetcher();
-+        return new org.leavesmc.leaves.util.LeavesVersionFetcher(); // Leaves
-     }
- 
-     @Override
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
 index 5c1306ac6eb620a38ed5ef3632b611214e1d5dcd..a69f70c2fae62848db8bed92ede994b8385696fa 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
