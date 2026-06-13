@@ -5,10 +5,10 @@ Subject: [PATCH] Add fakeplayer api
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 77473d9de8283a557ca061b0429dee9312de7d6b..9c5038e5dca41f9e77eba999dbc1dd839162281e 100644
+index 6dc049664394818adea57835838afc448a4dd9f5..8c3d72d061e294f356f625bb93512e29356dc7fe 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -3003,4 +3003,15 @@ public final class Bukkit {
+@@ -3006,4 +3006,15 @@ public final class Bukkit {
      public static void restart() {
          server.restart();
      }
@@ -25,10 +25,10 @@ index 77473d9de8283a557ca061b0429dee9312de7d6b..9c5038e5dca41f9e77eba999dbc1dd83
 +    // Leaves end - Bot API
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index dd8ad5976eb413f049245a4f37bd94b3e41829de..1a81b53408cd20af750d507fab8d037de389f450 100644
+index 62341f72e8457c5547994bee1f3fda9faade6ce0..44f8945353614ced8fc20ff4cf5e17222700760c 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -2780,4 +2780,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -2776,4 +2776,13 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
       */
      void allowPausing(@NotNull org.bukkit.plugin.Plugin plugin, boolean value);
      // Paper end - API to check if the server is sleeping

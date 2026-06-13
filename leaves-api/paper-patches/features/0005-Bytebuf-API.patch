@@ -5,10 +5,10 @@ Subject: [PATCH] Bytebuf API
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 4e1c97d828d7d4d3ba42e28dec8aa1ec6e96420d..089d2e862d3683f6749ed7bc1c2f35778fd41e88 100644
+index 5a16cd8a6c1b8241bd0532a0aa9b2076247d09a0..9cf71aa74ef47fd4611704384ba8236e58c7aab1 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -3020,4 +3020,10 @@ public final class Bukkit {
+@@ -3023,4 +3023,10 @@ public final class Bukkit {
          return server.getPhotographerManager();
      }
      // Leaves end - Photographer API
@@ -20,10 +20,10 @@ index 4e1c97d828d7d4d3ba42e28dec8aa1ec6e96420d..089d2e862d3683f6749ed7bc1c2f3577
 +    // Leaves end - Bytebuf API
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index e0e6161524fc5ced6704d8effec0a87009241f25..1b11ff184f91eb6923b79e5d6462d945ae8a0f42 100644
+index 4b37b44ff78503d4a1de808f5d429605f0de289c..6e9a0f48147e855e646223fedce3908548517f3e 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -2793,4 +2793,8 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+@@ -2789,4 +2789,8 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
      // Leaves start - Photographer API
      @NotNull org.leavesmc.leaves.entity.photographer.PhotographerManager getPhotographerManager();
      // Leaves end - Photographer API
@@ -33,7 +33,7 @@ index e0e6161524fc5ced6704d8effec0a87009241f25..1b11ff184f91eb6923b79e5d6462d945
 +    // Leaves end - Bytebuf API
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index c5af83a9e4e619d32378a7bf361b5b4f05b6e147..b1edc65eb9b65108caf31fc8efe312c97ea44ed5 100644
+index 5c3eb7d3cfabdfd18e91cdda0b8a1bfd9c250b3a..586928193b7907669f2c8b9121fb4b6ebab3b5fc 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -69,7 +69,7 @@ import org.jspecify.annotations.Nullable;
@@ -42,6 +42,6 @@ index c5af83a9e4e619d32378a7bf361b5b4f05b6e147..b1edc65eb9b65108caf31fc8efe312c9
  @NullMarked
 -public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginMessageRecipient, net.kyori.adventure.identity.Identified, net.kyori.adventure.bossbar.BossBarViewer, com.destroystokyo.paper.network.NetworkClient { // Paper
 +public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginMessageRecipient, net.kyori.adventure.identity.Identified, net.kyori.adventure.bossbar.BossBarViewer, com.destroystokyo.paper.network.NetworkClient, org.leavesmc.leaves.bytebuf.PacketAudience { // Paper // Leaves - Bytbuf API
-
+ 
      // Paper start
      @Override
