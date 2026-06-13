@@ -322,11 +322,11 @@ public class ServerBot extends ServerPlayer {
     }
 
     @Override
-    public void knockback(double strength, double x, double z, @Nullable Entity attacker, EntityKnockbackEvent.@NotNull Cause eventCause) {
+    public void knockback(double strength, double x, double z, net.minecraft.world.damagesource.DamageSource source, float damage, boolean comesFromEffect, @Nullable Entity attacker, EntityKnockbackEvent.@NotNull Cause eventCause) { // Leaves - 26.2: knockback signature
         if (!this.hurtMarked) {
             return;
         }
-        super.knockback(strength, x, z, attacker, eventCause);
+        super.knockback(strength, x, z, source, damage, comesFromEffect, attacker, eventCause);
     }
 
     @Override
