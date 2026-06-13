@@ -5,10 +5,10 @@ Subject: [PATCH] Old ender dragon part can use end portal
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 31a8631ef794a4b99adcbe0004f33bcc98ee73de..78d411d860dcdfffc8b3bbc3e08f4d23cd01722d 100644
+index 4ecdcd605877f43a46452275fff7830efde7efa7..cd0817e6a85513f63e551af0ee2a67b3a5bc1ab5 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -204,7 +204,7 @@ public abstract class Entity
+@@ -201,7 +201,7 @@ public abstract class Entity
      // Paper end - Share random for entities to make them more random
      public org.bukkit.event.entity.CreatureSpawnEvent.@Nullable SpawnReason spawnReason; // Paper - Entity#getEntitySpawnReason
  
@@ -17,7 +17,7 @@ index 31a8631ef794a4b99adcbe0004f33bcc98ee73de..78d411d860dcdfffc8b3bbc3e08f4d23
  
      public org.bukkit.craftbukkit.entity.CraftEntity getBukkitEntity() {
          if (this.bukkitEntity == null) {
-@@ -4064,7 +4064,7 @@ public abstract class Entity
+@@ -4137,7 +4137,7 @@ public abstract class Entity
  
      public @Nullable Entity teleport(TeleportTransition transition) { // Paper - remove param final
          // Paper start - Fix item duplication and teleport issues
@@ -26,7 +26,7 @@ index 31a8631ef794a4b99adcbe0004f33bcc98ee73de..78d411d860dcdfffc8b3bbc3e08f4d23
              LOGGER.warn("Illegal Entity Teleport {} to {}:{}", this, transition.newLevel(), transition.position(), new Throwable());
              return null;
          }
-@@ -4181,7 +4181,7 @@ public abstract class Entity
+@@ -4254,7 +4254,7 @@ public abstract class Entity
          newEntity.restoreFrom(this);
          this.removeAfterChangingDimensions();
          newEntity.teleportSetPosition(PositionMoveRotation.of(this), PositionMoveRotation.of(transition), transition.relatives());
@@ -35,7 +35,7 @@ index 31a8631ef794a4b99adcbe0004f33bcc98ee73de..78d411d860dcdfffc8b3bbc3e08f4d23
  
          for (Entity newPassenger : newPassengers) {
              newPassenger.startRiding(newEntity, true, false);
-@@ -4294,6 +4294,7 @@ public abstract class Entity
+@@ -4367,6 +4367,7 @@ public abstract class Entity
      }
  
      public boolean canTeleport(final Level from, final Level to) {
@@ -44,10 +44,10 @@ index 31a8631ef794a4b99adcbe0004f33bcc98ee73de..78d411d860dcdfffc8b3bbc3e08f4d23
          if (!this.isAlive() || !this.valid) return false; // Paper - Fix item duplication and teleport issues
          if (from.dimension() == Level.END && to.dimension() == Level.OVERWORLD) {
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index 85cc3228091ba769e79297c924549a7daaf1fff8..df73fdd8affd0a20c1ca456b02c8f31a872f25d4 100644
+index aad59a7cef63ebd0415ab93f5b5d47e8f3943522..d6e0ec9f38e6ee145ec719772e034b2a87665c53 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
-@@ -404,6 +404,16 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
+@@ -409,6 +409,16 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
          if (!this.level().isClientSide() && this.tickCount % 5 == 0) {
              this.updateControlFlags();
          }

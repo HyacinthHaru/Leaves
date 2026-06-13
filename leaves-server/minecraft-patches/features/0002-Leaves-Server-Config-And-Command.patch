@@ -5,10 +5,10 @@ Subject: [PATCH] Leaves Server Config And Command
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 01922963a6469f2dd93cf71a612b3df0a11f1bf1..0258eeb292cfb45aa6c09413d6ec97dea017995b 100644
+index 2e6b0102de8f0639d23ae30873b36a49a9fe3585..38bbb38900edd66eb666d8653dfa7d3dfe7f20a9 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -2332,6 +2332,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2339,6 +2339,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              )
              .thenAcceptAsync(newResources -> {
                  io.papermc.paper.command.brigadier.PaperBrigadier.moveBukkitCommands(this.resources.managers().getCommands(), newResources.managers().commands); // Paper
@@ -17,10 +17,10 @@ index 01922963a6469f2dd93cf71a612b3df0a11f1bf1..0258eeb292cfb45aa6c09413d6ec97de
                  this.resources = newResources;
                  this.packRepository.setSelected(packsToEnable, false); // Paper - add pendingReload flag to determine required pack loading - false as this is *after* a reload (see above)
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index 6a5d404e570ede5d49c82bccc30aa75ddd58983b..84684c28756629b428e764d38c84b71c9c103f8f 100644
+index 164a2f0f8c4f2d491c51489b9b667f91aee5f42d..df21eb2addc971c571f3393da1193c7a954f9b83 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -288,6 +288,9 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -249,6 +249,9 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          consoleThread.start(); // Paper - Enhance console tab completions for brigadier commands; start console thread after MinecraftServer.console & PaperConfig are initialized
          io.papermc.paper.command.PaperCommands.registerCommands(this); // Paper - setup /paper command
          this.server.spark.registerCommandBeforePlugins(this.server); // Paper - spark

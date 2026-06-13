@@ -5,10 +5,10 @@ Subject: [PATCH] Return nether portal fix
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 3b54e1bd8ab25a7564cf2befeb836e61465e2d0f..4c85295c972b84ac110f5691f48576a315754ad9 100644
+index 5b15a68fc6a593752d054a7c2e7dcde911c44a8d..9543929d50c1baf3710fda718f3e84c3b08db4b6 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1582,6 +1582,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1597,6 +1597,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          org.bukkit.event.player.PlayerChangedWorldEvent changeEvent = new org.bukkit.event.player.PlayerChangedWorldEvent(this.getBukkitEntity(), oldLevel.getWorld());
          this.level().getCraftServer().getPluginManager().callEvent(changeEvent);
          // CraftBukkit end
@@ -29,10 +29,10 @@ index 3b54e1bd8ab25a7564cf2befeb836e61465e2d0f..4c85295c972b84ac110f5691f48576a3
          if (this.isBlocking()) {
              this.stopUsingItem();
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 174443a3abca82b09ae2a0dd4dc55743607b1716..a5d7ab2d4c977fd63972487e2df37af6a1282b30 100644
+index d602a97b6841ba987c83d7563588a540622bae1b..c89ff01c0b0966a2b34720086f24c1b74c23b4f8 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -704,6 +704,18 @@ public abstract class PlayerList {
+@@ -705,6 +705,18 @@ public abstract class PlayerList {
          // It's possible for respawn to be in a diff dimension
          if (fromLevel != level) {
              new org.bukkit.event.player.PlayerChangedWorldEvent(player.getBukkitEntity(), fromLevel.getWorld()).callEvent();
@@ -52,10 +52,10 @@ index 174443a3abca82b09ae2a0dd4dc55743607b1716..a5d7ab2d4c977fd63972487e2df37af6
          }
  
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 5e312db025ff9b1c9b69eb65adebb2ec16aaa467..2403a117ec13922a5bdf1b736d37a77e21959c8d 100644
+index 0d3d9138ca1713e3ca28fcd504b04092f622ef38..c8aab7fd0746a39553150872f7c02b94b175ca37 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -261,7 +261,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -276,7 +276,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
      public int useItemRemaining;
      protected int fallFlyTicks;
      private long lastKineticHitFeedbackTime = -2147483648L;
@@ -65,10 +65,10 @@ index 5e312db025ff9b1c9b69eb65adebb2ec16aaa467..2403a117ec13922a5bdf1b736d37a77e
      private @Nullable DamageSource lastDamageSource;
      private long lastDamageStamp;
 diff --git a/net/minecraft/world/level/block/NetherPortalBlock.java b/net/minecraft/world/level/block/NetherPortalBlock.java
-index 14cca8dae351481328c689d4227d36c00f279b42..4fbc8e7114302004fc498329d6b9f3a0290dee76 100644
+index 070880adc13501f8011d81de339a66d474f7948a..65258973df24c829867dca6f66eb04b487b0bee8 100644
 --- a/net/minecraft/world/level/block/NetherPortalBlock.java
 +++ b/net/minecraft/world/level/block/NetherPortalBlock.java
-@@ -188,7 +188,18 @@ public class NetherPortalBlock extends Block implements Portal {
+@@ -190,7 +190,18 @@ public class NetherPortalBlock extends Block implements Portal {
          final WorldBorder worldBorder
          , org.bukkit.craftbukkit.event.PortalEventResult result // CraftBukkit
      ) {

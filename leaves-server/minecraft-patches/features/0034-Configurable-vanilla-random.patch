@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable vanilla random
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 42d43b6ba3d668a02621fc231dd03cf11a6f9db9..d7c453d2b72351ec3553b341c02cc54d8a06659a 100644
+index d39fb73ac8ef13d1dc5d4ddbd0c4b1fc9b83eddc..40af26e7b5dd240d3cbe04d0d98d83debc8f505e 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -298,7 +298,7 @@ public abstract class Entity
@@ -18,24 +18,23 @@ index 42d43b6ba3d668a02621fc231dd03cf11a6f9db9..d7c453d2b72351ec3553b341c02cc54d
      private int remainingFireTicks;
      private final EntityFluidInteraction fluidInteraction = new EntityFluidInteraction(Set.of(FluidTags.WATER, FluidTags.LAVA));
 diff --git a/net/minecraft/world/entity/animal/squid/Squid.java b/net/minecraft/world/entity/animal/squid/Squid.java
-index 637cdcf459aaf78dc381d8a990b0e2c571c06de8..492cb7411d3cae18786ba9835c122f94b73f57e5 100644
+index cc6ecffa5eccdf8f12d37861ead767dbe5326397..56157dae105a445ffa49b7b70b075b853bcb25fe 100644
 --- a/net/minecraft/world/entity/animal/squid/Squid.java
 +++ b/net/minecraft/world/entity/animal/squid/Squid.java
-@@ -51,7 +51,7 @@ public class Squid extends AgeableWaterCreature {
+@@ -52,6 +52,7 @@ public class Squid extends AgeableWaterCreature {
  
      public Squid(final EntityType<? extends Squid> type, final Level level) {
          super(type, level);
--        // this.random.setSeed(this.getId()); // Paper - Share random for entities to make them more random
 +        if (org.leavesmc.leaves.LeavesConfig.modify.useVanillaRandom) this.random.setSeed(this.getId()); // Paper - Share random for entities to make them more random // Leaves - configurable vanilla random
          this.tentacleSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
      }
  
 diff --git a/net/minecraft/world/entity/item/ItemEntity.java b/net/minecraft/world/entity/item/ItemEntity.java
-index 79d82446abdc782448a085b99177065d571eb5a1..83299a0e7a11ab1983bc07e4f0a71477d9c3a181 100644
+index 85dd5d7e09af964de1c0ad09799384d122f49bbe..bb2308339e614de8753b69a0961b35e4bbbc5d96 100644
 --- a/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/net/minecraft/world/entity/item/ItemEntity.java
-@@ -64,7 +64,13 @@ public class ItemEntity extends Entity implements TraceableEntity {
-         this(EntityType.ITEM, level);
+@@ -65,7 +65,13 @@ public class ItemEntity extends Entity implements TraceableEntity {
+         this(EntityTypes.ITEM, level);
          this.setPos(x, y, z);
          this.setItem(itemStack);
 -        this.setDeltaMovement(this.random.nextDouble() * 0.2 - 0.1, 0.2, this.random.nextDouble() * 0.2 - 0.1);
@@ -50,12 +49,12 @@ index 79d82446abdc782448a085b99177065d571eb5a1..83299a0e7a11ab1983bc07e4f0a71477
  
      public ItemEntity(
 diff --git a/net/minecraft/world/entity/item/PrimedTnt.java b/net/minecraft/world/entity/item/PrimedTnt.java
-index ede2ce9abfb14a25a6b48d7867ff935b5167ba3e..ba3f839e98ee1601a37169cbfe8b545acac63486 100644
+index ffb23ae34060c349e7200fc8475412295bd54c7e..6ae507eee760002bf52dc41375f0ed2047cc8d23 100644
 --- a/net/minecraft/world/entity/item/PrimedTnt.java
 +++ b/net/minecraft/world/entity/item/PrimedTnt.java
-@@ -69,7 +69,7 @@ public class PrimedTnt extends Entity implements TraceableEntity {
+@@ -72,7 +72,7 @@ public class PrimedTnt extends Entity implements TraceableEntity {
      public PrimedTnt(final Level level, final double x, final double y, final double z, final @Nullable LivingEntity owner) {
-         this(EntityType.TNT, level);
+         this(EntityTypes.TNT, level);
          this.setPos(x, y, z);
 -        double rot = this.getRandom().nextDouble() * (float) (Math.PI * 2); // Paper - Don't use level random in entity constructors
 +        double rot = (org.leavesmc.leaves.LeavesConfig.modify.useVanillaRandom ? level.getRandom().nextDouble() : this.getRandom().nextDouble()) * (float) (Math.PI * 2); // Paper - Don't use level random in entity constructors // Leaves - configurable vanilla random

@@ -5,10 +5,10 @@ Subject: [PATCH] Config to disable method profiler
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 606640a1a70d88e48c7e45aa6336635c21c415b0..d7d878a2d35ad40d4315aab15a466f2543906430 100644
+index fd5b5b39d279f595fc225a0daf841855eda36552..284c24d7c7ee2bfd47dede5209f57b356f22d45d 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1372,7 +1372,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1371,7 +1371,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
                  // Paper - improve tick loop - done above
  

@@ -5,10 +5,10 @@ Subject: [PATCH] Old minecart motion behavior
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index e79fea2359652f58623683f737510e631b7e2de7..ad07c92d2e7c68ec09b2f31d770552d4742dc8d9 100644
+index eadb5527b63c82109b8c12870521644a680412f2..0b8ed72b41d639eacbbf6dcb6af84ef44e1b40a3 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -4217,7 +4217,7 @@ public abstract class Entity
+@@ -4290,7 +4290,7 @@ public abstract class Entity
                  transition.relatives().contains(Relative.Y) ? 0.0 : passengerOffset.y(),
                  transition.relatives().contains(Relative.Z) ? 0.0 : passengerOffset.z()
              );
@@ -18,10 +18,10 @@ index e79fea2359652f58623683f737510e631b7e2de7..ad07c92d2e7c68ec09b2f31d770552d4
  
      private void sendTeleportTransitionToRidingPlayers(final TeleportTransition transition) {
 diff --git a/net/minecraft/world/level/block/NetherPortalBlock.java b/net/minecraft/world/level/block/NetherPortalBlock.java
-index 4fbc8e7114302004fc498329d6b9f3a0290dee76..0f3518e864c3917a0b9b173beff37af16fc0dace 100644
+index 65258973df24c829867dca6f66eb04b487b0bee8..33e0a9ea20ff3d9f5d517a8da504ad5393f56852 100644
 --- a/net/minecraft/world/level/block/NetherPortalBlock.java
 +++ b/net/minecraft/world/level/block/NetherPortalBlock.java
-@@ -272,7 +272,17 @@ public class NetherPortalBlock extends Block implements Portal {
+@@ -274,7 +274,17 @@ public class NetherPortalBlock extends Block implements Portal {
          double width = foundRectangle.axis1Size;
          double height = foundRectangle.axis2Size;
          EntityDimensions dimensions = entity.getDimensions(entity.getPose());
@@ -40,7 +40,7 @@ index 4fbc8e7114302004fc498329d6b9f3a0290dee76..0f3518e864c3917a0b9b173beff37af1
          double offsetRight = dimensions.width() / 2.0 + (width - dimensions.width()) * offset.x();
          double offsetUp = (height - dimensions.height()) * offset.y();
          double offsetForward = 0.5 + offset.z();
-@@ -284,7 +294,7 @@ public class NetherPortalBlock extends Block implements Portal {
+@@ -286,7 +296,7 @@ public class NetherPortalBlock extends Block implements Portal {
          );
          Vec3 collisionFreePos = PortalShape.findCollisionFreePosition(targetPos, newLevel, entity, dimensions);
          return new TeleportTransition(

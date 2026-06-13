@@ -5,10 +5,10 @@ Subject: [PATCH] Dont send useless entity packets
 
 
 diff --git a/net/minecraft/server/level/ServerEntity.java b/net/minecraft/server/level/ServerEntity.java
-index 5fad52157fc22755196ce9eaddaa2bc23c5bb86b..3e0c75b8006ee939115556ed09554ae5a007a272 100644
+index fcb3a4435d55f58d71cbf27d7024c60690876493..ec653b72874dcbdc80aa2560957a0cf5bafe9306 100644
 --- a/net/minecraft/server/level/ServerEntity.java
 +++ b/net/minecraft/server/level/ServerEntity.java
-@@ -194,6 +194,11 @@ public class ServerEntity {
+@@ -199,6 +199,11 @@ public class ServerEntity {
                      sentPosition = true;
                      sentRotation = true;
                  }
@@ -18,9 +18,9 @@ index 5fad52157fc22755196ce9eaddaa2bc23c5bb86b..3e0c75b8006ee939115556ed09554ae5
 +                }
 +                // Leaves end - dont send useless entity packets
  
-                 if (this.entity.needsSync || this.trackDelta || this.entity instanceof LivingEntity && ((LivingEntity)this.entity).isFallFlying()) {
+                 if (this.entity.needsSync || this.trackDelta || this.entity instanceof LivingEntity livingEntity && livingEntity.isFallFlying()) {
                      Vec3 movement = this.entity.getDeltaMovement();
-@@ -300,6 +305,21 @@ public class ServerEntity {
+@@ -305,6 +310,21 @@ public class ServerEntity {
          this.positionCodec.setBase(this.entity.position());
      }
  

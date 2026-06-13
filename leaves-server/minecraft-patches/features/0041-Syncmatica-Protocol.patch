@@ -6,15 +6,15 @@ Subject: [PATCH] Syncmatica Protocol
 This patch is Powered by Syncmatica(https://github.com/End-Tech/syncmatica)
 
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 047d3533c23c68b38d63889e9a88780451f66672..185824a02d0c1f67dbcb69d93e816af383e59566 100644
+index 2ead03e702ecb4fac78987f5103d4d8602867b32..cac5d723ec7b17e479a2a1913a044628aa38cae1 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -339,9 +339,12 @@ public class ServerGamePacketListenerImpl
+@@ -342,9 +342,12 @@ public class ServerGamePacketListenerImpl
          this.signedMessageDecoder = SignedMessageChain.Decoder.unsigned(player.getUUID(), server::enforceSecureProfile);
          this.chatMessageChain = new FutureChain(server.chatExecutor); // CraftBukkit - async chat
          this.tickEndEvent = new io.papermc.paper.event.packet.ClientTickEndEvent(player.getBukkitEntity()); // Paper - add client tick end event
 +        this.exchangeTarget = new org.leavesmc.leaves.protocol.syncmatica.exchange.ExchangeTarget(this); // Leaves - Syncmatica Protocol
-         this.playerGameConnection =  new io.papermc.paper.connection.PaperPlayerGameConnection(this); // Paper
+         this.playerGameConnection = new io.papermc.paper.connection.PaperPlayerGameConnection(this); // Paper
      }
  
 +    public final org.leavesmc.leaves.protocol.syncmatica.exchange.ExchangeTarget exchangeTarget; // Leaves - Syncmatica Protocol

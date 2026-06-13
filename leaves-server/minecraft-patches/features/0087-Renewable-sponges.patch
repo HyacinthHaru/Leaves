@@ -5,10 +5,10 @@ Subject: [PATCH] Renewable sponges
 
 
 diff --git a/net/minecraft/world/entity/monster/Guardian.java b/net/minecraft/world/entity/monster/Guardian.java
-index 39c7c9d7b92872b013fe4dbf68dafd02ecab3ab9..c67584b3db57760cd782c3b1dbbb3777600a1e1f 100644
+index 0c93837d5ba6395d1fd1825173f97d3b34f4b887..cf5fa6f1aaeb4cfe561ee4a40d9b9b0b18ce6078 100644
 --- a/net/minecraft/world/entity/monster/Guardian.java
 +++ b/net/minecraft/world/entity/monster/Guardian.java
-@@ -444,6 +444,28 @@ public class Guardian extends Monster {
+@@ -441,6 +441,28 @@ public class Guardian extends Monster {
          }
      }
  
@@ -34,6 +34,6 @@ index 39c7c9d7b92872b013fe4dbf68dafd02ecab3ab9..c67584b3db57760cd782c3b1dbbb3777
 +    }
 +    // Leaves end - renewable sponges
 +
-     private static class GuardianMoveControl extends MoveControl {
-         private final Guardian guardian;
- 
+     private static class GuardianMoveControl<T extends Guardian> extends MoveControl<T> {
+         public GuardianMoveControl(final T guardian) {
+             super(guardian);

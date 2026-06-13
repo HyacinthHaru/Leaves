@@ -5,10 +5,10 @@ Subject: [PATCH] Force Void Trade
 
 
 diff --git a/net/minecraft/world/entity/npc/villager/AbstractVillager.java b/net/minecraft/world/entity/npc/villager/AbstractVillager.java
-index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519579ce0c1 100644
+index 07aa7fae79edff4c92b8f153659f16b9769c80ff..36844b51b6db38a91dfda5b192e249983328a279 100644
 --- a/net/minecraft/world/entity/npc/villager/AbstractVillager.java
 +++ b/net/minecraft/world/entity/npc/villager/AbstractVillager.java
-@@ -57,6 +57,7 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
+@@ -58,6 +58,7 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
      private @Nullable Player tradingPlayer;
      protected @Nullable MerchantOffers offers;
      private final SimpleContainer inventory = new SimpleContainer(8, (org.bukkit.craftbukkit.entity.CraftAbstractVillager) this.getBukkitEntity()); // CraftBukkit - add argument
@@ -16,7 +16,7 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
  
      public AbstractVillager(final EntityType<? extends AbstractVillager> type, final Level level) {
          super(type, level);
-@@ -148,7 +149,13 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
+@@ -149,7 +150,13 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
      @Override
      public void processTrade(MerchantOffer offer, io.papermc.paper.event.player.@Nullable PlayerPurchaseEvent event) { // The MerchantRecipe passed in here is the one set by the PlayerPurchaseEvent
          if (event == null || event.willIncreaseTradeUses()) {
@@ -31,7 +31,7 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
          }
          if (event == null || event.isRewardingExp()) {
              this.rewardTradeXp(offer);
-@@ -160,7 +167,7 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
+@@ -161,7 +168,7 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
      @Override
      public void notifyTrade(final MerchantOffer offer) {
          // offer.increaseUses(); // Paper - Add PlayerTradeEvent and PlayerPurchaseEvent
@@ -40,7 +40,7 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
          // this.rewardTradeXp(offer); // Paper - Add PlayerTradeEvent and PlayerPurchaseEvent
          if (this.tradingPlayer instanceof ServerPlayer) {
              CriteriaTriggers.TRADE.trigger((ServerPlayer)this.tradingPlayer, this, offer.getResult());
-@@ -177,7 +184,7 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
+@@ -178,7 +185,7 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
      @Override
      public void notifyTradeUpdated(final ItemStack itemStack) {
          if (!this.level().isClientSide() && this.ambientSoundTime > -this.getAmbientSoundInterval() + 20) {
@@ -49,7 +49,7 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
              this.makeSound(this.getTradeUpdatedSound(!itemStack.isEmpty()));
          }
      }
-@@ -222,9 +229,21 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
+@@ -220,9 +227,21 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
      }
  
      protected void stopTrading() {
@@ -72,10 +72,10 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
      public void die(final DamageSource source) {
          super.die(source);
 diff --git a/net/minecraft/world/entity/npc/villager/Villager.java b/net/minecraft/world/entity/npc/villager/Villager.java
-index e4ba6e200e85f4e226d6a3e68db734f277b89226..5ba17ee4f048a6bb109a7706fe1adfe3de152e59 100644
+index 4f8439afa4ea602b662e68e6b86e9d927fb6a481..b90d14f416cb5124878a77b9a5eeaa2fab54afa6 100644
 --- a/net/minecraft/world/entity/npc/villager/Villager.java
 +++ b/net/minecraft/world/entity/npc/villager/Villager.java
-@@ -361,6 +361,7 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
+@@ -352,6 +352,7 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
      }
  
      private void startTrading(final Player player) {
@@ -83,7 +83,7 @@ index e4ba6e200e85f4e226d6a3e68db734f277b89226..5ba17ee4f048a6bb109a7706fe1adfe3
          this.updateSpecialPrices(player);
          this.setTradingPlayer(player);
          this.openTradingScreen(player, this.getDisplayName(), this.getVillagerData().level());
-@@ -612,8 +613,12 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
+@@ -613,8 +614,12 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
      @Override
      protected void rewardTradeXp(final MerchantOffer offer) {
          int popXp = 3 + this.random.nextInt(4);
@@ -99,7 +99,7 @@ index e4ba6e200e85f4e226d6a3e68db734f277b89226..5ba17ee4f048a6bb109a7706fe1adfe3
              this.updateMerchantTimer = 40;
              this.increaseProfessionLevelOnUpdate = true;
 diff --git a/net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader.java b/net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader.java
-index 104bf115e9cbd10bb2801ece34a6879b452edf63..11662a8f0945db2e0daf45695a9313189aa06a7e 100644
+index f79353aa58b03d00839e4e95d1fd2480a635a592..8e553ec0bfe9658cadec7ad1033ddfd22182b0e0 100644
 --- a/net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader.java
 +++ b/net/minecraft/world/entity/npc/wanderingtrader/WanderingTrader.java
 @@ -120,6 +120,7 @@ public class WanderingTrader extends AbstractVillager implements Consumable.Over
@@ -111,7 +111,7 @@ index 104bf115e9cbd10bb2801ece34a6879b452edf63..11662a8f0945db2e0daf45695a931318
                  this.openTradingScreen(player, this.getDisplayName(), 1);
              }
 diff --git a/net/minecraft/world/inventory/MerchantMenu.java b/net/minecraft/world/inventory/MerchantMenu.java
-index 7fcc2c2ad603699e176bb95559e51134174ecc20..8aa48fd5be819af44ce1ac4f5e101a9ae66a457d 100644
+index 0d19d4c2ea25ed8ee28ec505bc92baabac527b16..c07f5d4975a27d0cedf5759e66600edaa095a4f8 100644
 --- a/net/minecraft/world/inventory/MerchantMenu.java
 +++ b/net/minecraft/world/inventory/MerchantMenu.java
 @@ -25,7 +25,7 @@ public class MerchantMenu extends AbstractContainerMenu {
@@ -170,7 +170,7 @@ index 7e605e64aa386aadfa8ffc135d955f5b4a3f4381..ca76581c33f8d8d996deed0a714db821
  
      public void setToOutOfStock() {
 diff --git a/net/minecraft/world/level/block/EndGatewayBlock.java b/net/minecraft/world/level/block/EndGatewayBlock.java
-index f9bb42aa5f85c3a4ef144d9131ae9e2d7d7ed78b..e0874a0f424b81dcb694db0e83099ee82b2bfcff 100644
+index fd0ec9e5cc92b7022578d15b95bc2ff5168a6a71..3d5172cd1ef79a173c358055a755eaaf89a8c9db 100644
 --- a/net/minecraft/world/level/block/EndGatewayBlock.java
 +++ b/net/minecraft/world/level/block/EndGatewayBlock.java
 @@ -112,6 +112,15 @@ public class EndGatewayBlock extends BaseEntityBlock implements Portal {

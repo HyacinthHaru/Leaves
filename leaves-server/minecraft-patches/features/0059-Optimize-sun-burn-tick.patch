@@ -5,10 +5,10 @@ Subject: [PATCH] Optimize sun burn tick
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 8e62879ca0e2bf4913295bbad127f8cf314654cd..85a06111cecde93ca6bfecd4d8d3e0323684ae08 100644
+index 0495521c0dd8a1aaff6629e43e16a371274f95e2..bb63e2a64df28c2add6bf899fa49091a97999f73 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -2213,11 +2213,23 @@ public abstract class Entity
+@@ -2298,11 +2298,23 @@ public abstract class Entity
  
      @Deprecated
      public float getLightLevelDependentMagicValue() {
@@ -33,10 +33,10 @@ index 8e62879ca0e2bf4913295bbad127f8cf314654cd..85a06111cecde93ca6bfecd4d8d3e032
          this.absSnapTo(x, y, z);
          this.absSnapRotationTo(yRot, xRot);
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index 3bbf67d96f687b7275a4e496f0d25018ff4890c7..85cc3228091ba769e79297c924549a7daaf1fff8 100644
+index 7ed388ac0a25402399a4173f5d421a4368ce8b04..aad59a7cef63ebd0415ab93f5b5d47e8f3943522 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
-@@ -592,8 +592,26 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
+@@ -591,8 +591,26 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
          }
      }
  

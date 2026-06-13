@@ -54,10 +54,10 @@ index 51c126735ace8fdde89ad97b5cab62f244212db0..a6573e327ace16b7ea320eb1440ffcbc
 +    public void moonrise$write(final org.leavesmc.leaves.region.IRegionFile regionFile) throws IOException; // Leaves - more region format
  }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 95bb2ec78ec0d773cf065a8b60722576a3eae3bd..9b522f910812ab3523bca22c6575836e0520735f 100644
+index 41fedbf6cd95083eab681d688c29b476bed774b9..af1cfcf0f84cc5dc1a6eb63e9c5487f68e1f3a0a 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -980,10 +980,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -979,10 +979,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          if (flush) {
              for (ServerLevel level : this.getAllLevels()) {
                  String storageName = level.getChunkSource().chunkMap.getStorageName();
@@ -122,7 +122,7 @@ index b228cd6c54e8c8998923ab332882d99092769c67..a5ed73e542afd79b9ec5358639b168f2
              if (this.previousWriteFuture != null) {
                  this.previousWriteFuture.join();
 diff --git a/net/minecraft/world/level/chunk/storage/RegionFile.java b/net/minecraft/world/level/chunk/storage/RegionFile.java
-index 42d07aef0b2f646ec52ed6f4e7c003dbf82bd92d..19b7e8c5b964fbd3a72a2b99c95e3098ee0f02fa 100644
+index 3de7fd2b084c38e72d7a6bc416880a881f514ad3..5fec13cae17830804ab3fbcc66b138af4e2db195 100644
 --- a/net/minecraft/world/level/chunk/storage/RegionFile.java
 +++ b/net/minecraft/world/level/chunk/storage/RegionFile.java
 @@ -22,7 +22,7 @@ import net.minecraft.world.level.ChunkPos;
@@ -185,7 +185,7 @@ index 42d07aef0b2f646ec52ed6f4e7c003dbf82bd92d..19b7e8c5b964fbd3a72a2b99c95e3098
          try (DataInputStream out = new DataInputStream(new java.io.BufferedInputStream(new java.util.zip.InflaterInputStream(Files.newInputStream(file))))) {
              return net.minecraft.nbt.NbtIo.read((java.io.DataInput) out);
 diff --git a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
-index e47a91b1869801258d0db20c126722fb06522c80..69c6c40b1706870c7a89a366f51cc30105672bdb 100644
+index db118c2665f6d94c8394a478cc3c619ed010a0c6..f153e9835c07d5418c1c6ccaed810c1ff75258bb 100644
 --- a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 +++ b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 @@ -19,7 +19,7 @@ public class RegionFileStorage implements AutoCloseable, ca.spottedleaf.moonrise
@@ -383,7 +383,7 @@ index e47a91b1869801258d0db20c126722fb06522c80..69c6c40b1706870c7a89a366f51cc301
          }
 @@ -398,7 +417,7 @@ public class RegionFileStorage implements AutoCloseable, ca.spottedleaf.moonrise
  
-     public void write(final ChunkPos pos, final @Nullable CompoundTag value) throws IOException { // Paper - rewrite chunk system - public
+     public void write(final ChunkPos pos, final @Nullable CompoundTag value) throws IOException {
          if (!SharedConstants.DEBUG_DONT_SAVE_WORLD) {
 -            RegionFile region = this.getRegionFile(pos, value == null); // CraftBukkit // Paper - rewrite chunk system
 +            org.leavesmc.leaves.region.IRegionFile region = this.getRegionFile(pos, value == null); // CraftBukkit // Paper - rewrite chunk system // Leaves - more region format

@@ -1,18 +1,11 @@
-From a260c23da85bd64a4db7343130e814cf88237903 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Tue, 18 Jul 2023 13:14:15 +0800
 Subject: [PATCH] Faster chunk serialization
 
----
- net/minecraft/util/BitStorage.java            |  2 +
- net/minecraft/util/SimpleBitStorage.java      | 31 +++++++
- net/minecraft/util/ZeroBitStorage.java        |  2 +
- .../world/level/chunk/HashMapPalette.java     | 10 +-
- .../world/level/chunk/PalettedContainer.java  | 91 +++++++++++++++++--
- 5 files changed, 129 insertions(+), 7 deletions(-)
 
 diff --git a/net/minecraft/util/BitStorage.java b/net/minecraft/util/BitStorage.java
-index 48f6671..fe3f454 100644
+index 48f6671ecabfd5a8c9f8151ccb59f9ea9dc201ac..fe3f45494a946136fdec333841925acd257a272f 100644
 --- a/net/minecraft/util/BitStorage.java
 +++ b/net/minecraft/util/BitStorage.java
 @@ -38,4 +38,6 @@ public interface BitStorage extends ca.spottedleaf.moonrise.patches.block_counti
@@ -23,7 +16,7 @@ index 48f6671..fe3f454 100644
 +    <T> void compact(net.minecraft.world.level.chunk.Palette<T> srcPalette, net.minecraft.world.level.chunk.Palette<T> dstPalette, short[] out, net.minecraft.world.level.chunk.PalettedContainer<T> resizeHandler); // Leaves - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/util/SimpleBitStorage.java b/net/minecraft/util/SimpleBitStorage.java
-index 8513636..738dd4e 100644
+index 851363603a3f8180f841c6f1b08dbac2db70f97a..738dd4eb25208d853ca89ee78046b41b5bb45a91 100644
 --- a/net/minecraft/util/SimpleBitStorage.java
 +++ b/net/minecraft/util/SimpleBitStorage.java
 @@ -465,4 +465,35 @@ public class SimpleBitStorage implements BitStorage {
@@ -63,7 +56,7 @@ index 8513636..738dd4e 100644
 +    // Leaves end - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/util/ZeroBitStorage.java b/net/minecraft/util/ZeroBitStorage.java
-index 3666c3e..e316c2e 100644
+index 3666c3efd188508153b6482db425648e3ca77dc7..e316c2e206f0972b6bda614249079f78db874654 100644
 --- a/net/minecraft/util/ZeroBitStorage.java
 +++ b/net/minecraft/util/ZeroBitStorage.java
 @@ -80,4 +80,6 @@ public class ZeroBitStorage implements BitStorage {
@@ -74,7 +67,7 @@ index 3666c3e..e316c2e 100644
 +    @Override public <T> void compact(net.minecraft.world.level.chunk.Palette<T> srcPalette, net.minecraft.world.level.chunk.Palette<T> dstPalette, short[] out, net.minecraft.world.level.chunk.PalettedContainer<T> resizeHandler) {} // Leaves - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/world/level/chunk/HashMapPalette.java b/net/minecraft/world/level/chunk/HashMapPalette.java
-index 3ee3588..90bf5e7 100644
+index 3ee35885ea1f997bb5a36dd8d5f83b168883ba61..90bf5e76e1de86d0c4e721946fcca930c9ba9b15 100644
 --- a/net/minecraft/world/level/chunk/HashMapPalette.java
 +++ b/net/minecraft/world/level/chunk/HashMapPalette.java
 @@ -14,7 +14,7 @@ public class HashMapPalette<T> implements Palette<T>, ca.spottedleaf.moonrise.pa
@@ -102,7 +95,7 @@ index 3ee3588..90bf5e7 100644
          this.bits = bits;
          this.values = values;
 diff --git a/net/minecraft/world/level/chunk/PalettedContainer.java b/net/minecraft/world/level/chunk/PalettedContainer.java
-index 66a05ad..2ab0063 100644
+index 26dbb9da7a7f50ec913b1226eff9e9ce6b4f3f12..e5038b3854a28a18cbc219f88ffc00108c8c434a 100644
 --- a/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/net/minecraft/world/level/chunk/PalettedContainer.java
 @@ -23,6 +23,22 @@ import net.minecraft.util.ZeroBitStorage;
@@ -174,7 +167,7 @@ index 66a05ad..2ab0063 100644
          try {
              BitStorage currentStorage = this.data.storage;
              Palette<T> currentPalette = this.data.palette;
-@@ -417,13 +472,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -424,13 +479,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
  
      @Override
      public void count(final PalettedContainer.CountConsumer<T> output) {
@@ -218,6 +211,3 @@ index 66a05ad..2ab0063 100644
      }
  
      @FunctionalInterface
--- 
-2.50.1 (Apple Git-155)
-

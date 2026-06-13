@@ -5,10 +5,10 @@ Subject: [PATCH] Creative fly no clip
 
 
 diff --git a/net/minecraft/world/entity/ExperienceOrb.java b/net/minecraft/world/entity/ExperienceOrb.java
-index 73a29d7d40e092be8264679c7f30e5aa8b8fb393..49582cb05db4872486cc142efceae6b768a589a3 100644
+index 700c9c0d40dee1df6c97f7c63ad731f16bc5f3e7..b95c56e0699fbe16e65efcf010cd514f0ac0962f 100644
 --- a/net/minecraft/world/entity/ExperienceOrb.java
 +++ b/net/minecraft/world/entity/ExperienceOrb.java
-@@ -199,7 +199,7 @@ public class ExperienceOrb extends Entity {
+@@ -204,7 +204,7 @@ public class ExperienceOrb extends Entity {
          Player prevTarget = this.followingPlayer; // CraftBukkit - store old target
          if (this.followingPlayer == null || this.followingPlayer.isSpectator() || this.followingPlayer.distanceToSqr(this) > 64.0) {
              Player nearestPlayer = this.level().getNearestPlayer(this, 8.0);
@@ -18,10 +18,10 @@ index 73a29d7d40e092be8264679c7f30e5aa8b8fb393..49582cb05db4872486cc142efceae6b7
              } else {
                  this.followingPlayer = null;
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..4d488da36964ddfebabe478b3a7e61ec940f7984 100644
+index 4f140261aa0746fa49eda10b9e08a5694e8be282..3f7868905e9e4bc8cec4d8278f7f47be7c444e5e 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
-@@ -242,8 +242,8 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -243,8 +243,8 @@ public abstract class Player extends Avatar implements ContainerUser {
  
      @Override
      public void tick() {
@@ -32,7 +32,7 @@ index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..4d488da36964ddfebabe478b3a7e61ec
              this.setOnGround(false);
          }
  
-@@ -369,7 +369,7 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -370,7 +370,7 @@ public abstract class Player extends Avatar implements ContainerUser {
          if (this.canPlayerFitWithinBlocksAndEntitiesWhen(Pose.SWIMMING)) {
              Pose desiredPose = this.getDesiredPose();
              Pose actualPose;
@@ -41,7 +41,7 @@ index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..4d488da36964ddfebabe478b3a7e61ec
                  actualPose = desiredPose;
              } else if (this.canPlayerFitWithinBlocksAndEntitiesWhen(Pose.CROUCHING)) {
                  actualPose = Pose.CROUCHING;
-@@ -498,7 +498,7 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -499,7 +499,7 @@ public abstract class Player extends Avatar implements ContainerUser {
          this.updateSwingTime();
          this.yHeadRot = this.getYRot();
          this.setSpeed((float)this.getAttributeValue(Attributes.MOVEMENT_SPEED));
@@ -50,7 +50,7 @@ index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..4d488da36964ddfebabe478b3a7e61ec
              AABB pickupArea;
              if (this.isPassenger() && !this.getVehicle().isRemoved()) {
                  pickupArea = this.getBoundingBox().minmax(this.getVehicle().getBoundingBox()).inflate(1.0, 0.0, 1.0);
-@@ -1805,6 +1805,26 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -1820,6 +1820,26 @@ public abstract class Player extends Avatar implements ContainerUser {
          return this.gameMode() == GameType.SPECTATOR;
      }
  
@@ -78,7 +78,7 @@ index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..4d488da36964ddfebabe478b3a7e61ec
      public boolean isPickable() {
          return !this.isSpectator() && super.isPickable();
 diff --git a/net/minecraft/world/item/BlockItem.java b/net/minecraft/world/item/BlockItem.java
-index 03b11543304c173b8558d548e5a193747234de20..ea701aa6af6da7400c0ca08ad88376f26a620665 100644
+index 02e149f95c145db0cdf4e45cdec5d31ce9859bf6..072df19eac4d09e33b0e5da6bfff841870f7754b 100644
 --- a/net/minecraft/world/item/BlockItem.java
 +++ b/net/minecraft/world/item/BlockItem.java
 @@ -174,8 +174,9 @@ public class BlockItem extends Item {
@@ -106,7 +106,7 @@ index 29e94404a230c37afc2b592ef7df60f9ed8543de..0e9a48c5cacbe2dd97af1b4e994eb695
  
              org.bukkit.event.block.BlockCanBuildEvent event = new org.bukkit.event.block.BlockCanBuildEvent(org.bukkit.craftbukkit.block.CraftBlock.at(context.getLevel(), pos), player, stateForPlacement.asBlockData(), defaultReturn, org.bukkit.craftbukkit.CraftEquipmentSlot.getHand(context.getHand())); // Paper - Expose hand in BlockCanBuildEvent
 diff --git a/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java b/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
-index 702aa9fdd3a9787547c7d64fdb17b40f27cd8d5e..edf07e06509df360a1423aa0b3828d656b6a3c4b 100644
+index d1a2e671509b51f0bfad1633b1cdc2be671fca81..9bc754554faa9f2ba06e5fc2c90d3f6417cfe726 100644
 --- a/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
 @@ -152,7 +152,7 @@ public class ShulkerBoxBlockEntity extends RandomizableContainerBlockEntity impl
@@ -119,7 +119,7 @@ index 702aa9fdd3a9787547c7d64fdb17b40f27cd8d5e..edf07e06509df360a1423aa0b3828d65
                              MoverType.SHULKER_BOX,
                              new Vec3(
 diff --git a/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java b/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
-index 65f332462cdd60fb00f4dd7be4fccd250bfc69d9..95a88a9ee23bb6b51d15e31c1fb6ee567b513d2d 100644
+index d1c01ef0b16b5f74b26f815d3adbf95536b6a747..3ca0c8f17d481dc0d522ed35ff397d161e5144f7 100644
 --- a/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
 +++ b/net/minecraft/world/level/block/piston/PistonMovingBlockEntity.java
 @@ -158,7 +158,7 @@ public class PistonMovingBlockEntity extends BlockEntity {
