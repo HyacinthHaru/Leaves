@@ -52,19 +52,6 @@ index 74a2b3dcd303b25e9c26f3e4d4220b390b32f1d5..5e2d8efd30e57eaf5481a3986cac28dd
 +    }
 +    // Leaves end - leaves ex data
  }
-diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 56659181dc817ea028428eabf5937308c04b8cc5..9f7a08a3b19d1f494ff1bfbaaf4b853b0e0df315 100644
---- a/net/minecraft/world/level/Level.java
-+++ b/net/minecraft/world/level/Level.java
-@@ -922,7 +922,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
-     }
- 
-     @Override
--    public @Nullable MinecraftServer getServer() {
-+    public @org.jetbrains.annotations.NotNull MinecraftServer getServer() { // Leaves - notnull
-         return null;
-     }
- 
 diff --git a/net/minecraft/world/level/LevelAccessor.java b/net/minecraft/world/level/LevelAccessor.java
 index a82be0511b6381a2e9ee32f9f5ba1cca123b0835..ecb3073113bdef133932df14ae67d20f34e248ef 100644
 --- a/net/minecraft/world/level/LevelAccessor.java

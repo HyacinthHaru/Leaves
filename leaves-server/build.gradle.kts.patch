@@ -18,7 +18,7 @@
 +val leavesMavenPublicUrl = "https://repo.leavesmc.org/snapshots/" // Leaves - build change
  
  dependencies {
-     mache("io.papermc:mache:26.1.2+build.2")
+     mache("io.papermc:mache:26.1.2+build.3")
 -    paperclip("io.papermc:paperclip:3.0.4")
 +    leavesclip("org.leavesmc:leavesclip:3.0.10") // Leaves - build change
  }
@@ -96,14 +96,6 @@
      implementation("ca.spottedleaf:concurrentutil:0.0.10")
      implementation("org.jline:jline-terminal-ffm:3.27.1") // use ffm on java 22+
      implementation("org.jline:jline-terminal-jni:3.27.1") // fall back to jni on java 21
-@@ -136,7 +_,6 @@
-     implementation("org.spongepowered:configurate-yaml:4.2.0")
- 
-     // Deps that were previously in the API but have now been moved here for backwards compat, eventually to be removed
--    runtimeOnly("commons-lang:commons-lang:2.6")
-     runtimeOnly("org.xerial:sqlite-jdbc:3.49.1.0")
-     runtimeOnly("com.mysql:mysql-connector-j:9.2.0")
-     runtimeOnly("com.lmax:disruptor:3.4.4")
 @@ -159,26 +_,36 @@
      implementation("me.lucko:spark-paper:1.10.152")
  }

@@ -13,7 +13,7 @@ index 229ff740e0418a05d824a67401ae6f105b4c3642..7e90784a38bccfe6707ea7e10946c39d
              if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder && (!(entity instanceof ServerPlayer) || entity.getRemovalReason() != Entity.RemovalReason.KILLED)) { // SPIGOT-6876: closeInventory clears death message
                  // Paper start - Fix merchant inventory not closing on entity removal
 -                if (entity.getBukkitEntity() instanceof org.bukkit.inventory.Merchant merchant && merchant.getTrader() != null) {
-+                if (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.voidTrade && entity.getBukkitEntity() instanceof org.bukkit.inventory.Merchant merchant && merchant.getTrader() != null) { // Leaves - Configurable trading with the void
++                if (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.voidTrade && entity.getBukkitEntity() instanceof org.bukkit.inventory.Merchant merchant && merchant.getTrader() != null) { // Leaves - configurable void trade
                      merchant.getTrader().closeInventory(org.bukkit.event.inventory.InventoryCloseEvent.Reason.UNLOADED);
                  }
                  // Paper end - Fix merchant inventory not closing on entity removal
@@ -26,7 +26,7 @@ index bb49f5914b4a3d686821f1989af7a44c4e256c92..8ef8cc7a33ea8e2d368a273000b15795
                  vehicle.getPassengersAndSelf().forEach(e -> {
                      // Paper start - Fix villager boat exploit
 -                    if (e instanceof net.minecraft.world.entity.npc.villager.AbstractVillager villager) {
-+                    if (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.voidTrade && e instanceof net.minecraft.world.entity.npc.villager.AbstractVillager villager) { // Leaves - Configurable trading with the void
++                    if (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.voidTrade && e instanceof net.minecraft.world.entity.npc.villager.AbstractVillager villager) { // Leaves - configurable void trade
                          final net.minecraft.world.entity.player.Player human = villager.getTradingPlayer();
                          if (human != null) {
                              villager.setTradingPlayer(null);
@@ -38,7 +38,7 @@ index 1dd82dfa739957f00d51c8b987289a002815f622..7fcc2c2ad603699e176bb95559e51134
  
      @Override
      public boolean stillValid(final Player player) {
-+        if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.voidTrade) return this.trader.getTradingPlayer() == player; // Leaves - Configurable trading with the void
++        if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.voidTrade) return this.trader.getTradingPlayer() == player; // Leaves - configurable void trade
          if (!checkReachable) return true; // Paper - checkReachable
          return this.trader.stillValid(player);
      }

@@ -249,7 +249,7 @@ index 42ec67c53c35189838ce4767c2be620e05108159..2e44b338893aaf30ba36eace5796971f
              }
          }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 7e90784a38bccfe6707ea7e10946c39db995f969..189dbd2c332dd706900448c300bb6db5ed652012 100644
+index 2dd7e567ecf70990c59a87f05dee61187aa78c94..8be4ddee39fc976cf53d232be4d79499ca604f68 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -234,6 +234,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -414,12 +414,12 @@ index 12190f2a2856b0d0cf95144d0b1622f1b9600bf6..be01f06d4ee02854345842c97382e8b6
  
      // Paper start - utility method for common conversion back to the game profile
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 8ef8cc7a33ea8e2d368a273000b157958ad19ccb..adc1e97353b59dd79574d83a0a3d5ae41c06749c 100644
+index c73b1cc74b299e0f6d7512a4093ce5a42b9a76eb..1cd2980eb6f9a28d920286f868503b41fb252d26 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -247,6 +247,19 @@ public abstract class PlayerList {
  
-         org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePlayerJoin(player); // Leaves - protocol
+         org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePlayerJoin(player); // Leaves - protocol core
  
 +        // Leaves start - bot support
 +        if (org.leavesmc.leaves.LeavesConfig.modify.fakeplayer.enable) {

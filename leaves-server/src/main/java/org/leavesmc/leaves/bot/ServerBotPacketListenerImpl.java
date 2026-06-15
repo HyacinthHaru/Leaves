@@ -30,14 +30,13 @@ public class ServerBotPacketListenerImpl extends ServerGamePacketListenerImpl {
         return true;
     }
 
-    // Leaves - bots never send a client-loaded packet; report loaded so the spawn-invulnerability timer (isInvulnerableTo) isn't stuck on
     @Override
-    public boolean hasClientLoaded() {
-        return true;
+    public void tick() {
     }
 
     @Override
-    public void tick() {
+    public boolean hasClientLoaded() {
+        return true; // Don't kick me out!
     }
 
     public static class BotConnection extends Connection {
