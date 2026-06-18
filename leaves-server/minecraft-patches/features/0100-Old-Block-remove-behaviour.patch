@@ -762,10 +762,10 @@ index b1f1ea03072c63bc3032c9f023a8fb4ede34b34b..1d805ccd2bc9d74e8f15db37bcc8146b
              this.getBlock().affectNeighborsAfterRemoval(this.asState(), level, pos, movedByPiston);
          }
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 670459abcc6f32bdc6d4742f6710585fda83ac83..3c5640ed649ba89066da70e64fe6291165948a5d 100644
+index 670459abcc6f32bdc6d4742f6710585fda83ac83..01be92e6b26aa754ba239fe0873d336319ec5c18 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -401,22 +401,28 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -401,22 +401,31 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
                  boolean flag = !blockState.is(block);
                  boolean flag1 = (flags & Block.UPDATE_MOVE_BY_PISTON) != 0;
                  boolean flag2 = (flags & Block.UPDATE_SKIP_BLOCK_ENTITY_SIDEEFFECTS) == 0;
@@ -776,7 +776,7 @@ index 670459abcc6f32bdc6d4742f6710585fda83ac83..3c5640ed649ba89066da70e64fe62911
 -                            blockEntity.preRemoveSideEffects(pos, blockState);
 +                // Leaves start - behaviour 1.21.1-
 +                if (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.updater.oldBlockRemoveBehaviour) {
-+                    if (flag && blockState.hasBlockEntity()) {
++                    if (flag && blockState.hasBlockEntity() && !state.shouldChangedStateKeepBlockEntity(blockState)) {
 +                        if (!this.level.isClientSide() && flag2) {
 +                            BlockEntity blockEntity = this.level.getBlockEntity(pos);
 +                            if (blockEntity != null) {
@@ -800,7 +800,10 @@ index 670459abcc6f32bdc6d4742f6710585fda83ac83..3c5640ed649ba89066da70e64fe62911
 +                        blockState.affectNeighborsAfterRemoval(serverLevel, pos, flag1);
 +                    }
 +                } else {
-+                    blockState.onRemove(this.level, pos, state, flag1);
++                    // Leaves - behaviour 1.21.1- - keep the block entity when the changed state should preserve it (e.g. copper chest oxidation/scrape)
++                    if (!(flag && blockState.hasBlockEntity() && state.shouldChangedStateKeepBlockEntity(blockState))) {
++                        blockState.onRemove(this.level, pos, state, flag1);
++                    }
                  }
 +                // Leaves end - behaviour 1.21.1-
  
