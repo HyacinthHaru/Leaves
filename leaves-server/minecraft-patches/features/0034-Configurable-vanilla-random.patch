@@ -5,14 +5,14 @@ Subject: [PATCH] Configurable vanilla random
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index d39fb73ac8ef13d1dc5d4ddbd0c4b1fc9b83eddc..40af26e7b5dd240d3cbe04d0d98d83debc8f505e 100644
+index 3f14a0765022d32d36183f44ae158c4a2dacea27..5ced62213de0f1d8caf0eeefc12071950bbe30a8 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -298,7 +298,7 @@ public abstract class Entity
      public double yOld;
      public double zOld;
      public boolean noPhysics;
--    public final RandomSource random = SHARED_RANDOM; // Paper - Share random for entities to make them more random
+-    protected final RandomSource random = SHARED_RANDOM; // Paper - Share random for entities to make them more random
 +    public final RandomSource random = org.leavesmc.leaves.LeavesConfig.modify.useVanillaRandom ? RandomSource.create() : SHARED_RANDOM; // Paper - Share random for entities to make them more random // Leaves - configurable vanilla random
      public int tickCount;
      private int remainingFireTicks;

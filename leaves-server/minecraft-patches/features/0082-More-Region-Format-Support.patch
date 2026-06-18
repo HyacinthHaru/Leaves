@@ -54,7 +54,7 @@ index 51c126735ace8fdde89ad97b5cab62f244212db0..a6573e327ace16b7ea320eb1440ffcbc
 +    public void moonrise$write(final org.leavesmc.leaves.region.IRegionFile regionFile) throws IOException; // Leaves - more region format
  }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 41fedbf6cd95083eab681d688c29b476bed774b9..af1cfcf0f84cc5dc1a6eb63e9c5487f68e1f3a0a 100644
+index 3f6baa5ecfa2d6b4ec637d0b00bc18d8a6b4de35..0fab54678c35c87e98bfb8ea782ac237116051cf 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -979,10 +979,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -185,14 +185,14 @@ index 3de7fd2b084c38e72d7a6bc416880a881f514ad3..5fec13cae17830804ab3fbcc66b138af
          try (DataInputStream out = new DataInputStream(new java.io.BufferedInputStream(new java.util.zip.InflaterInputStream(Files.newInputStream(file))))) {
              return net.minecraft.nbt.NbtIo.read((java.io.DataInput) out);
 diff --git a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
-index db118c2665f6d94c8394a478cc3c619ed010a0c6..f153e9835c07d5418c1c6ccaed810c1ff75258bb 100644
+index 63b40c420030d935bb81a219fb33defe0946e21f..f153e9835c07d5418c1c6ccaed810c1ff75258bb 100644
 --- a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 +++ b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 @@ -19,7 +19,7 @@ public class RegionFileStorage implements AutoCloseable, ca.spottedleaf.moonrise
      private static final org.slf4j.Logger LOGGER = com.mojang.logging.LogUtils.getLogger(); // Paper
      public static final String ANVIL_EXTENSION = ".mca";
      private static final int MAX_CACHE_SIZE = 256;
--    public final Long2ObjectLinkedOpenHashMap<RegionFile> regionCache = new Long2ObjectLinkedOpenHashMap<>();
+-    private final Long2ObjectLinkedOpenHashMap<RegionFile> regionCache = new Long2ObjectLinkedOpenHashMap<>();
 +    public final Long2ObjectLinkedOpenHashMap<org.leavesmc.leaves.region.IRegionFile> regionCache = new Long2ObjectLinkedOpenHashMap<>(); // Leaves - more region format
      private final RegionStorageInfo info;
      private final Path folder;

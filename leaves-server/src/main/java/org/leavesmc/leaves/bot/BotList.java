@@ -187,7 +187,7 @@ public class BotList {
         this.server.server.getPluginManager().callEvent(event);
         location = event.getSpawnLocation();
 
-        bot.spawnIn(world);
+        bot.setServerLevel(world); // Leaves - 26.2: spawnIn renamed
         bot.gameMode.setLevel(bot.level());
 
         bot.setPosRaw(location.getX(), location.getY(), location.getZ());

@@ -5,10 +5,10 @@ Subject: [PATCH] MC Technical Survival Mode
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index ce0cd7ce610e11e5dd40edf09eb3c0efd4e2e5ff..5b15a68fc6a593752d054a7c2e7dcde911c44a8d 100644
+index 3f8481436a4535d8967d147561c2d94237417436..7689fec095f80684df4c0d4b929a2be2a307589c 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1779,7 +1779,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1770,7 +1770,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      public boolean isInvulnerableTo(final ServerLevel level, final DamageSource source) {
          // Paper start - disable player cramming
          return (super.isInvulnerableTo(level, source) || this.isChangingDimension() && !source.is(DamageTypes.ENDER_PEARL) || !this.connection.hasClientLoaded())
@@ -57,7 +57,7 @@ index 237d579c4fa760e6f6c8f8e747873b115d04d1bd..ffb23ae34060c349e7200fc847541229
          this.applyGravity();
          this.move(MoverType.SELF, this.getDeltaMovement());
 diff --git a/net/minecraft/world/level/NaturalSpawner.java b/net/minecraft/world/level/NaturalSpawner.java
-index ab37d2dcfac161010f9c808a4edabbda92937b25..e443be2badadf9ab8dbce4ab73d6d16f6410fc83 100644
+index e193cbed115663e9ca7a611837d5b8540dda03db..b5d172c28bf101dfaecfc706142fe92ef32b2cc0 100644
 --- a/net/minecraft/world/level/NaturalSpawner.java
 +++ b/net/minecraft/world/level/NaturalSpawner.java
 @@ -90,7 +90,7 @@ public final class NaturalSpawner {

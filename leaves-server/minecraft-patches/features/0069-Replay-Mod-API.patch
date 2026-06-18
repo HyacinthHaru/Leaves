@@ -83,7 +83,7 @@ index 6c05b9276bdc267a36376f6c64592a50e4b2b36e..faee912129c2cc6303b494523efcee59
                      result.add(player);
                      if (result.size() >= limit) {
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 5e5681097889b02b82d1dfa8f5f68b341906268d..41fedbf6cd95083eab681d688c29b476bed774b9 100644
+index df3b70fb608ad0a3bba7d16a079c2e2039a3b908..3f6baa5ecfa2d6b4ec637d0b00bc18d8a6b4de35 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -1768,7 +1768,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -145,7 +145,7 @@ index b6030a62720111aeb48699fc9f2f69ae9b76485a..e340389b5b560a435119ed6a23e3c266
          }
          // Leaves end - bot can't get advancement
 diff --git a/net/minecraft/server/ServerScoreboard.java b/net/minecraft/server/ServerScoreboard.java
-index 4e400a24c0a5968223c7cd4874bd4d1e04e9fa2b..288618f2e604d0d10d0519b24408dc99d7f3a5bc 100644
+index 62b2940e02ad5b3c515934dc5b1d0eaedce84d69..b8dadb6524f1f4e1a3a56f66043964c5f3810ee0 100644
 --- a/net/minecraft/server/ServerScoreboard.java
 +++ b/net/minecraft/server/ServerScoreboard.java
 @@ -247,7 +247,7 @@ public class ServerScoreboard extends Scoreboard {
@@ -284,10 +284,10 @@ index 37c9f983ae89c497f44a1b7967d741abf909e0a0..d7fb2505f2a86ca0d81f144624ef2e1a
  
              this.setListData(players);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 44f79c64fb7431f7b8436a792e8bdae374112f34..f347fc8b97c3387c92d4338a5b0adeb8e450db01 100644
+index fb1fadb00d94812bc85759f0c1a4a038d50f2033..6d1f10bd5b2b59a0dc4144c7356b362a7fcf90a3 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2890,7 +2890,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2892,7 +2892,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              if (entity instanceof ServerPlayer player) {
                  ServerLevel.this.players.add(player);
                  // Leaves start - skip
@@ -296,7 +296,7 @@ index 44f79c64fb7431f7b8436a792e8bdae374112f34..f347fc8b97c3387c92d4338a5b0adeb8
                      ServerLevel.this.realPlayers.add(player);
                  }
                  // Leaves end - skip
-@@ -2973,7 +2973,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2975,7 +2975,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              if (entity instanceof ServerPlayer player) {
                  ServerLevel.this.players.remove(player);
                  // Leaves start - skip
@@ -306,7 +306,7 @@ index 44f79c64fb7431f7b8436a792e8bdae374112f34..f347fc8b97c3387c92d4338a5b0adeb8
                  }
                  // Leaves end - skip
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index c89ff01c0b0966a2b34720086f24c1b74c23b4f8..fc7fdb65f2c9ebaa0b87d76be26a634d4863f6d4 100644
+index f95c5ed50cc1f7a454902e3110396dca65a62af7..05602a208acbe3cf9447363f8cb27d7690b5b219 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -129,6 +129,7 @@ public abstract class PlayerList {

@@ -18,7 +18,7 @@
 +val leavesMavenPublicUrl = "https://repo.leavesmc.org/snapshots/" // Leaves - build change
  
  dependencies {
-     mache("io.papermc:mache:26.2-rc-2+build.2")
+     mache("io.papermc:mache:26.2+build.1")
 -    paperclip("io.papermc:paperclip:3.0.4")
 +    leavesclip("org.leavesmc:leavesclip:3.0.10") // Leaves - build change
  }
@@ -41,8 +41,7 @@
 +    // Leaves end - build change
 +
      updatingMinecraft {
--        oldPaperCommit = "d4fe85375af18bfa88f44d7c1e6a61904ae550cc"
-+        // oldPaperCommit = "d4fe85375af18bfa88f44d7c1e6a61904ae550cc" // Leaves - 不走 Paper 的 updatingMinecraft 流程
+         // oldPaperCommit = "d4fe85375af18bfa88f44d7c1e6a61904ae550cc"
      }
 @@ -31,6 +_,7 @@
      libraryRepositories.addAll(

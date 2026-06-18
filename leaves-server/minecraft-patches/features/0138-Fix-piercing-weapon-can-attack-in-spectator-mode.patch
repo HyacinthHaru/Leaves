@@ -5,10 +5,10 @@ Subject: [PATCH] Fix piercing weapon can attack in spectator mode
 
 
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 76f05e86b19ecc8967652f39d7562d0a5122278c..6856bcb68f77bca48d7c7ac52429c587c9179674 100644
+index 8a9660265b13181d44c9bd0e070d71f672000fce..2fbb43116c0d47855e95ffb6214f1b655e431239 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -1980,7 +1980,7 @@ public class ServerGamePacketListenerImpl
+@@ -1950,7 +1950,7 @@ public class ServerGamePacketListenerImpl
                          }
  
                          PiercingWeapon piercingWeapon = itemInHand.get(DataComponents.PIERCING_WEAPON);

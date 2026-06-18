@@ -5,13 +5,13 @@ Subject: [PATCH] Leaves Server Config And Command
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 2e6b0102de8f0639d23ae30873b36a49a9fe3585..38bbb38900edd66eb666d8653dfa7d3dfe7f20a9 100644
+index 750c0623208932fcfee3e762e3d1064bd00d4cf4..25038ee69d815b6b104c9fa4c30b2ec6f374863f 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -2339,6 +2339,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              )
              .thenAcceptAsync(newResources -> {
-                 io.papermc.paper.command.brigadier.PaperBrigadier.moveBukkitCommands(this.resources.managers().getCommands(), newResources.managers().commands); // Paper
+                 io.papermc.paper.command.brigadier.PaperBrigadier.moveBukkitCommands(this.resources.managers().getCommands(), newResources.managers().getCommands()); // Paper
 +                org.leavesmc.leaves.command.RootNode.reloadLeavesCommands(); // Leaves - command
                  this.resources.close();
                  this.resources = newResources;

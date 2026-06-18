@@ -5,10 +5,10 @@ Subject: [PATCH] Return nether portal fix
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 5b15a68fc6a593752d054a7c2e7dcde911c44a8d..9543929d50c1baf3710fda718f3e84c3b08db4b6 100644
+index 7689fec095f80684df4c0d4b929a2be2a307589c..16c3246c770fe201ac659efdc097c7e18cb525ac 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1597,6 +1597,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1588,6 +1588,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          org.bukkit.event.player.PlayerChangedWorldEvent changeEvent = new org.bukkit.event.player.PlayerChangedWorldEvent(this.getBukkitEntity(), oldLevel.getWorld());
          this.level().getCraftServer().getPluginManager().callEvent(changeEvent);
          // CraftBukkit end
@@ -29,7 +29,7 @@ index 5b15a68fc6a593752d054a7c2e7dcde911c44a8d..9543929d50c1baf3710fda718f3e84c3
          if (this.isBlocking()) {
              this.stopUsingItem();
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index d602a97b6841ba987c83d7563588a540622bae1b..c89ff01c0b0966a2b34720086f24c1b74c23b4f8 100644
+index aca44e65381af9e529fffd9b1d8a3bae2a3c83b1..f95c5ed50cc1f7a454902e3110396dca65a62af7 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -705,6 +705,18 @@ public abstract class PlayerList {
@@ -52,7 +52,7 @@ index d602a97b6841ba987c83d7563588a540622bae1b..c89ff01c0b0966a2b34720086f24c1b7
          }
  
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 0d3d9138ca1713e3ca28fcd504b04092f622ef38..c8aab7fd0746a39553150872f7c02b94b175ca37 100644
+index aa13081e03a98ab6673e892dba09bd4d7a8d4211..f7ffe48afa13aaedc4ab471f493002c514cf7b91 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -276,7 +276,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin

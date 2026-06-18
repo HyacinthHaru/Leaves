@@ -30,7 +30,7 @@ index 408cb996fc8ff77785da8919f19baff2cf4bd789..7c4d0ab96eb0a392debc7fbb2b52717a
                          throw PacketUtils.makeReportedException(e, this.packet, this.listener);
                      }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index d7a6edd3a9d42fefe8120113e097c3d0ee990267..70f208f92ee8471a323ec3efec3f0f09e03935b3 100644
+index d269df59263b30b03444b5715d7ad46ee30f460e..5f907fa919c40ae84c595a4839d60dabd78af345 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -1849,7 +1849,16 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -51,10 +51,10 @@ index d7a6edd3a9d42fefe8120113e097c3d0ee990267..70f208f92ee8471a323ec3efec3f0f09
                  level.fillReportDetails(report);
                  throw new ReportedException(report);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index b851e64e804c33400956f381018cb0847021cf22..03f8549717fae87e2e1466b0431d64fa54f83603 100644
+index 6c4a760507010534aa71521fac511c84eee093b7..72d44158786b89cdda99a49f86091e78d0240186 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -904,6 +904,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -906,6 +906,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
                                      if (org.leavesmc.leaves.LeavesConfig.performance.remove.tickGuardLambda) {
                                          try {
                                              this.tickNonPassenger(entity); // Leaves - changed
@@ -67,10 +67,10 @@ index b851e64e804c33400956f381018cb0847021cf22..03f8549717fae87e2e1466b0431d64fa
                                              if (throwable instanceof ThreadDeath) throw throwable; // Paper
                                              // Paper start - Prevent block entity and entity crashes
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 9543929d50c1baf3710fda718f3e84c3b08db4b6..f3b4d53f704a156696ad659fad3fa90361975f86 100644
+index 16c3246c770fe201ac659efdc097c7e18cb525ac..88a16d52f91c0860a644d42e9a7b1425affd25b6 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -910,6 +910,12 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -901,6 +901,12 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
                  ((org.bukkit.craftbukkit.CraftWorldBorder) this.getBukkitEntity().getWorldBorder()).getHandle().tick();
              }
              // CraftBukkit end
@@ -84,7 +84,7 @@ index 9543929d50c1baf3710fda718f3e84c3b08db4b6..f3b4d53f704a156696ad659fad3fa903
              CrashReport report = CrashReport.forThrowable(t, "Ticking player");
              CrashReportCategory category = report.addCategory("Player being ticked");
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 40af26e7b5dd240d3cbe04d0d98d83debc8f505e..70847936c41d7f9805a7a6d13c51f2f1880bb058 100644
+index 5ced62213de0f1d8caf0eeefc12071950bbe30a8..40866b564346987be2e0fc0fdbb40401e3268976 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1473,9 +1473,19 @@ public abstract class Entity
@@ -109,7 +109,7 @@ index 40af26e7b5dd240d3cbe04d0d98d83debc8f505e..70847936c41d7f9805a7a6d13c51f2f1
              return true;
          } else {
 diff --git a/net/minecraft/world/level/block/ShulkerBoxBlock.java b/net/minecraft/world/level/block/ShulkerBoxBlock.java
-index 16c69292f01a7b840f2494a8347936d673a8a978..024b043a8a6f8f47434753dd79a8775855203160 100644
+index ccc3a380f892d1238952a224c7cbb15938cbfd92..44899662958c66cfba25a9a2dbacdec1e838619f 100644
 --- a/net/minecraft/world/level/block/ShulkerBoxBlock.java
 +++ b/net/minecraft/world/level/block/ShulkerBoxBlock.java
 @@ -183,7 +183,17 @@ public class ShulkerBoxBlock extends BaseEntityBlock {
@@ -154,7 +154,7 @@ index 47a4aa4a45978dfec52ea995d197022f4fe32808..4302b44b7ad8d9a3eae3dfa211648948
      }
  
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 1519f37b4055e2e9a838961f27529437471f803b..bb09d141931492eda8cf1830438e6807d4b0cacf 100644
+index 681563230061212afa7994c8eb16c068754db5dd..5159fe83ac04038524d10d093f3028544618bcc7 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -380,7 +380,7 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot

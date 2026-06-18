@@ -5,7 +5,7 @@ Subject: [PATCH] Fix block place desync due to update suppression
 
 
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index 164b7fcb72889fc6b991ce78cd7e0e443d8b6cb3..29ba257fc4e8c6421daea8e420746efd84fd8acb 100644
+index 0d582e7efc8f3695547a671405de3e974436cf62..b491af406632cb590f019a015eb75ac493b7dbfa 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
 @@ -395,8 +395,18 @@ public final class ItemStack implements DataComponentHolder, ItemInstance {
@@ -27,7 +27,7 @@ index 164b7fcb72889fc6b991ce78cd7e0e443d8b6cb3..29ba257fc4e8c6421daea8e420746efd
          } finally {
              level.captureBlockStates = false;
              level.captureTreeGeneration = false;
-@@ -515,6 +525,7 @@ public final class ItemStack implements DataComponentHolder, ItemInstance {
+@@ -513,6 +523,7 @@ public final class ItemStack implements DataComponentHolder, ItemInstance {
          }
          // CraftBukkit end
  
@@ -36,7 +36,7 @@ index 164b7fcb72889fc6b991ce78cd7e0e443d8b6cb3..29ba257fc4e8c6421daea8e420746efd
      }
  
 diff --git a/net/minecraft/world/level/block/entity/BarrelBlockEntity.java b/net/minecraft/world/level/block/entity/BarrelBlockEntity.java
-index 5bfd25f22808794f5e24d5425ea32e8c1b927182..d86482a79ec28c313d45a3cd761d62297a6e1ff3 100644
+index 118af4e35eec652e7eb8a484a44652cfabc1bab5..9b9920d800cd2f9946a9b743c21ba5f39439e973 100644
 --- a/net/minecraft/world/level/block/entity/BarrelBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/BarrelBlockEntity.java
 @@ -107,6 +107,16 @@ public class BarrelBlockEntity extends RandomizableContainerBlockEntity {
@@ -190,7 +190,7 @@ index ffd56d3607ab055d37300939919ed92ff800ed69..cba7e1d1cc78882aaba8fe39c51f849b
      protected void loadAdditional(final ValueInput input) {
          super.loadAdditional(input);
 diff --git a/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java b/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
-index 9bc754554faa9f2ba06e5fc2c90d3f6417cfe726..48433a5f5d484594f534d2c5088d3ef1741f3e00 100644
+index c3555b431a3345431b7d01f6b157a5d4652d91ed..f75ccee14de722c6b72d9b3932777ffc3d7a3ef6 100644
 --- a/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
 @@ -240,6 +240,16 @@ public class ShulkerBoxBlockEntity extends RandomizableContainerBlockEntity impl

@@ -5,7 +5,7 @@ Subject: [PATCH] Bytebuf API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index eda24e42686f607f20fc33cb6ec7b4af196cc5d9..1a55163f9680f31cda6550d7199a8a81ed2b5398 100644
+index 7d7f1f0bcbfc1cb42e66bc0619f030220270d73b..a545d37873f653235d90a9c7f2c49a165de81031 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -416,6 +416,8 @@ public final class CraftServer implements Server {
@@ -30,10 +30,10 @@ index eda24e42686f607f20fc33cb6ec7b4af196cc5d9..1a55163f9680f31cda6550d7199a8a81
 +    // Leaves end - Bytebuf API
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 2847fe96181dbede9e81c9c6a3314c355cf13013..35a08b7141600d3705e41b0248069dbbcaf020d3 100644
+index 15f4fc10e7e20374909f8d100a16cb1a4856a113..7ada11e4129ec2621aa802c29967af1b3031496f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -3368,4 +3368,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -3365,4 +3365,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
          super.knockback(strength, directionX, directionZ);
          this.entity.hurtMarked = true;
      }

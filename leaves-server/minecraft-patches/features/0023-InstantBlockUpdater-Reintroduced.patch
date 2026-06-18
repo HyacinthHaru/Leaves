@@ -5,10 +5,10 @@ Subject: [PATCH] InstantBlockUpdater Reintroduced
 
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 58ae3ec5370e87ce461e95e61ec02f0e2825a702..b851e64e804c33400956f381018cb0847021cf22 100644
+index 3434db351a1d88369454050c01138203347ea2b5..6c4a760507010534aa71521fac511c84eee093b7 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -936,12 +936,13 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -938,12 +938,13 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
          // Paper - rewrite chunk system
          profiler.pop();
          profiler.push("debugSynchronizers");
@@ -29,7 +29,7 @@ index 58ae3ec5370e87ce461e95e61ec02f0e2825a702..b851e64e804c33400956f381018cb084
          this.debugSynchronizers.tick(this.server.debugSubscribers());
          profiler.pop();
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 4e304f11e3420d63438b4ad704fa0d9576be71fa..27894bc15cf3246b95ada81778c47732526d9e25 100644
+index 397f53e6bd5b92b4350c4769840201f609b847e4..1350a07643e5b4023d10e9e846de7c100db2c2ad 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -120,7 +120,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
@@ -40,7 +40,7 @@ index 4e304f11e3420d63438b4ad704fa0d9576be71fa..27894bc15cf3246b95ada81778c47732
 +    protected final net.minecraft.world.level.redstone.NeighborUpdater neighborUpdater; // Leaves - instantBlockUpdaterReintroduced
      private final List<TickingBlockEntity> pendingBlockEntityTickers = Lists.newArrayList();
      private boolean tickingBlockEntities;
-     public final Thread thread;
+     protected final Thread thread;
 @@ -869,7 +869,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
          this.thread = Thread.currentThread();
          this.biomeManager = new BiomeManager(this, biomeZoomSeed);

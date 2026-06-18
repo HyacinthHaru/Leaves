@@ -5,7 +5,7 @@ Subject: [PATCH] Old minecart motion behavior
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index eadb5527b63c82109b8c12870521644a680412f2..0b8ed72b41d639eacbbf6dcb6af84ef44e1b40a3 100644
+index aebc1b36bc45cd88152bafe9c9b7ef97c55fc3f7..f6ad9d43cdfaa2edd5bf8442ceeb0855e35dc554 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -4290,7 +4290,7 @@ public abstract class Entity

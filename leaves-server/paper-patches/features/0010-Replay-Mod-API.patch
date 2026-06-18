@@ -18,7 +18,7 @@ index c0910f908ffad3bb94563836c032bb1d6d50c4ed..ecd25243b55a00d7c8a04385c2695d55
          }
          // Leaves end - skip bot
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4e7dc0ee74cf96e4c11739f6d62ffc2bafa6ceb9..eda24e42686f607f20fc33cb6ec7b4af196cc5d9 100644
+index 40bc9664cf03cfe20bb4e040db9f7939a3b97a75..7d7f1f0bcbfc1cb42e66bc0619f030220270d73b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -305,6 +305,7 @@ public final class CraftServer implements Server {
@@ -33,7 +33,7 @@ index 4e7dc0ee74cf96e4c11739f6d62ffc2bafa6ceb9..eda24e42686f607f20fc33cb6ec7b4af
      public CraftServer(DedicatedServer console, PlayerList playerList) {
          this.console = console;
          this.playerList = (DedicatedPlayerList) playerList;
--        this.playerView = MCUtil.transformUnmodifiable(playerList.players, ServerPlayer::getBukkitEntity);
+-        this.playerView = MCUtil.transformUnmodifiable(playerList.getPlayers(), ServerPlayer::getBukkitEntity);
 +        this.playerView = MCUtil.transformUnmodifiable(playerList.realPlayers, ServerPlayer::getBukkitEntity); // Leaves - replay api: use realPlayers (exclude replay photographers)
          this.serverVersion = io.papermc.paper.ServerBuildInfo.buildInfo().asString(io.papermc.paper.ServerBuildInfo.StringRepresentation.VERSION_SIMPLE); // Paper - improve version
          this.structureManager = new CraftStructureManager(console.getStructureManager(), console.registryAccess());
@@ -51,7 +51,7 @@ index 4e7dc0ee74cf96e4c11739f6d62ffc2bafa6ceb9..eda24e42686f607f20fc33cb6ec7b4af
 +    // Leaves end - replay mod api
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index f4c27e762028c44569f7d3d95d2492470bcff9e2..b21bfb6546ee56722801e412c9f5ee22f07adc9a 100644
+index 9be40f4d80ac96290d87e4ca82952cc8c8ec35f5..0416b5137c049457b0b5eb6560cae721efb410bd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -124,6 +124,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -63,10 +63,10 @@ index f4c27e762028c44569f7d3d95d2492470bcff9e2..b21bfb6546ee56722801e412c9f5ee22
          // Special case complex part, since there is no extra entity type for them
          if (entity instanceof EnderDragonPart complexPart) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b47a215db4b122619288a599fc8560f6917836f0..2847fe96181dbede9e81c9c6a3314c355cf13013 100644
+index 73f66b893c2d9541e78118150279be305f47a663..15f4fc10e7e20374909f8d100a16cb1a4856a113 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2054,7 +2054,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -2053,7 +2053,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
  
      @Override
      public boolean canSee(Player player) {
@@ -76,10 +76,10 @@ index b47a215db4b122619288a599fc8560f6917836f0..2847fe96181dbede9e81c9c6a3314c35
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-index 14b99f9fdc197c06ea42d4340ce45d7b2e74b741..dacf1f8351e8cb2123f88357bbb7853223105116 100644
+index 3ac6c7571a204b0d48995945985a252a495920d6..308a22e02ec2ca0d8743d4e74e7a24cdb12462bf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
-@@ -299,7 +299,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
+@@ -294,7 +294,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
                      Bukkit.getLogger().log(Level.SEVERE, "Error saving advancement " + key, ex);
                  }
  
@@ -89,14 +89,14 @@ index 14b99f9fdc197c06ea42d4340ce45d7b2e74b741..dacf1f8351e8cb2123f88357bbb78532
                      player.getAdvancements().flushDirty(player, false);
                  });
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/LazyPlayerSet.java b/src/main/java/org/bukkit/craftbukkit/util/LazyPlayerSet.java
-index 25aae550dcdcef2df268d0dd99bdcc9bbd49fcf8..83af50de50a03e164d572f3c3466b6d0b42ed138 100644
+index 15261d2e96347584e4baf65f12b336b73a68cd37..83af50de50a03e164d572f3c3466b6d0b42ed138 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/LazyPlayerSet.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/LazyPlayerSet.java
 @@ -23,7 +23,7 @@ public class LazyPlayerSet extends LazyHashSet<Player> {
      }
  
      public static Set<Player> makePlayerSet(final MinecraftServer server) {
--        List<ServerPlayer> players = server.getPlayerList().players;
+-        List<ServerPlayer> players = server.getPlayerList().getPlayers();
 +        List<ServerPlayer> players = server.getPlayerList().realPlayers; // Leaves - only real players
          Set<Player> reference = new HashSet<>(players.size());
          for (ServerPlayer player : players) {

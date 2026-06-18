@@ -6,7 +6,7 @@ Subject: [PATCH] Optimize suffocation
 This patch is Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
 
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 0d1a0a1eb00626b69bfc8f8075172d95ffc921de..0d3d9138ca1713e3ca28fcd504b04092f622ef38 100644
+index b689ca9a6ff67e64fef6776a9af6af2e2efa63ad..aa13081e03a98ab6673e892dba09bd4d7a8d4211 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -453,7 +453,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
@@ -18,7 +18,7 @@ index 0d1a0a1eb00626b69bfc8f8075172d95ffc921de..0d3d9138ca1713e3ca28fcd504b04092
                  this.hurtServer(level, this.damageSources().inWall(), 1.0F);
              } else if (isPlayer && !level.getWorldBorder().isWithinBounds(this.getBoundingBox())) {
                  double dist = level.getWorldBorder().getDistanceToBorder(this) + level.getWorldBorder().getSafeZone();
-@@ -1441,6 +1441,12 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -1423,6 +1423,12 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          return this.getHealth() <= 0.0F || this.dead;
      }
  

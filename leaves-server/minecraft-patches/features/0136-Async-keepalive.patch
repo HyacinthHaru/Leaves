@@ -5,7 +5,7 @@ Subject: [PATCH] Async keepalive
 
 
 diff --git a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index 5cf25ed690dc06a60a95116b755b590274ea954f..389c674cffbb12c8b8a8ed1f11a4ab6f5d1da5d6 100644
+index 05bef012ae05dd5f70ef7bb4c3cd48161227ffda..ebfb161f7b79d78aaf3d4f5ab0efd8e48ad8aa9b 100644
 --- a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -46,6 +46,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack

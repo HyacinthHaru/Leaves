@@ -5,7 +5,7 @@ Subject: [PATCH] Player operation limiter
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 66598cf29733b84021a6ed19d599592268492874..ce0cd7ce610e11e5dd40edf09eb3c0efd4e2e5ff 100644
+index 5893e39028e8e792826d08c0554131d9a82bcc95..3f8481436a4535d8967d147561c2d94237417436 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -441,6 +441,10 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -19,7 +19,7 @@ index 66598cf29733b84021a6ed19d599592268492874..ce0cd7ce610e11e5dd40edf09eb3c0ef
  
      // Paper start - rewrite chunk system
      private ca.spottedleaf.moonrise.patches.chunk_system.player.RegionizedPlayerChunkLoader.PlayerChunkLoaderData chunkLoader;
-@@ -732,6 +736,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -723,6 +727,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          }
          // CraftBukkit end
          this.connection.tickClientLoadTimeout();
@@ -27,7 +27,7 @@ index 66598cf29733b84021a6ed19d599592268492874..ce0cd7ce610e11e5dd40edf09eb3c0ef
          this.gameMode.tick();
          this.wardenSpawnTracker.tick();
          if (this.invulnerableTime > 0) {
-@@ -3172,4 +3177,31 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -3163,4 +3168,31 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          return (org.bukkit.craftbukkit.entity.CraftPlayer) super.getBukkitEntity();
      }
      // CraftBukkit end
@@ -60,7 +60,7 @@ index 66598cf29733b84021a6ed19d599592268492874..ce0cd7ce610e11e5dd40edf09eb3c0ef
 +    // Leaves end - player operation limiter
  }
 diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
-index ddd0447989ed3dd908509b9e729cfedc5498cfd6..68eecfe217b8681d990a3fac59d7e6cf82bce6ca 100644
+index 7ae3f33d8931d826b94cbc492340635c028f3fbc..14ddb381b7dae508e3f06507602b39c3d30ebb5f 100644
 --- a/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -324,6 +324,19 @@ public class ServerPlayerGameMode {
