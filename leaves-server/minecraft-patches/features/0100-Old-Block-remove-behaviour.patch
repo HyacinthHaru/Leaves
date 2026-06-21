@@ -762,7 +762,7 @@ index b1f1ea03072c63bc3032c9f023a8fb4ede34b34b..1d805ccd2bc9d74e8f15db37bcc8146b
              this.getBlock().affectNeighborsAfterRemoval(this.asState(), level, pos, movedByPiston);
          }
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 670459abcc6f32bdc6d4742f6710585fda83ac83..01be92e6b26aa754ba239fe0873d336319ec5c18 100644
+index 670459abcc6f32bdc6d4742f6710585fda83ac83..dc3ec20474556590b1f2598c8772cc77ac47fb31 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -401,22 +401,31 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
@@ -800,8 +800,8 @@ index 670459abcc6f32bdc6d4742f6710585fda83ac83..01be92e6b26aa754ba239fe0873d3363
 +                        blockState.affectNeighborsAfterRemoval(serverLevel, pos, flag1);
 +                    }
 +                } else {
-+                    // Leaves - behaviour 1.21.1- - keep the block entity when the changed state should preserve it (e.g. copper chest oxidation/scrape)
-+                    if (!(flag && blockState.hasBlockEntity() && state.shouldChangedStateKeepBlockEntity(blockState))) {
++                    // Leaves - behaviour 1.21.1- - keep the block entity when the changed state should preserve it (e.g. copper chest / copper golem statue oxidation/scrape)
++                    if (!(blockState.hasBlockEntity() && state.shouldChangedStateKeepBlockEntity(blockState))) {
 +                        blockState.onRemove(this.level, pos, state, flag1);
 +                    }
                  }
