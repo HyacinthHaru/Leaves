@@ -93,7 +93,7 @@
 +        exclude(group = "com.google.guava", module = "guava")
 +    }
 +    // Leaves end - leaves plugin
-     implementation("ca.spottedleaf:concurrentutil:0.0.10")
+     implementation("ca.spottedleaf:leafpile:1.0.0")
      implementation("org.jline:jline-terminal-ffm:3.27.1") // use ffm on java 22+
      implementation("org.jline:jline-terminal-jni:3.27.1") // fall back to jni on java 21
 @@ -136,7 +_,6 @@

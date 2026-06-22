@@ -30,7 +30,7 @@ index 01e5ff70c70dd7fab089d8965bd1c237fa239f45..4458a64b7838ef9e8f56930d9343494a
      private boolean disconnectionHandled;
      private int receivedPackets;
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 9f0e4975eb29e84282bffa24f4d0f268c29489d5..2c703b181a9745009f82f17627489b2f93283131 100644
+index e9b3c4abb1186656abe8c64130cfba69f305d5a8..3eacc3fc0cd25ed2c16a30492db8c115888149bd 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -297,6 +297,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -162,7 +162,7 @@ index c87bc86c57fde9d92e3927bdead5cdaf2e935744..950f8ed955bc09713348936ae7aa1a8b
              return count;
          }
 diff --git a/net/minecraft/server/commands/KickCommand.java b/net/minecraft/server/commands/KickCommand.java
-index 808c36bd2324c7b956cf1f32d9a4dac0ce4ad828..fc28d71048224180b6d0a60bfb7b758db8f5a728 100644
+index bf361ef4cbf2a55b8bba5a75111257fb2d6d471f..119734805de64888862fbe0524773634bd839e16 100644
 --- a/net/minecraft/server/commands/KickCommand.java
 +++ b/net/minecraft/server/commands/KickCommand.java
 @@ -39,9 +39,17 @@ public class KickCommand {
@@ -181,7 +181,7 @@ index 808c36bd2324c7b956cf1f32d9a4dac0ce4ad828..fc28d71048224180b6d0a60bfb7b758d
 +            }
 +            // Leaves end - disable kick
              if (!source.getServer().isSingleplayerOwner(player.nameAndId())) {
-                 player.connection.disconnect(reason, org.bukkit.event.player.PlayerKickEvent.Cause.KICK_COMMAND); // Paper - kick event cause
+                 player.connection.disconnect(reason, org.bukkit.event.player.PlayerKickEvent.Cause.KICKED); // Paper - kick event cause
                  source.sendSuccess(() -> Component.translatable("commands.kick.success", player.getDisplayName(), reason), true);
 @@ -50,7 +58,13 @@ public class KickCommand {
          }
@@ -306,7 +306,7 @@ index bef360439ca91748bd8790782d346b7e23a4d6a2..6e541982133310aa737a44e73eb12e74
                  ServerLevel.this.updateSleepingPlayerList();
              }
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 3ee3d29340bc82b071d621e8e3afa294c20dd06f..5893e39028e8e792826d08c0554131d9a82bcc95 100644
+index c063fa617ea79b758b9c4ef0456889a91e341ad4..6b04e6d4a7f08bf12a3b5e4f0d5769eae3876f2d 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -232,7 +232,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc

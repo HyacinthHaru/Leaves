@@ -5,10 +5,10 @@ Subject: [PATCH] MC Technical Survival Mode
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 3f8481436a4535d8967d147561c2d94237417436..7689fec095f80684df4c0d4b929a2be2a307589c 100644
+index 75730934f0944583923908c4cd325a7804ce554b..f00dbb6c1672392c3009d6098e306ee389d1aa6e 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1770,7 +1770,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1771,7 +1771,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      public boolean isInvulnerableTo(final ServerLevel level, final DamageSource source) {
          // Paper start - disable player cramming
          return (super.isInvulnerableTo(level, source) || this.isChangingDimension() && !source.is(DamageTypes.ENDER_PEARL) || !this.connection.hasClientLoaded())

@@ -5,7 +5,7 @@ Subject: [PATCH] Do not reset placed block on exception
 
 
 diff --git a/net/minecraft/world/item/BlockItem.java b/net/minecraft/world/item/BlockItem.java
-index 072df19eac4d09e33b0e5da6bfff841870f7754b..714d285a17fca075a8b832c38f941fac66b1b01e 100644
+index b02f1a501024e22a3893b9a863ae27209f1f045e..714d285a17fca075a8b832c38f941fac66b1b01e 100644
 --- a/net/minecraft/world/item/BlockItem.java
 +++ b/net/minecraft/world/item/BlockItem.java
 @@ -90,20 +90,22 @@ public class BlockItem extends Item {
@@ -22,7 +22,7 @@ index 072df19eac4d09e33b0e5da6bfff841870f7754b..714d285a17fca075a8b832c38f941fac
 -                ((org.bukkit.craftbukkit.block.CraftBlockState) previousState).revertPlace(false);
 -                if (player instanceof ServerPlayer serverPlayer) {
 -                    net.minecraft.server.MinecraftServer.LOGGER.warn("Player {} tried placing invalid block", player.getScoreboardName(), ex);
--                    serverPlayer.connection.disconnect(net.minecraft.network.chat.Component.literal("Packet processing error"));
+-                    serverPlayer.connection.disconnect(net.minecraft.network.chat.Component.literal("Packet processing error"), org.bukkit.event.player.PlayerKickEvent.Cause.ILLEGAL_ACTION);
 -                    return InteractionResult.FAIL;
 -                }
 -                throw ex; // Rethrow exception if not placed by a player
