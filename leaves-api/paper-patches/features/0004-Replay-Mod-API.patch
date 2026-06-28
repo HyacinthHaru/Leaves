@@ -5,10 +5,10 @@ Subject: [PATCH] Replay Mod API
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 8c3d72d061e294f356f625bb93512e29356dc7fe..5a16cd8a6c1b8241bd0532a0aa9b2076247d09a0 100644
+index fd43ae39a7db49f06b412adcc525afa86da9ffab..d0dc42bc30e81b6d7283dc1b3a42cab55fecafc7 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -3017,4 +3017,10 @@ public final class Bukkit {
+@@ -3021,4 +3021,10 @@ public final class Bukkit {
          return server.getBotManager();
      }
      // Leaves end - Bot API

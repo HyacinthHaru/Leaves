@@ -6,10 +6,10 @@ Subject: [PATCH] Leaves Plugin
 This patch is licensed under the MIT license.
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 83214411919881f6ff0f99796341adeaf8ccb641..dc0272a372af0e9f8445c6ed4cd8aa5fd98b170a 100644
+index ada86f4d598ac6774eabfd745f36bb759ad3a4ac..52c78b1d12ff49777eb2eb89b6c5db4f668313af 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -3007,6 +3007,12 @@ public final class Bukkit {
+@@ -3011,6 +3011,12 @@ public final class Bukkit {
          server.restart();
      }
  
