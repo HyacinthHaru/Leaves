@@ -33,10 +33,10 @@ index 08e253662a2c183c0ab53a51cc07485cff33bf2c..1bd678d668a1febc129f4cb4d0d95ea2
          };
      }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 38bbb38900edd66eb666d8653dfa7d3dfe7f20a9..448a7e9061b6f6261060d218d63bbac427f07137 100644
+index 8f5a1a7fd52118c712457cf7ee39c70e8ee88ec0..91dec32cbc25e4ee19ac83c515983c84a8a7101b 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1870,6 +1870,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1846,6 +1846,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
          profiler.popPush("server gui refresh");
  
@@ -46,7 +46,7 @@ index 38bbb38900edd66eb666d8653dfa7d3dfe7f20a9..448a7e9061b6f6261060d218d63bbac4
              tickable.run();
          }
 diff --git a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index 8fb001daa4f87d56ee353cef2d495aa131164e7d..2505d3d735b7f4cd3a10e33358546a11b7a7c498 100644
+index 3f171120604d02ec535f119e1a4a89db0ee99960..1a1bf4ee95db7a9fc4fec9804b80a10c1a7731e8 100644
 --- a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -57,6 +57,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
@@ -93,7 +93,7 @@ index 8fb001daa4f87d56ee353cef2d495aa131164e7d..2505d3d735b7f4cd3a10e33358546a11
              bridge.removeChannel(channel);
          }
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index b69051d99950aa77181e3b1803bb9bc7b48fa763..8420e21c9e7605a63bb9674436bc6a94bbc8ebe1 100644
+index baec5d072b8f2d9379dba850b04e881e5267ca6b..34f9f46e3fa8061931f1794e3633d97514d61aa9 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -246,6 +246,8 @@ public abstract class PlayerList {

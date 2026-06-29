@@ -54,10 +54,10 @@ index 51c126735ace8fdde89ad97b5cab62f244212db0..a6573e327ace16b7ea320eb1440ffcbc
 +    public void moonrise$write(final org.leavesmc.leaves.region.IRegionFile regionFile) throws IOException; // Leaves - more region format
  }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 3f6baa5ecfa2d6b4ec637d0b00bc18d8a6b4de35..0fab54678c35c87e98bfb8ea782ac237116051cf 100644
+index caa856f1a8f764c8bc93d71a0e3071f0e1338f47..1676fd8997d9e2b6f6c97598e40c608719656b3b 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -979,10 +979,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -955,10 +955,10 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          if (flush) {
              for (ServerLevel level : this.getAllLevels()) {
                  String storageName = level.getChunkSource().chunkMap.getStorageName();

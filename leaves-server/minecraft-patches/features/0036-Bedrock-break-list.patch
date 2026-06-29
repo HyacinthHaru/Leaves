@@ -5,10 +5,10 @@ Subject: [PATCH] Bedrock break list
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 70f208f92ee8471a323ec3efec3f0f09e03935b3..5e5681097889b02b82d1dfa8f5f68b341906268d 100644
+index 385d1f41a5584cea35bf064bb08fa7275fa878f1..9d04f1296fb48e4a463908d1d2b2ff79155e080e 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1885,6 +1885,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1861,6 +1861,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
          org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handleTick(this.tickCount); // Leaves - protocol
  
@@ -18,7 +18,7 @@ index 70f208f92ee8471a323ec3efec3f0f09e03935b3..5e5681097889b02b82d1dfa8f5f68b34
              tickable.run();
          }
 diff --git a/net/minecraft/server/ServerScoreboard.java b/net/minecraft/server/ServerScoreboard.java
-index 9bf09b888425e491072864265c8de3885154a0ba..4e400a24c0a5968223c7cd4874bd4d1e04e9fa2b 100644
+index 7ffd683c42557052d7bfa963d87e68f4e8f62d6c..62b2940e02ad5b3c515934dc5b1d0eaedce84d69 100644
 --- a/net/minecraft/server/ServerScoreboard.java
 +++ b/net/minecraft/server/ServerScoreboard.java
 @@ -164,6 +164,7 @@ public class ServerScoreboard extends Scoreboard {

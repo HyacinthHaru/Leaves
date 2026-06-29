@@ -30,10 +30,10 @@ index 408cb996fc8ff77785da8919f19baff2cf4bd789..7c4d0ab96eb0a392debc7fbb2b52717a
                          throw PacketUtils.makeReportedException(e, this.packet, this.listener);
                      }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index d269df59263b30b03444b5715d7ad46ee30f460e..5f907fa919c40ae84c595a4839d60dabd78af345 100644
+index 84b2f9d471fa494c9b593bdc777f0adad3be6e90..385d1f41a5584cea35bf064bb08fa7275fa878f1 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1849,7 +1849,16 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1825,7 +1825,16 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
              try {
                  level.tick(haveTime);
@@ -67,7 +67,7 @@ index 6c4a760507010534aa71521fac511c84eee093b7..72d44158786b89cdda99a49f86091e78
                                              if (throwable instanceof ThreadDeath) throw throwable; // Paper
                                              // Paper start - Prevent block entity and entity crashes
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 16c3246c770fe201ac659efdc097c7e18cb525ac..88a16d52f91c0860a644d42e9a7b1425affd25b6 100644
+index 9dc76a9162a973e737ab4eca62e17d30f840ee2c..8e7608d40691d8f37631eb9f0cd5864cc8cce6f2 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -901,6 +901,12 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc

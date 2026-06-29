@@ -42,7 +42,7 @@ index 72d44158786b89cdda99a49f86091e78d0240186..fb1fadb00d94812bc85759f0c1a4a038
              profiler.pop();
              } // Paper - option to disable ticking
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 326515b955991071eaf0d24d2af97f9dd489db50..8a9660265b13181d44c9bd0e070d71f672000fce 100644
+index 4e579e59f3ef18cf7250b0aa4f369a25d61cd23b..752db387d0633dcc36cdd963113122e2be3af91c 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -612,7 +612,7 @@ public class ServerGamePacketListenerImpl
@@ -90,10 +90,10 @@ index 40866b564346987be2e0fc0fdbb40401e3268976..722a08b99cf1fb26956237c65ed07f45
      }
  
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index f7ffe48afa13aaedc4ab471f493002c514cf7b91..f08d5ccb2f6dcb7ebc6757cdef312ebfcc02e329 100644
+index a1153439e7959cb3d7521cf943b3236c90c4ba69..a704cdd86d98a47b0e624c8f3d7d8e8623b7d5b1 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -3483,6 +3483,11 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -3482,6 +3482,11 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
              this.fallFlyTicks++;
          } else {
              this.fallFlyTicks = 0;

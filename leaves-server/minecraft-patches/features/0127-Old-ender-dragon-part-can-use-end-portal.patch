@@ -5,7 +5,7 @@ Subject: [PATCH] Old ender dragon part can use end portal
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 4ecdcd605877f43a46452275fff7830efde7efa7..cd0817e6a85513f63e551af0ee2a67b3a5bc1ab5 100644
+index 743e568f566a4696689bea3a5425dc1888a8d7b0..ca3d2eb712005db8e5951b1d3be9c9570e5ac057 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -201,7 +201,7 @@ public abstract class Entity
@@ -44,10 +44,10 @@ index 4ecdcd605877f43a46452275fff7830efde7efa7..cd0817e6a85513f63e551af0ee2a67b3
          if (!this.isAlive() || !this.valid) return false; // Paper - Fix item duplication and teleport issues
          if (from.dimension() == Level.END && to.dimension() == Level.OVERWORLD) {
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index aad59a7cef63ebd0415ab93f5b5d47e8f3943522..d6e0ec9f38e6ee145ec719772e034b2a87665c53 100644
+index 74d1d337e77c071432f87207683b72de6815bab2..92c21f38286c173111451eb2eccde38046965d43 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
-@@ -409,6 +409,16 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
+@@ -408,6 +408,16 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
          if (!this.level().isClientSide() && this.tickCount % 5 == 0) {
              this.updateControlFlags();
          }

@@ -435,10 +435,10 @@ index b491af406632cb590f019a015eb75ac493b7dbfa..f8cc90f898611309c6c6e8c21cc56787
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index ff9de619c18b7d8ae9caa4fb3b2ab8e7e0ea9fc0..29fb49c81398b427420af506008b87da5210d570 100644
+index 2dd8fc958c72774b1488e01604167af4b66a1027..406438fdd4774accf244110bcf3f4eb3724d00a8 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -1195,6 +1195,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1194,6 +1194,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
                  int neighbourUpdateFlags = updateFlags & ~(Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_NEIGHBORS);
                  // Leaves start - no block update
                  if (org.leavesmc.leaves.command.leaves.subcommands.BlockUpdateCommand.isNoBlockUpdate()) {
@@ -446,7 +446,7 @@ index ff9de619c18b7d8ae9caa4fb3b2ab8e7e0ea9fc0..29fb49c81398b427420af506008b87da
                      this.updatePOIOnBlockStateChange(pos, oldState, newState);
                      return;
                  }
-@@ -1530,7 +1531,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1529,7 +1530,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
          // Paper end - Fix MC-117075 use removeAll
              if (ticker.isRemoved()) {
                  toRemove.add(ticker); // Paper - Fix MC-117075 use removeAll
@@ -455,7 +455,7 @@ index ff9de619c18b7d8ae9caa4fb3b2ab8e7e0ea9fc0..29fb49c81398b427420af506008b87da
                  ticker.tick();
                  // Paper start - rewrite chunk system
                  if ((++tickedEntities & 7) == 0) {
-@@ -1586,6 +1587,27 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1585,6 +1586,27 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
          return this.shouldTickBlocksAt(ChunkPos.pack(pos));
      }
  
@@ -598,7 +598,7 @@ index 6f32bf6dfba981ebdfdfe8e9cfccaf8b5438bd03..228628ee6ab9467a255830ae306fe7b3
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java b/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-index b6f55df3e3f2752eae10cd0ee1e0c81fc57680c4..b1683002d961f75a7dbdcb6ba1f310b23a0f32cb 100644
+index 332f0053867f75d9f8d3f43ac50c6b6eaabb5e13..3def4bdab29192326ab4a411a66ce0065d6afcd6 100644
 --- a/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 @@ -39,7 +39,7 @@ import net.minecraft.world.level.storage.ValueOutput;
@@ -618,7 +618,7 @@ index b6f55df3e3f2752eae10cd0ee1e0c81fc57680c4..b1683002d961f75a7dbdcb6ba1f310b2
      }
  
      @Override
-@@ -278,6 +279,7 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
+@@ -279,6 +280,7 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
          if (changed) {
              setChanged(level, pos, state);
          }
@@ -626,7 +626,7 @@ index b6f55df3e3f2752eae10cd0ee1e0c81fc57680c4..b1683002d961f75a7dbdcb6ba1f310b2
      }
  
      private static void consumeFuel(final NonNullList<ItemStack> items, final ItemStack fuel) {
-@@ -519,4 +521,53 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
+@@ -520,4 +522,53 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
              this.getRecipesToAwardAndPopExperience(serverLevel, Vec3.atCenterOf(pos));
          }
      }
