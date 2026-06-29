@@ -5,7 +5,7 @@ Subject: [PATCH] Old zombie reinforcement
 
 
 diff --git a/net/minecraft/world/entity/monster/zombie/Zombie.java b/net/minecraft/world/entity/monster/zombie/Zombie.java
-index d7b9e938937398d4c74894681665a116633c7a7d..98058622cca3ced7d8820797cfdaf8b851c7ca2a 100644
+index aa0a34e3bae3c0d81bc87577570340d1efc46c2b..01b72f8ba2892d3b30d7b0a4a887029ba3cb068c 100644
 --- a/net/minecraft/world/entity/monster/zombie/Zombie.java
 +++ b/net/minecraft/world/entity/monster/zombie/Zombie.java
 @@ -333,7 +333,7 @@ public class Zombie extends Monster {
@@ -13,7 +13,7 @@ index d7b9e938937398d4c74894681665a116633c7a7d..98058622cca3ced7d8820797cfdaf8b8
              int y = Mth.floor(this.getY());
              int z = Mth.floor(this.getZ());
 -            EntityType<? extends Zombie> type = this.getType();
-+                EntityType<? extends Zombie> type = org.leavesmc.leaves.LeavesConfig.modify.oldMC.oldZombieReinforcement ? EntityType.ZOMBIE : this.getType(); // Leaves end - old zombie reinforcement
++                EntityType<? extends Zombie> type = org.leavesmc.leaves.LeavesConfig.modify.oldMC.oldZombieReinforcement ? net.minecraft.world.entity.EntityTypes.ZOMBIE : this.getType(); // Leaves end - old zombie reinforcement
              Zombie reinforcement = type.create(level, EntitySpawnReason.REINFORCEMENT);
              if (reinforcement == null) {
                  return true;

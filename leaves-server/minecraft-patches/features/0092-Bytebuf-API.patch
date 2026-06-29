@@ -5,10 +5,10 @@ Subject: [PATCH] Bytebuf API
 
 
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 1543fad27aff40dba8591ffde4de611cb2516f6c..c31d51dcbd7b27083550f137127c468e924cf8b0 100644
+index 8354e6079c60d0250ea23ed8e6af8f95011db3db..934c6df2da6b3035f15bb5c12166a3e37d99c4ce 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -295,6 +295,13 @@ public abstract class PlayerList {
+@@ -294,6 +294,13 @@ public abstract class PlayerList {
          boolean immediateRespawn = gameRules.get(GameRules.IMMEDIATE_RESPAWN);
          boolean reducedDebugInfo = gameRules.get(GameRules.REDUCED_DEBUG_INFO);
          boolean doLimitedCrafting = gameRules.get(GameRules.LIMITED_CRAFTING);

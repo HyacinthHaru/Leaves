@@ -195,7 +195,7 @@ index 4a24a36e022356d44a77306028ef2c09cd221fa5..d395fa84d29df3355e3fee75b70ba401
      protected void entityInside(
          final BlockState state,
 diff --git a/net/minecraft/world/level/block/ChestBlock.java b/net/minecraft/world/level/block/ChestBlock.java
-index 9b49207d8e5658420c62c6df9b2debae9f664093..ff2a3737dc2bde316f71ed9db5a630012c6f76df 100644
+index 4bd84b80199c7f625475ca62da02266d871a8639..51e623981301079912f8bb0f2fc1db82e68cb9a6 100644
 --- a/net/minecraft/world/level/block/ChestBlock.java
 +++ b/net/minecraft/world/level/block/ChestBlock.java
 @@ -253,6 +253,14 @@ public class ChestBlock extends AbstractChestBlock<ChestBlockEntity> implements
@@ -573,7 +573,7 @@ index 10cff0f9db2910c543c20fa055c0c5b759becc15..3da6b26423c0810827159d2df6464081
      protected void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel level, final BlockPos pos, final boolean movedByPiston) {
          if (getPhase(state) == SculkSensorPhase.ACTIVE) {
 diff --git a/net/minecraft/world/level/block/SculkShriekerBlock.java b/net/minecraft/world/level/block/SculkShriekerBlock.java
-index 5a15671202a0129b1ce97fae5515ddefa5b3fb01..685e4e9ed3a428f6c120cdfce6460a09d23aa250 100644
+index 5a15671202a0129b1ce97fae5515ddefa5b3fb01..9a3ba92b66433b605c9829d71c781317663702d2 100644
 --- a/net/minecraft/world/level/block/SculkShriekerBlock.java
 +++ b/net/minecraft/world/level/block/SculkShriekerBlock.java
 @@ -69,6 +69,16 @@ public class SculkShriekerBlock extends BaseEntityBlock implements SimpleWaterlo
@@ -584,7 +584,7 @@ index 5a15671202a0129b1ce97fae5515ddefa5b3fb01..685e4e9ed3a428f6c120cdfce6460a09
 +    @Override
 +    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
 +        if (level instanceof ServerLevel serverLevel && state.getValue(SHRIEKING) && !state.is(newState.getBlock())) {
-+            serverLevel.getBlockEntity(pos, BlockEntityType.SCULK_SHRIEKER).ifPresent(sculkShrieker -> sculkShrieker.tryRespond(serverLevel));
++            serverLevel.getBlockEntity(pos, net.minecraft.world.level.block.entity.BlockEntityTypes.SCULK_SHRIEKER).ifPresent(sculkShrieker -> sculkShrieker.tryRespond(serverLevel));
 +        }
 +        super.onRemove(state, level, pos, newState, movedByPiston);
 +    }
@@ -594,7 +594,7 @@ index 5a15671202a0129b1ce97fae5515ddefa5b3fb01..685e4e9ed3a428f6c120cdfce6460a09
      protected void tick(final BlockState state, final ServerLevel level, final BlockPos pos, final RandomSource random) {
          if (state.getValue(SHRIEKING)) {
 diff --git a/net/minecraft/world/level/block/ShulkerBoxBlock.java b/net/minecraft/world/level/block/ShulkerBoxBlock.java
-index ae2ab4bc7632ac35e5b18ffb4f20ba642413ab38..a7437cdfa6ca23db171e9202228ffd72a5786af4 100644
+index 503d4fbaeba3e2fb55a68c514c4b1560bbc23868..0168a286809c44e44c267d58979d77b4765e9afc 100644
 --- a/net/minecraft/world/level/block/ShulkerBoxBlock.java
 +++ b/net/minecraft/world/level/block/ShulkerBoxBlock.java
 @@ -152,6 +152,19 @@ public class ShulkerBoxBlock extends BaseEntityBlock {
@@ -732,7 +732,7 @@ index f8caa0b3c21766dbad73c524c1680346e4257188..343660d3e5fbdc25aba84a5cacbc367d
      protected void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel level, final BlockPos pos, final boolean movedByPiston) {
          BlockPos basePos = pos.relative(state.getValue(FACING).getOpposite());
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 70451851cfb86911498ce9f27f63b61178d56453..db65ae15ed000db7ab022904837f0c1b4b58500f 100644
+index 4d9416c06555a3080dd629201d48bb5dbacb4ea4..dffe1a1c4217fa42bd19acae4ccb93659b3c00bf 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -171,6 +171,15 @@ public abstract class BlockBehaviour implements FeatureElement {
@@ -765,7 +765,7 @@ index 70451851cfb86911498ce9f27f63b61178d56453..db65ae15ed000db7ab022904837f0c1b
              this.getBlock().affectNeighborsAfterRemoval(this.asState(), level, pos, movedByPiston);
          }
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index bb09d141931492eda8cf1830438e6807d4b0cacf..01fe10f0ad445e1428e4250dac0f480aa2a1cdd3 100644
+index 5159fe83ac04038524d10d093f3028544618bcc7..c13b1eb34f54e43a638e6cddd3cd694d0aa07ea1 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -403,6 +403,8 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot

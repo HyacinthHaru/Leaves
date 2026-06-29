@@ -3,6 +3,10 @@ From: HyacinthHaru <122684177+HyacinthHaru@users.noreply.github.com>
 Date: Sat, 13 Jun 2026 21:45:53 +0800
 Subject: [PATCH] 26.2 API adaptations
 
+26.2 dropped several access transformers that Leaves relied on. This patch
+re-widens those vanilla field declarations (Leaves' AT mechanism). The
+mechanical EntityType->EntityTypes / knockback / login-packet adaptations that
+used to live here have been folded back into their owning feature patches.
 
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
 index 4a1f9b9d3d3a8a307eb0ccbda99e1818b2a58d2d..343839348577108a4710522fd45100443672868b 100644
@@ -31,7 +35,7 @@ index cc246e8ee7d3697c78f944e3c854b77e90957bc6..a8d72a2858ad172cec121ee499fcfa68
      public final io.papermc.paper.world.saveddata.PaperLevelOverrides serverLevelData; // Paper - type
      private final EntityTickList entityTickList = new EntityTickList();
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index bbccfae1381dabc08c11d496d5ec050ffccd7e13..0badfcf95aa4ac2b0232bfdadb81cb71dba62de9 100644
+index 6f15063b55cc51cf8e4036fd4a2fdf607c8ee6fe..ec64e5db6b5eaecd2eb46d00b34c0894d5f08d76 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -251,7 +251,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -43,36 +47,6 @@ index bbccfae1381dabc08c11d496d5ec050ffccd7e13..0badfcf95aa4ac2b0232bfdadb81cb71
      public boolean seenCredits = false;
      protected ServerRecipeBook recipeBook; // Leaves - not final and private -> protected
      private @Nullable Vec3 levitationStartPos;
-diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index cad3241fdb19f497298209792e58da3336bb92b0..ac547dbe237246ef12ec16820f1aef2ea6f4713b 100644
---- a/net/minecraft/server/players/PlayerList.java
-+++ b/net/minecraft/server/players/PlayerList.java
-@@ -164,7 +164,6 @@ public abstract class PlayerList {
-         ServerLevel worldserver1 = worldserver;
- 
-         player.setServerLevel(worldserver1);
--        player.spawnIn(worldserver1);
-         player.gameMode.setLevel(player.level());
- 
-         LevelData worlddata = worldserver1.getLevelData();
-@@ -175,7 +174,7 @@ public abstract class PlayerList {
-         boolean flag1 = gamerules.get(GameRules.REDUCED_DEBUG_INFO);
-         boolean flag2 = gamerules.get(GameRules.LIMITED_CRAFTING);
- 
--        playerconnection.send(new ClientboundLoginPacket(player.getId(), worlddata.isHardcore(), this.server.levelKeys(), this.getMaxPlayers(), io.papermc.paper.FeatureHooks.getViewDistance(worldserver1), io.papermc.paper.FeatureHooks.getSimulationDistance(worldserver1), flag1, !flag, flag2, player.createCommonSpawnInfo(worldserver1), this.server.enforceSecureProfile()));
-+        playerconnection.send(new ClientboundLoginPacket(player.getId(), worlddata.isHardcore(), this.server.levelKeys(), this.getMaxPlayers(), io.papermc.paper.FeatureHooks.getViewDistance(worldserver1), io.papermc.paper.FeatureHooks.getSimulationDistance(worldserver1), flag1, !flag, flag2, player.createCommonSpawnInfo(worldserver1), this.server.usesAuthentication(), this.server.enforceSecureProfile()));
-         player.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
-         playerconnection.send(new ClientboundChangeDifficultyPacket(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-         playerconnection.send(new ClientboundPlayerAbilitiesPacket(player.getAbilities()));
-@@ -592,7 +591,7 @@ public abstract class PlayerList {
- 
-         worldserver.removePlayerImmediately(entityplayer, Entity.RemovalReason.UNLOADED_WITH_PLAYER);
-         entityplayer.retireScheduler();
--        entityplayer.getAdvancements().stopListening();
-+        entityplayer.getAdvancements().clearTriggers();
-         this.players.remove(entityplayer);
-         // Leaves - guard name removal so a photographer sharing a real player's name won't evict the real player's mapping
-         final String nameKey = entityplayer.getScoreboardName().toLowerCase(java.util.Locale.ROOT);
 diff --git a/net/minecraft/world/entity/monster/Creeper.java b/net/minecraft/world/entity/monster/Creeper.java
 index 4a90294f8d8447bb2f2cef7572119274a1a2c62e..3e2e0d21188f0ecdd32887d52108ef3681b5ce9a 100644
 --- a/net/minecraft/world/entity/monster/Creeper.java
@@ -86,58 +60,6 @@ index 4a90294f8d8447bb2f2cef7572119274a1a2c62e..3e2e0d21188f0ecdd32887d52108ef36
      public @Nullable Entity entityIgniter; // CraftBukkit
  
      public Creeper(final EntityType<? extends Creeper> type, final Level level) {
-diff --git a/net/minecraft/world/entity/monster/Guardian.java b/net/minecraft/world/entity/monster/Guardian.java
-index 4b80de4f23acd2888c6baa1f313492eae1772b1b..51938678fb3a04ca6b0ebd2ff195a718bad459d6 100644
---- a/net/minecraft/world/entity/monster/Guardian.java
-+++ b/net/minecraft/world/entity/monster/Guardian.java
-@@ -445,7 +445,7 @@ public class Guardian extends Monster {
-     @Override
-     public void thunderHit(net.minecraft.server.level.ServerLevel level, net.minecraft.world.entity.LightningBolt lightning) {
-         if (org.leavesmc.leaves.LeavesConfig.modify.renewableSponges && !this.isRemoved() && !(this instanceof ElderGuardian)) {
--            ElderGuardian elderGuardian = new ElderGuardian(EntityType.ELDER_GUARDIAN, this.level());
-+            ElderGuardian elderGuardian = new ElderGuardian(net.minecraft.world.entity.EntityTypes.ELDER_GUARDIAN, this.level());
-             elderGuardian.snapTo(this.getX(), this.getY(), this.getZ(), this.getYRot(), this.getXRot());
-             elderGuardian.finalizeSpawn(level, level.getCurrentDifficultyAt(elderGuardian.blockPosition()), EntitySpawnReason.CONVERSION, null);
-             elderGuardian.setNoAi(this.isNoAi());
-diff --git a/net/minecraft/world/entity/monster/skeleton/Skeleton.java b/net/minecraft/world/entity/monster/skeleton/Skeleton.java
-index d9d42c13e5467580d01f62a7a7815a9f28d2f4da..f72b655621ad7f70c5f062d4f39a8659310323db 100644
---- a/net/minecraft/world/entity/monster/skeleton/Skeleton.java
-+++ b/net/minecraft/world/entity/monster/skeleton/Skeleton.java
-@@ -146,7 +146,7 @@ public class Skeleton extends AbstractSkeleton {
-     protected void dropFromLootTable(final net.minecraft.server.level.ServerLevel level, final DamageSource source, final boolean playerKilled) {
-         super.dropFromLootTable(level, source, playerKilled);
-         if (org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples > 0.0D) {
--            if (this.getRootVehicle().getType() == EntityType.SPIDER && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
-+            if (this.getRootVehicle().getType() == net.minecraft.world.entity.EntityTypes.SPIDER && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
-                 this.spawnAtLocation(level, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE));
-             }
-         }
-diff --git a/net/minecraft/world/entity/monster/spider/Spider.java b/net/minecraft/world/entity/monster/spider/Spider.java
-index 28557fb62603da762bf8538bda12cd5a55106446..a5033b859e73c53485a06be9ca614ef1a057b391 100644
---- a/net/minecraft/world/entity/monster/spider/Spider.java
-+++ b/net/minecraft/world/entity/monster/spider/Spider.java
-@@ -147,7 +147,7 @@ public class Spider extends Monster {
-     protected void dropFromLootTable(final net.minecraft.server.level.ServerLevel level, final net.minecraft.world.damagesource.DamageSource source, final boolean playerKilled) {
-         super.dropFromLootTable(level, source, playerKilled);
-         if (org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples > 0.0D) {
--            if (this.hasPassenger(entity -> entity.getType() == EntityType.SKELETON) && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
-+            if (this.hasPassenger(entity -> entity.getType() == net.minecraft.world.entity.EntityTypes.SKELETON) && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
-                 this.spawnAtLocation(level, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE));
-             }
-         }
-diff --git a/net/minecraft/world/entity/monster/zombie/Zombie.java b/net/minecraft/world/entity/monster/zombie/Zombie.java
-index d5ed4718268d7e07ca91a5807cd1967997037e88..01b72f8ba2892d3b30d7b0a4a887029ba3cb068c 100644
---- a/net/minecraft/world/entity/monster/zombie/Zombie.java
-+++ b/net/minecraft/world/entity/monster/zombie/Zombie.java
-@@ -333,7 +333,7 @@ public class Zombie extends Monster {
-             int x = Mth.floor(this.getX());
-             int y = Mth.floor(this.getY());
-             int z = Mth.floor(this.getZ());
--                EntityType<? extends Zombie> type = org.leavesmc.leaves.LeavesConfig.modify.oldMC.oldZombieReinforcement ? EntityType.ZOMBIE : this.getType(); // Leaves end - old zombie reinforcement
-+                EntityType<? extends Zombie> type = org.leavesmc.leaves.LeavesConfig.modify.oldMC.oldZombieReinforcement ? net.minecraft.world.entity.EntityTypes.ZOMBIE : this.getType(); // Leaves end - old zombie reinforcement
-             Zombie reinforcement = type.create(level, EntitySpawnReason.REINFORCEMENT);
-             if (reinforcement == null) {
-                 return true;
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
 index d9443435a85c4e20bfcd6429e884d115b3d79689..e654d1c0ddbb09adcfacca7cc1503f1deece4c9a 100644
 --- a/net/minecraft/world/entity/player/Player.java
@@ -151,56 +73,8 @@ index d9443435a85c4e20bfcd6429e884d115b3d79689..e654d1c0ddbb09adcfacca7cc1503f1d
      protected boolean wasUnderwater;
      private final Abilities abilities = new Abilities();
      public int experienceLevel = 0;
-diff --git a/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java b/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
-index df10a76f8f43a0a483d4e59c55d5d78a723fb502..fae12028cded90eb69813b852b8bfd36f4b1ea42 100644
---- a/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
-+++ b/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
-@@ -60,7 +60,7 @@ public class Snowball extends ThrowableItemProjectile {
-         // Leaves start - make snowball can knockback player
-         if (org.leavesmc.leaves.LeavesConfig.modify.snowballAndEggCanKnockback && entity instanceof net.minecraft.server.level.ServerPlayer player) {
-             player.hurt(this.damageSources().thrown(this, this.getOwner()), 0.0000001F);
--            player.knockback(0.4000000059604645D, this.getX() - player.getX(), this.getZ() - player.getZ(), this, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.DAMAGE);
-+            player.knockback(0.4000000059604645D, this.getX() - player.getX(), this.getZ() - player.getZ(), this.damageSources().thrown(this, this.getOwner()), 0.0F, this, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.DAMAGE);
-         }
-         // Leaves end - make snowball can knockback player
-     }
-diff --git a/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEgg.java b/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEgg.java
-index 77c0d952253ef50a404445630dda56a93befd89e..5ec6019c2ad51763a6e25422a0944e5b24e5a1fc 100644
---- a/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEgg.java
-+++ b/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEgg.java
-@@ -64,7 +64,7 @@ public class ThrownEgg extends ThrowableItemProjectile {
-         // Leaves start - make egg can knockback player
-         if (org.leavesmc.leaves.LeavesConfig.modify.snowballAndEggCanKnockback && hitResult.getEntity() instanceof net.minecraft.server.level.ServerPlayer player) {
-             player.hurt(this.damageSources().thrown(this, this.getOwner()), 0.0000001F);
--            player.knockback(0.4000000059604645D, this.getX() - player.getX(), this.getZ() - player.getZ(), this, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.DAMAGE);
-+            player.knockback(0.4000000059604645D, this.getX() - player.getX(), this.getZ() - player.getZ(), this.damageSources().thrown(this, this.getOwner()), 0.0F, this, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.DAMAGE);
-         }
-         // Leaves end - make egg can knockback player
-     }
-diff --git a/net/minecraft/world/entity/raid/Raid.java b/net/minecraft/world/entity/raid/Raid.java
-index 20d1d33eced91c8f7ad81b0cb4b511bcbf25e45b..26d6991ef58b7ec07ea51351eb5d15a8dbb13ae4 100644
---- a/net/minecraft/world/entity/raid/Raid.java
-+++ b/net/minecraft/world/entity/raid/Raid.java
-@@ -898,7 +898,7 @@ public class Raid {
-     private BlockPos getRavagerSpawnLocation(final ServerLevel serverWorld, final int proximity, final int tries) {
-         int i = proximity == 0 ? 2 : 2 - proximity;
-         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
--        net.minecraft.world.entity.SpawnPlacementType spawnLocation = net.minecraft.world.entity.SpawnPlacements.getPlacementType(EntityType.RAVAGER);
-+        net.minecraft.world.entity.SpawnPlacementType spawnLocation = net.minecraft.world.entity.SpawnPlacements.getPlacementType(net.minecraft.world.entity.EntityTypes.RAVAGER);
-         for (int j = 0; j < tries; j++) {
-             float f = serverWorld.getRandom().nextFloat() * (float) (Math.PI * 2);
-             int k = this.center.getX() + Mth.floor(Mth.cos(f) * 32.0F * (float) i + serverWorld.getRandom().nextInt(5));
-@@ -910,7 +910,7 @@ public class Raid {
-             }
-             if (serverWorld.hasChunksAt(mutable.getX() - 10, mutable.getZ() - 10, mutable.getX() + 10, mutable.getZ() + 10)
-                 && serverWorld.isPositionEntityTicking(mutable)
--                && (spawnLocation.isSpawnPositionOk(serverWorld, mutable, EntityType.RAVAGER)
-+                && (spawnLocation.isSpawnPositionOk(serverWorld, mutable, net.minecraft.world.entity.EntityTypes.RAVAGER)
-                     || serverWorld.getBlockState(mutable.below()).is(net.minecraft.world.level.block.Blocks.SNOW)
-                     && serverWorld.getBlockState(mutable).isAir())
-             ) {
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 29fb49c81398b427420af506008b87da5210d570..cbf9ca405fce862eaf20d38e5233e525421a89f9 100644
+index 406438fdd4774accf244110bcf3f4eb3724d00a8..0a88427429c47eb33fd8584343fcf2a71df390a7 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -136,7 +136,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
@@ -212,16 +86,3 @@ index 29fb49c81398b427420af506008b87da5210d570..cbf9ca405fce862eaf20d38e5233e525
      private final boolean isClientSide;
      private final BiomeManager biomeManager;
      private final ResourceKey<Level> dimension;
-diff --git a/net/minecraft/world/level/block/SculkShriekerBlock.java b/net/minecraft/world/level/block/SculkShriekerBlock.java
-index 685e4e9ed3a428f6c120cdfce6460a09d23aa250..9a3ba92b66433b605c9829d71c781317663702d2 100644
---- a/net/minecraft/world/level/block/SculkShriekerBlock.java
-+++ b/net/minecraft/world/level/block/SculkShriekerBlock.java
-@@ -73,7 +73,7 @@ public class SculkShriekerBlock extends BaseEntityBlock implements SimpleWaterlo
-     @Override
-     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-         if (level instanceof ServerLevel serverLevel && state.getValue(SHRIEKING) && !state.is(newState.getBlock())) {
--            serverLevel.getBlockEntity(pos, BlockEntityType.SCULK_SHRIEKER).ifPresent(sculkShrieker -> sculkShrieker.tryRespond(serverLevel));
-+            serverLevel.getBlockEntity(pos, net.minecraft.world.level.block.entity.BlockEntityTypes.SCULK_SHRIEKER).ifPresent(sculkShrieker -> sculkShrieker.tryRespond(serverLevel));
-         }
-         super.onRemove(state, level, pos, newState, movedByPiston);
-     }

@@ -5,7 +5,7 @@ Subject: [PATCH] Spider jockeys drop gapples
 
 
 diff --git a/net/minecraft/world/entity/monster/skeleton/Skeleton.java b/net/minecraft/world/entity/monster/skeleton/Skeleton.java
-index 3ad7122e7219a867dc62dbee80ebe164785dce13..acb2ca573bf5a2b4a552782a8e898b7acd4476a5 100644
+index f23ffcbc12867a5ed068c95f5c570497a0d53f13..f72b655621ad7f70c5f062d4f39a8659310323db 100644
 --- a/net/minecraft/world/entity/monster/skeleton/Skeleton.java
 +++ b/net/minecraft/world/entity/monster/skeleton/Skeleton.java
 @@ -131,4 +131,25 @@ public class Skeleton extends AbstractSkeleton {
@@ -27,7 +27,7 @@ index 3ad7122e7219a867dc62dbee80ebe164785dce13..acb2ca573bf5a2b4a552782a8e898b7a
 +    protected void dropFromLootTable(final net.minecraft.server.level.ServerLevel level, final DamageSource source, final boolean playerKilled) {
 +        super.dropFromLootTable(level, source, playerKilled);
 +        if (org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples > 0.0D) {
-+            if (this.getRootVehicle().getType() == EntityType.SPIDER && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
++            if (this.getRootVehicle().getType() == net.minecraft.world.entity.EntityTypes.SPIDER && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
 +                this.spawnAtLocation(level, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE));
 +            }
 +        }
@@ -35,7 +35,7 @@ index 3ad7122e7219a867dc62dbee80ebe164785dce13..acb2ca573bf5a2b4a552782a8e898b7a
 +    // Leaves end - spider jockeys drop gapples
  }
 diff --git a/net/minecraft/world/entity/monster/spider/Spider.java b/net/minecraft/world/entity/monster/spider/Spider.java
-index 820a257e3cb43cbda930b5512b63eecfc6e37fa8..28557fb62603da762bf8538bda12cd5a55106446 100644
+index 820a257e3cb43cbda930b5512b63eecfc6e37fa8..a5033b859e73c53485a06be9ca614ef1a057b391 100644
 --- a/net/minecraft/world/entity/monster/spider/Spider.java
 +++ b/net/minecraft/world/entity/monster/spider/Spider.java
 @@ -142,6 +142,18 @@ public class Spider extends Monster {
@@ -47,7 +47,7 @@ index 820a257e3cb43cbda930b5512b63eecfc6e37fa8..28557fb62603da762bf8538bda12cd5a
 +    protected void dropFromLootTable(final net.minecraft.server.level.ServerLevel level, final net.minecraft.world.damagesource.DamageSource source, final boolean playerKilled) {
 +        super.dropFromLootTable(level, source, playerKilled);
 +        if (org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples > 0.0D) {
-+            if (this.hasPassenger(entity -> entity.getType() == EntityType.SKELETON) && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
++            if (this.hasPassenger(entity -> entity.getType() == net.minecraft.world.entity.EntityTypes.SKELETON) && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
 +                this.spawnAtLocation(level, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.ENCHANTED_GOLDEN_APPLE));
 +            }
 +        }

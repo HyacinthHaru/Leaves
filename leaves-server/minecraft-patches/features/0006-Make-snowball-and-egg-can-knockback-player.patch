@@ -5,7 +5,7 @@ Subject: [PATCH] Make snowball and egg can knockback player
 
 
 diff --git a/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java b/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
-index 09a18f5050b0b4f3f282bf3d4ba969d77958e531..b3d907be09878e85ec90b75e5c76e11bb156a15a 100644
+index d183a75c87626c680b96016c535f31acdfbc710e..fae12028cded90eb69813b852b8bfd36f4b1ea42 100644
 --- a/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
 +++ b/net/minecraft/world/entity/projectile/throwableitemprojectile/Snowball.java
 @@ -57,6 +57,12 @@ public class Snowball extends ThrowableItemProjectile {
@@ -15,14 +15,14 @@ index 09a18f5050b0b4f3f282bf3d4ba969d77958e531..b3d907be09878e85ec90b75e5c76e11b
 +        // Leaves start - make snowball can knockback player
 +        if (org.leavesmc.leaves.LeavesConfig.modify.snowballAndEggCanKnockback && entity instanceof net.minecraft.server.level.ServerPlayer player) {
 +            player.hurt(this.damageSources().thrown(this, this.getOwner()), 0.0000001F);
-+            player.knockback(0.4000000059604645D, this.getX() - player.getX(), this.getZ() - player.getZ(), this, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.DAMAGE);
++            player.knockback(0.4000000059604645D, this.getX() - player.getX(), this.getZ() - player.getZ(), this.damageSources().thrown(this, this.getOwner()), 0.0F, this, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.DAMAGE);
 +        }
 +        // Leaves end - make snowball can knockback player
      }
  
      @Override
 diff --git a/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEgg.java b/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEgg.java
-index 0a37aa2e6557bcd5cc1918abfa0d6b7ffeac7b4d..7b568e6952a2768f47276ab4cd7c7e8e00169a5e 100644
+index b844dee92b175ddef4506d96e513e5ca3d27750d..5ec6019c2ad51763a6e25422a0944e5b24e5a1fc 100644
 --- a/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEgg.java
 +++ b/net/minecraft/world/entity/projectile/throwableitemprojectile/ThrownEgg.java
 @@ -61,6 +61,12 @@ public class ThrownEgg extends ThrowableItemProjectile {
@@ -32,7 +32,7 @@ index 0a37aa2e6557bcd5cc1918abfa0d6b7ffeac7b4d..7b568e6952a2768f47276ab4cd7c7e8e
 +        // Leaves start - make egg can knockback player
 +        if (org.leavesmc.leaves.LeavesConfig.modify.snowballAndEggCanKnockback && hitResult.getEntity() instanceof net.minecraft.server.level.ServerPlayer player) {
 +            player.hurt(this.damageSources().thrown(this, this.getOwner()), 0.0000001F);
-+            player.knockback(0.4000000059604645D, this.getX() - player.getX(), this.getZ() - player.getZ(), this, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.DAMAGE);
++            player.knockback(0.4000000059604645D, this.getX() - player.getX(), this.getZ() - player.getZ(), this.damageSources().thrown(this, this.getOwner()), 0.0F, this, io.papermc.paper.event.entity.EntityKnockbackEvent.Cause.DAMAGE);
 +        }
 +        // Leaves end - make egg can knockback player
      }

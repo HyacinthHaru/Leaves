@@ -21,7 +21,7 @@ index f58b10c7dec0d2b7dc2b3d1198539b74d13038f3..ee49b2bdf1bbf6a53940099d1b84a99b
              if (raid == null || raid.getRaidOmenLevel() < raid.getMaxRaidOmenLevel()) {
                  player.addEffect(new MobEffectInstance(MobEffects.RAID_OMEN, 600, amplification));
 diff --git a/net/minecraft/world/entity/raid/Raid.java b/net/minecraft/world/entity/raid/Raid.java
-index 58cd315a3ee3bb3ab6e05408c5b6df8d532de11e..80cfb4b2d9860b5c0cce2a6a154e42486ac0cfde 100644
+index 16d789ffce1f645505f51a1e61944cd2bc0672c5..26d6991ef58b7ec07ea51351eb5d15a8dbb13ae4 100644
 --- a/net/minecraft/world/entity/raid/Raid.java
 +++ b/net/minecraft/world/entity/raid/Raid.java
 @@ -262,7 +262,7 @@ public class Raid {
@@ -92,7 +92,7 @@ index 58cd315a3ee3bb3ab6e05408c5b6df8d532de11e..80cfb4b2d9860b5c0cce2a6a154e4248
 +    private BlockPos getRavagerSpawnLocation(final ServerLevel serverWorld, final int proximity, final int tries) {
 +        int i = proximity == 0 ? 2 : 2 - proximity;
 +        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-+        net.minecraft.world.entity.SpawnPlacementType spawnLocation = net.minecraft.world.entity.SpawnPlacements.getPlacementType(EntityType.RAVAGER);
++        net.minecraft.world.entity.SpawnPlacementType spawnLocation = net.minecraft.world.entity.SpawnPlacements.getPlacementType(net.minecraft.world.entity.EntityTypes.RAVAGER);
 +        for (int j = 0; j < tries; j++) {
 +            float f = serverWorld.getRandom().nextFloat() * (float) (Math.PI * 2);
 +            int k = this.center.getX() + Mth.floor(Mth.cos(f) * 32.0F * (float) i + serverWorld.getRandom().nextInt(5));
@@ -104,7 +104,7 @@ index 58cd315a3ee3bb3ab6e05408c5b6df8d532de11e..80cfb4b2d9860b5c0cce2a6a154e4248
 +            }
 +            if (serverWorld.hasChunksAt(mutable.getX() - 10, mutable.getZ() - 10, mutable.getX() + 10, mutable.getZ() + 10)
 +                && serverWorld.isPositionEntityTicking(mutable)
-+                && (spawnLocation.isSpawnPositionOk(serverWorld, mutable, EntityType.RAVAGER)
++                && (spawnLocation.isSpawnPositionOk(serverWorld, mutable, net.minecraft.world.entity.EntityTypes.RAVAGER)
 +                    || serverWorld.getBlockState(mutable.below()).is(net.minecraft.world.level.block.Blocks.SNOW)
 +                    && serverWorld.getBlockState(mutable).isAir())
 +            ) {
@@ -126,7 +126,7 @@ index 58cd315a3ee3bb3ab6e05408c5b6df8d532de11e..80cfb4b2d9860b5c0cce2a6a154e4248
 +    // Leaves end - old FindSpawnPosition
  }
 diff --git a/net/minecraft/world/entity/raid/Raider.java b/net/minecraft/world/entity/raid/Raider.java
-index 7eb20e1ea16136116e1979eb3a17b31f4cc3cc75..d4a362328b3a4b252b74a52d295b34c29239e713 100644
+index 9d242f24c37fec196f06b8ef6fa29a66b2781c68..ac6163d48f19619105d45c26cf515d275e1dc879 100644
 --- a/net/minecraft/world/entity/raid/Raider.java
 +++ b/net/minecraft/world/entity/raid/Raider.java
 @@ -129,6 +129,42 @@ public abstract class Raider extends PatrollingMonster {
