@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Mon, 3 Feb 2025 13:33:19 +0800
 Subject: [PATCH] Jade Protocol
 
+This patch is Powered by Jade(https://github.com/Snownee/Jade)
 
 diff --git a/net/minecraft/world/entity/animal/armadillo/Armadillo.java b/net/minecraft/world/entity/animal/armadillo/Armadillo.java
 index 14491f7136266a738bbc463731d0785bcce2b4cd..2a72a46ffa748d3b6ff7eb712a57ec344733f87b 100644

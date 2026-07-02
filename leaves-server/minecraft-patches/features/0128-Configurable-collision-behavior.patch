@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable collision behavior
 
 
 diff --git a/ca/spottedleaf/moonrise/patches/collisions/CollisionUtil.java b/ca/spottedleaf/moonrise/patches/collisions/CollisionUtil.java
-index de764da80793d272ff597b4a0742ce785838799a..f6fd88839fa08fa48468712aec959c3c4eee7db4 100644
+index de764da80793d272ff597b4a0742ce785838799a..4986a9597d07876aa4f20cb39b2b3455f1620a40 100644
 --- a/ca/spottedleaf/moonrise/patches/collisions/CollisionUtil.java
 +++ b/ca/spottedleaf/moonrise/patches/collisions/CollisionUtil.java
 @@ -101,6 +101,14 @@ public final class CollisionUtil {
@@ -54,7 +54,7 @@ index de764da80793d272ff597b4a0742ce785838799a..f6fd88839fa08fa48468712aec959c3c
 +    private static boolean shouldSkip(final net.minecraft.world.phys.AABB aabb, final net.minecraft.world.phys.shapes.VoxelShape blockCollision, final net.minecraft.world.phys.AABB singleAABB) {
 +        final boolean isBlockShape = blockCollision == net.minecraft.world.phys.shapes.Shapes.block();
 +        return switch (org.leavesmc.leaves.LeavesConfig.fix.collisionBehavior) {
-+            case PAPER -> !voxelShapeIntersect(aabb, singleAABB);
++            case PAPER -> isBlockShape ? !voxelShapeIntersectVanilla(aabb, singleAABB) : !voxelShapeIntersect(aabb, singleAABB); // Leaves - keep Paper's block-shape vanilla (no-epsilon) fast path; only non-block shapes use epsilon intersect
 +            case VANILLA -> !voxelShapeIntersectVanilla(aabb, singleAABB);
 +        };
 +    }

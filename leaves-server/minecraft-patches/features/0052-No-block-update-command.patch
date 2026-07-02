@@ -18,7 +18,7 @@ index 97bd365f332d64c9e4023ecdf109ca37c4c9238a..e1ebc7729f1c60833fafe90636e22e33
          if (SharedConstants.DEBUG_BLOCK_BREAK) {
              LOGGER.info("server broke {} {} -> {}", pos, adjustedState, this.level.getBlockState(pos));
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index d0b07e6a30a98466efacb3d9a032be5d394c23c9..48f044d8296c0b35d22202887c515872787ed3f3 100644
+index 2cc4da03a1038ec0e024ac93b915aab7c7d69a57..a8cdd2d38f6a49f1b5a54db55576274d51d5d9a2 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -1055,7 +1055,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
@@ -73,7 +73,7 @@ index 8e60d158618e45b03eac9a01abe0777e359cf0bc..a9597492e3c61d063035a5cb94f76c06
          boolean extend = this.getNeighborSignal(level, pos, direction);
          if (extend && !state.getValue(EXTENDED)) {
 diff --git a/net/minecraft/world/level/redstone/NeighborUpdater.java b/net/minecraft/world/level/redstone/NeighborUpdater.java
-index 4bf7a27224896c6b71331196b625438fa9d5b52a..dfe7e80bd84b651a5059a1a1ab99b2615e7254dc 100644
+index d18d158974af7931bedae89c80971aff9c51e549..6d1ff12d6f826d4e90fd45b86fbd21a97bf3d25e 100644
 --- a/net/minecraft/world/level/redstone/NeighborUpdater.java
 +++ b/net/minecraft/world/level/redstone/NeighborUpdater.java
 @@ -39,9 +39,14 @@ public interface NeighborUpdater {
@@ -92,7 +92,7 @@ index 4bf7a27224896c6b71331196b625438fa9d5b52a..dfe7e80bd84b651a5059a1a1ab99b261
          BlockState currentState = level.getBlockState(pos);
          if ((updateFlags & Block.UPDATE_SKIP_SHAPE_UPDATE_ON_WIRE) == 0 || !currentState.is(Blocks.REDSTONE_WIRE)) {
              try {
-@@ -72,6 +77,7 @@ public interface NeighborUpdater {
+@@ -80,6 +85,7 @@ public interface NeighborUpdater {
  
      static void executeUpdate(Level level, BlockState state, BlockPos pos, Block changedBlock, @Nullable Orientation orientation, boolean movedByPiston, BlockPos sourcePos) {
          // Paper end - Add source block to BlockPhysicsEvent

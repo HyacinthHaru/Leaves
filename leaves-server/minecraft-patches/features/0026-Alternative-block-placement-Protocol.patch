@@ -3,6 +3,10 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Mon, 3 Feb 2025 13:51:26 +0800
 Subject: [PATCH] Alternative block placement Protocol
 
+This patch is Powered by
+carpet-extra(https://github.com/gnembon/carpet-extra)
+MasaGadget(https://github.com/plusls/MasaGadget)
+litematica(https://github.com/maruohon/litematica)
 
 diff --git a/net/minecraft/world/item/BlockItem.java b/net/minecraft/world/item/BlockItem.java
 index 1065595193574da941d05edec716729d29a65d18..903c819b6de37a07186ecd2f25301586a840c344 100644

@@ -30,10 +30,10 @@ index 408cb996fc8ff77785da8919f19baff2cf4bd789..7c4d0ab96eb0a392debc7fbb2b52717a
                          throw PacketUtils.makeReportedException(e, this.packet, this.listener);
                      }
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 5f34bcf3ea0bfdb5f90c2fd5214adcd4521dafb1..44115cd289cc35a29700251499bd176210d4eace 100644
+index f5be62950638d39feb904f9cab59eca9f34021c9..74b10f353cb97c20553dc7af32a081f239cd0671 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1850,7 +1850,16 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1851,7 +1851,16 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
              try {
                  level.tick(haveTime);
@@ -51,7 +51,7 @@ index 5f34bcf3ea0bfdb5f90c2fd5214adcd4521dafb1..44115cd289cc35a29700251499bd1762
                  level.fillReportDetails(report);
                  throw new ReportedException(report);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 80a5c47097031b583176d5751413ba6678276655..7e469816f9be0dcba5d6bab0d0b9ac9881f14a35 100644
+index eccb02af4f3eb5e380863393eb7313700f418206..bb169daf1a373a6953111a4f0f172723a926fd73 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -891,6 +891,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -154,7 +154,7 @@ index 47a4aa4a45978dfec52ea995d197022f4fe32808..4302b44b7ad8d9a3eae3dfa211648948
      }
  
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index a9d781e2fcac4e2426b0e35e46bbc10c540f9fd9..f845c2c6b19a274f39ec63980b6e3e6761f23bf0 100644
+index a9d781e2fcac4e2426b0e35e46bbc10c540f9fd9..c54d00600b51c27df4460c1dc6e7a5aed1908cd2 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -380,7 +380,7 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
@@ -174,23 +174,26 @@ index a9d781e2fcac4e2426b0e35e46bbc10c540f9fd9..f845c2c6b19a274f39ec63980b6e3e67
      }
  
      @Deprecated
-@@ -750,6 +751,11 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
- 
-     public void setLoaded(final boolean loaded) {
-         this.loaded = loaded;
-+        // Leaves start - bbor
-+        if (loaded) {
-+            org.leavesmc.leaves.protocol.BBORProtocol.onChunkLoaded(this);
-+        }
-+        // Leaves end - bbor
-     }
- 
-     public Level getLevel() {
 diff --git a/net/minecraft/world/level/redstone/NeighborUpdater.java b/net/minecraft/world/level/redstone/NeighborUpdater.java
-index 72ef04091d1c850de5c15f0d9be3f2097a44ca7a..4bf7a27224896c6b71331196b625438fa9d5b52a 100644
+index 72ef04091d1c850de5c15f0d9be3f2097a44ca7a..d18d158974af7931bedae89c80971aff9c51e549 100644
 --- a/net/minecraft/world/level/redstone/NeighborUpdater.java
 +++ b/net/minecraft/world/level/redstone/NeighborUpdater.java
-@@ -84,9 +84,22 @@ public interface NeighborUpdater {
+@@ -48,6 +48,14 @@ public interface NeighborUpdater {
+                 BlockState newState = currentState.updateShape(level, level, pos, direction, neighborPos, neighborState, level.getRandom());
+                 Block.updateOrDestroy(currentState, newState, level, pos, updateFlags, updateLimit);
+             } catch (Throwable t) {
++                // Leaves start - update suppression crash fix - Mojang added this try/catch to executeShapeUpdate in 26.1.2; mirror executeUpdate so UpdateSuppressionException is not wrapped into ReportedException (keeps downstream catchers working)
++                if (org.leavesmc.leaves.LeavesConfig.modify.updateSuppressionCrashFix) {
++                    if (t instanceof org.leavesmc.leaves.util.UpdateSuppressionException ue) {
++                        throw ue;
++                    }
++                    throw new org.leavesmc.leaves.util.UpdateSuppressionException(pos, null, currentState.getBlock(), null, t);
++                }
++                // Leaves end - update suppression crash fix
+                 CrashReport report = CrashReport.forThrowable(t, "Exception while updating neighbour shapes");
+                 CrashReportCategory ownCategory = report.addCategory("Block being updated");
+                 CrashReportCategory.populateBlockDetails(ownCategory, level, pos, currentState);
+@@ -84,9 +92,22 @@ public interface NeighborUpdater {
              state.handleNeighborChanged(level, pos, changedBlock, orientation, movedByPiston);
              // Spigot start
          } catch (StackOverflowError ex) {

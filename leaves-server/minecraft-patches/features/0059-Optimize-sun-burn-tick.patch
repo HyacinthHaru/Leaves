@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Thu, 20 Jul 2023 15:18:50 +0800
 Subject: [PATCH] Optimize sun burn tick
 
+This patch is Powered by Gale(https://github.com/GaleMC/Gale)
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
 index 8e62879ca0e2bf4913295bbad127f8cf314654cd..85a06111cecde93ca6bfecd4d8d3e0323684ae08 100644

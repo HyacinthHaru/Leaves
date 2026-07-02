@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Mon, 3 Feb 2025 13:17:03 +0800
 Subject: [PATCH] PCA sync protocol
 
+This patch is Powered by plusls-carpet-addition(https://github.com/plusls/plusls-carpet-addition)
 
 diff --git a/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java b/net/minecraft/world/level/block/entity/BeehiveBlockEntity.java
 index d2aa5ef709781e0cea99883ce8deab340d4adee0..c74d683d4ab26d20903842c690b06db34b5f6a85 100644

@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Tue, 4 Feb 2025 19:45:19 +0800
 Subject: [PATCH] Replay Mod API
 
+This patch is Powered by ReplayMod(https://github.com/ReplayMod)
 
 diff --git a/net/minecraft/commands/CommandSourceStack.java b/net/minecraft/commands/CommandSourceStack.java
 index 89b9d1a4122d502437d516f8affc5ba72f421f5f..b4b5b32f73659f3bd9de1c62e56419ec93374e05 100644

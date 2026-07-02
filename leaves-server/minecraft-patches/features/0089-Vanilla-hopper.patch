@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Fri, 26 Jan 2024 01:36:34 +0800
 Subject: [PATCH] Vanilla hopper
 
+This is a temporary solution designed to attempt to restore the vanilla behavior of the funnel while preserving optimizations as much as possible. It should ultimately be replaced by the optimization solution provided by lithium.
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 index 33d832852cf167c4925cd9548636fc712d2ddaf3..17f8c6f812c300216b32a8fbc109e94e80c78e73 100644

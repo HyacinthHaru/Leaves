@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Tue, 4 Feb 2025 20:18:35 +0800
 Subject: [PATCH] Wool Hopper Counter
 
+This patch is Powered by fabric-carpet(https://github.com/gnembon/fabric-carpet)
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 index 326e25d1226ed1f719265e32b6e2d64eab6059a6..33d832852cf167c4925cd9548636fc712d2ddaf3 100644

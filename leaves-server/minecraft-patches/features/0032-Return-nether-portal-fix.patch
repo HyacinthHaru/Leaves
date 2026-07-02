@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Mon, 3 Feb 2025 15:36:21 +0800
 Subject: [PATCH] Return nether portal fix
 
+This patch is powered by NetherPortalFix(https://github.com/TwelveIterationMods/NetherPortalFix)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
 index 3b54e1bd8ab25a7564cf2befeb836e61465e2d0f..4c85295c972b84ac110f5691f48576a315754ad9 100644
