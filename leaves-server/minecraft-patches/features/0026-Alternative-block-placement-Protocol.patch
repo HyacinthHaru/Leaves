@@ -9,10 +9,10 @@ MasaGadget(https://github.com/plusls/MasaGadget)
 litematica(https://github.com/maruohon/litematica)
 
 diff --git a/net/minecraft/world/item/BlockItem.java b/net/minecraft/world/item/BlockItem.java
-index 2da4fd153b3de6e97ef264062b40855aa620ec14..b1bf92c1b33350e7db8578470c99371318906077 100644
+index b94c4f0a6908a37d8a07dba6ff3ece7193aca1b5..248e2a569b441c2f58b86a81fa3c3c5337ee5afb 100644
 --- a/net/minecraft/world/item/BlockItem.java
 +++ b/net/minecraft/world/item/BlockItem.java
-@@ -138,7 +138,7 @@ public class BlockItem extends Item {
+@@ -140,7 +140,7 @@ public class BlockItem extends Item {
      }
  
      protected @Nullable BlockState getPlacementState(final BlockPlaceContext context) {

@@ -18,7 +18,7 @@ index 700c9c0d40dee1df6c97f7c63ad731f16bc5f3e7..b95c56e0699fbe16e65efcf010cd514f
              } else {
                  this.followingPlayer = null;
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index 4f140261aa0746fa49eda10b9e08a5694e8be282..3f7868905e9e4bc8cec4d8278f7f47be7c444e5e 100644
+index 5bc21ee2e5f32ff7593e21fc417bdf97e2985409..0298cd0c44599ba652d77dbf59d3ffec28299c03 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
 @@ -243,8 +243,8 @@ public abstract class Player extends Avatar implements ContainerUser {
@@ -78,10 +78,10 @@ index 4f140261aa0746fa49eda10b9e08a5694e8be282..3f7868905e9e4bc8cec4d8278f7f47be
      public boolean isPickable() {
          return !this.isSpectator() && super.isPickable();
 diff --git a/net/minecraft/world/item/BlockItem.java b/net/minecraft/world/item/BlockItem.java
-index 02e149f95c145db0cdf4e45cdec5d31ce9859bf6..072df19eac4d09e33b0e5da6bfff841870f7754b 100644
+index 9684ef8f0ad3e5bf8991b8e8dfee1873709123bf..a2d42a08dff988644c239fa8219ecd0b2539336c 100644
 --- a/net/minecraft/world/item/BlockItem.java
 +++ b/net/minecraft/world/item/BlockItem.java
-@@ -174,8 +174,9 @@ public class BlockItem extends Item {
+@@ -176,8 +176,9 @@ public class BlockItem extends Item {
          Player player = context.getPlayer();
          // CraftBukkit start
          Level world = context.getLevel(); // Paper - Cancel hit for vanished players
@@ -93,7 +93,7 @@ index 02e149f95c145db0cdf4e45cdec5d31ce9859bf6..072df19eac4d09e33b0e5da6bfff8418
  
          org.bukkit.event.block.BlockCanBuildEvent event = new org.bukkit.event.block.BlockCanBuildEvent(
 diff --git a/net/minecraft/world/item/StandingAndWallBlockItem.java b/net/minecraft/world/item/StandingAndWallBlockItem.java
-index 29e94404a230c37afc2b592ef7df60f9ed8543de..0e9a48c5cacbe2dd97af1b4e994eb69509160043 100644
+index 8a5404e79028e9f0bfdb5f16599226679109e710..bc5e51a39bd0ea2b8602b4dccf715d971c597d34 100644
 --- a/net/minecraft/world/item/StandingAndWallBlockItem.java
 +++ b/net/minecraft/world/item/StandingAndWallBlockItem.java
 @@ -44,7 +44,7 @@ public class StandingAndWallBlockItem extends BlockItem {
@@ -106,7 +106,7 @@ index 29e94404a230c37afc2b592ef7df60f9ed8543de..0e9a48c5cacbe2dd97af1b4e994eb695
  
              org.bukkit.event.block.BlockCanBuildEvent event = new org.bukkit.event.block.BlockCanBuildEvent(org.bukkit.craftbukkit.block.CraftBlock.at(context.getLevel(), pos), player, stateForPlacement.asBlockData(), defaultReturn, org.bukkit.craftbukkit.CraftEquipmentSlot.getHand(context.getHand())); // Paper - Expose hand in BlockCanBuildEvent
 diff --git a/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java b/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
-index d1a2e671509b51f0bfad1633b1cdc2be671fca81..9bc754554faa9f2ba06e5fc2c90d3f6417cfe726 100644
+index 174e39fb109bef3dd27ebc14aa13f6faabb10547..c3555b431a3345431b7d01f6b157a5d4652d91ed 100644
 --- a/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/ShulkerBoxBlockEntity.java
 @@ -152,7 +152,7 @@ public class ShulkerBoxBlockEntity extends RandomizableContainerBlockEntity impl
