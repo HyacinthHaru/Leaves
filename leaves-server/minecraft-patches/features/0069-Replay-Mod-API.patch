@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Tue, 4 Feb 2025 19:45:19 +0800
 Subject: [PATCH] Replay Mod API
 
+This patch is Powered by ReplayMod(https://github.com/ReplayMod)
 
 diff --git a/net/minecraft/commands/CommandSourceStack.java b/net/minecraft/commands/CommandSourceStack.java
 index 89b9d1a4122d502437d516f8affc5ba72f421f5f..b4b5b32f73659f3bd9de1c62e56419ec93374e05 100644
@@ -284,7 +285,7 @@ index 37c9f983ae89c497f44a1b7967d741abf909e0a0..d7fb2505f2a86ca0d81f144624ef2e1a
  
              this.setListData(players);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index fb1fadb00d94812bc85759f0c1a4a038d50f2033..6d1f10bd5b2b59a0dc4144c7356b362a7fcf90a3 100644
+index 6517e650ce361641a4766fd65cbbeaf871cf7da0..388c097929c5241c8b9a3daa5efbdc04c2d72ed0 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -2892,7 +2892,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -306,7 +307,7 @@ index fb1fadb00d94812bc85759f0c1a4a038d50f2033..6d1f10bd5b2b59a0dc4144c7356b362a
                  }
                  // Leaves end - skip
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index f95c5ed50cc1f7a454902e3110396dca65a62af7..8354e6079c60d0250ea23ed8e6af8f95011db3db 100644
+index 9a7c5af1b1960a5cb310997670c33ecbb4b39a07..05fc69d5d6488abf045282f4ef2249190475184a 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -129,6 +129,7 @@ public abstract class PlayerList {

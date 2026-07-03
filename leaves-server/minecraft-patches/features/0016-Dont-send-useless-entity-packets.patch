@@ -3,9 +3,10 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Sun, 14 Aug 2022 00:00:51 +0800
 Subject: [PATCH] Dont send useless entity packets
 
+This patch is Powered by Purpur(https://github.com/PurpurMC/Purpur)
 
 diff --git a/net/minecraft/server/level/ServerEntity.java b/net/minecraft/server/level/ServerEntity.java
-index fcb3a4435d55f58d71cbf27d7024c60690876493..ec653b72874dcbdc80aa2560957a0cf5bafe9306 100644
+index 60af82925d2f7e605bf7340cf01f1a5668f4d725..7cc7313f9acebbb0b6fcd40d15f242de8dedac86 100644
 --- a/net/minecraft/server/level/ServerEntity.java
 +++ b/net/minecraft/server/level/ServerEntity.java
 @@ -199,6 +199,11 @@ public class ServerEntity {

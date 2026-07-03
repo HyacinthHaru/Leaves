@@ -39,3 +39,16 @@ index b7f607e90b4237bab2bf6bda1c6c91b58aa052f1..9491c7bff1f6af250715e5a4a6b79981
      }
  
      public ServerClockManager clockManager() {
+diff --git a/net/minecraft/server/gui/MinecraftServerGui.java b/net/minecraft/server/gui/MinecraftServerGui.java
+index 023cca49c6dd0f2961cf30f02c7cd74601f73f8b..57b74c6864d32de0348ef143901c4c92d3fbcfb0 100644
+--- a/net/minecraft/server/gui/MinecraftServerGui.java
++++ b/net/minecraft/server/gui/MinecraftServerGui.java
+@@ -185,7 +185,7 @@ public class MinecraftServerGui extends JComponent {
+ 
+     // Paper start - Add onboarding message for initial server start
+     private JComponent buildOnboardingPanel() {
+-        String onboardingLink = "https://docs.papermc.io/paper/next-steps";
++        String onboardingLink = "https://docs.leavesmc.org/leaves/guides/next-steps"; // Leaves - change
+         JPanel jPanel = new JPanel();
+ 
+         javax.swing.JLabel jLabel = new javax.swing.JLabel("If you need help setting up your server you can visit:");

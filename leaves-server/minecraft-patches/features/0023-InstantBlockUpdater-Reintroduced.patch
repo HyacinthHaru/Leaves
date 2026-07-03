@@ -3,9 +3,10 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Tue, 29 Nov 2022 14:54:56 +0800
 Subject: [PATCH] InstantBlockUpdater Reintroduced
 
+This patch is Powered by Carpet-TIS-Addition(https://github.com/plusls/Carpet-TIS-Addition)
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 3434db351a1d88369454050c01138203347ea2b5..6c4a760507010534aa71521fac511c84eee093b7 100644
+index c6a491e0b47453dc7596fb09b18b92545ff081cf..9710f1cb45e9387b1aa0d2faea458dd7f9518c5a 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -938,12 +938,13 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -29,7 +30,7 @@ index 3434db351a1d88369454050c01138203347ea2b5..6c4a760507010534aa71521fac511c84
          this.debugSynchronizers.tick(this.server.debugSubscribers());
          profiler.pop();
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 397f53e6bd5b92b4350c4769840201f609b847e4..1350a07643e5b4023d10e9e846de7c100db2c2ad 100644
+index 9286d9bcf3ec4069e77d3133f3d7bf29b2370c5a..83476906f85e955de18b34655d6c943743cb1249 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -120,7 +120,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl

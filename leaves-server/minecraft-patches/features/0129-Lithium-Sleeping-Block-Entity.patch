@@ -3,6 +3,18 @@ From: MC_XiaoHei <xor7xiaohei@gmail.com>
 Date: Thu, 31 Jul 2025 09:37:26 +0800
 Subject: [PATCH] Lithium Sleeping Block Entity
 
+This patch is Powered by Lithium(https://github.com/CaffeineMC/lithium)
+
+This patch is based on the following mixins:
+* "net/caffeinemc/mods/lithium/mixin/world/block_entity_ticking/sleeping/*.java"
+* "net/caffeinemc/mods/lithium/mixin/block/hopper/*.java"
+* "net/caffeinemc/mods/lithium/mixin/util/block_entity_retrieval/LevelMixin.java"
+* "net/caffeinemc/mods/lithium/mixin/util/inventory_change_listening/*.java"
+* "net/caffeinemc/mods/lithium/mixin/util/inventory_comparator_tracking/*.java"
+* "net/caffeinemc/mods/lithium/mixin/util/item_component_and_count_tracking/*.java"
+By: 2No2Name <2No2Name@web.de>
+As part of: Lithium (https://github.com/CaffeineMC/lithium)
+Licensed under: LGPL-3.0 (https://www.gnu.org/licenses/lgpl-3.0.html)
 
 diff --git a/net/minecraft/core/NonNullList.java b/net/minecraft/core/NonNullList.java
 index 8fd27a342f7302284c48b3db7d085bb692e08cdc..8992e13df499333235e1a51b725c0ad3ccd0284d 100644
@@ -74,7 +86,7 @@ index f2c5a6ce769d8a5fdb4b836eae6a61a4da91cb3f..01ce0dee1f0c2942be59e78b237bc75d
      }
  
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 74118c93b504f065c2c79d5ae9a3b418f5a6f517..cc246e8ee7d3697c78f944e3c854b77e90957bc6 100644
+index aaa809c5cb8e621b5754aaf2322b919d2f45872f..5ebef1e780262b22bca8e647f5f6f1eb75814326 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -2576,6 +2576,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -435,7 +447,7 @@ index b491af406632cb590f019a015eb75ac493b7dbfa..f8cc90f898611309c6c6e8c21cc56787
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 2dd8fc958c72774b1488e01604167af4b66a1027..406438fdd4774accf244110bcf3f4eb3724d00a8 100644
+index 0091d318fea5d585f650f1e3df7352cdbb4db55d..0e2848df38cb6860bd9b7f1b9f97bcab72d967ae 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -1194,6 +1194,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
@@ -2435,10 +2447,10 @@ index dffe1a1c4217fa42bd19acae4ccb93659b3c00bf..44d9c5becc233a8c9a815d3db810045c
      }
  
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 37a148c6848cf3c68ed868721b422e75e73776bc..6ef09ca1d9b415a40d0bc16f64cf97cff50a7091 100644
+index 1bcac4de700a52b257f208b8d64ca7c5df4c5e11..4b2493dd19a5f8a0cf14f0661c1e5393a91e4f1a 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -923,10 +923,12 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -918,10 +918,12 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
              this.tickersInLevel.compute(blockEntity.getBlockPos(), (blockPos, existingTicker) -> {
                  TickingBlockEntity actualTicker = this.createTicker(blockEntity, ticker);
                  if (existingTicker != null) {
@@ -2451,7 +2463,7 @@ index 37a148c6848cf3c68ed868721b422e75e73776bc..6ef09ca1d9b415a40d0bc16f64cf97cf
                      this.level.addBlockEntityTicker(result);
                      return result;
                  } else {
-@@ -1025,14 +1027,14 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -1020,14 +1022,14 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
          void run(LevelChunk levelChunk);
      }
  

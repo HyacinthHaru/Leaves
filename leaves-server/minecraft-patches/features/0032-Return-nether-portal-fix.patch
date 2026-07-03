@@ -3,9 +3,10 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Mon, 3 Feb 2025 15:36:21 +0800
 Subject: [PATCH] Return nether portal fix
 
+This patch is powered by NetherPortalFix(https://github.com/TwelveIterationMods/NetherPortalFix)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 7689fec095f80684df4c0d4b929a2be2a307589c..16c3246c770fe201ac659efdc097c7e18cb525ac 100644
+index f00dbb6c1672392c3009d6098e306ee389d1aa6e..9dc76a9162a973e737ab4eca62e17d30f840ee2c 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -1588,6 +1588,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -29,7 +30,7 @@ index 7689fec095f80684df4c0d4b929a2be2a307589c..16c3246c770fe201ac659efdc097c7e1
          if (this.isBlocking()) {
              this.stopUsingItem();
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index aca44e65381af9e529fffd9b1d8a3bae2a3c83b1..f95c5ed50cc1f7a454902e3110396dca65a62af7 100644
+index 65c93c2baaf7f353c066c175c6444f5e27c7b80e..9a7c5af1b1960a5cb310997670c33ecbb4b39a07 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -705,6 +705,18 @@ public abstract class PlayerList {
@@ -52,7 +53,7 @@ index aca44e65381af9e529fffd9b1d8a3bae2a3c83b1..f95c5ed50cc1f7a454902e3110396dca
          }
  
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index aa13081e03a98ab6673e892dba09bd4d7a8d4211..f7ffe48afa13aaedc4ab471f493002c514cf7b91 100644
+index b6789b318989ea060e9f3a56dc2038eb992c478c..a1153439e7959cb3d7521cf943b3236c90c4ba69 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -276,7 +276,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin

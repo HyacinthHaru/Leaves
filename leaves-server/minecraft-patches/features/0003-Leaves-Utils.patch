@@ -5,7 +5,7 @@ Subject: [PATCH] Leaves Utils
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 5ab2be51446bb2af71ecc75dfe7bdfa863842260..1b4c626fdd19b025dc0016ce7bdd040e779706ce 100644
+index 1530810cdb74810e37e3e22ce4fcda4ee7511055..d2a6d2e31868b5d3726826d50ecf5ff70ae10950 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -387,6 +387,7 @@ public abstract class Entity
@@ -52,19 +52,6 @@ index 5ab2be51446bb2af71ecc75dfe7bdfa863842260..1b4c626fdd19b025dc0016ce7bdd040e
 +    }
 +    // Leaves end - leaves ex data
  }
-diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 289cc0e185c59b54bc86e9ee616917fb9617d3c6..4e304f11e3420d63438b4ad704fa0d9576be71fa 100644
---- a/net/minecraft/world/level/Level.java
-+++ b/net/minecraft/world/level/Level.java
-@@ -927,7 +927,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
-     }
- 
-     @Override
--    public @Nullable MinecraftServer getServer() {
-+    public @org.jetbrains.annotations.NotNull MinecraftServer getServer() { // Leaves - notnull
-         return null;
-     }
- 
 diff --git a/net/minecraft/world/level/LevelAccessor.java b/net/minecraft/world/level/LevelAccessor.java
 index 700b9e7f141c4a2689690224c86376c9b957540e..b7c52129df2ee880ac1f61e282184443953a3ae2 100644
 --- a/net/minecraft/world/level/LevelAccessor.java
@@ -79,7 +66,7 @@ index 700b9e7f141c4a2689690224c86376c9b957540e..b7c52129df2ee880ac1f61e282184443
      default Difficulty getDifficulty() {
          return this.getLevelData().getDifficulty();
 diff --git a/net/minecraft/world/level/block/Block.java b/net/minecraft/world/level/block/Block.java
-index fd97524eecd5af2d67e496c8ab5c53b405edc076..fbd1734c9b01b71b0204c70a956802fb4fcdd484 100644
+index 29f5182c8528bfdced6a3c2c145e58721e723777..debf613713016443060ed85440ac0f80b1d0ad21 100644
 --- a/net/minecraft/world/level/block/Block.java
 +++ b/net/minecraft/world/level/block/Block.java
 @@ -696,6 +696,13 @@ public class Block extends BlockBehaviour implements ItemLike {
@@ -97,7 +84,7 @@ index fd97524eecd5af2d67e496c8ab5c53b405edc076..fbd1734c9b01b71b0204c70a956802fb
          @Override
          public boolean equals(final Object o) {
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 15ba7b34dacbe89f604adb6245c9f914de1d71a7..70451851cfb86911498ce9f27f63b61178d56453 100644
+index c78d77089e34c4bb559f173b449bfb7d91b05d5c..4d9416c06555a3080dd629201d48bb5dbacb4ea4 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -792,7 +792,7 @@ public abstract class BlockBehaviour implements FeatureElement {

@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Wed, 14 Dec 2022 14:47:06 +0800
 Subject: [PATCH] Item overstack util
 
+Part of this patch is Powered by fabric-carpet(https://github.com/gnembon/fabric-carpet) and plusls-carpet-addition(https://github.com/plusls/plusls-carpet-addition)
 
 diff --git a/net/minecraft/commands/arguments/item/ItemInput.java b/net/minecraft/commands/arguments/item/ItemInput.java
 index 0dce216ae73c85dd69056bec7ef60b5e4364f23b..7cf4653bd7ae893ef16c10ab69221e9c9a43a519 100644

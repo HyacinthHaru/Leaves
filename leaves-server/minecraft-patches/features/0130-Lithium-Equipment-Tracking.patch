@@ -3,6 +3,25 @@ From: MC_XiaoHei <xor7xiaohei@gmail.com>
 Date: Tue, 9 Nov 2077 00:00:00 +0800
 Subject: [PATCH] Lithium Equipment Tracking
 
+Origin patch author: HaHaWTH <102713261+HaHaWTH@users.noreply.github.com>
+Origin patch link: https://github.com/Winds-Studio/Leaf/blob/ver/1.21.8/leaf-server/minecraft-patches/features/0268-Lithium-equipment-tracking.patch
+
+Should have special treatment to ArmorStand, since Paper introduced the configurable
+ArmorStand no-tick, and still gives it ability to update equipment changes.
+Thus added a bypass condition in LivingEntity#collectEquipmentChanges, always send
+ArmorStand equipment changes even if the ArmorStand is no-tick
+
+This patch is based on the following mixins:
+* "net/caffeinemc/mods/lithium/mixin/util/item_component_and_count_tracking/PatchedDataComponentMapMixin.java"
+* "net/caffeinemc/mods/lithium/mixin/util/item_component_and_count_tracking/ItemStackMixin.java"
+* "net/caffeinemc/mods/lithium/mixin/entity/equipment_tracking/enchantment_ticking/LivingEntityMixin.java"
+* "net/caffeinemc/mods/lithium/mixin/entity/equipment_tracking/equipment_changes/LivingEntityMixin.java"
+* "net/caffeinemc/mods/lithium/mixin/entity/equipment_tracking/EntityEquipmentMixin.java"
+* "net/caffeinemc/mods/lithium/common/util/change_tracking/ChangePublisher.java"
+* "net/caffeinemc/mods/lithium/common/util/change_tracking/ChangeSubscriber.java"
+By: 2No2Name <2No2Name@web.de>
+As part of: Lithium (https://github.com/CaffeineMC/lithium)
+Licensed under: LGPL-3.0 (https://www.gnu.org/licenses/lgpl-3.0.html)
 
 diff --git a/net/minecraft/world/entity/EntityEquipment.java b/net/minecraft/world/entity/EntityEquipment.java
 index 20041325ae77f16a5b77f5de7255788b52ebb3a5..1456dbc98de65da1d854a3d3c224e4dad2de0f38 100644

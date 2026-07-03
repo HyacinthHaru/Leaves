@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Tue, 18 Jul 2023 15:27:19 +0800
 Subject: [PATCH] Optimize noise generation
 
+This patch is Powered by Gale(https://github.com/GaleMC/Gale)
 
 diff --git a/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java b/net/minecraft/world/level/levelgen/synth/ImprovedNoise.java
 index ef8f2a00945a3d240a23ca73f138960ee0fe8742..d31fd89d8127b898486a8a455115498756900c64 100644

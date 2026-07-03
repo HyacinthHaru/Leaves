@@ -93,14 +93,14 @@ index 3f171120604d02ec535f119e1a4a89db0ee99960..1a1bf4ee95db7a9fc4fec9804b80a10c
              bridge.removeChannel(channel);
          }
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index baec5d072b8f2d9379dba850b04e881e5267ca6b..34f9f46e3fa8061931f1794e3633d97514d61aa9 100644
+index baec5d072b8f2d9379dba850b04e881e5267ca6b..5ac2636f633df502e4ac38970a1cc92b29ae7bb3 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -246,6 +246,8 @@ public abstract class PlayerList {
              return;
          }
  
-+        org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePlayerJoin(player); // Leaves - protocol
++        org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePlayerJoin(player); // Leaves - protocol core
 +
          final net.kyori.adventure.text.Component jm = playerJoinEvent.joinMessage();
  

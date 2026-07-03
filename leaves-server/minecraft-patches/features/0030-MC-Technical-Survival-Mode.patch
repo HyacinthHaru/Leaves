@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Thu, 19 Jan 2023 23:38:50 +0800
 Subject: [PATCH] MC Technical Survival Mode
 
+Will automatically overwrite some configuration after startup
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
 index 75730934f0944583923908c4cd325a7804ce554b..f00dbb6c1672392c3009d6098e306ee389d1aa6e 100644

@@ -3,6 +3,7 @@ From: violetc <58360096+s-yh-china@users.noreply.github.com>
 Date: Mon, 15 Aug 2022 10:18:36 +0800
 Subject: [PATCH] Config to disable method profiler
 
+This patch is Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
 index 9aaef70b7ee43cc8d80d2a61014d165149e1a22b..292634a9ab1dc6c21630cbab36f8d5ac2a97a75f 100644
