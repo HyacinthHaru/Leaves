@@ -5,7 +5,7 @@ Subject: [PATCH] Replay Mod API
 
 
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index c0910f908ffad3bb94563836c032bb1d6d50c4ed..ecd25243b55a00d7c8a04385c2695d55afc58657 100644
+index 8c3a9ebebcbc75f9587e620834cbc727ddc1cc49..cada376607f03da0e23005498c5c2fdefbf8f2b8 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 @@ -42,7 +42,7 @@ class PaperEventManager {
@@ -18,7 +18,7 @@ index c0910f908ffad3bb94563836c032bb1d6d50c4ed..ecd25243b55a00d7c8a04385c2695d55
          }
          // Leaves end - skip bot
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 40bc9664cf03cfe20bb4e040db9f7939a3b97a75..7d7f1f0bcbfc1cb42e66bc0619f030220270d73b 100644
+index d7703d6d53cebe60f108c9b2a589e537da174edc..777214ea32b1781e6c53b83714a6d141b3aa2b37 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -305,6 +305,7 @@ public final class CraftServer implements Server {
@@ -51,7 +51,7 @@ index 40bc9664cf03cfe20bb4e040db9f7939a3b97a75..7d7f1f0bcbfc1cb42e66bc0619f03022
 +    // Leaves end - replay mod api
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 9be40f4d80ac96290d87e4ca82952cc8c8ec35f5..0416b5137c049457b0b5eb6560cae721efb410bd 100644
+index e288d8df284080f06e550a418a2fbdf9b34fe2df..742980ec89d697023cc27ba3e2f8a22721e22a18 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -124,6 +124,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -63,10 +63,10 @@ index 9be40f4d80ac96290d87e4ca82952cc8c8ec35f5..0416b5137c049457b0b5eb6560cae721
          // Special case complex part, since there is no extra entity type for them
          if (entity instanceof EnderDragonPart complexPart) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 73f66b893c2d9541e78118150279be305f47a663..15f4fc10e7e20374909f8d100a16cb1a4856a113 100644
+index ad51146ef274106d542bf416cd47d0ebcd17e7c6..ea42e212c9114635316ac6109347b563b9cd7349 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2053,7 +2053,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -2051,7 +2051,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
  
      @Override
      public boolean canSee(Player player) {

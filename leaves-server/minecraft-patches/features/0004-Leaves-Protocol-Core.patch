@@ -46,11 +46,11 @@ index 369a5363cd0cb651afbb2a73d7e3b84aa75a91fd..3f536af8813df98348b2f0746f29c2f4
              tickable.run();
          }
 diff --git a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index 3f171120604d02ec535f119e1a4a89db0ee99960..1a1bf4ee95db7a9fc4fec9804b80a10c1a7731e8 100644
+index 5dbb2849f32ac3418f8fdf76c04022d7e9dc165b..5c0073b9d7759877ad28b5ebbb32ac33db37a67c 100644
 --- a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 @@ -57,6 +57,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
-     public @Nullable String playerBrand;
+     public @Nullable String clientBrand;
      public final java.util.Set<String> pluginMessagerChannels;
      // Paper end - retain certain values
 +    public final GameProfile profile; // Leaves - protocol core
