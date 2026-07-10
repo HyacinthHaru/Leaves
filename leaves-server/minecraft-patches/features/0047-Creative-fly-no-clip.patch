@@ -18,7 +18,7 @@ index 73a29d7d40e092be8264679c7f30e5aa8b8fb393..49582cb05db4872486cc142efceae6b7
              } else {
                  this.followingPlayer = null;
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..4d488da36964ddfebabe478b3a7e61ec940f7984 100644
+index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..06c4df8d41f60c5166aab30a58c9fd04df130c28 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
 @@ -242,8 +242,8 @@ public abstract class Player extends Avatar implements ContainerUser {
@@ -50,7 +50,7 @@ index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..4d488da36964ddfebabe478b3a7e61ec
              AABB pickupArea;
              if (this.isPassenger() && !this.getVehicle().isRemoved()) {
                  pickupArea = this.getBoundingBox().minmax(this.getVehicle().getBoundingBox()).inflate(1.0, 0.0, 1.0);
-@@ -1805,6 +1805,26 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -1805,6 +1805,31 @@ public abstract class Player extends Avatar implements ContainerUser {
          return this.gameMode() == GameType.SPECTATOR;
      }
  
@@ -72,13 +72,18 @@ index b75702a359cef9ecbf92c7c4f0c8eae1e8020d10..4d488da36964ddfebabe478b3a7e61ec
 +    public boolean isCollidable(final boolean ignoreClimbing) {
 +        return !isCreativeFlyOrSpectator() && super.isCollidable(ignoreClimbing);
 +    }
++
++    @Override
++    public boolean canBeHitByProjectile() {
++        return !this.isCreativeFlyOrSpectator() && super.canBeHitByProjectile();
++    }
 +    // Leaves end - creative no clip
 +
      @Override
      public boolean isPickable() {
          return !this.isSpectator() && super.isPickable();
 diff --git a/net/minecraft/world/item/BlockItem.java b/net/minecraft/world/item/BlockItem.java
-index 03b11543304c173b8558d548e5a193747234de20..ea701aa6af6da7400c0ca08ad88376f26a620665 100644
+index ff919c0db19fe6ebc5fbe79fb07bf8fec8ce73af..a36530616fd46cb72e0b1982724a1e33984dff06 100644
 --- a/net/minecraft/world/item/BlockItem.java
 +++ b/net/minecraft/world/item/BlockItem.java
 @@ -174,8 +174,9 @@ public class BlockItem extends Item {
@@ -93,7 +98,7 @@ index 03b11543304c173b8558d548e5a193747234de20..ea701aa6af6da7400c0ca08ad88376f2
  
          org.bukkit.event.block.BlockCanBuildEvent event = new org.bukkit.event.block.BlockCanBuildEvent(
 diff --git a/net/minecraft/world/item/StandingAndWallBlockItem.java b/net/minecraft/world/item/StandingAndWallBlockItem.java
-index 29e94404a230c37afc2b592ef7df60f9ed8543de..0e9a48c5cacbe2dd97af1b4e994eb69509160043 100644
+index cb0a4a9865df69e5504a86de6c144bc4450bd19a..1d3f91ce4938f46b3d6aef1237c955339bd0a75b 100644
 --- a/net/minecraft/world/item/StandingAndWallBlockItem.java
 +++ b/net/minecraft/world/item/StandingAndWallBlockItem.java
 @@ -44,7 +44,7 @@ public class StandingAndWallBlockItem extends BlockItem {

@@ -5,10 +5,10 @@ Subject: [PATCH] Add fakeplayer api
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 77473d9de8283a557ca061b0429dee9312de7d6b..9c5038e5dca41f9e77eba999dbc1dd839162281e 100644
+index de21023e1e0ea9d22f6beb8ef50715809c10058a..986a34b5b7872ba964f2f9cdd735439d91973557 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -3003,4 +3003,15 @@ public final class Bukkit {
+@@ -3006,4 +3006,15 @@ public final class Bukkit {
      public static void restart() {
          server.restart();
      }
