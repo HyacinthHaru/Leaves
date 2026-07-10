@@ -5,10 +5,10 @@ Subject: [PATCH] Leaves Server Config And Command
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 01922963a6469f2dd93cf71a612b3df0a11f1bf1..0258eeb292cfb45aa6c09413d6ec97dea017995b 100644
+index 3fd785f2094ea8da37fe454ecc773ccffa4fa7c3..8119d8589a9139b5d4a301aecfbb9dcb3c67b706 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -2332,6 +2332,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2333,6 +2333,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              )
              .thenAcceptAsync(newResources -> {
                  io.papermc.paper.command.brigadier.PaperBrigadier.moveBukkitCommands(this.resources.managers().getCommands(), newResources.managers().commands); // Paper

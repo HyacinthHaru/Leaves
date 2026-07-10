@@ -5,10 +5,10 @@ Subject: [PATCH] Bedrock break list
 
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 44115cd289cc35a29700251499bd176210d4eace..426420ad00f70d9c0a8792064ee1e73e887a624b 100644
+index 74b10f353cb97c20553dc7af32a081f239cd0671..a2aef8bc2b67ffc2fc95a71cc38ea96502cf1d46 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1886,6 +1886,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1887,6 +1887,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
          org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handleTick(this.tickCount); // Leaves - protocol
  

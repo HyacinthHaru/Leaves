@@ -30,7 +30,7 @@ index 0f06d509125e72ec11d263d0d5c2179d65f6d8dd..5d3403d53a87435a0d13694533c7f68d
      private boolean encrypted;
      private boolean disconnectionHandled;
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 7a33035594fda3374d8789ca50c7139d5172c99b..606640a1a70d88e48c7e45aa6336635c21c415b0 100644
+index aac57d6b44aeece797c6d8f71025359d5850d8ef..41f5758f70e59f8c9bc155c1263c0d7c5e2553d8 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -298,6 +298,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -50,7 +50,7 @@ index 7a33035594fda3374d8789ca50c7139d5172c99b..606640a1a70d88e48c7e45aa6336635c
          // CraftBukkit start
          if (this.server != null) {
              this.server.spark.disable(); // Paper - spark
-@@ -1607,7 +1610,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1608,7 +1611,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          int emptyTickThreshold = this.pauseWhenEmptySeconds() * 20;
          this.removeDisabledPluginsBlockingSleep(); // Paper - API to allow/disallow tick sleeping
          if (emptyTickThreshold > 0) {
@@ -59,7 +59,7 @@ index 7a33035594fda3374d8789ca50c7139d5172c99b..606640a1a70d88e48c7e45aa6336635c
                  this.emptyTicks++;
              } else {
                  this.emptyTicks = 0;
-@@ -1660,6 +1663,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1661,6 +1664,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              this.isSaving = true;
              if (playerSaveInterval > 0) {
                  this.playerList.saveAll(playerSaveInterval);
@@ -67,7 +67,7 @@ index 7a33035594fda3374d8789ca50c7139d5172c99b..606640a1a70d88e48c7e45aa6336635c
              }
              if (fullSave) {
                  this.saveGlobalData(false);
-@@ -1899,6 +1903,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1900,6 +1904,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      protected void tickConnection() {
          this.getConnection().tick();
@@ -75,7 +75,7 @@ index 7a33035594fda3374d8789ca50c7139d5172c99b..606640a1a70d88e48c7e45aa6336635c
      }
  
      public void forceGameTimeSynchronization() {
-@@ -3077,6 +3082,16 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -3078,6 +3083,16 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          return this.debugSubscribers;
      }
  

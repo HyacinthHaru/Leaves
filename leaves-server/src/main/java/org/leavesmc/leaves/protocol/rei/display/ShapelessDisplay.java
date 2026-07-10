@@ -9,7 +9,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
 import org.apache.commons.lang3.NotImplementedException;
-import org.bukkit.craftbukkit.CraftRegistry;
 import org.jetbrains.annotations.NotNull;
 import org.leavesmc.leaves.protocol.rei.ingredient.EntryIngredient;
 
