@@ -43,16 +43,15 @@ index d5d499226d0b2c2adfae7bbb4c28c96c80411c44..cb0a4a9865df69e5504a86de6c144bc4
                      stateForPlacement = possibleState;
                      break;
 diff --git a/net/minecraft/world/level/block/Block.java b/net/minecraft/world/level/block/Block.java
-index 70960c3c280eedc3624f20139a52d5d4961d6217..124834b62c059d642a86cd159c4136b518c02c18 100644
+index 70960c3c280eedc3624f20139a52d5d4961d6217..6060f30488e92c3481f6aa7a4f7968ff25d9e52f 100644
 --- a/net/minecraft/world/level/block/Block.java
 +++ b/net/minecraft/world/level/block/Block.java
-@@ -520,6 +520,33 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -520,6 +520,32 @@ public class Block extends BlockBehaviour implements ItemLike {
      public void stepOn(final Level level, final BlockPos pos, final BlockState onState, final Entity entity) {
      }
  
 +    // Leaves start - alternativeBlockPlacement
-+    @Nullable
-+    public BlockState getRealStateForPlacement(BlockPlaceContext ctx) {
++    public @Nullable BlockState getRealStateForPlacement(BlockPlaceContext ctx) {
 +        BlockState vanillaState = this.getStateForPlacement(ctx);
 +        switch (org.leavesmc.leaves.LeavesConfig.protocol.alternativeBlockPlacement) {
 +            case CARPET -> {

@@ -5,13 +5,13 @@ Subject: [PATCH] Bytebuf API
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 77f8f93b2402630150cfddb66694a861103d7f58..3b489ea7933b7275a1b3e65820154cedc8a61768 100644
+index 09eda069b9d82ce953d8370d7df5afe581341173..cb3c329f34d13881d8c7d4cee6b1e4322161a623 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -3023,4 +3023,10 @@ public final class Bukkit {
+@@ -3021,4 +3021,10 @@ public final class Bukkit {
+     public static @NotNull org.leavesmc.leaves.entity.photographer.PhotographerManager getPhotographerManager() { // Leaves - Photographer API
          return server.getPhotographerManager();
      }
-     // Leaves end - Photographer API
 +
 +    // Leaves start - Bytebuf API
 +    public static org.leavesmc.leaves.bytebuf.BytebufAllocator getBytebufManager() {
@@ -20,17 +20,15 @@ index 77f8f93b2402630150cfddb66694a861103d7f58..3b489ea7933b7275a1b3e65820154ced
 +    // Leaves end - Bytebuf API
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index e0e6161524fc5ced6704d8effec0a87009241f25..d2b60183d8a84d8cf3faeec0dfa8528a747d32dc 100644
+index 471297bd2c74430a2b4a5b7bb93521326e1a2a9d..0858f07c549372500320f98ab8a9f416df9670b2 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -2793,4 +2793,8 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
-     // Leaves start - Photographer API
-     @NotNull org.leavesmc.leaves.entity.photographer.PhotographerManager getPhotographerManager();
-     // Leaves end - Photographer API
+@@ -2791,4 +2791,6 @@ public interface Server extends PluginMessageRecipient, net.kyori.adventure.audi
+     // Leaves end - Bot API
+ 
+     @NotNull org.leavesmc.leaves.entity.photographer.PhotographerManager getPhotographerManager(); // Leaves - Photographer API
 +
-+    // Leaves start - Bytebuf API
-+    org.leavesmc.leaves.bytebuf.BytebufAllocator getBytebufAllocator();
-+    // Leaves end - Bytebuf API
++    org.leavesmc.leaves.bytebuf.BytebufAllocator getBytebufAllocator(); // Leaves - Bytebuf API
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
 index fe3f4b7552e1230d518a8554a3f0fd4009523a73..0484628bce42b1222df02777b7c19767e280e475 100644
