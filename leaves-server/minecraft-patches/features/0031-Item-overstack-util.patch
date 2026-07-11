@@ -84,7 +84,7 @@ index 810b352503cdf56091ec6340ad72edde238fe359..f2ef9b2b0585819c8a59f45f5a12465c
              } else if (drop && validData) {
                  if (this.dropSpamThrottler.isUnderThreshold()) {
 diff --git a/net/minecraft/world/Container.java b/net/minecraft/world/Container.java
-index 6e08d50794c4af4405f3e164a3fd46f376b3f78f..99449ab429ce545cf8f6f72bd1baad83b1461365 100644
+index 6e08d50794c4af4405f3e164a3fd46f376b3f78f..a03f460384d0af85a28cc8f8bdd3479602513ff8 100644
 --- a/net/minecraft/world/Container.java
 +++ b/net/minecraft/world/Container.java
 @@ -37,6 +37,12 @@ public interface Container extends Clearable, Iterable<ItemStack>, SlotProvider
@@ -92,7 +92,7 @@ index 6e08d50794c4af4405f3e164a3fd46f376b3f78f..99449ab429ce545cf8f6f72bd1baad83
      }
  
 +    // Leaves start - item over-stack util
-+    default int getMaxStackLeaves(final ItemStack stack) {
++    default int getMaxStackLeaves(ItemStack stack) {
 +        return Math.min(this.getMaxStackSize(), org.leavesmc.leaves.util.ItemOverstackUtils.getItemStackMaxCount(stack));
 +    }
 +    // Leaves end - item over-stack util
@@ -225,7 +225,7 @@ index 028f9217e16963b4d3d8deb0f364c526d5661a59..15692744697043ab68a7247534614afa
  
      default @Nullable SlotAccess getChestVehicleSlot(final int slot) {
 diff --git a/net/minecraft/world/inventory/AbstractContainerMenu.java b/net/minecraft/world/inventory/AbstractContainerMenu.java
-index ded1c27b2083aea24525ffe42ad0e9cc263cbcdb..ea4d896148b4d5886a73a7d1214c552122106332 100644
+index ded1c27b2083aea24525ffe42ad0e9cc263cbcdb..f1bbf77712b72b82256d9c703ddc2bc6cca016a6 100644
 --- a/net/minecraft/world/inventory/AbstractContainerMenu.java
 +++ b/net/minecraft/world/inventory/AbstractContainerMenu.java
 @@ -293,6 +293,14 @@ public abstract class AbstractContainerMenu {
@@ -233,7 +233,7 @@ index ded1c27b2083aea24525ffe42ad0e9cc263cbcdb..ea4d896148b4d5886a73a7d1214c5521
      }
  
 +    // Leaves start - item over-stack util
-+    public void sendSingleSlot(final int slotIndex, final ItemStack item) {
++    public void sendSingleSlot(int slotIndex, ItemStack item) {
 +        if (this.synchronizer != null) {
 +            this.synchronizer.sendSlotChange(this, slotIndex, item);
 +        }

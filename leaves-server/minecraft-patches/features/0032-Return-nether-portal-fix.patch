@@ -6,10 +6,10 @@ Subject: [PATCH] Return nether portal fix
 This patch is powered by NetherPortalFix(https://github.com/TwelveIterationMods/NetherPortalFix)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 3b54e1bd8ab25a7564cf2befeb836e61465e2d0f..4c85295c972b84ac110f5691f48576a315754ad9 100644
+index 51b30e5d91f1ca70d3f88b79a86efa5c10f66648..5bbe8f167e47e3df13c272b79319b3746e1421d7 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1582,6 +1582,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1582,6 +1582,21 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          org.bukkit.event.player.PlayerChangedWorldEvent changeEvent = new org.bukkit.event.player.PlayerChangedWorldEvent(this.getBukkitEntity(), oldLevel.getWorld());
          this.level().getCraftServer().getPluginManager().callEvent(changeEvent);
          // CraftBukkit end
@@ -17,7 +17,9 @@ index 3b54e1bd8ab25a7564cf2befeb836e61465e2d0f..4c85295c972b84ac110f5691f48576a3
 +                if (org.leavesmc.leaves.LeavesConfig.modify.netherPortalFix) {
 +                    final net.minecraft.resources.ResourceKey<Level> fromDim = oldLevel.dimension();
 +                    final net.minecraft.resources.ResourceKey<Level> toDim = this.level().dimension();
-+                    if ((fromDim == Level.OVERWORLD && toDim == Level.NETHER) || (fromDim == Level.NETHER && toDim == Level.OVERWORLD)) {
++                    final net.minecraft.resources.ResourceKey<Level> OVERWORLD = Level.OVERWORLD;
++                    final net.minecraft.resources.ResourceKey<Level> THE_NETHER = Level.NETHER;
++                    if (!((fromDim != OVERWORLD || toDim != THE_NETHER) && (fromDim != THE_NETHER || toDim != OVERWORLD))) {
 +                        BlockPos fromPortal = org.leavesmc.leaves.util.ReturnPortalManager.findPortalAt(this, fromDim, this.lastPos);
 +                        BlockPos toPos = this.blockPosition();
 +                        if (fromPortal != null) {
@@ -30,10 +32,10 @@ index 3b54e1bd8ab25a7564cf2befeb836e61465e2d0f..4c85295c972b84ac110f5691f48576a3
          if (this.isBlocking()) {
              this.stopUsingItem();
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 174443a3abca82b09ae2a0dd4dc55743607b1716..a5d7ab2d4c977fd63972487e2df37af6a1282b30 100644
+index 0ad0b80415bce8ecac3e029a8c42a1841b21def0..919662291992b9e7da9edf392c9e5e0b4dcc1871 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -704,6 +704,18 @@ public abstract class PlayerList {
+@@ -704,6 +704,20 @@ public abstract class PlayerList {
          // It's possible for respawn to be in a diff dimension
          if (fromLevel != level) {
              new org.bukkit.event.player.PlayerChangedWorldEvent(player.getBukkitEntity(), fromLevel.getWorld()).callEvent();
@@ -41,7 +43,9 @@ index 174443a3abca82b09ae2a0dd4dc55743607b1716..a5d7ab2d4c977fd63972487e2df37af6
 +            if (org.leavesmc.leaves.LeavesConfig.modify.netherPortalFix) {
 +                final net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> fromDim = fromLevel.dimension();
 +                final net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> toDim = level.dimension();
-+                if ((fromDim == net.minecraft.world.level.Level.OVERWORLD && toDim == net.minecraft.world.level.Level.NETHER) || (fromDim == net.minecraft.world.level.Level.NETHER && toDim == net.minecraft.world.level.Level.OVERWORLD)) {
++                final net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> OVERWORLD = net.minecraft.world.level.Level.OVERWORLD;
++                final net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> THE_NETHER = net.minecraft.world.level.Level.NETHER;
++                if (!((fromDim != OVERWORLD || toDim != THE_NETHER) && (fromDim != THE_NETHER || toDim != OVERWORLD))) {
 +                    net.minecraft.core.BlockPos fromPortal = org.leavesmc.leaves.util.ReturnPortalManager.findPortalAt(player, fromDim, player.lastPos);
 +                    if (fromPortal != null) {
 +                        org.leavesmc.leaves.util.ReturnPortalManager.storeReturnPortal(player, toDim, player.blockPosition(), fromPortal);

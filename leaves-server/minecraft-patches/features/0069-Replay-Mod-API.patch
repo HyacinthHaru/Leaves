@@ -307,7 +307,7 @@ index a40defcd406e7b5db0245059211623fe99af0404..18f2a2b4da4efc764974dc9fe20feac5
                  }
                  // Leaves end - skip
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index f2339cb7f016180dc540fa4b2074fac44050d057..4f12d78cfc905839874e879c015e74debf5b4da7 100644
+index 919662291992b9e7da9edf392c9e5e0b4dcc1871..0ab2b81072080ea79bf77881c7017b64360081f0 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -129,6 +129,7 @@ public abstract class PlayerList {
@@ -515,7 +515,7 @@ index f2339cb7f016180dc540fa4b2074fac44050d057..4f12d78cfc905839874e879c015e74de
          this.playersByName.remove(player.getScoreboardName().toLowerCase(java.util.Locale.ROOT)); // Spigot
          this.server.getCustomBossEvents().onPlayerDisconnect(player);
          UUID uuid = player.getUUID();
-@@ -836,14 +999,14 @@ public abstract class PlayerList {
+@@ -838,14 +1001,14 @@ public abstract class PlayerList {
      }
  
      public String[] getPlayerNamesArray() {
@@ -535,7 +535,7 @@ index f2339cb7f016180dc540fa4b2074fac44050d057..4f12d78cfc905839874e879c015e74de
          }
          // Leaves end - fakeplayer support
  
-@@ -910,7 +1073,7 @@ public abstract class PlayerList {
+@@ -912,7 +1075,7 @@ public abstract class PlayerList {
  
      // Paper start - whitelist verify event / login event
      public LoginResult canBypassFullServerLogin(final NameAndId nameAndId, final LoginResult currentResult) {

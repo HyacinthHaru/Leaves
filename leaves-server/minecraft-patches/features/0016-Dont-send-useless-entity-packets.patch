@@ -6,7 +6,7 @@ Subject: [PATCH] Dont send useless entity packets
 This patch is Powered by Purpur(https://github.com/PurpurMC/Purpur)
 
 diff --git a/net/minecraft/server/level/ServerEntity.java b/net/minecraft/server/level/ServerEntity.java
-index 5fad52157fc22755196ce9eaddaa2bc23c5bb86b..3e0c75b8006ee939115556ed09554ae5a007a272 100644
+index 5fad52157fc22755196ce9eaddaa2bc23c5bb86b..7372220d71f8f7c4aafd607b8a23ab18fbf5a256 100644
 --- a/net/minecraft/server/level/ServerEntity.java
 +++ b/net/minecraft/server/level/ServerEntity.java
 @@ -194,6 +194,11 @@ public class ServerEntity {
@@ -14,7 +14,7 @@ index 5fad52157fc22755196ce9eaddaa2bc23c5bb86b..3e0c75b8006ee939115556ed09554ae5
                      sentRotation = true;
                  }
 +                // Leaves start - dont send useless entity packets
-+                if (packet != null && org.leavesmc.leaves.LeavesConfig.performance.dontSendUselessEntityPackets && this.isUselessPacket(packet)) {
++                if (packet != null && org.leavesmc.leaves.LeavesConfig.performance.dontSendUselessEntityPackets && isUselessPacket(packet)) {
 +                    packet = null;
 +                }
 +                // Leaves end - dont send useless entity packets
@@ -26,7 +26,7 @@ index 5fad52157fc22755196ce9eaddaa2bc23c5bb86b..3e0c75b8006ee939115556ed09554ae5
      }
  
 +    // Leaves start - dont send useless entity packets
-+    private boolean isUselessPacket(final Packet<?> possibleUselessPacket) {
++    private boolean isUselessPacket(Packet<?> possibleUselessPacket) {
 +        if (possibleUselessPacket instanceof ClientboundMoveEntityPacket packet) {
 +            if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.Pos) {
 +                return packet.getXa() == 0 && packet.getYa() == 0 && packet.getZa() == 0;

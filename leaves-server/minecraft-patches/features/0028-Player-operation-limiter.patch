@@ -6,7 +6,7 @@ Subject: [PATCH] Player operation limiter
 This patch is Powered by plusls-carpet-addition(https://github.com/plusls/plusls-carpet-addition)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index c869682651fe3479aafcf4632a4f203b88ef9e95..8799692ffd3eff3915789145e254e2a370ccd92c 100644
+index c869682651fe3479aafcf4632a4f203b88ef9e95..11a2bc0eb38829ef2b71f82acc17017edffa3192 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -435,6 +435,10 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -35,33 +35,33 @@ index c869682651fe3479aafcf4632a4f203b88ef9e95..8799692ffd3eff3915789145e254e2a3
 +
 +    // Leaves start - player operation limiter
 +    protected void resetOperationCountPerTick() {
-+        this.instaBreakCountPerTick = 0;
-+        this.placeBlockCountPerTick = 0;
++        instaBreakCountPerTick = 0;
++        placeBlockCountPerTick = 0;
 +    }
 +
 +    public int getInstaBreakCountPerTick() {
-+        return this.instaBreakCountPerTick;
++        return instaBreakCountPerTick;
 +    }
 +
 +    public int getPlaceBlockCountPerTick() {
-+        return this.placeBlockCountPerTick;
++        return placeBlockCountPerTick;
 +    }
 +
 +    public void addInstaBreakCountPerTick() {
-+        ++this.instaBreakCountPerTick;
++        ++instaBreakCountPerTick;
 +    }
 +
 +    public void addPlaceBlockCountPerTick() {
-+        ++this.placeBlockCountPerTick;
++        ++placeBlockCountPerTick;
 +    }
 +
 +    public boolean allowOperation() {
-+        return (this.instaBreakCountPerTick == 0 || this.placeBlockCountPerTick == 0) && (this.instaBreakCountPerTick <= 1 && this.placeBlockCountPerTick <= 2);
++        return (instaBreakCountPerTick == 0 || placeBlockCountPerTick == 0) && (instaBreakCountPerTick <= 1 && placeBlockCountPerTick <= 2);
 +    }
 +    // Leaves end - player operation limiter
  }
 diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
-index 45cbc7913546fe7294cf1ac4a885e6ca68dcbd7f..97bd365f332d64c9e4023ecdf109ca37c4c9238a 100644
+index 45cbc7913546fe7294cf1ac4a885e6ca68dcbd7f..1f6bd57334409831f893277eef3900250123c933 100644
 --- a/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -324,6 +324,19 @@ public class ServerPlayerGameMode {
@@ -71,9 +71,9 @@ index 45cbc7913546fe7294cf1ac4a885e6ca68dcbd7f..97bd365f332d64c9e4023ecdf109ca37
 +        // Leaves start - player operation limiter
 +        if (org.leavesmc.leaves.LeavesConfig.modify.playerOperationLimiter) {
 +            if (exitId.equals("insta mine")) {
-+                this.player.addInstaBreakCountPerTick();
-+                if (!this.player.allowOperation()) {
-+                    this.level.getCraftServer().getPluginManager().callEvent(new org.leavesmc.leaves.event.player.PlayerOperationLimitEvent(this.player.getBukkitEntity(), org.leavesmc.leaves.event.player.PlayerOperationLimitEvent.Operation.MINE, org.bukkit.craftbukkit.block.CraftBlock.at(this.level, pos)));
++                player.addInstaBreakCountPerTick();
++                if (!player.allowOperation()) {
++                    this.level.getCraftServer().getPluginManager().callEvent(new org.leavesmc.leaves.event.player.PlayerOperationLimitEvent(player.getBukkitEntity(), org.leavesmc.leaves.event.player.PlayerOperationLimitEvent.Operation.MINE, org.bukkit.craftbukkit.block.CraftBlock.at(level, pos)));
 +                    this.player.connection.send(new ClientboundBlockUpdatePacket(pos, this.level.getBlockState(pos)));
 +                    this.debugLogging(pos, false, sequence, exitId);
 +                    return;
@@ -85,7 +85,7 @@ index 45cbc7913546fe7294cf1ac4a885e6ca68dcbd7f..97bd365f332d64c9e4023ecdf109ca37
              this.debugLogging(pos, true, sequence, exitId);
          } else {
 diff --git a/net/minecraft/world/item/BlockItem.java b/net/minecraft/world/item/BlockItem.java
-index 903c819b6de37a07186ecd2f25301586a840c344..03b11543304c173b8558d548e5a193747234de20 100644
+index 9f5b009518c8e11e6a6549104984bb2fb2a659f5..ff919c0db19fe6ebc5fbe79fb07bf8fec8ce73af 100644
 --- a/net/minecraft/world/item/BlockItem.java
 +++ b/net/minecraft/world/item/BlockItem.java
 @@ -61,6 +61,20 @@ public class BlockItem extends Item {
