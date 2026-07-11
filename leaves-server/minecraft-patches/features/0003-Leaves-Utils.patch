@@ -84,7 +84,7 @@ index a8625939a4220050990b09097d5e3bfd2d8473d5..70960c3c280eedc3624f20139a52d5d4
          @Override
          public boolean equals(final Object o) {
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 7093613a09a79d7ffce34f1cb54ec2605c5af384..6be4d5c7801937e865788e08789de2814c6fa19d 100644
+index 7093613a09a79d7ffce34f1cb54ec2605c5af384..6a7aac202049337b7e02167b97b63ba77aa771a7 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -785,7 +785,7 @@ public abstract class BlockBehaviour implements FeatureElement {
@@ -92,7 +92,7 @@ index 7093613a09a79d7ffce34f1cb54ec2605c5af384..6be4d5c7801937e865788e08789de281
  
          public PushReaction getPistonPushReaction() {
 -            return !this.isDestroyable() ? PushReaction.BLOCK : this.pushReaction; // Paper - Protect Bedrock and End Portal/Frames from being destroyed
-+            return !this.isDestroyable() ? PushReaction.BLOCK : this.getBlock().getResetPushReaction() == null ? this.pushReaction : this.getBlock().getResetPushReaction(); // Paper - Protect Bedrock // Leaves - reset push reaction
++            return !this.isDestroyable() ? PushReaction.BLOCK : this.getBlock().getResetPushReaction() == null ? this.pushReaction : this.getBlock().getResetPushReaction(); // Paper - Protect Bedrock and End Portal/Frames from being destroyed // Leaves - reset push reaction
          }
  
          public boolean isSolidRender() {
