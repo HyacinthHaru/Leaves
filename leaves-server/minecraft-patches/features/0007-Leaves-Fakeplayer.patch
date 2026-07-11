@@ -597,7 +597,7 @@ index 358ff4330102a058c86d8209374d8cb9dd18b6ad..3e9c25b7ac2ef0512ef8749f0de84a9d
          if (!this.level().isClientSide()) {
              boolean wasUsingItem = this.isUsingItem();
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index e34b050cfeb9d9afa1869b19ff862627d27d60f7..b75702a359cef9ecbf92c7c4f0c8eae1e8020d10 100644
+index e34b050cfeb9d9afa1869b19ff862627d27d60f7..c8ba6f874f0de0ba017bb49f4df826e98a349ed2 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
 @@ -166,7 +166,7 @@ public abstract class Player extends Avatar implements ContainerUser {
@@ -605,7 +605,7 @@ index e34b050cfeb9d9afa1869b19ff862627d27d60f7..b75702a359cef9ecbf92c7c4f0c8eae1
      public GameProfile gameProfile;
      private boolean reducedDebugInfo;
 -    private ItemStack lastItemInMainHand = ItemStack.EMPTY;
-+    protected ItemStack lastItemInMainHand = ItemStack.EMPTY; // Leaves - fakeplayer
++    protected ItemStack lastItemInMainHand = ItemStack.EMPTY;
      private final ItemCooldowns cooldowns = this.createItemCooldowns();
      private Optional<GlobalPos> lastDeathLocation = Optional.empty();
      public @Nullable FishingHook fishing;
