@@ -51,7 +51,7 @@
      )
  }
  
-@@ -86,7 +_,21 @@
+@@ -86,7 +_,22 @@
      }
  }
  
@@ -174,8 +174,7 @@
 +    classpath(tasks.createLeavesclipJar.flatMap { it.outputZip })
      mainClass.set(null as String?)
  }
-+// Leaves end - build change
- 
+-
 -fill {
 -    project("paper")
 -    versionFamily(paperweight.minecraftVersion.map { it.split(".", "-").takeWhile { part -> part.toIntOrNull() != null }.take(2).joinToString(".") })
@@ -191,6 +190,8 @@
 -            }
 -        }
 -    }
++// Leaves end - build change
++
 +// Leaves start - create config file
 +tasks.registerRunTask("createLeavesConfig") {
 +    description = "Create a new leaves.yml"

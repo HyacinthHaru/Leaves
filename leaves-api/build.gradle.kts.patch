@@ -17,30 +17,28 @@
          java {
              srcDir(generatedDir)
 +            srcDir(file("../paper-api/src/main/java"))
-         }
++        }
 +        resources {
 +            srcDir(file("../paper-api/src/main/resources"))
 +        }
-     }
++    }
 +    test {
 +        java {
 +            srcDir(file("../paper-api/src/test/java"))
 +        }
 +        resources {
 +            srcDir(file("../paper-api/src/test/resources"))
-+        }
-+    }
+         }
+     }
  }
 +// Leaves end - build change
  
  val outgoingVariants = arrayOf("runtimeElements", "apiElements", "sourcesElements", "javadocElements")
  val mainCapability = "${project.group}:${project.name}:${project.version}"
-@@ -164,7 +_,17 @@
-     outputFile.set(layout.buildDirectory.file("apiVersioning.json"))
-     projectVersion.set(project.version.toString())
+@@ -166,6 +_,16 @@
      apiVersion.set(rootProject.providers.gradleProperty("apiVersion"))
-+}
-+
+ }
+ 
 +// Leaves start - hide irrelevant compilation warnings
 +tasks.withType<JavaCompile> {
 +    val compilerArgs = options.compilerArgs
@@ -48,11 +46,12 @@
 +    compilerArgs.add("-Xlint:-removal")
 +    compilerArgs.add("-Xlint:-dep-ann")
 +    compilerArgs.add("--add-modules=jdk.incubator.vector") // Leaves - SIMD support
- }
++}
 +// Leaves end - hide irrelevant compilation warnings
- 
++
  tasks.jar {
      from(generateApiVersioningFile.flatMap { it.outputFile })
+     manifest {
 @@ -183,7 +_,7 @@
  
  tasks.withType<Javadoc>().configureEach {
