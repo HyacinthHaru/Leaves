@@ -414,12 +414,12 @@ index 12190f2a2856b0d0cf95144d0b1622f1b9600bf6..be01f06d4ee02854345842c97382e8b6
  
      // Paper start - utility method for common conversion back to the game profile
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index c73b1cc74b299e0f6d7512a4093ce5a42b9a76eb..1cd2980eb6f9a28d920286f868503b41fb252d26 100644
+index 5c19d590a36957a29f2bcddd45877ebb5b41d7e0..99219206c1dc0856978d21ba33c1d305f856371c 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -247,6 +247,19 @@ public abstract class PlayerList {
  
-         org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePlayerJoin(player); // Leaves - protocol core
+         org.leavesmc.leaves.protocol.core.LeavesProtocolManager.handlePlayerJoin(player);
  
 +        // Leaves start - bot support
 +        if (org.leavesmc.leaves.LeavesConfig.modify.fakeplayer.enable) {
