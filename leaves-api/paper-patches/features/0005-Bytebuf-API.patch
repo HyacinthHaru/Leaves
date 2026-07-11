@@ -5,13 +5,13 @@ Subject: [PATCH] Bytebuf API
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 09eda069b9d82ce953d8370d7df5afe581341173..cb3c329f34d13881d8c7d4cee6b1e4322161a623 100644
+index 77f8f93b2402630150cfddb66694a861103d7f58..3b489ea7933b7275a1b3e65820154cedc8a61768 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -3021,4 +3021,10 @@ public final class Bukkit {
-     public static @NotNull org.leavesmc.leaves.entity.photographer.PhotographerManager getPhotographerManager() { // Leaves - Photographer API
+@@ -3023,4 +3023,10 @@ public final class Bukkit {
          return server.getPhotographerManager();
      }
+     // Leaves end - Photographer API
 +
 +    // Leaves start - Bytebuf API
 +    public static org.leavesmc.leaves.bytebuf.BytebufAllocator getBytebufManager() {

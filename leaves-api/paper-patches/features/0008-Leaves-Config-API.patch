@@ -5,10 +5,10 @@ Subject: [PATCH] Leaves Config API
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index cb3c329f34d13881d8c7d4cee6b1e4322161a623..2c2ebc3f85d3812ef4ec7f972e8e3e11fe245d38 100644
+index 3b489ea7933b7275a1b3e65820154cedc8a61768..fb615407be4b6726ec9e412209e92cd9809474a0 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -3027,4 +3027,10 @@ public final class Bukkit {
+@@ -3029,4 +3029,10 @@ public final class Bukkit {
          return server.getBytebufAllocator();
      }
      // Leaves end - Bytebuf API
