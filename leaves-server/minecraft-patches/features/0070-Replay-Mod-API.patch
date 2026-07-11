@@ -285,10 +285,10 @@ index 37c9f983ae89c497f44a1b7967d741abf909e0a0..d7fb2505f2a86ca0d81f144624ef2e1a
  
              this.setListData(players);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index a40defcd406e7b5db0245059211623fe99af0404..18f2a2b4da4efc764974dc9fe20feac537b7bf60 100644
+index d60bd5ed5df0555cd6a1621b78811a216bc5a2cf..ecaee08faac2bfa720652f80dcf33d7649348b2e 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2884,7 +2884,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2883,7 +2883,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              if (entity instanceof ServerPlayer player) {
                  ServerLevel.this.players.add(player);
                  // Leaves start - skip
@@ -297,7 +297,7 @@ index a40defcd406e7b5db0245059211623fe99af0404..18f2a2b4da4efc764974dc9fe20feac5
                      ServerLevel.this.realPlayers.add(player);
                  }
                  // Leaves end - skip
-@@ -2967,7 +2967,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2966,7 +2966,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              if (entity instanceof ServerPlayer player) {
                  ServerLevel.this.players.remove(player);
                  // Leaves start - skip

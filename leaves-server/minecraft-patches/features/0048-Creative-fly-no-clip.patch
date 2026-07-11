@@ -18,7 +18,7 @@ index 73a29d7d40e092be8264679c7f30e5aa8b8fb393..49582cb05db4872486cc142efceae6b7
              } else {
                  this.followingPlayer = null;
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index c8ba6f874f0de0ba017bb49f4df826e98a349ed2..0c72244fa420f1b2b04228349914eb1e663e641d 100644
+index c8ba6f874f0de0ba017bb49f4df826e98a349ed2..796fa4da73831216de6e23f033cf64262f793bd2 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
 @@ -242,8 +242,8 @@ public abstract class Player extends Avatar implements ContainerUser {
@@ -59,7 +59,7 @@ index c8ba6f874f0de0ba017bb49f4df826e98a349ed2..0c72244fa420f1b2b04228349914eb1e
 +        return isSpectator() || (org.leavesmc.leaves.LeavesConfig.modify.creativeNoClip && isCreative() && getAbilities().flying);
 +    }
 +
-+    public boolean canSpectatingPlace(final net.minecraft.world.level.LevelReader world, final BlockState state, final BlockPos pos, final net.minecraft.world.phys.shapes.CollisionContext context) {
++    public boolean canSpectatingPlace(net.minecraft.world.level.LevelReader world, BlockState state, BlockPos pos, net.minecraft.world.phys.shapes.CollisionContext context) {
 +        if (this.isCreativeFlyOrSpectator()) {
 +            net.minecraft.world.phys.shapes.VoxelShape voxelShape = state.getCollisionShape(world, pos, context);
 +            return voxelShape.isEmpty() || world.isUnobstructed(this, voxelShape.move(pos.getX(), pos.getY(), pos.getZ()));
@@ -69,7 +69,7 @@ index c8ba6f874f0de0ba017bb49f4df826e98a349ed2..0c72244fa420f1b2b04228349914eb1e
 +    }
 +
 +    @Override
-+    public boolean isCollidable(final boolean ignoreClimbing) {
++    public boolean isCollidable(boolean ignoreClimbing) {
 +        return !isCreativeFlyOrSpectator() && super.isCollidable(ignoreClimbing);
 +    }
 +

@@ -5,7 +5,7 @@ Subject: [PATCH] Cache ignite odds
 
 
 diff --git a/net/minecraft/world/level/block/FireBlock.java b/net/minecraft/world/level/block/FireBlock.java
-index 5602bdde7fc5dc10ec9281dcc52a817a3944c252..6fcbf2c3ae6dd1cfe88b1f2c5cb62f0669d7184f 100644
+index 5602bdde7fc5dc10ec9281dcc52a817a3944c252..baa7d541b141729d6c1d6acf9e007265c31adbc7 100644
 --- a/net/minecraft/world/level/block/FireBlock.java
 +++ b/net/minecraft/world/level/block/FireBlock.java
 @@ -202,6 +202,7 @@ public class FireBlock extends BaseFireBlock {
@@ -29,11 +29,11 @@ index 5602bdde7fc5dc10ec9281dcc52a817a3944c252..6fcbf2c3ae6dd1cfe88b1f2c5cb62f06
      }
  
      private int getIgniteOdds(final LevelReader level, final BlockPos pos) {
-+        return this.getIgniteOdds(level, pos, null);
++        return getIgniteOdds(level, pos, null);
 +    }
 +
 +    // Leaves start - cache ignite odds
-+    private int getIgniteOdds(final LevelReader level, final BlockPos pos, @org.jetbrains.annotations.Nullable final Object2IntOpenHashMap<BlockPos> cache) {
++    private int getIgniteOdds(LevelReader level, BlockPos pos, @org.jetbrains.annotations.Nullable Object2IntOpenHashMap<BlockPos> cache) {
          if (!level.isEmptyBlock(pos)) {
              return 0;
 -        }
