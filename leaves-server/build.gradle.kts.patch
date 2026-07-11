@@ -75,7 +75,7 @@
  configurations.named(log4jPlugins.compileClasspathConfigurationName) {
      extendsFrom(configurations.compileClasspath.get())
  }
-@@ -109,7 +_,19 @@
+@@ -109,7 +_,18 @@
  }
  
  dependencies {
@@ -84,7 +84,6 @@
 +    implementation("commons-lang:commons-lang:2.6") // Leaves - build change
 +    // Leaves start - linear
 +    implementation("com.github.luben:zstd-jni:1.5.4-1")
-+    // lz4-java is provided by mache (at.yawk.lz4:lz4-java) since Paper 26.1 - Leaves
 +    implementation("net.openhft:zero-allocation-hashing:0.16")
 +    // Leaves end - linear
 +    // Leaves start - leaves plugin
