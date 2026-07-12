@@ -5,7 +5,7 @@ Subject: [PATCH] Fast exp orb absorb
 
 
 diff --git a/net/minecraft/world/entity/ExperienceOrb.java b/net/minecraft/world/entity/ExperienceOrb.java
-index 49582cb05db4872486cc142efceae6b768a589a3..ae76daa86e870fd6fbbaa51b110f4340b19e626b 100644
+index 49582cb05db4872486cc142efceae6b768a589a3..906ff12a8bcccc30b08bb31988883a57196a40d0 100644
 --- a/net/minecraft/world/entity/ExperienceOrb.java
 +++ b/net/minecraft/world/entity/ExperienceOrb.java
 @@ -352,6 +352,20 @@ public class ExperienceOrb extends Entity {
@@ -16,9 +16,9 @@ index 49582cb05db4872486cc142efceae6b768a589a3..ae76daa86e870fd6fbbaa51b110f4340
 +                    player.takeXpDelay = org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerXpCooldownEvent(player, 0, org.bukkit.event.player.PlayerExpCooldownChangeEvent.ChangeReason.PICKUP_ORB).getNewCooldown(); // CraftBukkit - entity.takeXpDelay = 2;
 +                    while (this.count > 0) {
 +                        player.take(this, 1);
-+                        int rem = this.repairPlayerItems(serverPlayer, this.getValue());
-+                        if (rem > 0) {
-+                            player.giveExperiencePoints(org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerExpChangeEvent(player, this, rem).getAmount()); // CraftBukkit - this.value -> event.getAmount() // Paper - supply experience orb object
++                        int i = this.repairPlayerItems(serverPlayer, this.getValue());
++                        if (i > 0) {
++                            player.giveExperiencePoints(org.bukkit.craftbukkit.event.CraftEventFactory.callPlayerExpChangeEvent(player, this, i).getAmount()); // CraftBukkit - this.value -> event.getAmount() // Paper - supply experience orb object
 +                        }
 +                        this.count--;
 +                    }
