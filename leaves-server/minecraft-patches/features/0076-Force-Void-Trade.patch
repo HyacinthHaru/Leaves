@@ -5,7 +5,7 @@ Subject: [PATCH] Force Void Trade
 
 
 diff --git a/net/minecraft/world/entity/npc/villager/AbstractVillager.java b/net/minecraft/world/entity/npc/villager/AbstractVillager.java
-index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519579ce0c1 100644
+index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..a94e10e2ea025f134c9499a53c760ee8b4368046 100644
 --- a/net/minecraft/world/entity/npc/villager/AbstractVillager.java
 +++ b/net/minecraft/world/entity/npc/villager/AbstractVillager.java
 @@ -57,6 +57,7 @@ public abstract class AbstractVillager extends AgeableMob implements Npc, Mercha
@@ -22,7 +22,7 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
          if (event == null || event.willIncreaseTradeUses()) {
 -            offer.increaseUses();
 +            // Leaves start - force void trade
-+            if (this.voidTrade) {
++            if (voidTrade) {
 +                offer.increaseVoidUses();
 +            } else {
 +                offer.increaseUses();
@@ -36,7 +36,7 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
      public void notifyTrade(final MerchantOffer offer) {
          // offer.increaseUses(); // Paper - Add PlayerTradeEvent and PlayerPurchaseEvent
 -        this.ambientSoundTime = -this.getAmbientSoundInterval();
-+        if (!this.voidTrade) this.ambientSoundTime = -this.getAmbientSoundInterval(); // Leaves - force void trade
++        if (!voidTrade) this.ambientSoundTime = -this.getAmbientSoundInterval(); // Leaves - force void trade
          // this.rewardTradeXp(offer); // Paper - Add PlayerTradeEvent and PlayerPurchaseEvent
          if (this.tradingPlayer instanceof ServerPlayer) {
              CriteriaTriggers.TRADE.trigger((ServerPlayer)this.tradingPlayer, this, offer.getResult());
@@ -45,7 +45,7 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
      public void notifyTradeUpdated(final ItemStack itemStack) {
          if (!this.level().isClientSide() && this.ambientSoundTime > -this.getAmbientSoundInterval() + 20) {
 -            this.ambientSoundTime = -this.getAmbientSoundInterval();
-+            if (!this.voidTrade) this.ambientSoundTime = -this.getAmbientSoundInterval(); // Leaves - force void trade
++            if (!voidTrade) this.ambientSoundTime = -this.getAmbientSoundInterval(); // Leaves - force void trade
              this.makeSound(this.getTradeUpdatedSound(!itemStack.isEmpty()));
          }
      }
@@ -72,7 +72,7 @@ index 9582f694ddbb47be7d820c5fe8791d5ba112ec6b..d68cc8ae9e2b5e2350fa226bcf8ed519
      public void die(final DamageSource source) {
          super.die(source);
 diff --git a/net/minecraft/world/entity/npc/villager/Villager.java b/net/minecraft/world/entity/npc/villager/Villager.java
-index e4ba6e200e85f4e226d6a3e68db734f277b89226..5ba17ee4f048a6bb109a7706fe1adfe3de152e59 100644
+index e4ba6e200e85f4e226d6a3e68db734f277b89226..ffce96f260b7677500125dd771b354add9d2db43 100644
 --- a/net/minecraft/world/entity/npc/villager/Villager.java
 +++ b/net/minecraft/world/entity/npc/villager/Villager.java
 @@ -361,6 +361,7 @@ public class Villager extends AbstractVillager implements VillagerDataHolder, Re
@@ -90,7 +90,7 @@ index e4ba6e200e85f4e226d6a3e68db734f277b89226..5ba17ee4f048a6bb109a7706fe1adfe3
 -        this.villagerXp = this.villagerXp + offer.getXp();
 -        this.lastTradedPlayer = this.getTradingPlayer();
 +        // Leaves start - force void trade
-+        if (!this.voidTrade) {
++        if (!voidTrade) {
 +            this.villagerXp += offer.getXp();
 +            this.lastTradedPlayer = this.getTradingPlayer();
 +        }

@@ -5,7 +5,7 @@ Subject: [PATCH] Leaves I18n support
 
 
 diff --git a/net/minecraft/locale/Language.java b/net/minecraft/locale/Language.java
-index 3ee139b4c47cd5a747cf7aa4f95beb0c67f86143..22289e4247082c6c2388ab5df686f89e708a8eb1 100644
+index 3ee139b4c47cd5a747cf7aa4f95beb0c67f86143..1d2276f2db3d83bc23a8a73d9b7f762cca5d4680 100644
 --- a/net/minecraft/locale/Language.java
 +++ b/net/minecraft/locale/Language.java
 @@ -37,6 +37,7 @@ public abstract class Language {
@@ -21,7 +21,7 @@ index 3ee139b4c47cd5a747cf7aa4f95beb0c67f86143..22289e4247082c6c2388ab5df686f89e
      }
  
 -    private static void parseTranslations(final BiConsumer<String, String> output, final String path) {
-+    public static void parseTranslations(final BiConsumer<String, String> output, final String path) { // Leaves - private -> public
++    public static void parseTranslations(BiConsumer<String, String> output, String path) { // private -> public
          try (InputStream stream = Language.class.getResourceAsStream(path)) {
              loadFromJson(stream, output);
          } catch (IOException | JsonParseException e) {

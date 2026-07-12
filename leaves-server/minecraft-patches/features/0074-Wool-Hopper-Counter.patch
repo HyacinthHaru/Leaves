@@ -6,7 +6,7 @@ Subject: [PATCH] Wool Hopper Counter
 This patch is Powered by fabric-carpet(https://github.com/gnembon/fabric-carpet)
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 326e25d1226ed1f719265e32b6e2d64eab6059a6..33d832852cf167c4925cd9548636fc712d2ddaf3 100644
+index 326e25d1226ed1f719265e32b6e2d64eab6059a6..0eda2031d23eb0a9bc345d3848c4bba1a259a8a5 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -197,8 +197,30 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
@@ -17,7 +17,7 @@ index 326e25d1226ed1f719265e32b6e2d64eab6059a6..33d832852cf167c4925cd9548636fc71
 +            if (org.leavesmc.leaves.LeavesConfig.modify.hopperCounter.unlimitedSpeed && org.leavesmc.leaves.util.HopperCounter.isEnabled()) {
 +                net.minecraft.world.item.DyeColor woolColor = org.leavesmc.leaves.util.WoolUtils.getWoolColorAtPosition(level, entity.getBlockPos().relative(state.getValue(HopperBlock.FACING)));
 +                if (woolColor != null) {
-+                    for (int unlimited = 0; unlimited < Short.MAX_VALUE; unlimited++) {
++                    for (int i = 0; i < Short.MAX_VALUE; i++) {
 +                        changed |= suckInItems(level, entity);
 +                        if (!changed) {
 +                            break;
@@ -59,7 +59,7 @@ index 326e25d1226ed1f719265e32b6e2d64eab6059a6..33d832852cf167c4925cd9548636fc71
      }
  
 +    // Leaves start - hopper counter
-+    private static boolean woolHopperCounter(final Level level, final BlockPos blockPos, final BlockState state, final @Nullable Container container) {
++    private static boolean woolHopperCounter(Level level, BlockPos blockPos, BlockState state, @Nullable Container container) {
 +        if (container == null) {
 +            return false;
 +        }

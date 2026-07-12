@@ -6,10 +6,10 @@ Subject: [PATCH] Vanilla hopper
 This is a temporary solution designed to attempt to restore the vanilla behavior of the funnel while preserving optimizations as much as possible. It should ultimately be replaced by the optimization solution provided by lithium.
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 33d832852cf167c4925cd9548636fc712d2ddaf3..17f8c6f812c300216b32a8fbc109e94e80c78e73 100644
+index 0eda2031d23eb0a9bc345d3848c4bba1a259a8a5..94d4bd6b37dd950d7360b04fd37b14fdac857bca 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -298,36 +298,55 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -298,36 +298,58 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          ItemStack movedItem = origItemStack;
          final int originalItemCount = origItemStack.getCount();
          final int movedItemCount = Math.min(level.spigotConfig.hopperAmount, originalItemCount);
@@ -23,7 +23,10 @@ index 33d832852cf167c4925cd9548636fc712d2ddaf3..17f8c6f812c300216b32a8fbc109e94e
 -                // Drastically improve performance by returning true.
 -                // No plugin could have relied on the behavior of false as the other call
 -                // site for IMIE did not exhibit the same behavior
-+        // Leaves start - fix vanilla hopper
++        // Leaves start - fix vanilla
++        // Drastically improve performance by returning true.
++        // No plugin could have relied on the behavior of false as the other call
++        // site for IMIE did not exhibit the same behavior
 +        if (org.leavesmc.leaves.LeavesConfig.fix.vanillaHopper && movedItem.getCount() <= movedItemCount) {
 +            if (!skipPullModeEventFire) {
 +                movedItem = callPullMoveEvent(hopper, container, movedItem);
@@ -85,7 +88,7 @@ index 33d832852cf167c4925cd9548636fc712d2ddaf3..17f8c6f812c300216b32a8fbc109e94e
 +            origItemStack.setCount(originalItemCount);
          }
 -        origItemStack.setCount(originalItemCount);
-+        // Leaves end - fix vanilla hopper
++        // Leaves end - fix vanilla
  
          if (level.paperConfig().hopper.cooldownWhenFull && !org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode) { // Leaves - mc technical survival mode
              applyCooldown(hopper);

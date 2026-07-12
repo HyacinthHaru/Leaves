@@ -21,7 +21,7 @@ index f58b10c7dec0d2b7dc2b3d1198539b74d13038f3..ee49b2bdf1bbf6a53940099d1b84a99b
              if (raid == null || raid.getRaidOmenLevel() < raid.getMaxRaidOmenLevel()) {
                  player.addEffect(new MobEffectInstance(MobEffects.RAID_OMEN, 600, amplification));
 diff --git a/net/minecraft/world/entity/raid/Raid.java b/net/minecraft/world/entity/raid/Raid.java
-index bd40c5fecbf449d0774b3ce68c471916fc494154..4c97c5d5f9e47bb53b49e0f87a5998a993bed312 100644
+index bd40c5fecbf449d0774b3ce68c471916fc494154..efc3ee641a99bc6cbbce70997eb30d8df57950ee 100644
 --- a/net/minecraft/world/entity/raid/Raid.java
 +++ b/net/minecraft/world/entity/raid/Raid.java
 @@ -261,7 +261,7 @@ public class Raid {
@@ -89,7 +89,7 @@ index bd40c5fecbf449d0774b3ce68c471916fc494154..4c97c5d5f9e47bb53b49e0f87a5998a9
 +
 +    // Leaves start - old FindSpawnPosition
 +    @Nullable
-+    private BlockPos getRavagerSpawnLocation(final ServerLevel serverWorld, final int proximity, final int tries) {
++    private BlockPos getRavagerSpawnLocation(ServerLevel serverWorld, int proximity, int tries) {
 +        int i = proximity == 0 ? 2 : 2 - proximity;
 +        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 +        net.minecraft.world.entity.SpawnPlacementType spawnLocation = net.minecraft.world.entity.SpawnPlacements.getPlacementType(EntityType.RAVAGER);
@@ -114,7 +114,7 @@ index bd40c5fecbf449d0774b3ce68c471916fc494154..4c97c5d5f9e47bb53b49e0f87a5998a9
 +        return null;
 +    }
 +
-+    private Optional<BlockPos> preCalcRavagerSpawnLocation(final ServerLevel serverWorld, final int proximity) {
++    private Optional<BlockPos> preCalcRavagerSpawnLocation(ServerLevel serverWorld, int proximity) {
 +        for (int i = 0; i < 3; i++) {
 +            BlockPos blockPos = this.getRavagerSpawnLocation(serverWorld, proximity, 1);
 +            if (blockPos != null) {
@@ -126,7 +126,7 @@ index bd40c5fecbf449d0774b3ce68c471916fc494154..4c97c5d5f9e47bb53b49e0f87a5998a9
 +    // Leaves end - old FindSpawnPosition
  }
 diff --git a/net/minecraft/world/entity/raid/Raider.java b/net/minecraft/world/entity/raid/Raider.java
-index cf689dae6978577970e39bf3004be551b4908cd1..474e5de382b3d1e485d9ea988c143689e72f39ab 100644
+index cf689dae6978577970e39bf3004be551b4908cd1..b1eee52a4149cb509a3c64514894fa521ec090e1 100644
 --- a/net/minecraft/world/entity/raid/Raider.java
 +++ b/net/minecraft/world/entity/raid/Raider.java
 @@ -128,6 +128,42 @@ public abstract class Raider extends PatrollingMonster {
@@ -150,17 +150,17 @@ index cf689dae6978577970e39bf3004be551b4908cd1..474e5de382b3d1e485d9ea988c143689
 +
 +                if (entityhuman != null && !itemstack.isEmpty() && this.isPatrolLeader()) {
 +                    net.minecraft.world.effect.MobEffectInstance mobeffect = entityhuman.getEffect(net.minecraft.world.effect.MobEffects.BAD_OMEN);
-+                    int amp = 1;
++                    int i = 1;
 +
 +                    if (mobeffect != null) {
-+                        amp += mobeffect.getAmplifier();
++                        i += mobeffect.getAmplifier();
 +                        entityhuman.removeEffectNoUpdate(net.minecraft.world.effect.MobEffects.BAD_OMEN);
 +                    } else {
-+                        --amp;
++                        --i;
 +                    }
 +
-+                    amp = net.minecraft.util.Mth.clamp(amp, 0, 4);
-+                    net.minecraft.world.effect.MobEffectInstance mobeffect1 = new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.BAD_OMEN, 120000, amp, false, false, true);
++                    i = net.minecraft.util.Mth.clamp(i, 0, 4);
++                    net.minecraft.world.effect.MobEffectInstance mobeffect1 = new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.BAD_OMEN, 120000, i, false, false, true);
 +
 +                    if (serverLevel.getGameRules().get(net.minecraft.world.level.gamerules.GameRules.RAIDS)) {
 +                        entityhuman.addEffect(mobeffect1, org.bukkit.event.entity.EntityPotionEffectEvent.Cause.PATROL_CAPTAIN); // CraftBukkit

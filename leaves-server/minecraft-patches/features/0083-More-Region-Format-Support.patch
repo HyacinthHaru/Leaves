@@ -82,7 +82,7 @@ index a7f2cfa9277c898038f6b9e0a3401db51012b64c..eed7abc6eb84592ade0fa1bc247c726c
 +public record FileToUpgrade(org.leavesmc.leaves.region.IRegionFile file, List<ChunkPos> chunksToUpgrade) { // Leaves - more region format
  }
 diff --git a/net/minecraft/util/worldupdate/RegionStorageUpgrader.java b/net/minecraft/util/worldupdate/RegionStorageUpgrader.java
-index b228cd6c54e8c8998923ab332882d99092769c67..a5ed73e542afd79b9ec5358639b168f25bd0a18c 100644
+index b228cd6c54e8c8998923ab332882d99092769c67..cc5ffdd559eb0ec66516814336714f6d84110e29 100644
 --- a/net/minecraft/util/worldupdate/RegionStorageUpgrader.java
 +++ b/net/minecraft/util/worldupdate/RegionStorageUpgrader.java
 @@ -36,7 +36,7 @@ import org.slf4j.Logger;
@@ -117,12 +117,12 @@ index b228cd6c54e8c8998923ab332882d99092769c67..a5ed73e542afd79b9ec5358639b168f2
      }
  
 -    private void onFileFinished(final RegionFile regionFile) {
-+    private void onFileFinished(final org.leavesmc.leaves.region.IRegionFile regionFile) { // Leaves - more region format
++    private void onFileFinished(org.leavesmc.leaves.region.IRegionFile regionFile) { // Leaves - more region format
          if (this.recreateRegionFiles) {
              if (this.previousWriteFuture != null) {
                  this.previousWriteFuture.join();
 diff --git a/net/minecraft/world/level/chunk/storage/RegionFile.java b/net/minecraft/world/level/chunk/storage/RegionFile.java
-index 42d07aef0b2f646ec52ed6f4e7c003dbf82bd92d..19b7e8c5b964fbd3a72a2b99c95e3098ee0f02fa 100644
+index 42d07aef0b2f646ec52ed6f4e7c003dbf82bd92d..ef32fdb94989bc293ba7f4bb785e67754ddda809 100644
 --- a/net/minecraft/world/level/chunk/storage/RegionFile.java
 +++ b/net/minecraft/world/level/chunk/storage/RegionFile.java
 @@ -22,7 +22,7 @@ import net.minecraft.world.level.ChunkPos;
@@ -148,7 +148,7 @@ index 42d07aef0b2f646ec52ed6f4e7c003dbf82bd92d..19b7e8c5b964fbd3a72a2b99c95e3098
      }
  
 -    protected synchronized void write(final ChunkPos pos, final ByteBuffer data) throws IOException {
-+    public synchronized void write(final ChunkPos pos, final ByteBuffer data) throws IOException { // Leaves - more region format
++    public synchronized void write(ChunkPos pos, ByteBuffer data) throws IOException { // Leaves - more region format
          int offsetIndex = getOffsetIndex(pos);
          int offset = this.offsets.get(offsetIndex);
          int sectorNumber = getSectorNumber(offset);
@@ -185,7 +185,7 @@ index 42d07aef0b2f646ec52ed6f4e7c003dbf82bd92d..19b7e8c5b964fbd3a72a2b99c95e3098
          try (DataInputStream out = new DataInputStream(new java.io.BufferedInputStream(new java.util.zip.InflaterInputStream(Files.newInputStream(file))))) {
              return net.minecraft.nbt.NbtIo.read((java.io.DataInput) out);
 diff --git a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
-index e47a91b1869801258d0db20c126722fb06522c80..69c6c40b1706870c7a89a366f51cc30105672bdb 100644
+index e47a91b1869801258d0db20c126722fb06522c80..23f60788e8eda68d0341bf06457f2f0ee260fe23 100644
 --- a/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 +++ b/net/minecraft/world/level/chunk/storage/RegionFileStorage.java
 @@ -19,7 +19,7 @@ public class RegionFileStorage implements AutoCloseable, ca.spottedleaf.moonrise
@@ -316,7 +316,7 @@ index e47a91b1869801258d0db20c126722fb06522c80..69c6c40b1706870c7a89a366f51cc301
      }
  
 -    @org.jetbrains.annotations.Contract("_, false -> !null") private @Nullable RegionFile getRegionFile(final ChunkPos pos, boolean existingOnly) throws IOException { // CraftBukkit
-+    @org.jetbrains.annotations.Contract("_, false -> !null") private org.leavesmc.leaves.region.@Nullable IRegionFile getRegionFile(final ChunkPos pos, boolean existingOnly) throws IOException { // CraftBukkit // Leaves - more region format
++    @org.jetbrains.annotations.Contract("_, false -> !null") private org.leavesmc.leaves.region.@Nullable IRegionFile getRegionFile(ChunkPos pos, boolean existingOnly) throws IOException { // CraftBukkit // Leaves - more region format
          // Paper start - rewrite chunk system
          if (existingOnly) {
              return this.moonrise$getRegionFileIfExists(pos.x(), pos.z());

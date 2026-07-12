@@ -50,7 +50,7 @@ index 76dbad4969f8e7e39c78eec782579362203ca6bc..386795ed3920dc94341848b65dd2b29a
      }
  
 diff --git a/net/minecraft/world/level/block/GrowingPlantHeadBlock.java b/net/minecraft/world/level/block/GrowingPlantHeadBlock.java
-index 21524350cb8822d33c86f1be783669ac8b961319..fbed46f137c13ae80a954d1de3b7b339978024ce 100644
+index 21524350cb8822d33c86f1be783669ac8b961319..0f3ae1bd8e0378f7bc785fe776a8dd46c329523a 100644
 --- a/net/minecraft/world/level/block/GrowingPlantHeadBlock.java
 +++ b/net/minecraft/world/level/block/GrowingPlantHeadBlock.java
 @@ -160,4 +160,15 @@ public abstract class GrowingPlantHeadBlock extends GrowingPlantBlock implements
@@ -60,7 +60,7 @@ index 21524350cb8822d33c86f1be783669ac8b961319..fbed46f137c13ae80a954d1de3b7b339
 +
 +    // Leaves start - zero tick plants
 +    @Override
-+    protected void tick(final BlockState state, final ServerLevel level, final BlockPos pos, final RandomSource random) {
++    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 +        if (!state.canSurvive(level, pos)) {
 +            level.destroyBlock(pos, true);
 +        } else if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.zeroTickPlants) {

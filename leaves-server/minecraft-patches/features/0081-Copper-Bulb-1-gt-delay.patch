@@ -5,7 +5,7 @@ Subject: [PATCH] Copper Bulb 1 gt delay
 
 
 diff --git a/net/minecraft/world/level/block/CopperBulbBlock.java b/net/minecraft/world/level/block/CopperBulbBlock.java
-index ebc44c7adf15ea8a67b4253a18eafe2c9eadb3e2..d280e871a51360d34e21238481e94f80af4e96f0 100644
+index ebc44c7adf15ea8a67b4253a18eafe2c9eadb3e2..265b62c651222950c79ed8a3c6ad9d66ff88eb97 100644
 --- a/net/minecraft/world/level/block/CopperBulbBlock.java
 +++ b/net/minecraft/world/level/block/CopperBulbBlock.java
 @@ -33,7 +33,13 @@ public class CopperBulbBlock extends Block {
@@ -38,14 +38,14 @@ index ebc44c7adf15ea8a67b4253a18eafe2c9eadb3e2..d280e871a51360d34e21238481e94f80
 +        }
 +    }
 +
-+    // Leaves start - copper bulb 1 gt delay
++    // Leaves start - copper bulb 1 gt
 +    @Override
-+    public void tick(final BlockState state, final ServerLevel level, final BlockPos pos, final net.minecraft.util.RandomSource random) {
++    public void tick(BlockState state, ServerLevel level, BlockPos pos, net.minecraft.util.RandomSource random) {
 +        if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.copperBulb1gt) {
-+            this.checkAndFlip(state, level, pos);
++            checkAndFlip(state, level, pos);
          }
      }
-+    // Leaves end - copper bulb 1 gt delay
++    // Leaves end - copper bulb 1 gt
  
      public void checkAndFlip(final BlockState state, final ServerLevel level, final BlockPos pos) {
          boolean signal = level.hasNeighborSignal(pos);

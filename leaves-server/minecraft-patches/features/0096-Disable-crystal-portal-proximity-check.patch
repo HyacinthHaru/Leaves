@@ -5,7 +5,7 @@ Subject: [PATCH] Disable crystal-portal proximity check
 
 
 diff --git a/net/minecraft/world/item/EndCrystalItem.java b/net/minecraft/world/item/EndCrystalItem.java
-index eaf7b3f7e9b8135e0ebc1aa7f764f58b45dd3aa5..d28f2d6fda7fcb6018fa19fd0939bcf49eb869ad 100644
+index eaf7b3f7e9b8135e0ebc1aa7f764f58b45dd3aa5..b0cf5265f1bad7e81b9de22a0c48e272f8c41d70 100644
 --- a/net/minecraft/world/item/EndCrystalItem.java
 +++ b/net/minecraft/world/item/EndCrystalItem.java
 @@ -54,7 +54,7 @@ public class EndCrystalItem extends Item {
@@ -13,19 +13,19 @@ index eaf7b3f7e9b8135e0ebc1aa7f764f58b45dd3aa5..d28f2d6fda7fcb6018fa19fd0939bcf4
              EnderDragonFight fight = ((ServerLevel)level).getDragonFight();
              if (fight != null) {
 -                fight.tryRespawn(above); // Paper - Perf: Do crystal-portal proximity check before entity lookup
-+                            fight.tryRespawn(); // fight.tryRespawn(above); // Paper - Perf: Do crystal-portal proximity check before entity lookup // Leaves - disable crystal-portal proximity check
++                            fight.tryRespawn(); // fight.tryRespawn(above); // Paper - Perf: Do crystal-portal proximity check before entity lookup // Leaves
              }
          }
  
 diff --git a/net/minecraft/world/level/dimension/end/EnderDragonFight.java b/net/minecraft/world/level/dimension/end/EnderDragonFight.java
-index 9153b1cc8042eb04f4f3ccd7e71b3dbf4380b62d..fbae59ab57fa737f47b42c75bb304d1ad17a1c94 100644
+index 86bfcae47d216f7041284f7a40d592d997b514b9..fa69eb989d826140f3cf7ad34701e1b0c24f818a 100644
 --- a/net/minecraft/world/level/dimension/end/EnderDragonFight.java
 +++ b/net/minecraft/world/level/dimension/end/EnderDragonFight.java
 @@ -615,12 +615,14 @@ public class EnderDragonFight extends SavedData {
      }
  
      public boolean tryRespawn() { // CraftBukkit - return boolean
-+        /* Leaves - disable crystal-portal proximity check
++        /* Leaves
          // Paper start - Perf: Do crystal-portal proximity check before entity lookup
          return this.tryRespawn(null);
      }
@@ -40,7 +40,7 @@ index 9153b1cc8042eb04f4f3ccd7e71b3dbf4380b62d..fbae59ab57fa737f47b42c75bb304d1a
  
                  location = this.exitPortalLocation;
              }
-+            /* Leaves - disable crystal-portal proximity check
++            /* Leaves
              // Paper start - Perf: Do crystal-portal proximity check before entity lookup
              if (placedEndCrystalPos != null && !this.level.paperConfig().misc.allowRemoteEnderDragonRespawning) {
                  int dy = placedEndCrystalPos.getY() - location.getY();

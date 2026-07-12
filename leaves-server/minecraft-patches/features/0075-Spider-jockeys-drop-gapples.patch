@@ -5,7 +5,7 @@ Subject: [PATCH] Spider jockeys drop gapples
 
 
 diff --git a/net/minecraft/world/entity/monster/skeleton/Skeleton.java b/net/minecraft/world/entity/monster/skeleton/Skeleton.java
-index f2759462a4423d2c5d31d2c7fbfe96dc61081c77..28142a6131426eb6aee85572c8b0574331e414e9 100644
+index f2759462a4423d2c5d31d2c7fbfe96dc61081c77..6b23b1b6f1cdcb528035e05f0ced201ee4d17fa4 100644
 --- a/net/minecraft/world/entity/monster/skeleton/Skeleton.java
 +++ b/net/minecraft/world/entity/monster/skeleton/Skeleton.java
 @@ -130,4 +130,25 @@ public class Skeleton extends AbstractSkeleton {
@@ -15,7 +15,7 @@ index f2759462a4423d2c5d31d2c7fbfe96dc61081c77..28142a6131426eb6aee85572c8b05743
 +
 +    // Leaves start - spider jockeys drop gapples
 +    @Override
-+    protected void dropCustomDeathLoot(final net.minecraft.server.level.ServerLevel level, final DamageSource source, final boolean playerKilled) {
++    protected void dropCustomDeathLoot(net.minecraft.server.level.ServerLevel level, DamageSource source, boolean playerKilled) {
 +        super.dropCustomDeathLoot(level, source, playerKilled);
 +        if (source.getEntity() instanceof net.minecraft.world.entity.monster.Creeper creeper && creeper.isPowered() && !creeper.droppedSkulls) {
 +            creeper.droppedSkulls = true;
@@ -24,7 +24,7 @@ index f2759462a4423d2c5d31d2c7fbfe96dc61081c77..28142a6131426eb6aee85572c8b05743
 +    }
 +
 +    @Override
-+    protected void dropFromLootTable(final net.minecraft.server.level.ServerLevel level, final DamageSource source, final boolean playerKilled) {
++    protected void dropFromLootTable(net.minecraft.server.level.ServerLevel level, DamageSource source, boolean playerKilled) {
 +        super.dropFromLootTable(level, source, playerKilled);
 +        if (org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples > 0.0D) {
 +            if (this.getRootVehicle().getType() == EntityType.SPIDER && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
@@ -35,7 +35,7 @@ index f2759462a4423d2c5d31d2c7fbfe96dc61081c77..28142a6131426eb6aee85572c8b05743
 +    // Leaves end - spider jockeys drop gapples
  }
 diff --git a/net/minecraft/world/entity/monster/spider/Spider.java b/net/minecraft/world/entity/monster/spider/Spider.java
-index 1507f340b16fd95985bfe49870e923c626833d18..975693c1aa4a6e441040ed8dc9cbb77ba33ddd68 100644
+index 1507f340b16fd95985bfe49870e923c626833d18..0fd0e92c0142e290079d88e499c7d85958ba65cb 100644
 --- a/net/minecraft/world/entity/monster/spider/Spider.java
 +++ b/net/minecraft/world/entity/monster/spider/Spider.java
 @@ -141,6 +141,18 @@ public class Spider extends Monster {
@@ -44,7 +44,7 @@ index 1507f340b16fd95985bfe49870e923c626833d18..975693c1aa4a6e441040ed8dc9cbb77b
  
 +    // Leaves start - spider jockeys drop gapples
 +    @Override
-+    protected void dropFromLootTable(final net.minecraft.server.level.ServerLevel level, final net.minecraft.world.damagesource.DamageSource source, final boolean playerKilled) {
++    protected void dropFromLootTable(net.minecraft.server.level.ServerLevel level, net.minecraft.world.damagesource.DamageSource source, boolean playerKilled) {
 +        super.dropFromLootTable(level, source, playerKilled);
 +        if (org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples > 0.0D) {
 +            if (this.hasPassenger(entity -> entity.getType() == EntityType.SKELETON) && this.random.nextDouble() < org.leavesmc.leaves.LeavesConfig.modify.spiderJockeysDropGapples) {
