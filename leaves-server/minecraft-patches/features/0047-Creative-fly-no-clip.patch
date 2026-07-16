@@ -18,7 +18,7 @@ index 700c9c0d40dee1df6c97f7c63ad731f16bc5f3e7..b95c56e0699fbe16e65efcf010cd514f
              } else {
                  this.followingPlayer = null;
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index 5bc21ee2e5f32ff7593e21fc417bdf97e2985409..0298cd0c44599ba652d77dbf59d3ffec28299c03 100644
+index 5bc21ee2e5f32ff7593e21fc417bdf97e2985409..c5067710d2ff272c873b7209bf4686e6c909d7a0 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
 @@ -243,8 +243,8 @@ public abstract class Player extends Avatar implements ContainerUser {
@@ -50,7 +50,7 @@ index 5bc21ee2e5f32ff7593e21fc417bdf97e2985409..0298cd0c44599ba652d77dbf59d3ffec
              AABB pickupArea;
              if (this.isPassenger() && !this.getVehicle().isRemoved()) {
                  pickupArea = this.getBoundingBox().minmax(this.getVehicle().getBoundingBox()).inflate(1.0, 0.0, 1.0);
-@@ -1820,6 +1820,26 @@ public abstract class Player extends Avatar implements ContainerUser {
+@@ -1820,6 +1820,31 @@ public abstract class Player extends Avatar implements ContainerUser {
          return this.gameMode() == GameType.SPECTATOR;
      }
  
@@ -71,6 +71,11 @@ index 5bc21ee2e5f32ff7593e21fc417bdf97e2985409..0298cd0c44599ba652d77dbf59d3ffec
 +    @Override
 +    public boolean isCollidable(final boolean ignoreClimbing) {
 +        return !isCreativeFlyOrSpectator() && super.isCollidable(ignoreClimbing);
++    }
++
++    @Override
++    public boolean canBeHitByProjectile() {
++        return !this.isCreativeFlyOrSpectator() && super.canBeHitByProjectile();
 +    }
 +    // Leaves end - creative no clip
 +

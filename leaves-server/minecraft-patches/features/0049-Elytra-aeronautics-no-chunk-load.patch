@@ -5,10 +5,10 @@ Subject: [PATCH] Elytra aeronautics no chunk load
 
 
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
-index 3b35bdd176528e5fa39c633793b8b1cf7c0001e9..4a1f9b9d3d3a8a307eb0ccbda99e1818b2a58d2d 100644
+index 7d395f1af215d6cb832a5a9186911925b14da054..63ef80d4072eba61eb179e881952814f9243c1d8 100644
 --- a/net/minecraft/server/level/ChunkMap.java
 +++ b/net/minecraft/server/level/ChunkMap.java
-@@ -891,7 +891,8 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+@@ -892,7 +892,8 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
      }
  
      private boolean skipPlayer(final ServerPlayer player) {
@@ -18,7 +18,7 @@ index 3b35bdd176528e5fa39c633793b8b1cf7c0001e9..4a1f9b9d3d3a8a307eb0ccbda99e1818
      }
  
      private void updatePlayerStatus(final ServerPlayer player, final boolean added) {
-@@ -925,6 +926,7 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+@@ -926,6 +927,7 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
      }
  
      public void move(final ServerPlayer player) {
@@ -27,10 +27,10 @@ index 3b35bdd176528e5fa39c633793b8b1cf7c0001e9..4a1f9b9d3d3a8a307eb0ccbda99e1818
  
          SectionPos oldSection = player.getLastSectionPos();
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 72d44158786b89cdda99a49f86091e78d0240186..fb1fadb00d94812bc85759f0c1a4a038d50f2033 100644
+index 052b338b61a722d497bf061edbb85231e6a25e6b..8ac800361a03675d8b1d0bc60b533064fd89476c 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -933,6 +933,10 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -934,6 +934,10 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
                  );
              if (this.paperConfig().unsupportedSettings.ticking.blockEntities) { // Paper - option to disable ticking
              profiler.popPush("blockEntities");
@@ -42,7 +42,7 @@ index 72d44158786b89cdda99a49f86091e78d0240186..fb1fadb00d94812bc85759f0c1a4a038
              profiler.pop();
              } // Paper - option to disable ticking
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 4e579e59f3ef18cf7250b0aa4f369a25d61cd23b..752db387d0633dcc36cdd963113122e2be3af91c 100644
+index 1c894131b4f2b3f6dc1767cbb669308d89b24b20..ba350ac4856b9d8099004b4d7be5fd39f53fb638 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -612,7 +612,7 @@ public class ServerGamePacketListenerImpl
@@ -106,7 +106,7 @@ index a1153439e7959cb3d7521cf943b3236c90c4ba69..a704cdd86d98a47b0e624c8f3d7d8e86
  
          if (this.isSleeping()) {
 diff --git a/net/minecraft/world/entity/player/Player.java b/net/minecraft/world/entity/player/Player.java
-index 0298cd0c44599ba652d77dbf59d3ffec28299c03..e405e94f8c35aa1049bf74a1307987e107bd9c29 100644
+index c5067710d2ff272c873b7209bf4686e6c909d7a0..53e82771eaee87d6db39cbf51df1c37cfbddf017 100644
 --- a/net/minecraft/world/entity/player/Player.java
 +++ b/net/minecraft/world/entity/player/Player.java
 @@ -174,6 +174,7 @@ public abstract class Player extends Avatar implements ContainerUser {

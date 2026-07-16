@@ -6,10 +6,10 @@ Subject: [PATCH] Remove lambda from ticking guard
 This patch is Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 6e541982133310aa737a44e73eb12e74eebdf0a2..3434db351a1d88369454050c01138203347ea2b5 100644
+index 594b8d7ba1b50bdfbc7a207a662ea6689b627ad1..749d4ce7c8ecb83da7f1ee8240d16be58aea2073 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -902,7 +902,24 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -903,7 +903,24 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
                                      }
  
                                      profiler.push("tick");

@@ -138,13 +138,12 @@ public class REIServerProtocol implements LeavesProtocol {
             switch (holder.value()) {
                 case ShapedRecipe ignored -> builder.add(new ShapedDisplay((RecipeHolder) holder));
                 case ShapelessRecipe ignored -> builder.add(new ShapelessDisplay((RecipeHolder) holder));
-                // Leaves - map_cloning is a generic TransmuteRecipe; match it by id before the generic case so it gets a shapeless-style display
-                case TransmuteRecipe ignored when "minecraft:map_cloning".equals(holder.id().identifier().toString()) ->
-                    builder.addAll(Display.ofMapCloningRecipe((RecipeHolder) holder));
+                // map_cloning is a generic TransmuteRecipe; match it by id before the generic case so it gets a shapeless-style display
+                case TransmuteRecipe ignored when "minecraft:map_cloning".equals(holder.id().identifier().toString()) -> builder.addAll(Display.ofMapCloningRecipe(holder));
                 case TransmuteRecipe ignored -> builder.addAll(Display.ofTransmuteRecipe((RecipeHolder) holder));
                 case FireworkRocketRecipe ignored -> builder.addAll(Display.ofFireworkRocketRecipe((RecipeHolder) holder));
-                // Leaves - tipped_arrow is the only ImbueRecipe, so a plain type match routes it
-                case ImbueRecipe ignored -> builder.addAll(Display.ofTippedArrowRecipe((RecipeHolder) holder));
+                // tipped_arrow is the only ImbueRecipe, so a plain type match routes it
+                case ImbueRecipe ignored -> builder.addAll(Display.ofTippedArrowRecipe(holder));
                 // ignore ArmorDyeRecipe, BannerDuplicateRecipe, BookCloningRecipe, ShieldDecorationRecipe, RepairItemRecipe
                 default -> {
                 }

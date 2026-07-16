@@ -51,10 +51,10 @@ index f5dc1163ac28dbadf939ed243a8c33bcac7b0b5c..2b046aef19b24b96f86511f6b4639801
                  level.fillReportDetails(report);
                  throw new ReportedException(report);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 9710f1cb45e9387b1aa0d2faea458dd7f9518c5a..36e841ff7081708bb65c901642d313778231cea3 100644
+index 540ad85654f4ddae3a991c8eeb08b2b7191d9e72..052b338b61a722d497bf061edbb85231e6a25e6b 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -906,6 +906,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -907,6 +907,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
                                      if (org.leavesmc.leaves.LeavesConfig.performance.remove.tickGuardLambda) {
                                          try {
                                              this.tickNonPassenger(entity); // Leaves - changed

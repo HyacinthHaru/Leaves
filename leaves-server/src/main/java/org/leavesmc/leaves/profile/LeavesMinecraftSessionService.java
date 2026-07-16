@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 public class LeavesMinecraftSessionService extends PaperMinecraftSessionService {
 
-    private final MinecraftClient leavesClient; // Leaves - mirror of YggdrasilMinecraftSessionService#client (now private)
+    private final MinecraftClient leavesClient;
 
     protected LeavesMinecraftSessionService(ServicesKeySet keySet, Proxy authenticationService, Environment environment) {
         super(keySet, authenticationService, environment);

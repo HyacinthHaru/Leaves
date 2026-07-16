@@ -231,10 +231,10 @@ index 0c06347422a9d7538753b46f0750413ca3ef83bb..5ee37941a0d5915637099ff313cbae60
          com.destroystokyo.paper.Metrics.PaperMetrics.startMetrics(); // Paper - start metrics
          com.destroystokyo.paper.VersionHistoryManager.INSTANCE.getClass(); // Paper - load version history now
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
-index b42bf0ecd381c07ff7c42dea3970f598ec426e98..3b35bdd176528e5fa39c633793b8b1cf7c0001e9 100644
+index 7f0df1c26f93d53b5925c564374f3e5fa6d966b3..7d395f1af215d6cb832a5a9186911925b14da054 100644
 --- a/net/minecraft/server/level/ChunkMap.java
 +++ b/net/minecraft/server/level/ChunkMap.java
-@@ -1399,6 +1399,13 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+@@ -1400,6 +1400,13 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
                      }
                  } else {
                      this.removePlayer(player);
@@ -249,7 +249,7 @@ index b42bf0ecd381c07ff7c42dea3970f598ec426e98..3b35bdd176528e5fa39c633793b8b1cf
              }
          }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 40b17c69982a9844d2af6806c34fa659dc822005..9fc8ae5cb89bdfbfe73452dcb4dde445b6b1cc23 100644
+index 62e718abae1f13e339feab3f076cc32d35ae2435..594b8d7ba1b50bdfbc7a207a662ea6689b627ad1 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -237,6 +237,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -260,7 +260,7 @@ index 40b17c69982a9844d2af6806c34fa659dc822005..9fc8ae5cb89bdfbfe73452dcb4dde445
  
      @Override
      public @Nullable LevelChunk getChunkIfLoaded(int x, int z) {
-@@ -741,6 +742,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -742,6 +743,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
          this.chunkDataController = new ca.spottedleaf.moonrise.patches.chunk_system.io.datacontroller.ChunkDataController((ServerLevel)(Object)this, this.chunkTaskScheduler);
          // Paper end - rewrite chunk system
          this.getCraftServer().addWorld(this.getWorld()); // CraftBukkit
@@ -268,7 +268,7 @@ index 40b17c69982a9844d2af6806c34fa659dc822005..9fc8ae5cb89bdfbfe73452dcb4dde445
      }
  
      // Paper start
-@@ -2384,6 +2386,12 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2385,6 +2387,12 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
          return this.players;
      }
  
@@ -281,7 +281,7 @@ index 40b17c69982a9844d2af6806c34fa659dc822005..9fc8ae5cb89bdfbfe73452dcb4dde445
      @Override
      public void updatePOIOnBlockStateChange(final BlockPos pos, final BlockState oldState, final BlockState newState) {
          Optional<Holder<PoiType>> oldType = PoiTypes.forState(oldState);
-@@ -2856,6 +2864,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2857,6 +2865,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              // ServerLevel.this.getChunkSource().addEntity(entity); // Paper - ignore and warn about illegal addEntity calls instead of crashing server; moved down below valid=true
              if (entity instanceof ServerPlayer player) {
                  ServerLevel.this.players.add(player);
@@ -293,7 +293,7 @@ index 40b17c69982a9844d2af6806c34fa659dc822005..9fc8ae5cb89bdfbfe73452dcb4dde445
                  if (player.isReceivingWaypoints()) {
                      ServerLevel.this.getWaypointManager().addPlayer(player);
                  }
-@@ -2934,6 +2947,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2935,6 +2948,11 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              ServerLevel.this.getChunkSource().removeEntity(entity);
              if (entity instanceof ServerPlayer player) {
                  ServerLevel.this.players.remove(player);

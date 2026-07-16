@@ -86,10 +86,10 @@ index f2c5a6ce769d8a5fdb4b836eae6a61a4da91cb3f..01ce0dee1f0c2942be59e78b237bc75d
      }
  
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index aaa809c5cb8e621b5754aaf2322b919d2f45872f..5ebef1e780262b22bca8e647f5f6f1eb75814326 100644
+index b5595be453c8daa29bcac920541ae5286f3d8930..1c617584d447aace2534a3c32c003e2d855feb17 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2576,6 +2576,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2577,6 +2577,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
  
          for (TickingBlockEntity ticker : this.blockEntityTickers) {
              BlockPos blockPos = ticker.getPos();
@@ -306,7 +306,7 @@ index 4b7dfc924e3068050cd876a34450b3ccd853069b..fa35b60db2eaecf034e0a49dfc940869
          for (int i = 0; i < container.getContainerSize(); i++) {
              ItemStack itemStack = container.getItem(i);
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index b491af406632cb590f019a015eb75ac493b7dbfa..f8cc90f898611309c6c6e8c21cc567875acf6945 100644
+index d7c598df731a91a770d24eecebe4629ea1d1da46..2cb3347dbad74c19fd1fe1b4a4a28ab354fad555 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
 @@ -98,8 +98,12 @@ import org.apache.commons.lang3.function.TriConsumer;

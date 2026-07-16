@@ -202,12 +202,12 @@ public class Recorder extends Connection {
             }
         }
 
-        if (recorderOption.forceDayTime != -1 && packet instanceof ClientboundSetTimePacket packet1) {
+        if (recorderOption.forceDayTime != -1 && packet instanceof ClientboundSetTimePacket(long gameTime, java.util.Map<net.minecraft.core.Holder<net.minecraft.world.clock.WorldClock>, net.minecraft.world.clock.ClockNetworkState> clockUpdates)) {
             // Leaves - freeze each world clock at forceDayTime within its current day, keeping the day count (mirrors ServerPlayer#getDefaultClockTime: floor to day start + offset)
             packet = new ClientboundSetTimePacket(
-                packet1.gameTime(),
+                gameTime,
                 net.minecraft.util.Util.mapValues(
-                    packet1.clockUpdates(),
+                    clockUpdates,
                     state -> new net.minecraft.world.clock.ClockNetworkState(
                         state.totalTicks() - (state.totalTicks() % net.minecraft.SharedConstants.TICKS_PER_GAME_DAY) + recorderOption.forceDayTime,
                         0.0F,

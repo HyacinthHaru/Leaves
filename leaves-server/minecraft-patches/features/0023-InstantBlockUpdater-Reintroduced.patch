@@ -6,10 +6,10 @@ Subject: [PATCH] InstantBlockUpdater Reintroduced
 This patch is Powered by Carpet-TIS-Addition(https://github.com/plusls/Carpet-TIS-Addition)
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index c6a491e0b47453dc7596fb09b18b92545ff081cf..9710f1cb45e9387b1aa0d2faea458dd7f9518c5a 100644
+index 749d4ce7c8ecb83da7f1ee8240d16be58aea2073..540ad85654f4ddae3a991c8eeb08b2b7191d9e72 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -938,12 +938,13 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -939,12 +939,13 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
          // Paper - rewrite chunk system
          profiler.pop();
          profiler.push("debugSynchronizers");

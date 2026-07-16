@@ -5,10 +5,10 @@ Subject: [PATCH] Configurable void trade
 
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index ca1725b9ad40f41e241447e14948ee4116c3e4c9..40b17c69982a9844d2af6806c34fa659dc822005 100644
+index 02bd74f2ed7f34233e3543c8e70ae754adb8aa25..62e718abae1f13e339feab3f076cc32d35ae2435 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2922,7 +2922,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2923,7 +2923,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
              // Spigot start
              if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder && (!(entity instanceof ServerPlayer) || entity.getRemovalReason() != Entity.RemovalReason.KILLED)) { // SPIGOT-6876: closeInventory clears death message
                  // Paper start - Fix merchant inventory not closing on entity removal
