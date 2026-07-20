@@ -800,7 +800,7 @@ index 670459abcc6f32bdc6d4742f6710585fda83ac83..dc3ec20474556590b1f2598c8772cc77
 +                        blockState.affectNeighborsAfterRemoval(serverLevel, pos, flag1);
 +                    }
 +                } else {
-+                    // Leaves - behaviour 1.21.1- - keep the block entity when the changed state should preserve it (e.g. copper chest / copper golem statue oxidation/scrape)
++                    // Leaves - behaviour 1.21.1-
 +                    if (!(blockState.hasBlockEntity() && state.shouldChangedStateKeepBlockEntity(blockState))) {
 +                        blockState.onRemove(this.level, pos, state, flag1);
 +                    }
