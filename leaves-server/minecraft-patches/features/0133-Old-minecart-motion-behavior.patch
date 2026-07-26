@@ -13,10 +13,10 @@ As part of: CPCA (https://github.com/liuyuexiaoyu1/carpet_pc_additon)
 Licensed under: MIT (https://mit-license.org)
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index aebc1b36bc45cd88152bafe9c9b7ef97c55fc3f7..f6ad9d43cdfaa2edd5bf8442ceeb0855e35dc554 100644
+index 9e94ce3195d1d3604c28e5f6964b4138066bb961..86f2b2bd3f749d96cf8eda91a730d1a3d828c356 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -4290,7 +4290,7 @@ public abstract class Entity
+@@ -4297,7 +4297,7 @@ public abstract class Entity
                  transition.relatives().contains(Relative.Y) ? 0.0 : passengerOffset.y(),
                  transition.relatives().contains(Relative.Z) ? 0.0 : passengerOffset.z()
              );
@@ -26,7 +26,7 @@ index aebc1b36bc45cd88152bafe9c9b7ef97c55fc3f7..f6ad9d43cdfaa2edd5bf8442ceeb0855
  
      private void sendTeleportTransitionToRidingPlayers(final TeleportTransition transition) {
 diff --git a/net/minecraft/world/level/block/NetherPortalBlock.java b/net/minecraft/world/level/block/NetherPortalBlock.java
-index 65258973df24c829867dca6f66eb04b487b0bee8..33e0a9ea20ff3d9f5d517a8da504ad5393f56852 100644
+index eaad96ddf584924beca270e962077d083d64f57a..330a9c8945fff8f874116b69e8a9eca18e0a9d34 100644
 --- a/net/minecraft/world/level/block/NetherPortalBlock.java
 +++ b/net/minecraft/world/level/block/NetherPortalBlock.java
 @@ -274,7 +274,17 @@ public class NetherPortalBlock extends Block implements Portal {
@@ -52,8 +52,8 @@ index 65258973df24c829867dca6f66eb04b487b0bee8..33e0a9ea20ff3d9f5d517a8da504ad53
          );
          Vec3 collisionFreePos = PortalShape.findCollisionFreePosition(targetPos, newLevel, entity, dimensions);
          return new TeleportTransition(
--            newLevel, collisionFreePos, Vec3.ZERO, outputRotation, 0.0F, Relative.union(Relative.DELTA, Relative.ROTATION), postTeleportTransition, org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.NETHER_PORTAL // CraftBukkit
-+            newLevel, collisionFreePos, outputDelta, outputRotation, 0.0F, Relative.union(Relative.DELTA, Relative.ROTATION), postTeleportTransition, org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.NETHER_PORTAL // CraftBukkit // Leaves - old minecart motion behavior
-         );
+-            newLevel, collisionFreePos, Vec3.ZERO, outputRotation, 0.0F, Relative.union(Relative.DELTA, Relative.ROTATION), postTeleportTransition
++            newLevel, collisionFreePos, outputDelta, outputRotation, 0.0F, Relative.union(Relative.DELTA, Relative.ROTATION), postTeleportTransition // Leaves - old minecart motion behavior
+         ).withCause(org.bukkit.event.player.PlayerTeleportEvent.TeleportCause.NETHER_PORTAL); // CraftBukkit
      }
  

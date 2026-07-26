@@ -6,10 +6,10 @@ Subject: [PATCH] Return nether portal fix
 This patch is powered by NetherPortalFix(https://github.com/TwelveIterationMods/NetherPortalFix)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index f00dbb6c1672392c3009d6098e306ee389d1aa6e..9dc76a9162a973e737ab4eca62e17d30f840ee2c 100644
+index 81d0bd027e58ddb1f1736b47ddcb082b61aa0cd1..a6a08624f631b5c4d650e0c9e596f89935b7323b 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1588,6 +1588,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1567,6 +1567,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          org.bukkit.event.player.PlayerChangedWorldEvent changeEvent = new org.bukkit.event.player.PlayerChangedWorldEvent(this.getBukkitEntity(), oldLevel.getWorld());
          this.level().getCraftServer().getPluginManager().callEvent(changeEvent);
          // CraftBukkit end
@@ -66,7 +66,7 @@ index b6789b318989ea060e9f3a56dc2038eb992c478c..a1153439e7959cb3d7521cf943b3236c
      private @Nullable DamageSource lastDamageSource;
      private long lastDamageStamp;
 diff --git a/net/minecraft/world/level/block/NetherPortalBlock.java b/net/minecraft/world/level/block/NetherPortalBlock.java
-index 070880adc13501f8011d81de339a66d474f7948a..65258973df24c829867dca6f66eb04b487b0bee8 100644
+index 0bc5063f05599f41086f23ba6753e268258add3a..eaad96ddf584924beca270e962077d083d64f57a 100644
 --- a/net/minecraft/world/level/block/NetherPortalBlock.java
 +++ b/net/minecraft/world/level/block/NetherPortalBlock.java
 @@ -190,7 +190,18 @@ public class NetherPortalBlock extends Block implements Portal {

@@ -30,7 +30,7 @@ index 01e5ff70c70dd7fab089d8965bd1c237fa239f45..4458a64b7838ef9e8f56930d9343494a
      private boolean disconnectionHandled;
      private int receivedPackets;
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 3f536af8813df98348b2f0746f29c2f42a21d46a..c7d0fe28fe0aa8fb04711b79d7ecfffa8b2b1308 100644
+index 1fb1a233a588ead483aef43beb1686726dec616c..f5c48e48369a0eb8fba256b7896b94f5597bd69e 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -297,6 +297,8 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -306,7 +306,7 @@ index 62e718abae1f13e339feab3f076cc32d35ae2435..594b8d7ba1b50bdfbc7a207a662ea668
                  ServerLevel.this.updateSleepingPlayerList();
              }
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index c063fa617ea79b758b9c4ef0456889a91e341ad4..6b04e6d4a7f08bf12a3b5e4f0d5769eae3876f2d 100644
+index 3cd4e850f223100b61ac6831a87dd38f3a3bb58f..383d00e7ffe04ea9eefd1a78817027f1e2cf31b5 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -232,7 +232,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -336,7 +336,7 @@ index c063fa617ea79b758b9c4ef0456889a91e341ad4..6b04e6d4a7f08bf12a3b5e4f0d5769ea
          AABB aabb = new AABB(this.blockPosition()).inflate(32.0, 10.0, 32.0);
          this.level()
              .getEntitiesOfClass(Mob.class, aabb, EntitySelector.NO_SPECTATORS)
-@@ -1574,6 +1574,11 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1553,6 +1553,11 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          this.lastSentHealth = -1.0F;
          this.lastSentFood = -1;
          this.teleportSpectators(transition, oldLevel);
@@ -529,7 +529,7 @@ index b9748a392c9f76e61a1b673085b4dd74c007c70d..654e7956e7d540842a16d797247b6aa1
  
          if (this.locatorBarEnabled) { // Paper - optimize ServerWaypointManager with locator bar disabled
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index d2a6d2e31868b5d3726826d50ecf5ff70ae10950..3f14a0765022d32d36183f44ae158c4a2dacea27 100644
+index 2b8e7a19b6b7f2358ee09f6d649d9e95ade2722e..3e88125f0b6b54ee017515d72a71842f9a5069eb 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1224,7 +1224,7 @@ public abstract class Entity

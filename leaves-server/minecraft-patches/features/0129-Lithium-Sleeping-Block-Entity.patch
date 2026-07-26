@@ -111,7 +111,7 @@ index 99449ab429ce545cf8f6f72bd1baad83b1461365..b3585aee0393142366e583fc2c8fb207
  
      int getContainerSize();
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index ca3d2eb712005db8e5951b1d3be9c9570e5ac057..63dd4272663711f9e957e2160cba193013b85332 100644
+index f5af54503084b57f44afb6ab6862a4cdd0b29925..56b9863b3d8fbaceaa1d263618da2b0712735b15 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -325,7 +325,7 @@ public abstract class Entity
@@ -123,7 +123,7 @@ index ca3d2eb712005db8e5951b1d3be9c9570e5ac057..63dd4272663711f9e957e2160cba1930
      private final VecDeltaCodec packetPositionCodec = new VecDeltaCodec();
      public boolean needsSync;
      public boolean syncPosition;
-@@ -5139,6 +5139,19 @@ public abstract class Entity
+@@ -5146,6 +5146,19 @@ public abstract class Entity
              this.setBoundingBox(this.makeBoundingBox());
          }
          // Paper end - Block invalid positions and bounding box

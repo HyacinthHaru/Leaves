@@ -5,7 +5,7 @@ Subject: [PATCH] Leaves Utils
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 1530810cdb74810e37e3e22ce4fcda4ee7511055..d2a6d2e31868b5d3726826d50ecf5ff70ae10950 100644
+index 0fa6006a7c344f9f12972008e586b4c1f03c470e..2b8e7a19b6b7f2358ee09f6d649d9e95ade2722e 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -387,6 +387,7 @@ public abstract class Entity
@@ -32,7 +32,7 @@ index 1530810cdb74810e37e3e22ce4fcda4ee7511055..d2a6d2e31868b5d3726826d50ecf5ff7
          } catch (Throwable t) {
              CrashReport report = CrashReport.forThrowable(t, "Loading entity NBT");
              CrashReportCategory category = report.addCategory("Entity being loaded");
-@@ -4656,7 +4659,7 @@ public abstract class Entity
+@@ -4663,7 +4666,7 @@ public abstract class Entity
          return this.is(EntityTypeTags.DEFLECTS_PROJECTILES) ? ProjectileDeflection.REVERSE : ProjectileDeflection.NONE;
      }
  
@@ -41,7 +41,7 @@ index 1530810cdb74810e37e3e22ce4fcda4ee7511055..d2a6d2e31868b5d3726826d50ecf5ff7
          return null;
      }
  
-@@ -5456,4 +5459,10 @@ public abstract class Entity
+@@ -5463,4 +5466,10 @@ public abstract class Entity
          return ((ServerLevel) this.level()).isPositionEntityTicking(this.blockPosition());
      }
      // Paper end

@@ -26,7 +26,7 @@ This patch is Powered by CrystalCarpetAddition(https://github.com/Crystal0404/Cr
  */
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 743e568f566a4696689bea3a5425dc1888a8d7b0..ca3d2eb712005db8e5951b1d3be9c9570e5ac057 100644
+index dc121a911336e780e214a6764b208702ac1f81eb..f5af54503084b57f44afb6ab6862a4cdd0b29925 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -201,7 +201,7 @@ public abstract class Entity
@@ -56,7 +56,7 @@ index 743e568f566a4696689bea3a5425dc1888a8d7b0..ca3d2eb712005db8e5951b1d3be9c957
  
          for (Entity newPassenger : newPassengers) {
              newPassenger.startRiding(newEntity, true, false);
-@@ -4367,6 +4367,7 @@ public abstract class Entity
+@@ -4374,6 +4374,7 @@ public abstract class Entity
      }
  
      public boolean canTeleport(final Level from, final Level to) {

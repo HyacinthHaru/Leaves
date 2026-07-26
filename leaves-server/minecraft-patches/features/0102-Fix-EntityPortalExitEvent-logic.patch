@@ -5,7 +5,7 @@ Subject: [PATCH] Fix EntityPortalExitEvent logic
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 912bee07749317df358b3e2a3bb05e460e7100a1..cd8421e0d2712d3f20b40baea0f57df7497ebedb 100644
+index 92368337b316fc231e766306009c8076af71b3a1..a96354c71df21c1222e2d47989c42c4bba99597b 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -4166,19 +4166,21 @@ public abstract class Entity
@@ -32,7 +32,7 @@ index 912bee07749317df358b3e2a3bb05e460e7100a1..cd8421e0d2712d3f20b40baea0f57df7
 +                        to = event.getFrom().clone();
 +                        velocity = Vec3.ZERO;
                      }
-                     transition = new TeleportTransition(((org.bukkit.craftbukkit.CraftWorld) to.getWorld()).getHandle(), org.bukkit.craftbukkit.util.CraftLocation.toVec3(to), velocity, to.getYaw(), to.getPitch(), transition.missingRespawnBlock(), transition.asPassenger(), Set.of(), transition.postTeleportTransition(), transition.cause());
+                     transition = transition.withChangedLocation(to).withRelatives(Set.of()).withVelocity(velocity);
                  }
 +                // Leaves end - fix
              }

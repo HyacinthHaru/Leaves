@@ -5,10 +5,10 @@ Subject: [PATCH] Configurable MC-67
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 023fc8c5a8b47caf0946b9d87dc1a3c8beecc158..912bee07749317df358b3e2a3bb05e460e7100a1 100644
+index 2e65eb879f6fc7c7f5ef82dd42e15f5bfd78e824..92368337b316fc231e766306009c8076af71b3a1 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -4355,6 +4355,7 @@ public abstract class Entity
+@@ -4362,6 +4362,7 @@ public abstract class Entity
      }
  
      public boolean canTeleport(final Level from, final Level to) {

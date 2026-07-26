@@ -5,7 +5,7 @@ Subject: [PATCH] Allow Inf NaN values in entity motions
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 63dd4272663711f9e957e2160cba193013b85332..aebc1b36bc45cd88152bafe9c9b7ef97c55fc3f7 100644
+index 56b9863b3d8fbaceaa1d263618da2b0712735b15..9e94ce3195d1d3604c28e5f6964b4138066bb961 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -2476,7 +2476,7 @@ public abstract class Entity
@@ -49,7 +49,7 @@ index 63dd4272663711f9e957e2160cba193013b85332..aebc1b36bc45cd88152bafe9c9b7ef97
              // CraftBukkit end
              output.store("Rotation", Vec2.CODEC, new Vec2(this.getYRot(), this.getXRot()));
              output.putDouble("fall_distance", this.fallDistance);
-@@ -4986,7 +4990,7 @@ public abstract class Entity
+@@ -4993,7 +4997,7 @@ public abstract class Entity
      }
  
      public void setDeltaMovement(final Vec3 deltaMovement) {
@@ -58,7 +58,7 @@ index 63dd4272663711f9e957e2160cba193013b85332..aebc1b36bc45cd88152bafe9c9b7ef97
              synchronized (this.posLock) { // Paper - detailed watchdog information
              this.deltaMovement = deltaMovement;
              } // Paper - detailed watchdog information
-@@ -4994,7 +4998,7 @@ public abstract class Entity
+@@ -5001,7 +5005,7 @@ public abstract class Entity
      }
  
      public void addDeltaMovement(final Vec3 momentum) {
@@ -67,7 +67,7 @@ index 63dd4272663711f9e957e2160cba193013b85332..aebc1b36bc45cd88152bafe9c9b7ef97
              this.setDeltaMovement(this.getDeltaMovement().add(momentum));
          }
      }
-@@ -5219,7 +5223,7 @@ public abstract class Entity
+@@ -5226,7 +5230,7 @@ public abstract class Entity
      }
  
      public void setYRot(final float yRot) {
@@ -76,7 +76,7 @@ index 63dd4272663711f9e957e2160cba193013b85332..aebc1b36bc45cd88152bafe9c9b7ef97
              Util.logAndPauseIfInIde("Invalid entity rotation: " + yRot + ", discarding.");
          } else {
              this.yRot = yRot;
-@@ -5231,7 +5235,7 @@ public abstract class Entity
+@@ -5238,7 +5242,7 @@ public abstract class Entity
      }
  
      public void setXRot(final float xRot) {
