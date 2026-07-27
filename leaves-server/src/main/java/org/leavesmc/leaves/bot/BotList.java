@@ -76,11 +76,16 @@ public class BotList {
     public void saveAllResumeBots(final int interval) {
         MCUtil.ensureMain("Save Bots", () -> {
             final long now = MinecraftServer.currentTick;
+            boolean saved = false;
             for (ServerBot bot : bots) {
                 if (interval == -1 || now - bot.lastSave >= interval) {
-                    this.resumeDataStorage.save(bot);
+                    this.resumeDataStorage.save(bot, false);
                     bot.lastSave = MinecraftServer.currentTick;
+                    saved = true;
                 }
+            }
+            if (saved) {
+                this.resumeDataStorage.saveBotList();
             }
             return null;
         });
