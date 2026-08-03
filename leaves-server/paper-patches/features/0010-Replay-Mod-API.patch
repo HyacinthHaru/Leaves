@@ -18,7 +18,7 @@ index 8c3a9ebebcbc75f9587e620834cbc727ddc1cc49..cada376607f03da0e23005498c5c2fde
          }
          // Leaves end - skip bot
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d7703d6d53cebe60f108c9b2a589e537da174edc..777214ea32b1781e6c53b83714a6d141b3aa2b37 100644
+index 8cdecfa7d57e8358165cfc3579fc445d72630b92..26a2365e304006212e209aec4f3949a189fac377 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -305,6 +305,7 @@ public final class CraftServer implements Server {
@@ -38,7 +38,7 @@ index d7703d6d53cebe60f108c9b2a589e537da174edc..777214ea32b1781e6c53b83714a6d141
          this.serverVersion = io.papermc.paper.ServerBuildInfo.buildInfo().asString(io.papermc.paper.ServerBuildInfo.StringRepresentation.VERSION_SIMPLE); // Paper - improve version
          this.structureManager = new CraftStructureManager(console.getStructureManager(), console.registryAccess());
          this.serverTickManager = new CraftServerTickManager(console.tickRateManager());
-@@ -2974,4 +2975,11 @@ public final class CraftServer implements Server {
+@@ -2973,4 +2974,11 @@ public final class CraftServer implements Server {
          return botManager;
      }
      // Leaves end - Bot API
@@ -51,10 +51,10 @@ index d7703d6d53cebe60f108c9b2a589e537da174edc..777214ea32b1781e6c53b83714a6d141
 +    // Leaves end - replay mod api
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index e288d8df284080f06e550a418a2fbdf9b34fe2df..742980ec89d697023cc27ba3e2f8a22721e22a18 100644
+index 24e5a04ec7a69af19879d09554ace5046adb2558..88ce60e4ca2d1568d273c28cff567eef5a06f2dc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -124,6 +124,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -127,6 +127,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          }
  
          if (entity instanceof org.leavesmc.leaves.bot.ServerBot bot) { return new org.leavesmc.leaves.entity.bot.CraftBot(server, bot); }
@@ -63,10 +63,10 @@ index e288d8df284080f06e550a418a2fbdf9b34fe2df..742980ec89d697023cc27ba3e2f8a227
          // Special case complex part, since there is no extra entity type for them
          if (entity instanceof EnderDragonPart complexPart) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index ad51146ef274106d542bf416cd47d0ebcd17e7c6..ea42e212c9114635316ac6109347b563b9cd7349 100644
+index 596338c7c9b39284dcaa41c2a2360e5d04c9269e..9acdbad30e0f31512005a6462236a9920dc12a9b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2051,7 +2051,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -2059,7 +2059,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
  
      @Override
      public boolean canSee(Player player) {
