@@ -105,7 +105,7 @@
      runtimeOnly("com.mysql:mysql-connector-j:9.2.0")
      runtimeOnly("com.lmax:disruptor:3.4.4")
 @@ -159,26 +_,36 @@
-     implementation("me.lucko:spark-paper:1.10.152")
+     implementation("me.lucko:spark-paper:1.10.172")
  }
  
 +// Leaves start - hide irrelevant compilation warnings

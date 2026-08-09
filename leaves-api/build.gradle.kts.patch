@@ -1,7 +1,36 @@
 --- a/paper-api/build.gradle.kts
 +++ b/paper-api/build.gradle.kts
-@@ -91,19 +_,33 @@
+@@ -1,25 +_,14 @@
+-import io.papermc.paperweight.checkstyle.JavadocTag
+ import paper.libs.com.google.gson.Gson
+ 
+ plugins {
+     `java-library`
+     `maven-publish`
+     idea
+-    id("io.papermc.paperweight.paper-checkstyle")
+ }
+ 
+ java {
+     withSourcesJar()
+     withJavadocJar()
+ }
+-
+-val projectCustomJavadocTags = setOf(
+-    JavadocTag("apiNote", "a", "API Note:"),
+-)
+-
+-paperCheckstyle {
+-    customJavadocTags = projectCustomJavadocTags
+-    directoriesToSkipFile = layout.projectDirectory.file(".checkstyle/ignored_directories.txt")
+-}
+ 
+ val annotationsVersion = "26.0.2"
+@@ -105,22 +_,33 @@
      testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.3")
+-
+-    // checkstyle
+-    checkstyle(project(":paper-checkstyle"))
  }
  
 -val generatedDir: java.nio.file.Path = layout.projectDirectory.dir("src/generated/java").asFile.toPath()
@@ -35,7 +64,7 @@
  
  val outgoingVariants = arrayOf("runtimeElements", "apiElements", "sourcesElements", "javadocElements")
  val mainCapability = "${project.group}:${project.name}:${project.version}"
-@@ -164,7 +_,17 @@
+@@ -181,7 +_,17 @@
      outputFile.set(layout.buildDirectory.file("apiVersioning.json"))
      projectVersion.set(project.version.toString())
      apiVersion.set(rootProject.providers.gradleProperty("apiVersion"))
@@ -53,7 +82,7 @@
  
  tasks.jar {
      from(generateApiVersioningFile.flatMap { it.outputFile })
-@@ -183,7 +_,7 @@
+@@ -200,7 +_,7 @@
  
  tasks.withType<Javadoc>().configureEach {
      val options = options as StandardJavadocDocletOptions
@@ -62,7 +91,14 @@
      options.use()
      options.isDocFilesSubDirs = true
      options.links(
-@@ -217,16 +_,18 @@
+@@ -216,5 +_,5 @@
+         "https://www.javadocs.dev/org.apache.maven.resolver/maven-resolver-api/1.7.3",
+     )
+-    options.tags(projectCustomJavadocTags.map { it.toOptionString() })
++    options.tags("apiNote:a:API Note:") // Leaves - strip paper-checkstyle
+ 
+     inputs.files(javadocSourcepath).ignoreEmptyDirectories().withPropertyName(javadocSourcepath.name + "-configuration")
+@@ -227,16 +_,18 @@
      }
  
      // workaround for https://github.com/gradle/gradle/issues/4046
