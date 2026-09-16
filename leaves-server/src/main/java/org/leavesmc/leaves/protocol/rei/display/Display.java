@@ -229,9 +229,9 @@ public abstract class Display {
             default -> {
                 RegistryAccess access = MinecraftServer.getServer().registryAccess();
                 try {
-                    List<ItemStack> stacks = slot.resolveForStacks(new ContextMap.Builder()
-                        .withParameter(SlotDisplayContext.REGISTRIES, access)
-                        .create(SlotDisplayContext.CONTEXT));
+                    List<ItemStack> stacks = slot.resolveForStacks(ContextMap.builder()
+                        .set(SlotDisplayContext.REGISTRIES, access)
+                        .buildAndValidate(SlotDisplayContext.CONTEXT));
                     yield EntryIngredient.of(stacks.toArray(new ItemStack[0]));
                 } catch (Exception e) {
                     MinecraftServer.LOGGER.warn("Failed to resolve slot display: {}", slot, e);
@@ -252,13 +252,7 @@ public abstract class Display {
         return ingredients.build();
     }
 
-    public static <T extends ItemLike> EntryIngredient ofItemTag(TagKey<T> tagKey) {
-        HolderGetter<T> getter = MinecraftServer.getServer().registryAccess().lookupOrThrow(tagKey.registry());
-        HolderSet.Named<T> holders = getter.get(tagKey).orElse(null);
-        if (holders == null) {
-            return EntryIngredient.empty();
-        }
-
+    public static <T extends ItemLike> EntryIngredient ofItemTag(HolderSet<T> holders) {
         int size = holders.size();
         if (size == 0) {
             return EntryIngredient.empty();

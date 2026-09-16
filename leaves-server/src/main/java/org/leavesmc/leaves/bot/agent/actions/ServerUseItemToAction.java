@@ -40,7 +40,7 @@ public class ServerUseItemToAction extends AbstractUseBotAction<ServerUseItemToA
         }
 
         if (shouldSwing(interactionResult)) {
-            bot.swing(hand);
+            bot.swing(hand, bot.getItemInHand(hand).getInteractAnimation(), false);
         }
 
         return interactionResult;

@@ -123,7 +123,7 @@ public class ServuxStructuresProtocol implements LeavesProtocol {
 
         MinecraftServer server = getServer();
         sendMetaData(player);
-        initialSyncStructures(player, player.moonrise$getViewDistanceHolder().getViewDistances().sendViewDistance() + 2, server.getTickCount());
+        initialSyncStructures(player, ca.spottedleaf.moonrise.common.PlatformHooks.get().getSendViewDistance(player) + 2, server.getTickCount());
     }
 
     private static void sendMetaData(ServerPlayer player) {

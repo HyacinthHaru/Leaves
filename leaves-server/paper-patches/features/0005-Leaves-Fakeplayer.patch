@@ -32,7 +32,7 @@ index a1c9726d25479b5326fe2fa2b0f5a98d6b2da4c5..8c3a9ebebcbc75f9587e620834cbc727
          RegisteredListener[] listeners = handlers.getRegisteredListeners();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftRegionAccessor.java b/src/main/java/org/bukkit/craftbukkit/CraftRegionAccessor.java
-index 3a47e4c633ee016d5deeb6a5ee9e2e26769d5193..efb47f914fd0c0e966c6921ed1b26c4139754c55 100644
+index 4b02b66f7b6d3787cc5e90fb7d2fba0dc2d7b861..a0a8b84b83c06ff440f1fccd0b6556a115d59824 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftRegionAccessor.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftRegionAccessor.java
 @@ -375,6 +375,7 @@ public abstract class CraftRegionAccessor implements RegionAccessor {
@@ -44,10 +44,10 @@ index 3a47e4c633ee016d5deeb6a5ee9e2e26769d5193..efb47f914fd0c0e966c6921ed1b26c41
          if (nmsEntity.level() != this.getHandle().getLevel()) {
              throw new IllegalArgumentException(entity + " wasn't created with this world, you must create the entity with the world you want to add it to.");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index db88b85439fe903d6e31ef2d1d7084a49262e884..8cdecfa7d57e8358165cfc3579fc445d72630b92 100644
+index 70686fe07897fe75c6cb45617ca0ecc001ff827a..2193ec2f68ad510e0e40cfbc64212ede092ff3bc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -304,6 +304,7 @@ public final class CraftServer implements Server {
+@@ -306,6 +306,7 @@ public final class CraftServer implements Server {
      private final io.papermc.paper.potion.PaperPotionBrewer potionBrewer;
      public final io.papermc.paper.SparksFly spark;
      private final ServerConfiguration serverConfig = new PaperServerConfiguration();
@@ -55,7 +55,7 @@ index db88b85439fe903d6e31ef2d1d7084a49262e884..8cdecfa7d57e8358165cfc3579fc445d
  
      // Paper start - Folia region threading API
      private final io.papermc.paper.threadedregions.scheduler.FallbackRegionScheduler regionizedScheduler = new io.papermc.paper.threadedregions.scheduler.FallbackRegionScheduler();
-@@ -480,6 +481,7 @@ public final class CraftServer implements Server {
+@@ -482,6 +483,7 @@ public final class CraftServer implements Server {
          datapackManager = new io.papermc.paper.datapack.PaperDatapackManager(console.getPackRepository()); // Paper
          this.spark = new io.papermc.paper.SparksFly(this); // Paper - spark
          org.leavesmc.leaves.protocol.core.LeavesProtocolManager.init(); // Leaves - protocol
@@ -63,7 +63,7 @@ index db88b85439fe903d6e31ef2d1d7084a49262e884..8cdecfa7d57e8358165cfc3579fc445d
      }
  
      public boolean getCommandBlockOverride(String command) {
-@@ -1339,7 +1341,7 @@ public final class CraftServer implements Server {
+@@ -1341,7 +1343,7 @@ public final class CraftServer implements Server {
              return false;
          }
  
@@ -72,7 +72,7 @@ index db88b85439fe903d6e31ef2d1d7084a49262e884..8cdecfa7d57e8358165cfc3579fc445d
              return false;
          }
  
-@@ -2964,4 +2966,11 @@ public final class CraftServer implements Server {
+@@ -2953,4 +2955,11 @@ public final class CraftServer implements Server {
      public void allowPausing(final Plugin plugin, final boolean value) {
          this.console.addPluginAllowingSleep(plugin.getName(), value);
      }
@@ -85,10 +85,10 @@ index db88b85439fe903d6e31ef2d1d7084a49262e884..8cdecfa7d57e8358165cfc3579fc445d
 +    // Leaves end - Bot API
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index f3f068011abd8c6585463169d50634bf42a09497..76ff668fcf8451789c8a0c458adf90233d36802c 100644
+index d6ec28fd0f10a501a0db9621baaaffb568cc6ae3..c03d06898a5419929942d5c80b58d3303f226672 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -247,7 +247,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -248,7 +248,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
  
      @Override
      public int getPlayerCount() {
@@ -97,7 +97,7 @@ index f3f068011abd8c6585463169d50634bf42a09497..76ff668fcf8451789c8a0c458adf9023
      }
  
      @Override
-@@ -1109,9 +1109,9 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1114,9 +1114,9 @@ public class CraftWorld extends CraftRegionAccessor implements World {
  
      @Override
      public List<Player> getPlayers() {
@@ -109,7 +109,7 @@ index f3f068011abd8c6585463169d50634bf42a09497..76ff668fcf8451789c8a0c458adf9023
              HumanEntity bukkitEntity = human.getBukkitEntity();
  
              if ((bukkitEntity != null) && (bukkitEntity instanceof Player)) {
-@@ -1604,7 +1604,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1609,7 +1609,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
      public void playSound(final net.kyori.adventure.sound.Sound sound) {
          org.spigotmc.AsyncCatcher.catchOp("play sound"); // Paper
          final long seed = sound.seed().orElseGet(this.world.getRandom()::nextLong);
@@ -118,7 +118,7 @@ index f3f068011abd8c6585463169d50634bf42a09497..76ff668fcf8451789c8a0c458adf9023
              player.connection.send(io.papermc.paper.adventure.PaperAdventure.asSoundPacket(sound, player.getX(), player.getY(), player.getZ(), seed, null));
          }
      }
-@@ -1632,7 +1632,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1637,7 +1637,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          org.spigotmc.AsyncCatcher.catchOp("play sound"); // Paper
          final long seed = sound.seed().orElseGet(this.getHandle().getRandom()::nextLong);
          if (emitter == net.kyori.adventure.sound.Sound.Emitter.self()) {
@@ -131,16 +131,16 @@ index f3f068011abd8c6585463169d50634bf42a09497..76ff668fcf8451789c8a0c458adf9023
              Preconditions.checkArgument(particle.getDataType().isInstance(data), "data (%s) should be %s", data.getClass(), particle.getDataType());
          }
          this.getHandle().sendParticlesSource(
--                receivers == null ? this.getHandle().players() : Lists.transform(receivers, player -> ((CraftPlayer) player).getHandle()), // Paper -  Particle API
-+                receivers == null ? this.getHandle().realPlayers() : Lists.transform(receivers, player -> ((CraftPlayer) player).getHandle()), // Paper -  Particle API
-                 sender != null ? ((CraftPlayer) sender).getHandle() : null, // Sender // Paper - Particle API
-                 CraftParticle.createParticleParam(particle, data), // Particle
-                 force,
+-            receivers == null ? this.getHandle().players() : Lists.transform(receivers, player -> ((CraftPlayer) player).getHandle()),
++            receivers == null ? this.getHandle().realPlayers() : Lists.transform(receivers, player -> ((CraftPlayer) player).getHandle()), // Paper -  Particle API
+             sender != null ? ((CraftPlayer) sender).getHandle() : null,
+             CraftParticle.createParticleParam(particle, data),
+             force,
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 0965a503160ae11aa20963a8871c3838c50d0c6a..652670fd751c7080eb5b749b604129401737cbdc 100644
+index 078083c88f336afd8bfe69c770c6d3ac486e826f..0df0970883af88090f80bd64e0f2a820f3aca1b5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -127,6 +127,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -128,6 +128,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
              return new CraftHumanEntity(server, (net.minecraft.world.entity.player.Player) entity);
          }
  
@@ -150,10 +150,10 @@ index 0965a503160ae11aa20963a8871c3838c50d0c6a..652670fd751c7080eb5b749b60412940
          if (entity instanceof EnderDragonPart complexPart) {
              if (complexPart.parentMob instanceof EnderDragon) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index a5ea91906abebf44cfbfa120c535b8c391ab1acd..95e130c77ecb7df8c35169579435d689f234414e 100644
+index 52b11c40b1f89bdc6f79ac81f968af45492ad56b..78d4aae3934abb5b8c0c4a95b95ca632f9d18ce2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1009,7 +1009,11 @@ public class CraftEventFactory {
+@@ -1012,7 +1012,11 @@ public class CraftEventFactory {
          event.setKeepInventory(keepInventory);
          event.setKeepLevel(victim.keepLevel); // SPIGOT-2222: pre-set keepLevel
          populateFields(victim, event); // Paper - make cancellable

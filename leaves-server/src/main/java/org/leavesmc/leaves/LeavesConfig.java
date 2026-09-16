@@ -39,9 +39,6 @@ import org.leavesmc.leaves.protocol.bladeren.BladerenProtocol.LeavesFeatureSet;
 import org.leavesmc.leaves.protocol.rei.REIServerProtocol;
 import org.leavesmc.leaves.protocol.servux.logger.DataLogger;
 import org.leavesmc.leaves.protocol.syncmatica.SyncmaticaProtocol;
-import org.leavesmc.leaves.region.IRegionFileFactory;
-import org.leavesmc.leaves.region.RegionFileFormat;
-import org.leavesmc.leaves.region.linear.LinearVersion;
 import org.leavesmc.leaves.util.LeavesUpdateHelper;
 import org.leavesmc.leaves.util.MathUtils;
 import org.leavesmc.leaves.util.McTechnicalModeHelper;
@@ -1217,69 +1214,6 @@ public final class LeavesConfig {
 
         @GlobalConfig("leaves-packet-event")
         public boolean leavesPacketEvent = false;
-    }
-
-    public static RegionConfig region = new RegionConfig();
-
-    @GlobalConfigCategory("region")
-    public static class RegionConfig {
-
-        @GlobalConfig(value = "format", lock = true, validator = RegionFormatValidator.class)
-        public RegionFileFormat format = RegionFileFormat.ANVIL;
-
-        private static class RegionFormatValidator extends EnumConfigValidator<RegionFileFormat> {
-            @Override
-            public void verify(RegionFileFormat old, RegionFileFormat value) throws IllegalArgumentException {
-                IRegionFileFactory.initFirstRegion(value);
-            }
-        }
-
-        public LinearConfig linear = new LinearConfig();
-
-        @GlobalConfigCategory("linear")
-        public static class LinearConfig {
-
-            @GlobalConfig(value = "version", lock = true)
-            public LinearVersion version = LinearVersion.V2;
-
-            @GlobalConfig(value = "flush-max-threads", lock = true)
-            public int flushThreads = 6;
-
-            public int getLinearFlushThreads() {
-                if (flushThreads <= 0) {
-                    return Math.max(Runtime.getRuntime().availableProcessors() + flushThreads, 1);
-                } else {
-                    return flushThreads;
-                }
-            }
-
-            @GlobalConfig(value = "flush-delay-ms", lock = true)
-            public int flushDelayMs = 100;
-
-            @GlobalConfig(value = "region-unload-idle-ms", lock = true)
-            public int regionUnloadIdleMs = 600000;
-
-            @GlobalConfig(value = "region-unload-check-interval-ms", lock = true)
-            public int regionUnloadCheckIntervalMs = 30000;
-
-            @GlobalConfig(value = "max-flush-per-run", lock = true)
-            public int maxFlushPerRun = 256;
-
-            @GlobalConfig(value = "use-virtual-thread", lock = true)
-            public boolean useVirtualThread = true;
-
-            @GlobalConfig(value = "compression-level", lock = true, validator = LinearCompressValidator.class)
-            public int compressionLevel = 1;
-
-            private static class LinearCompressValidator extends IntConfigValidator {
-                @Override
-                public void verify(Integer old, Integer value) throws IllegalArgumentException {
-                    if (value < 1 || value > 22) {
-                        throw new IllegalArgumentException("linear.compression-level need between 1 and 22");
-                    }
-                }
-            }
-        }
     }
 
     public static FixConfig fix = new FixConfig();

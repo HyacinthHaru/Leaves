@@ -5,21 +5,21 @@ Subject: [PATCH] Configurable MC-59471
 
 
 diff --git a/net/minecraft/world/level/block/TripWireHookBlock.java b/net/minecraft/world/level/block/TripWireHookBlock.java
-index ad7a8c082c20b1ad30c520a94e9f902986ed6030..cf6dcbffcef94bed19b89c252b602dd04d646d84 100644
+index b9090b80f9489431b11da29acf1f499e94c022ea..f9c499fd5e4cee06af1603859e745bb8aa5ce7e8 100644
 --- a/net/minecraft/world/level/block/TripWireHookBlock.java
 +++ b/net/minecraft/world/level/block/TripWireHookBlock.java
-@@ -200,10 +200,17 @@ public class TripWireHookBlock extends Block {
+@@ -193,10 +193,17 @@ public class TripWireHookBlock extends Block {
                      BlockPos testPos = pos.relative(direction, i);
                      BlockState wireData = wireStates[i];
                      if (wireData != null) {
 +                        // Leaves start - MC-59471
 +                        if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.tripwire.stringTripwireHookDuplicate) {
-+                            level.setBlock(testPos, wireData.trySetValue(ATTACHED, attached), Block.UPDATE_ALL);
++                            level.setBlockAndUpdate(testPos, wireData.trySetValue(ATTACHED, attached));
 +                            level.getBlockState(testPos);
 +                        } else {
                          BlockState testPosState = level.getBlockState(testPos);
                          if (testPosState.is(Blocks.TRIPWIRE) || testPosState.is(Blocks.TRIPWIRE_HOOK)) {
-                             if (!io.papermc.paper.configuration.GlobalConfiguration.get().blockUpdates.disableTripwireUpdates || !testPosState.is(Blocks.TRIPWIRE)) level.setBlock(testPos, wireData.trySetValue(ATTACHED, attached), Block.UPDATE_ALL); // Paper - prevent tripwire from updating
+                             if (!io.papermc.paper.configuration.GlobalConfiguration.get().blockUpdates.disableTripwireUpdates || !testPosState.is(Blocks.TRIPWIRE)) level.setBlockAndUpdate(testPos, wireData.trySetValue(ATTACHED, attached)); // Paper - prevent tripwire from updating
                          }
 +                        }
 +                        // Leaves end - MC-59471

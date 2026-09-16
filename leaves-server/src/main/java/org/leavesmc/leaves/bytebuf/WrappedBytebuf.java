@@ -263,7 +263,7 @@ public class WrappedBytebuf implements Bytebuf {
     @Override
     public ItemStack readItemStack() {
         net.minecraft.world.item.ItemStack nmsItem = net.minecraft.world.item.ItemStack.OPTIONAL_STREAM_CODEC.decode(this.buf);
-        return nmsItem.asBukkitMirror();
+        return CraftItemStack.asBukkitMirror(nmsItem);
     }
 
     @Override
@@ -276,7 +276,7 @@ public class WrappedBytebuf implements Bytebuf {
     @Override
     public List<ItemStack> readItemStackList() {
         List<net.minecraft.world.item.ItemStack> nmsItemList = net.minecraft.world.item.ItemStack.OPTIONAL_LIST_STREAM_CODEC.decode(this.buf);
-        return nmsItemList.stream().map(net.minecraft.world.item.ItemStack::asBukkitMirror).toList();
+        return nmsItemList.stream().map(CraftItemStack::asBukkitMirror).toList();
     }
 
     @Override

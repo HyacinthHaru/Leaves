@@ -6,10 +6,10 @@ Subject: [PATCH] Optimize suffocation
 This patch is Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
 
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index b689ca9a6ff67e64fef6776a9af6af2e2efa63ad..aa13081e03a98ab6673e892dba09bd4d7a8d4211 100644
+index 75ed07a11ecac2059ebb1bfff883c705e78f4d62..de9b1097c78da6812b0afdba9c6d9df16370fe43 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -453,7 +453,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -456,7 +456,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          profiler.push("livingEntityBaseTick");
          if (this.isAlive() && this.level() instanceof ServerLevel level) {
              boolean isPlayer = this instanceof Player;
@@ -18,13 +18,13 @@ index b689ca9a6ff67e64fef6776a9af6af2e2efa63ad..aa13081e03a98ab6673e892dba09bd4d
                  this.hurtServer(level, this.damageSources().inWall(), 1.0F);
              } else if (isPlayer && !level.getWorldBorder().isWithinBounds(this.getBoundingBox())) {
                  double dist = level.getWorldBorder().getDistanceToBorder(this) + level.getWorldBorder().getSafeZone();
-@@ -1423,6 +1423,12 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
-         return this.getHealth() <= 0.0F || this.dead;
+@@ -1427,6 +1427,12 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+         return this.hurtTime > 0;
      }
  
 +    // Leaves start - optimize suffocation
 +    public boolean couldPossiblyBeHurt(float amount) {
-+        return !((float) this.invulnerableTime > (float) this.invulnerableDuration / 2.0F) || !(amount <= this.lastHurt);
++        return !((float) this.damageCooldownTime > (float) this.invulnerableDuration / 2.0F) || !(amount <= this.lastHurt);
 +    }
 +    // Leaves end - optimize suffocation
 +

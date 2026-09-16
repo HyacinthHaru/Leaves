@@ -20,7 +20,6 @@ import org.leavesmc.leaves.protocol.jade.tool.ShearsToolHandler;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 public class LootTableMineableCollector {
 
@@ -50,18 +49,18 @@ public class LootTableMineableCollector {
         return list;
     }
 
-    public static boolean isCorrectConditions(@NotNull List<LootItemCondition> conditions, ItemStack toolItem) {
-        if (conditions.size() != 1) {
+    public static boolean isCorrectConditions(@NotNull Optional<Holder<LootItemCondition>> conditionHolder, ItemStack toolItem) {
+        if (conditionHolder.isEmpty()) {
             return false;
         }
 
-        LootItemCondition condition = conditions.getFirst();
+        LootItemCondition condition = conditionHolder.get().value();
         if (condition instanceof MatchTool(Optional<ItemPredicate> predicate)) {
             ItemPredicate itemPredicate = predicate.orElse(null);
             return itemPredicate != null && itemPredicate.test(toolItem);
         } else if (condition instanceof AnyOfCondition anyOfCondition) {
-            for (LootItemCondition child : anyOfCondition.terms) {
-                if (isCorrectConditions(List.of(child), toolItem)) {
+            for (Holder<LootItemCondition> child : anyOfCondition.terms) {
+                if (isCorrectConditions(Optional.of(child), toolItem)) {
                     return true;
                 }
             }
@@ -99,10 +98,13 @@ public class LootTableMineableCollector {
                 }
             }
         } else if (entry instanceof NestedLootTable nestedLootTable) {
-            LootTable lootTable = nestedLootTable.contents.map($ -> lootRegistry.get($).map(Holder::value).orElse(null), Function.identity());
-            return doLootTable(lootTable);
+            for (Holder<LootTable> table : nestedLootTable.value) {
+                if (doLootTable(table.value())) {
+                    return true;
+                }
+            }
         } else {
-            return isCorrectConditions(entry.conditions, toolItem);
+            return isCorrectConditions(entry.condition, toolItem);
         }
         return false;
     }

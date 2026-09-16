@@ -1,0 +1,52 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Wed, 14 Jun 2023 12:07:07 +0800
+Subject: [PATCH] Redstone ignore upwards update
+
+
+diff --git a/net/minecraft/world/level/block/ComparatorBlock.java b/net/minecraft/world/level/block/ComparatorBlock.java
+index b867f52d98f127269864775dbeb2481cbbd07a26..af6a047a4449a82f6945a7059f501b5590fe48e1 100644
+--- a/net/minecraft/world/level/block/ComparatorBlock.java
++++ b/net/minecraft/world/level/block/ComparatorBlock.java
+@@ -52,6 +52,7 @@ public class ComparatorBlock extends DiodeBlock implements EntityBlock {
+         final BlockState neighbourState,
+         final RandomSource random
+     ) {
++        if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.updater.redstoneIgnoreUpwardsUpdate && directionToNeighbour == Direction.DOWN) return state; // Leaves - behavior to 1.20.1
+         return directionToNeighbour == Direction.DOWN && !this.canSurviveOn(level, neighbourPos, neighbourState)
+             ? Blocks.AIR.defaultBlockState()
+             : super.updateShape(state, level, ticks, pos, directionToNeighbour, neighbourPos, neighbourState, random);
+diff --git a/net/minecraft/world/level/block/RedstoneWireBlock.java b/net/minecraft/world/level/block/RedstoneWireBlock.java
+index 2698705eab0ff53849b3a312f47dfea160af089b..d01f19767b1d7041c3ac104f980021b230e23c95 100644
+--- a/net/minecraft/world/level/block/RedstoneWireBlock.java
++++ b/net/minecraft/world/level/block/RedstoneWireBlock.java
+@@ -172,7 +172,7 @@ public class RedstoneWireBlock extends Block {
+         final RandomSource random
+     ) {
+         if (directionToNeighbour == Direction.DOWN) {
+-            return !this.canSurviveOn(level, neighbourPos, neighbourState) ? Blocks.AIR.defaultBlockState() : state;
++            return org.leavesmc.leaves.LeavesConfig.modify.oldMC.updater.redstoneIgnoreUpwardsUpdate ? state : !this.canSurviveOn(level, neighbourPos, neighbourState) ? Blocks.AIR.defaultBlockState() : state; // Leaves - behavior to 1.19
+         }
+ 
+         if (directionToNeighbour == Direction.UP) {
+@@ -235,7 +235,7 @@ public class RedstoneWireBlock extends Block {
+         BlockPos relativePos = pos.relative(direction);
+         BlockState relativeState = level.getBlockState(relativePos);
+         if (canConnectUp) {
+-            boolean isPlaceableAbove = relativeState.getBlock() instanceof TrapDoorBlock || this.canSurviveOn(level, relativePos, relativeState);
++            boolean isPlaceableAbove = (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.updater.redstoneIgnoreUpwardsUpdate && relativeState.getBlock() instanceof TrapDoorBlock) || this.canSurviveOn(level, relativePos, relativeState); // Leaves - behavior to 1.19
+             if (isPlaceableAbove && shouldConnectTo(level, relativePos.above())) {
+                 if (relativeState.isFaceSturdy(level, relativePos, direction.getOpposite())) {
+                     return RedstoneSide.UP;
+diff --git a/net/minecraft/world/level/block/RepeaterBlock.java b/net/minecraft/world/level/block/RepeaterBlock.java
+index 0705bba5bcb79fd5ead5838e94640bbf56371163..57c3a907fa8059e5d5ce0de626e83361245c7a25 100644
+--- a/net/minecraft/world/level/block/RepeaterBlock.java
++++ b/net/minecraft/world/level/block/RepeaterBlock.java
+@@ -65,6 +65,7 @@ public class RepeaterBlock extends DiodeBlock {
+         final BlockState neighbourState,
+         final RandomSource random
+     ) {
++        if (org.leavesmc.leaves.LeavesConfig.modify.oldMC.updater.redstoneIgnoreUpwardsUpdate && directionToNeighbour == Direction.DOWN) return state; // Leaves - behavior to 1.20.1
+         if (directionToNeighbour == Direction.DOWN && !this.canSurviveOn(level, neighbourPos, neighbourState)) {
+             return Blocks.AIR.defaultBlockState();
+         } else {

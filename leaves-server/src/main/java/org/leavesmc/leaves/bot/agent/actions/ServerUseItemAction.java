@@ -22,7 +22,7 @@ public class ServerUseItemAction extends AbstractUseBotAction<ServerUseItemActio
         bot.updateItemInHand(hand);
         InteractionResult result = bot.gameMode.useItem(bot, bot.level(), bot.getItemInHand(hand), hand);
         if (shouldSwing(result)) {
-            bot.swing(hand);
+            bot.swing(hand, bot.getItemInHand(hand).getInteractAnimation(), false);
         }
         return result;
     }

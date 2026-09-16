@@ -5,18 +5,18 @@ Subject: [PATCH] Leaves Utils
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 0fa6006a7c344f9f12972008e586b4c1f03c470e..2b8e7a19b6b7f2358ee09f6d649d9e95ade2722e 100644
+index 39fb058f962c496a683bbe1682fc93c5173d199e..0e0fb46381fb7ab89714079cdbca267ef2247265 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -387,6 +387,7 @@ public abstract class Entity
-     public long activatedTick = Integer.MIN_VALUE;
-     public boolean isTemporarilyActive;
-     public long activatedImmunityTick = Integer.MIN_VALUE;
+@@ -433,6 +433,7 @@ public abstract class Entity
+     public int totalEntityAge; // Paper - age-like counter for all entities
+     public final io.papermc.paper.entity.activation.ActivationType activationType = io.papermc.paper.entity.activation.ActivationType.activationTypeFor(this); // Paper - EAR 2/tracking ranges
+     // CraftBukkit end
 +    private net.minecraft.nbt.CompoundTag leavesData = new net.minecraft.nbt.CompoundTag(); // Leaves - Leaves ex data
  
-     public void inactiveTick() {
-     }
-@@ -2768,6 +2769,7 @@ public abstract class Entity
+     // Paper start
+     public final AABB getBoundingBoxAt(double x, double y, double z) {
+@@ -2652,6 +2653,7 @@ public abstract class Entity
                  output.putBoolean("Paper.FreezeLock", true);
              }
              // Paper end
@@ -24,7 +24,7 @@ index 0fa6006a7c344f9f12972008e586b4c1f03c470e..2b8e7a19b6b7f2358ee09f6d649d9e95
          } catch (Throwable t) {
              CrashReport report = CrashReport.forThrowable(t, "Saving entity NBT");
              CrashReportCategory category = report.addCategory("Entity being saved");
-@@ -2891,6 +2893,7 @@ public abstract class Entity
+@@ -2781,6 +2783,7 @@ public abstract class Entity
              }
              freezeLocked = input.getBooleanOr("Paper.FreezeLock", false);
              // Paper end
@@ -32,7 +32,7 @@ index 0fa6006a7c344f9f12972008e586b4c1f03c470e..2b8e7a19b6b7f2358ee09f6d649d9e95
          } catch (Throwable t) {
              CrashReport report = CrashReport.forThrowable(t, "Loading entity NBT");
              CrashReportCategory category = report.addCategory("Entity being loaded");
-@@ -4663,7 +4666,7 @@ public abstract class Entity
+@@ -4529,7 +4532,7 @@ public abstract class Entity
          return this.is(EntityTypeTags.DEFLECTS_PROJECTILES) ? ProjectileDeflection.REVERSE : ProjectileDeflection.NONE;
      }
  
@@ -41,7 +41,7 @@ index 0fa6006a7c344f9f12972008e586b4c1f03c470e..2b8e7a19b6b7f2358ee09f6d649d9e95
          return null;
      }
  
-@@ -5463,4 +5466,10 @@ public abstract class Entity
+@@ -5333,4 +5336,10 @@ public abstract class Entity
          return ((ServerLevel) this.level()).isPositionEntityTicking(this.blockPosition());
      }
      // Paper end
@@ -53,10 +53,10 @@ index 0fa6006a7c344f9f12972008e586b4c1f03c470e..2b8e7a19b6b7f2358ee09f6d649d9e95
 +    // Leaves end - leaves ex data
  }
 diff --git a/net/minecraft/world/level/LevelAccessor.java b/net/minecraft/world/level/LevelAccessor.java
-index 700b9e7f141c4a2689690224c86376c9b957540e..b7c52129df2ee880ac1f61e282184443953a3ae2 100644
+index 0cfb4da0d2cf1c107427fdc59e2fe56ff374f4ee..266c1e216cd0339d7ddd874c5821ed8bf7aee7db 100644
 --- a/net/minecraft/world/level/LevelAccessor.java
 +++ b/net/minecraft/world/level/LevelAccessor.java
-@@ -42,7 +42,7 @@ public interface LevelAccessor extends CommonLevelAccessor, ScheduledTickAccess
+@@ -43,7 +43,7 @@ public interface LevelAccessor extends CommonLevelAccessor, ScheduledTickAccess
          return this.getLevelData().getGameTime();
      }
  
@@ -66,10 +66,10 @@ index 700b9e7f141c4a2689690224c86376c9b957540e..b7c52129df2ee880ac1f61e282184443
      default Difficulty getDifficulty() {
          return this.getLevelData().getDifficulty();
 diff --git a/net/minecraft/world/level/block/Block.java b/net/minecraft/world/level/block/Block.java
-index 29f5182c8528bfdced6a3c2c145e58721e723777..debf613713016443060ed85440ac0f80b1d0ad21 100644
+index d6b840af9729234a51052a8ed57fd5de864cf142..74308108eb6a8691b7fa5382584c61f09aad47ff 100644
 --- a/net/minecraft/world/level/block/Block.java
 +++ b/net/minecraft/world/level/block/Block.java
-@@ -696,6 +696,13 @@ public class Block extends BlockBehaviour implements ItemLike {
+@@ -698,6 +698,13 @@ public class Block extends BlockBehaviour implements ItemLike {
      }
      // CraftBukkit end
  
@@ -84,15 +84,15 @@ index 29f5182c8528bfdced6a3c2c145e58721e723777..debf613713016443060ed85440ac0f80
          @Override
          public boolean equals(final Object o) {
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index c78d77089e34c4bb559f173b449bfb7d91b05d5c..4d9416c06555a3080dd629201d48bb5dbacb4ea4 100644
+index 591f6a4ffcf7507c1d6f8f70cb747f59eb077b4d..9be95aef15aa575cf9922aec2f53abf4a263e74d 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
-@@ -792,7 +792,7 @@ public abstract class BlockBehaviour implements FeatureElement {
+@@ -686,7 +686,7 @@ public abstract class BlockBehaviour implements FeatureElement {
          }
  
          public PushReaction getPistonPushReaction() {
--            return !this.isDestroyable() ? PushReaction.BLOCK : this.pushReaction; // Paper - Protect Bedrock and End Portal/Frames from being destroyed
-+            return !this.isDestroyable() ? PushReaction.BLOCK : this.getBlock().getResetPushReaction() == null ? this.pushReaction : this.getBlock().getResetPushReaction(); // Paper - Protect Bedrock // Leaves - reset push reaction
+-            return !this.isDestroyable() ? PushReaction.IMMOVEABLE : this.pushReaction; // Paper - Protect Bedrock and End Portal/Frames from being destroyed
++            return !this.isDestroyable() ? PushReaction.IMMOVEABLE : this.getBlock().getResetPushReaction() == null ? this.pushReaction : this.getBlock().getResetPushReaction(); // Paper - Protect Bedrock // Leaves - reset push reaction
          }
  
          public boolean isSolidRender() {

@@ -50,7 +50,7 @@ public class NewInputSlotCrafter<T extends AbstractContainerMenu> extends InputS
     @Override
     protected void cleanInputs() {
         for (SlotAccessor slot : getInputSlots()) {
-            org.bukkit.inventory.ItemStack bukkitStack = slot.getItemStack().getBukkitStack();
+            org.bukkit.inventory.ItemStack bukkitStack = org.bukkit.craftbukkit.inventory.CraftItemStack.asBukkitCopy(slot.getItemStack());
             if (bukkitStack.getType().isAir()) {
                 continue;
             }
@@ -59,7 +59,7 @@ public class NewInputSlotCrafter<T extends AbstractContainerMenu> extends InputS
                 slot.setItemStack(ItemStack.EMPTY);
             } else {
                 org.bukkit.inventory.ItemStack remain = notAdded.values().iterator().next();
-                slot.setItemStack(ItemStack.fromBukkitCopy(remain));
+                slot.setItemStack(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(remain));
                 throw new IllegalStateException("rei.rei.no.slot.in.inv");
             }
         }

@@ -18,7 +18,7 @@
 +val leavesMavenPublicUrl = "https://repo.leavesmc.org/snapshots/" // Leaves - build change
  
  dependencies {
-     mache("io.papermc:mache:26.2+build.1")
+     mache("io.papermc:mache:26.3+build.1")
 -    paperclip("io.papermc:paperclip:3.0.4")
 +    leavesclip("org.leavesmc:leavesclip:3.0.10") // Leaves - build change
  }
@@ -41,7 +41,7 @@
 +    // Leaves end - build change
 +
      updatingMinecraft {
-         // oldPaperCommit = "d4fe85375af18bfa88f44d7c1e6a61904ae550cc"
+         //oldPaperCommit = "e5fe71723e2ffde7cc9fafc085ac3bb73e63175e"
      }
 @@ -31,6 +_,7 @@
      libraryRepositories.addAll(
@@ -75,18 +75,13 @@
  configurations.named(log4jPlugins.compileClasspathConfigurationName) {
      extendsFrom(configurations.compileClasspath.get())
  }
-@@ -109,7 +_,19 @@
+@@ -109,7 +_,14 @@
  }
  
  dependencies {
 -    implementation(project(":paper-api"))
 +    implementation(project(":leaves-api")) // Leaves - build change
 +    implementation("commons-lang:commons-lang:2.6") // Leaves - build change
-+    // Leaves start - linear
-+    implementation("com.github.luben:zstd-jni:1.5.4-1")
-+    // lz4-java is provided by mache (at.yawk.lz4:lz4-java) since Paper 26.1 - Leaves
-+    implementation("net.openhft:zero-allocation-hashing:0.16")
-+    // Leaves end - linear
 +    // Leaves start - leaves plugin
 +    implementation("org.spongepowered:configurate-gson:4.2.0-SNAPSHOT") {
 +        exclude(group = "com.google.code.gson", module = "gson")

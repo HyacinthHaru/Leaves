@@ -1,0 +1,108 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Tue, 4 Feb 2025 19:45:21 +0800
+Subject: [PATCH] Replay Mod API
+
+
+diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
+index 8c3a9ebebcbc75f9587e620834cbc727ddc1cc49..cada376607f03da0e23005498c5c2fdefbf8f2b8 100644
+--- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
++++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
+@@ -42,7 +42,7 @@ class PaperEventManager {
+         }
+ 
+         // Leaves start - skip bot
+-        if (event instanceof org.bukkit.event.player.PlayerEvent playerEvent && playerEvent.getPlayer() instanceof org.leavesmc.leaves.entity.bot.Bot) {
++        if (event instanceof org.bukkit.event.player.PlayerEvent playerEvent && (playerEvent.getPlayer() instanceof org.leavesmc.leaves.entity.bot.Bot || playerEvent.getPlayer() instanceof org.leavesmc.leaves.entity.photographer.Photographer)) { // Leaves - and photographer
+             return;
+         }
+         // Leaves end - skip bot
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 2193ec2f68ad510e0e40cfbc64212ede092ff3bc..6d0eb7c55856aff671204ddf390b2a1123b1441a 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -307,6 +307,7 @@ public final class CraftServer implements Server {
+     public final io.papermc.paper.SparksFly spark;
+     private final ServerConfiguration serverConfig = new PaperServerConfiguration();
+     private final org.leavesmc.leaves.entity.bot.CraftBotManager botManager; // Leaves
++    private final org.leavesmc.leaves.entity.photographer.CraftPhotographerManager photographerManager = new org.leavesmc.leaves.entity.photographer.CraftPhotographerManager(); // Leaves
+ 
+     // Paper start - Folia region threading API
+     private final io.papermc.paper.threadedregions.scheduler.FallbackRegionScheduler regionizedScheduler = new io.papermc.paper.threadedregions.scheduler.FallbackRegionScheduler();
+@@ -401,7 +402,7 @@ public final class CraftServer implements Server {
+     public CraftServer(DedicatedServer console, PlayerList playerList) {
+         this.console = console;
+         this.playerList = (DedicatedPlayerList) playerList;
+-        this.playerView = MCUtil.transformUnmodifiable(playerList.getPlayers(), ServerPlayer::getBukkitEntity);
++        this.playerView = MCUtil.transformUnmodifiable(playerList.realPlayers, ServerPlayer::getBukkitEntity); // Leaves - replay api: use realPlayers (exclude replay photographers)
+         this.serverVersion = io.papermc.paper.ServerBuildInfo.buildInfo().asString(io.papermc.paper.ServerBuildInfo.StringRepresentation.VERSION_SIMPLE); // Paper - improve version
+         this.structureManager = new CraftStructureManager(console.getStructureTemplateManager(), console.registryAccess());
+         this.serverTickManager = new CraftServerTickManager(console.tickRateManager());
+@@ -2962,4 +2963,11 @@ public final class CraftServer implements Server {
+         return botManager;
+     }
+     // Leaves end - Bot API
++
++    // Leaves start - replay mod api
++    @Override
++    public org.leavesmc.leaves.entity.photographer.CraftPhotographerManager getPhotographerManager() {
++        return photographerManager;
++    }
++    // Leaves end - replay mod api
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+index 0df0970883af88090f80bd64e0f2a820f3aca1b5..69bd2110ac752f86276af15ca1dd48aa6c369e05 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+@@ -129,6 +129,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+         }
+ 
+         if (entity instanceof org.leavesmc.leaves.bot.ServerBot bot) { return new org.leavesmc.leaves.entity.bot.CraftBot(server, bot); }
++        if (entity instanceof org.leavesmc.leaves.replay.ServerPhotographer photographer) { return new org.leavesmc.leaves.entity.photographer.CraftPhotographer(server, photographer); }
+ 
+         // Special case complex part, since there is no extra entity type for them
+         if (entity instanceof EnderDragonPart complexPart) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index 6d8399017e696be3bb794a0c012e25d4a3072c68..b1c63c955d7d4eeec298870bcbef053bd758b4ef 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -2054,7 +2054,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+ 
+     @Override
+     public boolean canSee(Player player) {
+-        return this.canSee((org.bukkit.entity.Entity) player);
++        return !(player instanceof org.leavesmc.leaves.entity.photographer.Photographer) && this.canSee((org.bukkit.entity.Entity) player); // Leaves - skip photographer
+     }
+ 
+     @Override
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
+index 2c6137746c3bb545967c73de9311eb7d9cb80d10..b2baee3fe59a1a5b39e7e4ec1cfdc23964705d29 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java
+@@ -355,7 +355,12 @@ public final class CraftMagicNumbers implements UnsafeValues {
+             deserializedAdvancements.add(entry.advancement().toBukkit());
+         }
+ 
+-        MinecraftServer.getServer().getPlayerList().reloadAdvancementData();
++        // Leaves start - only real players
++        MinecraftServer.getServer().getPlayerList().realPlayers.forEach(player -> {
++            player.getAdvancements().reload(MinecraftServer.getServer().getAdvancements());
++            player.getAdvancements().flushDirty(player, false);
++        });
++        // Leaves end - only real players
+         return deserializedAdvancements;
+     }
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/LazyPlayerSet.java b/src/main/java/org/bukkit/craftbukkit/util/LazyPlayerSet.java
+index 15261d2e96347584e4baf65f12b336b73a68cd37..83af50de50a03e164d572f3c3466b6d0b42ed138 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/LazyPlayerSet.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/LazyPlayerSet.java
+@@ -23,7 +23,7 @@ public class LazyPlayerSet extends LazyHashSet<Player> {
+     }
+ 
+     public static Set<Player> makePlayerSet(final MinecraftServer server) {
+-        List<ServerPlayer> players = server.getPlayerList().getPlayers();
++        List<ServerPlayer> players = server.getPlayerList().realPlayers; // Leaves - only real players
+         Set<Player> reference = new HashSet<>(players.size());
+         for (ServerPlayer player : players) {
+             reference.add(player.getBukkitEntity());

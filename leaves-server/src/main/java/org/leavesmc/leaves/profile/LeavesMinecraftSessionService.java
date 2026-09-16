@@ -1,17 +1,17 @@
 package org.leavesmc.leaves.profile;
 
 import com.destroystokyo.paper.profile.PaperMinecraftSessionService;
-import com.mojang.authlib.Environment;
+import com.destroystokyo.paper.profile.PaperServicesDiscoveryService;
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.HttpAuthenticationService;
+import com.mojang.authlib.HttpDiscoveryService;
 import com.mojang.authlib.exceptions.AuthenticationUnavailableException;
 import com.mojang.authlib.exceptions.MinecraftClientException;
 import com.mojang.authlib.minecraft.client.MinecraftClient;
-import com.mojang.authlib.yggdrasil.ProfileActionType;
-import com.mojang.authlib.yggdrasil.ProfileResult;
-import com.mojang.authlib.yggdrasil.ServicesKeySet;
-import com.mojang.authlib.yggdrasil.response.HasJoinedMinecraftServerResponse;
-import com.mojang.authlib.yggdrasil.response.ProfileAction;
+import com.mojang.authlib.services.ProfileActionType;
+import com.mojang.authlib.services.ProfileResult;
+import com.mojang.authlib.services.ServicesKeySet;
+import com.mojang.authlib.services.response.HasJoinedMinecraftServerResponse;
+import com.mojang.authlib.services.response.ProfileAction;
 import io.papermc.paper.profile.MutablePropertyMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,9 +35,9 @@ public class LeavesMinecraftSessionService extends PaperMinecraftSessionService 
 
     private final MinecraftClient leavesClient;
 
-    protected LeavesMinecraftSessionService(ServicesKeySet keySet, Proxy authenticationService, Environment environment) {
-        super(keySet, authenticationService, environment);
-        this.leavesClient = MinecraftClient.unauthenticated(authenticationService);
+    protected LeavesMinecraftSessionService(ServicesKeySet keySet, Proxy proxy, PaperServicesDiscoveryService discoveryService) {
+        super(keySet, proxy, discoveryService);
+        this.leavesClient = MinecraftClient.unauthenticated(proxy);
     }
 
     private static List<URL> extraYggdrasilList = List.of();
@@ -45,7 +45,7 @@ public class LeavesMinecraftSessionService extends PaperMinecraftSessionService 
     public static void initExtraYggdrasilList(List<String> extraYggdrasilServiceList) {
         List<URL> list = new ArrayList<>();
         for (String str : extraYggdrasilServiceList) {
-            list.add(HttpAuthenticationService.constantURL(str + "/sessionserver/session/minecraft/hasJoined"));
+            list.add(HttpDiscoveryService.constantURL(str + "/sessionserver/session/minecraft/hasJoined"));
         }
         extraYggdrasilList = Collections.unmodifiableList(list);
     }
@@ -75,7 +75,7 @@ public class LeavesMinecraftSessionService extends PaperMinecraftSessionService 
             }
 
             for (URL checkUrl : extraYggdrasilList) {
-                URL url = HttpAuthenticationService.concatenateURL(checkUrl, HttpAuthenticationService.buildQuery(arguments));
+                URL url = HttpDiscoveryService.concatenateURL(checkUrl, HttpDiscoveryService.buildQuery(arguments));
                 try {
                     final HasJoinedMinecraftServerResponse response = this.leavesClient.get(url, HasJoinedMinecraftServerResponse.class); // Leaves - use own client
                     if (response != null && response.id() != null) {

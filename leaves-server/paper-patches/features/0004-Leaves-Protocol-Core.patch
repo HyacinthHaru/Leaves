@@ -5,10 +5,10 @@ Subject: [PATCH] Leaves Protocol Core
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 59a3dd659bbe5876fa5b6ebae732f902db9c8b8f..293c10a6ed9bacd349e16a24e739c0db83550721 100644
+index e7fdedbba227ad4c4d7b4daa47e5eb6f332ff6ac..70686fe07897fe75c6cb45617ca0ecc001ff827a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -479,6 +479,7 @@ public final class CraftServer implements Server {
+@@ -481,6 +481,7 @@ public final class CraftServer implements Server {
          this.potionBrewer = new io.papermc.paper.potion.PaperPotionBrewer(console); // Paper - custom potion mixes
          datapackManager = new io.papermc.paper.datapack.PaperDatapackManager(console.getPackRepository()); // Paper
          this.spark = new io.papermc.paper.SparksFly(this); // Paper - spark
@@ -16,7 +16,7 @@ index 59a3dd659bbe5876fa5b6ebae732f902db9c8b8f..293c10a6ed9bacd349e16a24e739c0db
      }
  
      public boolean getCommandBlockOverride(String command) {
-@@ -1020,6 +1021,7 @@ public final class CraftServer implements Server {
+@@ -1022,6 +1023,7 @@ public final class CraftServer implements Server {
          this.spark.registerCommandBeforePlugins(this); // Paper - spark
          this.overrideAllCommandBlockCommands = this.commandsConfiguration.getStringList("command-block-overrides").contains("*");
          this.ignoreVanillaPermissions = this.commandsConfiguration.getBoolean("ignore-vanilla-permissions");

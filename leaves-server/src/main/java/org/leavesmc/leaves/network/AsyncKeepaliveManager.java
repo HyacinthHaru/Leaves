@@ -44,12 +44,11 @@ public final class AsyncKeepaliveManager {
     }
 
     private static void tickAll() {
-        long currentTimeNs = System.nanoTime();
         long currentTimeMs = Util.getMillis();
 
         for (ServerCommonPacketListenerImpl listener : ACTIVE_LISTENERS.values()) {
             try {
-                listener.keepConnectionAliveAsync(currentTimeNs, currentTimeMs);
+                listener.keepConnectionAliveAsync(currentTimeMs);
                 if (!listener.connection.isConnected()) {
                     ACTIVE_LISTENERS.remove(listener.connection, listener);
                 }

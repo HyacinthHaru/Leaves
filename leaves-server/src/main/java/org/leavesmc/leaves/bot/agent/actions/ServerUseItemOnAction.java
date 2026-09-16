@@ -35,7 +35,7 @@ public class ServerUseItemOnAction extends AbstractUseBotAction<ServerUseItemOnA
         bot.updateItemInHand(hand);
         InteractionResult interactionResult = bot.gameMode.useItemOn(bot, bot.level(), bot.getItemInHand(hand), hand, hitResult);
         if (shouldSwing(interactionResult)) {
-            bot.swing(hand);
+            bot.swing(hand, bot.getItemInHand(hand).getInteractAnimation(), false);
         }
 
         return interactionResult;

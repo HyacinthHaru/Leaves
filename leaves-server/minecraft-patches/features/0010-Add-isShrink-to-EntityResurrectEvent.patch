@@ -5,15 +5,15 @@ Subject: [PATCH] Add isShrink to EntityResurrectEvent
 
 
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 56451de8f2fa541d4e94e7dcb05ab214285ea3d0..b689ca9a6ff67e64fef6776a9af6af2e2efa63ad 100644
+index e5d532985637bd279b52d2dfc71e6e6d441be7e3..75ed07a11ecac2059ebb1bfff883c705e78f4d62 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
-@@ -1760,14 +1760,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
+@@ -1769,14 +1769,14 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
          }
  
          final org.bukkit.inventory.EquipmentSlot handSlot = (usedHand != null) ? org.bukkit.craftbukkit.CraftEquipmentSlot.getHand(usedHand) : null;
--        final EntityResurrectEvent event = new EntityResurrectEvent((org.bukkit.entity.LivingEntity) this.getBukkitEntity(), handSlot);
-+            final EntityResurrectEvent event = new EntityResurrectEvent((org.bukkit.entity.LivingEntity) this.getBukkitEntity(), handSlot, true); // Leaves - can dont shrink
+-        final EntityResurrectEvent event = new EntityResurrectEvent(this.getBukkitEntity(), handSlot);
++        final EntityResurrectEvent event = new EntityResurrectEvent(this.getBukkitEntity(), handSlot, true); // Leaves - can dont shrink
          event.setCancelled(protectionItem == null);
          this.level().getCraftServer().getPluginManager().callEvent(event);
          if (event.isCancelled()) {
@@ -21,7 +21,7 @@ index 56451de8f2fa541d4e94e7dcb05ab214285ea3d0..b689ca9a6ff67e64fef6776a9af6af2e
              protection = null;
          } else {
 -            if (!itemStack.isEmpty() && protectionItem != null) { // Paper - only reduce item if actual totem was found
-+                if (!itemStack.isEmpty() && protectionItem != null && event.isShrink()) { // Paper - only reduce item if actual totem was found // Leaves - can dont shrink
++            if (!itemStack.isEmpty() && protectionItem != null && event.isShrink()) { // Paper - only reduce item if actual totem was found // Leaves - can dont shrink
                  itemStack.shrink(1);
              }
              // Paper start - fix NPE when pre-cancelled EntityResurrectEvent is uncancelled

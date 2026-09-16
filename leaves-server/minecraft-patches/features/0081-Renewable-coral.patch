@@ -1,0 +1,87 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Wed, 5 Feb 2025 23:42:22 +0800
+Subject: [PATCH] Renewable coral
+
+
+diff --git a/net/minecraft/world/level/block/CoralFanBlock.java b/net/minecraft/world/level/block/CoralFanBlock.java
+index b9db4321f1f206dc2d3b223d50518fbe74351d65..bca62683c8e0ff8cee5e40a3c2fcb8bebdb1395f 100644
+--- a/net/minecraft/world/level/block/CoralFanBlock.java
++++ b/net/minecraft/world/level/block/CoralFanBlock.java
+@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
+ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.material.Fluids;
+ 
+-public class CoralFanBlock extends BaseCoralFanBlock {
++public class CoralFanBlock extends BaseCoralFanBlock implements org.leavesmc.leaves.util.FertilizableCoral { // Leaves - renewable coral
+     private final Block deadBlock;
+ 
+     protected CoralFanBlock(final Block deadBlock, final BlockBehaviour.Properties properties) {
+@@ -58,4 +58,13 @@ public class CoralFanBlock extends BaseCoralFanBlock {
+ 
+         return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighbourPos, neighbourState, random);
+     }
++
++    // Leaves start - renewable coral
++    @Override
++    public boolean isEnabled() {
++        return org.leavesmc.leaves.LeavesConfig.modify.renewableCoral == org.leavesmc.leaves.LeavesConfig.ModifyConfig.RenewableCoralType.EXPANDED
++            || org.leavesmc.leaves.LeavesConfig.modify.renewableCoral == org.leavesmc.leaves.LeavesConfig.ModifyConfig.RenewableCoralType.TRUE;
++    }
++    // Leaves end - renewable coral
++
+ }
+diff --git a/net/minecraft/world/level/block/CoralPlantBlock.java b/net/minecraft/world/level/block/CoralPlantBlock.java
+index 9a17b41db60be75f2d7dce7fb184249061fb0436..dcf1124277eff5824cf51f32fce3413fdf558017 100644
+--- a/net/minecraft/world/level/block/CoralPlantBlock.java
++++ b/net/minecraft/world/level/block/CoralPlantBlock.java
+@@ -14,7 +14,7 @@ import net.minecraft.world.level.material.Fluids;
+ import net.minecraft.world.phys.shapes.CollisionContext;
+ import net.minecraft.world.phys.shapes.VoxelShape;
+ 
+-public class CoralPlantBlock extends BaseCoralPlantTypeBlock {
++public class CoralPlantBlock extends BaseCoralPlantTypeBlock implements org.leavesmc.leaves.util.FertilizableCoral { // Leaves - renewable coral
+     private final Block deadBlock;
+     private static final VoxelShape SHAPE = Block.column(12.0, 0.0, 15.0);
+ 
+@@ -67,4 +67,13 @@ public class CoralPlantBlock extends BaseCoralPlantTypeBlock {
+     protected VoxelShape getShape(final BlockState state, final BlockGetter level, final BlockPos pos, final CollisionContext context) {
+         return SHAPE;
+     }
++
++    // Leaves start - renewable coral
++    @Override
++    public boolean isEnabled() {
++        return org.leavesmc.leaves.LeavesConfig.modify.renewableCoral == org.leavesmc.leaves.LeavesConfig.ModifyConfig.RenewableCoralType.EXPANDED
++            || org.leavesmc.leaves.LeavesConfig.modify.renewableCoral == org.leavesmc.leaves.LeavesConfig.ModifyConfig.RenewableCoralType.TRUE;
++    }
++    // Leaves end - renewable coral
++
+ }
+diff --git a/net/minecraft/world/level/block/CoralWallFanBlock.java b/net/minecraft/world/level/block/CoralWallFanBlock.java
+index 90d09065fd946ba882cd7421f29ba25b39a4fc22..94ed5cc9701e3ee845f36cbf99bff08a7b22d30b 100644
+--- a/net/minecraft/world/level/block/CoralWallFanBlock.java
++++ b/net/minecraft/world/level/block/CoralWallFanBlock.java
+@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
+ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.material.Fluids;
+ 
+-public class CoralWallFanBlock extends BaseCoralWallFanBlock {
++public class CoralWallFanBlock extends BaseCoralWallFanBlock implements org.leavesmc.leaves.util.FertilizableCoral { // Leaves - renewable coral
+     private final Block deadBlock;
+ 
+     protected CoralWallFanBlock(final Block deadBlock, final BlockBehaviour.Properties properties) {
+@@ -58,4 +58,13 @@ public class CoralWallFanBlock extends BaseCoralWallFanBlock {
+         this.tryScheduleDieTick(state, level, ticks, random, pos);
+         return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighbourPos, neighbourState, random);
+     }
++
++    // Leaves start - renewable coral
++    @Override
++    public boolean isEnabled() {
++        return org.leavesmc.leaves.LeavesConfig.modify.renewableCoral == org.leavesmc.leaves.LeavesConfig.ModifyConfig.RenewableCoralType.EXPANDED
++            || org.leavesmc.leaves.LeavesConfig.modify.renewableCoral == org.leavesmc.leaves.LeavesConfig.ModifyConfig.RenewableCoralType.TRUE;
++    }
++    // Leaves end - renewable coral
++
+ }

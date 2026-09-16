@@ -51,7 +51,7 @@ public class ElytraAeronauticsHelper {
                     lookAngle.y * 0.1 + (lookAngle.y * 1.5 - deltaMovement.y) * 0.5,
                     lookAngle.z * 0.1 + (lookAngle.z * 1.5 - deltaMovement.z) * 0.5
                 ));
-                firework.attachedToEntity.hurtMarked = true;
+                firework.attachedToEntity.syncVelocity = true;
                 handHoldingItemAngle = firework.attachedToEntity.getHandHoldingItemAngle(Items.FIREWORK_ROCKET);
             } else {
                 handHoldingItemAngle = Vec3.ZERO;

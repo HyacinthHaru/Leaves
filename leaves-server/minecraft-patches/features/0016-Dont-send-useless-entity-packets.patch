@@ -6,12 +6,12 @@ Subject: [PATCH] Dont send useless entity packets
 This patch is Powered by Purpur(https://github.com/PurpurMC/Purpur)
 
 diff --git a/net/minecraft/server/level/ServerEntity.java b/net/minecraft/server/level/ServerEntity.java
-index 60af82925d2f7e605bf7340cf01f1a5668f4d725..7cc7313f9acebbb0b6fcd40d15f242de8dedac86 100644
+index e7ddd956a7f942f682f60062eecf0fad95b18749..e7ca243995fb9d710faecd9596aaf2e2b354dc17 100644
 --- a/net/minecraft/server/level/ServerEntity.java
 +++ b/net/minecraft/server/level/ServerEntity.java
-@@ -199,6 +199,11 @@ public class ServerEntity {
-                     sentPosition = true;
-                     sentRotation = true;
+@@ -177,6 +177,11 @@ public class ServerEntity {
+                     boolean shouldSendPosition = positionChanged || this.tickCount % 60 == 0;
+                     packet = this.createMovePacket(position, yRotn, xRotn, shouldSendPosition, shouldSendRotation);
                  }
 +                // Leaves start - dont send useless entity packets
 +                if (packet != null && org.leavesmc.leaves.LeavesConfig.performance.dontSendUselessEntityPackets && this.isUselessPacket(packet)) {
@@ -21,7 +21,7 @@ index 60af82925d2f7e605bf7340cf01f1a5668f4d725..7cc7313f9acebbb0b6fcd40d15f242de
  
                  if (this.entity.needsSync || this.trackDelta || this.entity instanceof LivingEntity livingEntity && livingEntity.isFallFlying()) {
                      Vec3 movement = this.entity.getDeltaMovement();
-@@ -305,6 +310,21 @@ public class ServerEntity {
+@@ -328,6 +333,21 @@ public class ServerEntity {
          this.positionCodec.setBase(this.entity.position());
      }
  
@@ -29,9 +29,9 @@ index 60af82925d2f7e605bf7340cf01f1a5668f4d725..7cc7313f9acebbb0b6fcd40d15f242de
 +    private boolean isUselessPacket(final Packet<?> possibleUselessPacket) {
 +        if (possibleUselessPacket instanceof ClientboundMoveEntityPacket packet) {
 +            if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.Pos) {
-+                return packet.getXa() == 0 && packet.getYa() == 0 && packet.getZa() == 0;
++                return VecDelta.ZERO.equals(packet.getPositionDelta());
 +            } else if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.PosRot) {
-+                return packet.getXa() == 0 && packet.getYa() == 0 && packet.getZa() == 0 && packet.getYRot() == 0 && packet.getXRot() == 0;
++                return VecDelta.ZERO.equals(packet.getPositionDelta()) && packet.getYRot() == 0 && packet.getXRot() == 0;
 +            } else if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.Rot) {
 +                return packet.getYRot() == 0 && packet.getXRot() == 0;
 +            }

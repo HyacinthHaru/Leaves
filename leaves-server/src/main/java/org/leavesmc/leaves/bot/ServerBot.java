@@ -101,6 +101,8 @@ public class ServerBot extends ServerPlayer {
 
     public int removeTaskId = -1;
 
+    public long lastSave; // Leaves - 26.3: ServerPlayer#lastSave dropped upstream
+
     public ServerBot(MinecraftServer server, ServerLevel world, GameProfile profile) {
         super(server, world, profile, ClientInformation.createDefault());
         this.entityData.set(Player.DATA_PLAYER_MODE_CUSTOMISATION, (byte) -2);
@@ -142,11 +144,11 @@ public class ServerBot extends ServerPlayer {
 
         this.resetOperationCountPerTick(); // Leaves - player operation limiter
         this.wardenSpawnTracker.tick();
-        if (this.invulnerableTime > 0) {
-            this.invulnerableTime--;
-        }
         if (this.spawnInvulnerableTime > 0) {
             --this.spawnInvulnerableTime; // Leaves - spawn invulnerable time
+        }
+        if (this.damageCooldownTime > 0) {
+            this.damageCooldownTime--;
         }
         // copy ServerPlayer end
 
@@ -248,11 +250,6 @@ public class ServerBot extends ServerPlayer {
     }
 
     @Override
-    public boolean canSimulateMovement() {
-        return true;
-    }
-
-    @Override
     public void removeVehicle() {
         super.removeVehicle();
         this.handsBusy = false;
@@ -323,7 +320,7 @@ public class ServerBot extends ServerPlayer {
 
     @Override
     public void knockback(double strength, double x, double z, net.minecraft.world.damagesource.DamageSource source, float damage, boolean comesFromEffect, @Nullable Entity attacker, EntityKnockbackEvent.@NotNull Cause eventCause) { // Leaves - 26.2: knockback signature
-        if (!this.hurtMarked) {
+        if (!this.syncVelocity) {
             return;
         }
         super.knockback(strength, x, z, source, damage, comesFromEffect, attacker, eventCause);
@@ -365,7 +362,7 @@ public class ServerBot extends ServerPlayer {
     @Override
     public void attack(@NotNull Entity target) {
         super.attack(target);
-        this.swing(InteractionHand.MAIN_HAND);
+        this.swing(InteractionHand.MAIN_HAND, this.getItemInHand(InteractionHand.MAIN_HAND).getAttackAnimation(), false);
     }
 
     @Override
@@ -655,14 +652,14 @@ public class ServerBot extends ServerPlayer {
         for (int i = 0; i < items.size(); i++) {
             ItemStack itemStack = items.get(i);
             if (!itemStack.isEmpty()) {
-                this.drop(itemStack, death, false);
+                this.drop(itemStack, false, net.minecraft.util.Prediction.SERVER_ONLY, death, true, null);
                 items.set(i, ItemStack.EMPTY);
             }
         }
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             ItemStack itemStack;
             if (!(itemStack = this.equipment.get(slot)).isEmpty()) {
-                this.drop(itemStack, death, false);
+                this.drop(itemStack, false, net.minecraft.util.Prediction.SERVER_ONLY, death, true, null);
                 this.equipment.set(slot, ItemStack.EMPTY);
             }
         }
