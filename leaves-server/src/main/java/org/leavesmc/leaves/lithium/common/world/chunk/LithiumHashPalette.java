@@ -2,6 +2,8 @@
 
 package org.leavesmc.leaves.lithium.common.world.chunk;
 
+import ca.spottedleaf.moonrise.patches.fast_palette.FastPalette;
+import ca.spottedleaf.moonrise.patches.fast_palette.FastPaletteData;
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.CrashReport;
@@ -27,7 +29,7 @@ import static it.unimi.dsi.fastutil.Hash.FAST_LOAD_FACTOR;
  * {@link LithiumHashPalette#idFor(Object, PaletteResize)} through using a faster backing map and reducing pointer chasing.
  */
 @NullMarked
-public final class LithiumHashPalette<T> extends HashMapPalette<T> implements Palette<T> {
+public final class LithiumHashPalette<T> extends HashMapPalette<T> implements Palette<T>, FastPalette<T> {
     private static final int ABSENT_VALUE = -1;
 
     private final int indexBits;
@@ -63,6 +65,13 @@ public final class LithiumHashPalette<T> extends HashMapPalette<T> implements Pa
         this.table = new Reference2IntOpenHashMap<>(capacity, FAST_LOAD_FACTOR);
         this.table.defaultReturnValue(ABSENT_VALUE);
     }
+
+    // Leaves start - Leaf - Sync moonrise changes
+    @Override
+    public T[] moonrise$getRawPalette(final FastPaletteData<T> container) {
+        return this.entries;
+    }
+    // Leaves end - Leaf - Sync moonrise changes
 
     @Override
     public int idFor(T obj, PaletteResize<T> paletteResize) {

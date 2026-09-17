@@ -5,10 +5,10 @@ Subject: [PATCH] Do not prevent block entity and entity crash at LevelChunk
 
 
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 5df1807d1c3396880a9449c5aaffd2511464c266..3c05abbc5a83a536df8138f75e8450947889a25c 100644
+index 0256f11220f80ac560f326ed9466bf98b0b744cc..14506a3f7d13d3b98eb869b117f1c1628a9de76c 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -897,12 +897,14 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource {
+@@ -972,12 +972,14 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
  
                          profiler.pop();
                      } catch (Throwable t) {

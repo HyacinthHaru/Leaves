@@ -726,7 +726,7 @@ index c00cbfa4d0238ae42a91023a29d674ae98de6400..899ed80405935bcbb3a43b1203a1693c
      protected void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel level, final BlockPos pos, final boolean movedByPiston) {
          BlockPos basePos = pos.relative(state.getValue(FACING).getOpposite());
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 9be95aef15aa575cf9922aec2f53abf4a263e74d..b7a74fa27e48ab74de474b5ec8024da04b090cf8 100644
+index 1e755949257c7a9dfbd0f4921e7336aa915dba90..1df61e76c24f213caf61a0b3d0c22a44404f55c0 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -162,6 +162,15 @@ public abstract class BlockBehaviour implements FeatureElement {
@@ -745,7 +745,7 @@ index 9be95aef15aa575cf9922aec2f53abf4a263e74d..b7a74fa27e48ab74de474b5ec8024da0
      protected void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel level, final BlockPos pos, final boolean movedByPiston) {
      }
  
-@@ -793,6 +802,12 @@ public abstract class BlockBehaviour implements FeatureElement {
+@@ -898,6 +907,12 @@ public abstract class BlockBehaviour implements FeatureElement {
              // CraftBukkit end
          }
  
@@ -759,10 +759,10 @@ index 9be95aef15aa575cf9922aec2f53abf4a263e74d..b7a74fa27e48ab74de474b5ec8024da0
              this.getBlock().affectNeighborsAfterRemoval(this.asState(), level, pos, movedByPiston);
          }
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index a7eda0c2d44d748d60fc5dbbcfb22459b511cd2f..5df1807d1c3396880a9449c5aaffd2511464c266 100644
+index b26d4f4dea2571535157ef85048b131ad6f788d5..0256f11220f80ac560f326ed9466bf98b0b744cc 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -355,6 +355,8 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource {
+@@ -402,6 +402,8 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
          boolean blockChanged = !oldState.is(newBlock);
          boolean movedByPiston = (flags & Block.UPDATE_MOVE_BY_PISTON) != 0;
          boolean sideEffects = (flags & Block.UPDATE_SKIP_BLOCK_ENTITY_SIDEEFFECTS) == 0;
@@ -771,7 +771,7 @@ index a7eda0c2d44d748d60fc5dbbcfb22459b511cd2f..5df1807d1c3396880a9449c5aaffd251
          if (blockChanged && oldState.hasBlockEntity() && !state.shouldChangedStateKeepBlockEntity(oldState)) {
              if (!this.level.isClientSide() && sideEffects) {
                  BlockEntity blockEntity = this.level.getBlockEntity(pos);
-@@ -371,6 +373,10 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource {
+@@ -418,6 +420,10 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
              && ((flags & Block.UPDATE_NEIGHBORS) != 0 || movedByPiston)) {
              oldState.affectNeighborsAfterRemoval(serverLevel, pos, movedByPiston);
          }

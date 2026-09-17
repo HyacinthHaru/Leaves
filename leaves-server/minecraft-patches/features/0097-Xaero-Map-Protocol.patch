@@ -5,12 +5,12 @@ Subject: [PATCH] Xaero Map Protocol
 
 
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 152d3faaaeff902a2e2975e0fa322aea293c6eb8..89a0458db7ded72b8d1cf322edd367764a015870 100644
+index 2125fb4e6d20a8288bf5824c5d39da2d57f1019c..bb610346bf7187844804963558a2fff9290475a9 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -1203,6 +1203,7 @@ public abstract class PlayerList {
-         player.connection.send(new ClientboundSetChunkCacheRadiusPacket(io.papermc.paper.FeatureHooks.getViewDistance(level)));
-         player.connection.send(new ClientboundSetSimulationDistancePacket(io.papermc.paper.FeatureHooks.getSimulationDistance(level)));
+         //player.connection.send(new ClientboundSetChunkCacheRadiusPacket(io.papermc.paper.FeatureHooks.getViewDistance(level))); // Paper - rewrite chunk system
+         //player.connection.send(new ClientboundSetSimulationDistancePacket(io.papermc.paper.FeatureHooks.getSimulationDistance(level))); // Paper - rewrite chunk system
          // Paper end - view distances
 +        org.leavesmc.leaves.protocol.XaeroMapProtocol.onSendWorldInfo(player); // Leaves - xaero map protocol
          if (level.isRaining()) {

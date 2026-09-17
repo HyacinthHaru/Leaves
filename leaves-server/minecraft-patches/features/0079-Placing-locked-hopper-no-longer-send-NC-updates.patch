@@ -5,10 +5,10 @@ Subject: [PATCH] Placing locked hopper no longer send NC updates
 
 
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 246ba9d6ddf2ac780cba0f77c2daaef064175b9a..35cbcaae4d6781f67a77ace6b8c3cc8744ae2d16 100644
+index dfaf63f1a9be63c22dbf6a1d3fd4037ca0f8baa3..040201d5ac1d02891a791b91ec0182e7db4afd3a 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -529,7 +529,11 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1163,7 +1163,11 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
              }
  
              if ((updateFlags & Block.UPDATE_NEIGHBORS) != 0) {

@@ -99,10 +99,10 @@ index 5eb7d46bf0d84720662125711fa7b544e9299446..d0c9d71b6bb05ae6d5b463f4d0847a75
          private static final String PREFIX = "data:image/png;base64,";
          public static final Codec<ServerStatus.Favicon> CODEC = Codec.STRING.comapFlatMap(string -> {
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index 48c3ab23891ae8c19adcf0421967178013004834..6eeacb43ca5c9886b66803da39d9e5f957e20de5 100644
+index df16785becfbf683fe3e3ef66c7451b4caee7a97..b845017e0f43207cf955a66abb473422fac6aab9 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -747,7 +747,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -773,7 +773,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          // Paper start - Add setting for proxy online mode status
          return properties.enforceSecureProfile
              && io.papermc.paper.configuration.GlobalConfiguration.get().proxies.isProxyOnlineMode()
@@ -144,7 +144,7 @@ index 7abe3b0fe6d6944d55de60f8f35398f3de73c82c..cbd6973c399996683e6ed80d549370d2
          if (packet == null) {
              return;
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 07fec648778e7738a23f77dd17db4829dbe8bfd5..fe4981c596420786eb42b6436ac4a38f8b0afa16 100644
+index d6155ba418c1969959a41d3ac25bf93f39517577..631ff4873743db2030e6544e186dc1a825a6d232 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -1176,7 +1176,7 @@ public abstract class PlayerList {

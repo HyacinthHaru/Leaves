@@ -5,10 +5,10 @@ Subject: [PATCH] Old projectile explosion behavior
 
 
 diff --git a/net/minecraft/world/level/ServerExplosion.java b/net/minecraft/world/level/ServerExplosion.java
-index 245d8115f085fa7649e24cf3ed7cef3aff80f16a..2f43bf628cd4b20f35c4e717fcec97c99265cbf7 100644
+index c63bf0fd58ce9b81edec823703dc0f32874aaf26..000e43e6e5929c0f9a7e45147922ed9e107c3d64 100644
 --- a/net/minecraft/world/level/ServerExplosion.java
 +++ b/net/minecraft/world/level/ServerExplosion.java
-@@ -252,7 +252,7 @@ public class ServerExplosion implements Explosion {
+@@ -534,7 +534,7 @@ public class ServerExplosion implements Explosion {
                              // Paper end - knockback events
                          }
                          // CraftBukkit end

@@ -5,10 +5,10 @@ Subject: [PATCH] Fix SculkCatalyst exp skip
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 18cd84c0677dd426289de091feaa83146b511241..0da6a471eb7d325b5ed788d25da5327672d4b692 100644
+index 3fa530977bc58d21a3c8aae7ead38f0cc2413bb9..fe3fb0f5191b7ba0057f83f3616ba009a2e2fbf8 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1188,7 +1188,7 @@ public class ServerPlayer extends Player {
+@@ -1218,7 +1218,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          }
  
          // SPIGOT-5478 must be called manually now
@@ -17,7 +17,7 @@ index 18cd84c0677dd426289de091feaa83146b511241..0da6a471eb7d325b5ed788d25da53276
          // we clean the player's inventory after the EntityDeathEvent is called so plugins can get the exact state of the inventory.
          if (!event.getKeepInventory()) {
              // Paper start - PlayerDeathEvent#getItemsToKeep
-@@ -1235,6 +1235,15 @@ public class ServerPlayer extends Player {
+@@ -1265,6 +1265,15 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          this.connection.markClientUnloadedAfterDeath();
      }
  

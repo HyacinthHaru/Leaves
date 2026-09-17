@@ -26,10 +26,10 @@ This patch is Powered by CrystalCarpetAddition(https://github.com/Crystal0404/Cr
  */
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 718fac03c1d348d8df0c02992e01dbfa953218ef..21f788d8e3842c38ff15cef853ce17aff846175b 100644
+index 83021f027cce9d513aa52694401c2f8c3f19b815..837916a18ef09eca53e3a8910820eb0e0e76ebb9 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -247,7 +247,7 @@ public abstract class Entity
+@@ -203,7 +203,7 @@ public abstract class Entity
      // Paper end - Share random for entities to make them more random
      public org.bukkit.event.entity.CreatureSpawnEvent.@Nullable SpawnReason spawnReason; // Paper - Entity#getEntitySpawnReason
  
@@ -38,7 +38,7 @@ index 718fac03c1d348d8df0c02992e01dbfa953218ef..21f788d8e3842c38ff15cef853ce17af
  
      public org.bukkit.craftbukkit.entity.CraftEntity getBukkitEntity() {
          if (this.bukkitEntity == null) {
-@@ -3982,7 +3982,7 @@ public abstract class Entity
+@@ -4224,7 +4224,7 @@ public abstract class Entity
  
      public @Nullable Entity teleport(TeleportTransition transition) { // Paper - remove param final
          // Paper start - Fix item duplication and teleport issues
@@ -47,7 +47,7 @@ index 718fac03c1d348d8df0c02992e01dbfa953218ef..21f788d8e3842c38ff15cef853ce17af
              LOGGER.warn("Illegal Entity Teleport {} to {}:{}", this, transition.newLevel(), transition.position(), new Throwable());
              return null;
          }
-@@ -4099,7 +4099,7 @@ public abstract class Entity
+@@ -4341,7 +4341,7 @@ public abstract class Entity
          newEntity.restoreFrom(this);
          this.removeAfterChangingDimensions();
          newEntity.teleportSetPosition(PositionMoveRotation.of(this), PositionMoveRotation.of(transition), transition.relatives());
@@ -56,7 +56,7 @@ index 718fac03c1d348d8df0c02992e01dbfa953218ef..21f788d8e3842c38ff15cef853ce17af
  
          for (Entity newPassenger : newPassengers) {
              newPassenger.startRiding(newEntity, true, false);
-@@ -4229,6 +4229,7 @@ public abstract class Entity
+@@ -4471,6 +4471,7 @@ public abstract class Entity
      }
  
      public boolean canTeleport(final Level from, final Level to) {

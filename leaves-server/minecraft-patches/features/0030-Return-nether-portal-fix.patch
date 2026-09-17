@@ -6,10 +6,10 @@ Subject: [PATCH] Return nether portal fix
 This patch is powered by NetherPortalFix(https://github.com/TwelveIterationMods/NetherPortalFix)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index d6e031bd5ba94f4a66cda4cbd9893730a878220d..b7c38cf70c6c3143c82d86818e1e428993d9ee3c 100644
+index 9247ec7b9c289b96f597fbef776b1e25e77e4e02..a78583125c5dfc6745cdceb062b6d1be6d1fd854 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1579,6 +1579,19 @@ public class ServerPlayer extends Player {
+@@ -1609,6 +1609,19 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          org.bukkit.event.player.PlayerChangedWorldEvent changeEvent = new org.bukkit.event.player.PlayerChangedWorldEvent(this.getBukkitEntity(), oldLevel.getWorld());
          this.level().getCraftServer().getPluginManager().callEvent(changeEvent);
          // CraftBukkit end
@@ -30,7 +30,7 @@ index d6e031bd5ba94f4a66cda4cbd9893730a878220d..b7c38cf70c6c3143c82d86818e1e4289
          if (this.isBlocking()) {
              this.stopUsingItem();
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index fe4981c596420786eb42b6436ac4a38f8b0afa16..1209bb3da64cfbb2cf4e3be87f5232cd8e375cd2 100644
+index 631ff4873743db2030e6544e186dc1a825a6d232..fb8521706e06aa7f842ed5ea39d680e96f8dd1bd 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -712,6 +712,18 @@ public abstract class PlayerList {

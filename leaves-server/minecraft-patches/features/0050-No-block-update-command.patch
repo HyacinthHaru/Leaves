@@ -5,7 +5,7 @@ Subject: [PATCH] No block update command
 
 
 diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
-index 48c2f7a7e3d57017448622d5112617e365003dcf..d06502b94e447570b3de1b8e42c99dfc1feb04c2 100644
+index 33c0fc183a7e4aa2f7a811d442fb5861454e1d74..044e6e443edddf90d14e6257a4eb8e730cbef969 100644
 --- a/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/net/minecraft/server/level/ServerPlayerGameMode.java
 @@ -430,7 +430,7 @@ public class ServerPlayerGameMode {
@@ -18,10 +18,10 @@ index 48c2f7a7e3d57017448622d5112617e365003dcf..d06502b94e447570b3de1b8e42c99dfc
          if (SharedConstants.DEBUG_BLOCK_BREAK) {
              LOGGER.info("server broke {} {} -> {}", pos, adjustedState, this.level.getBlockState(pos));
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 48e6e240be3081d5314f80f523dc5389b71c45dc..246ba9d6ddf2ac780cba0f77c2daaef064175b9a 100644
+index ee55e1d8f1ea6be0c800723c526e2e1918482346..dfaf63f1a9be63c22dbf6a1d3fd4037ca0f8baa3 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -409,7 +409,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1043,7 +1043,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
      }
  
      @Override
@@ -35,7 +35,7 @@ index 48e6e240be3081d5314f80f523dc5389b71c45dc..246ba9d6ddf2ac780cba0f77c2daaef0
          // CraftBukkit start - tree generation
          if (this.captureTreeGeneration) {
              // Paper start - Protect Bedrock and End Portal/Frames from being destroyed
-@@ -509,6 +514,11 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1143,6 +1148,11 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
  
      // CraftBukkit start - Split off from above in order to directly send client and physic updates
      public void notifyAndUpdatePhysics(BlockPos pos, LevelChunk chunk, BlockState oldState, BlockState blockState, BlockState newState, @Block.UpdateFlags int updateFlags, int updateLimit) {
@@ -47,7 +47,7 @@ index 48e6e240be3081d5314f80f523dc5389b71c45dc..246ba9d6ddf2ac780cba0f77c2daaef0
          if (newState == blockState) {
              if (oldState != newState) {
                  this.setBlocksDirty(pos, oldState, newState);
-@@ -527,6 +537,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1161,6 +1171,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
  
              if ((updateFlags & Block.UPDATE_KNOWN_SHAPE) == 0 && updateLimit > 0) {
                  int neighbourUpdateFlags = updateFlags & ~(Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_NEIGHBORS);

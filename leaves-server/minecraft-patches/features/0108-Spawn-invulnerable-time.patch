@@ -5,10 +5,10 @@ Subject: [PATCH] Spawn invulnerable time
 
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 0da6a471eb7d325b5ed788d25da5327672d4b692..8af531b6396a8b04d576371b186fefc2929dd1b1 100644
+index fe3fb0f5191b7ba0057f83f3616ba009a2e2fbf8..a7713cebb8df3270ef72ff3ec4894b988b57b314 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -248,6 +248,7 @@ public class ServerPlayer extends Player {
+@@ -248,6 +248,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      private int lastSentFood = -99999999;
      private boolean lastFoodSaturationZero = true;
      public int lastSentExp = -99999999;
@@ -16,7 +16,7 @@ index 0da6a471eb7d325b5ed788d25da5327672d4b692..8af531b6396a8b04d576371b186fefc2
      private ChatVisiblity chatVisibility = ChatVisiblity.FULL;
      public ParticleStatus particleStatus = ParticleStatus.ALL;
      private boolean canChatColor = true;
-@@ -701,6 +702,7 @@ public class ServerPlayer extends Player {
+@@ -731,6 +732,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          this.resetOperationCountPerTick(); // Leaves - player operation limiter
          this.gameMode.tick();
          this.wardenSpawnTracker.tick();
@@ -24,7 +24,7 @@ index 0da6a471eb7d325b5ed788d25da5327672d4b692..8af531b6396a8b04d576371b186fefc2
          if (this.damageCooldownTime > 0) {
              this.damageCooldownTime--;
          }
-@@ -1289,6 +1291,14 @@ public class ServerPlayer extends Player {
+@@ -1319,6 +1321,14 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
              return false;
          }
  

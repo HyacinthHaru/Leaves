@@ -5,10 +5,10 @@ Subject: [PATCH] Leaves Utils
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 39fb058f962c496a683bbe1682fc93c5173d199e..0e0fb46381fb7ab89714079cdbca267ef2247265 100644
+index 963a7759bbae44a9c23fab36bd2954d652ffcb28..173acc1d43296af11828ab21d2de710e2095a717 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -433,6 +433,7 @@ public abstract class Entity
+@@ -389,6 +389,7 @@ public abstract class Entity
      public int totalEntityAge; // Paper - age-like counter for all entities
      public final io.papermc.paper.entity.activation.ActivationType activationType = io.papermc.paper.entity.activation.ActivationType.activationTypeFor(this); // Paper - EAR 2/tracking ranges
      // CraftBukkit end
@@ -16,7 +16,7 @@ index 39fb058f962c496a683bbe1682fc93c5173d199e..0e0fb46381fb7ab89714079cdbca267e
  
      // Paper start
      public final AABB getBoundingBoxAt(double x, double y, double z) {
-@@ -2652,6 +2653,7 @@ public abstract class Entity
+@@ -2805,6 +2806,7 @@ public abstract class Entity
                  output.putBoolean("Paper.FreezeLock", true);
              }
              // Paper end
@@ -24,7 +24,7 @@ index 39fb058f962c496a683bbe1682fc93c5173d199e..0e0fb46381fb7ab89714079cdbca267e
          } catch (Throwable t) {
              CrashReport report = CrashReport.forThrowable(t, "Saving entity NBT");
              CrashReportCategory category = report.addCategory("Entity being saved");
-@@ -2781,6 +2783,7 @@ public abstract class Entity
+@@ -2934,6 +2936,7 @@ public abstract class Entity
              }
              freezeLocked = input.getBooleanOr("Paper.FreezeLock", false);
              // Paper end
@@ -32,7 +32,7 @@ index 39fb058f962c496a683bbe1682fc93c5173d199e..0e0fb46381fb7ab89714079cdbca267e
          } catch (Throwable t) {
              CrashReport report = CrashReport.forThrowable(t, "Loading entity NBT");
              CrashReportCategory category = report.addCategory("Entity being loaded");
-@@ -4529,7 +4532,7 @@ public abstract class Entity
+@@ -4771,7 +4774,7 @@ public abstract class Entity
          return this.is(EntityTypeTags.DEFLECTS_PROJECTILES) ? ProjectileDeflection.REVERSE : ProjectileDeflection.NONE;
      }
  
@@ -41,7 +41,7 @@ index 39fb058f962c496a683bbe1682fc93c5173d199e..0e0fb46381fb7ab89714079cdbca267e
          return null;
      }
  
-@@ -5333,4 +5336,10 @@ public abstract class Entity
+@@ -5592,4 +5595,10 @@ public abstract class Entity
          return ((ServerLevel) this.level()).isPositionEntityTicking(this.blockPosition());
      }
      // Paper end
@@ -66,7 +66,7 @@ index 0cfb4da0d2cf1c107427fdc59e2fe56ff374f4ee..266c1e216cd0339d7ddd874c5821ed8b
      default Difficulty getDifficulty() {
          return this.getLevelData().getDifficulty();
 diff --git a/net/minecraft/world/level/block/Block.java b/net/minecraft/world/level/block/Block.java
-index d6b840af9729234a51052a8ed57fd5de864cf142..74308108eb6a8691b7fa5382584c61f09aad47ff 100644
+index 1b89d481168347f8edd078a8ac190b38a4390a6f..35eb733f51a133aee91ef8a2115fff7a3610741b 100644
 --- a/net/minecraft/world/level/block/Block.java
 +++ b/net/minecraft/world/level/block/Block.java
 @@ -698,6 +698,13 @@ public class Block extends BlockBehaviour implements ItemLike {
@@ -84,10 +84,10 @@ index d6b840af9729234a51052a8ed57fd5de864cf142..74308108eb6a8691b7fa5382584c61f0
          @Override
          public boolean equals(final Object o) {
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 591f6a4ffcf7507c1d6f8f70cb747f59eb077b4d..9be95aef15aa575cf9922aec2f53abf4a263e74d 100644
+index bebfe5b72c1dd812c480de3311ad36ca8d96466b..1e755949257c7a9dfbd0f4921e7336aa915dba90 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
-@@ -686,7 +686,7 @@ public abstract class BlockBehaviour implements FeatureElement {
+@@ -791,7 +791,7 @@ public abstract class BlockBehaviour implements FeatureElement {
          }
  
          public PushReaction getPistonPushReaction() {

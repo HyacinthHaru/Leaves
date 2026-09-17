@@ -86,10 +86,10 @@ index d8cacf975c2c35e5fe7370bd5b007fbe0d4bd031..335e52e61606fb1a13f984026ead1044
          }
      }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 1bc1e6fb0982dd333dfba7a0965dfe7c50290a7c..27969ad9f941233ebdd59bdab272e84833bd57dc 100644
+index 008cfd715d74808f8fc68f18c2a199cb7bdbe677..67a0700b3240062fa6b079b3d2d3fdd7670f708e 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -2508,6 +2508,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2820,6 +2820,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
  
          for (TickingBlockEntity ticker : this.blockEntityTickers) {
              BlockPos blockPos = ticker.getPos();
@@ -111,10 +111,10 @@ index 99449ab429ce545cf8f6f72bd1baad83b1461365..b3585aee0393142366e583fc2c8fb207
  
      int getContainerSize();
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 21f788d8e3842c38ff15cef853ce17aff846175b..4aea4fe5d5db05c3b623407ca5f052adfa6a7016 100644
+index 837916a18ef09eca53e3a8910820eb0e0e76ebb9..fcfce30219776046236dfad25bfad9a1688a364e 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -372,7 +372,7 @@ public abstract class Entity
+@@ -328,7 +328,7 @@ public abstract class Entity
      private static final EntityDataAccessor<Boolean> DATA_NO_GRAVITY = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.BOOLEAN);
      protected static final EntityDataAccessor<Pose> DATA_POSE = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.POSE);
      public static final EntityDataAccessor<Integer> DATA_TICKS_FROZEN = SynchedEntityData.defineId(Entity.class, EntityDataSerializers.INT);
@@ -123,7 +123,7 @@ index 21f788d8e3842c38ff15cef853ce17aff846175b..4aea4fe5d5db05c3b623407ca5f052ad
      private final VecDeltaCodec packetPositionCodec = new VecDeltaCodec();
      public boolean needsSync;
      public boolean syncPosition;
-@@ -5001,6 +5001,19 @@ public abstract class Entity
+@@ -5254,6 +5254,19 @@ public abstract class Entity
              this.setBoundingBox(this.makeBoundingBox());
          }
          // Paper end - Block invalid positions and bounding box
@@ -448,10 +448,10 @@ index 01e479e0cac2b6e628c20e05804e42b7f00e926f..704a602311bf037f93f3fe55dc98b02b
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 35cbcaae4d6781f67a77ace6b8c3cc8744ae2d16..f56a9e5862fbf01edc813ea61ed6e9de919cf82c 100644
+index 040201d5ac1d02891a791b91ec0182e7db4afd3a..f49b8322661d43701a54b189a5971758c87ee9d2 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -543,6 +543,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1177,6 +1177,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
                  int neighbourUpdateFlags = updateFlags & ~(Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_NEIGHBORS);
                  // Leaves start - no block update
                  if (org.leavesmc.leaves.command.leaves.subcommands.BlockUpdateCommand.isNoBlockUpdate()) {
@@ -459,16 +459,16 @@ index 35cbcaae4d6781f67a77ace6b8c3cc8744ae2d16..f56a9e5862fbf01edc813ea61ed6e9de
                      this.updatePOIOnBlockStateChange(pos, oldState, newState);
                      return;
                  }
-@@ -885,7 +886,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1520,7 +1521,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
          // Paper end - Fix MC-117075 use removeAll
              if (ticker.isRemoved()) {
                  toRemove.add(ticker); // Paper - Fix MC-117075 use removeAll
 -            } else if (tickBlockEntities && this.shouldTickBlocksAt(ticker.getPos())) {
 +            } else if (tickBlockEntities && this.shouldTickBlockPosFilterNull(ticker.getPos())) { // Leaves - Lithium Sleeping Block Entity
                  ticker.tick();
-             }
-         }
-@@ -928,6 +929,27 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+                 // Paper start - rewrite chunk system
+                 if ((++tickedEntities & 7) == 0) {
+@@ -1576,6 +1577,27 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
          return this.shouldTickBlocksAt(ChunkPos.pack(pos));
      }
  
@@ -2435,7 +2435,7 @@ index 34f368916233fc9e8982e8f54df786e23ac58bc9..ba1d58266f3078f894ffa7314f9a76ff
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index b7a74fa27e48ab74de474b5ec8024da04b090cf8..2dd2c5d416c55e5c560ce2e5e78894537be8cc1b 100644
+index 1df61e76c24f213caf61a0b3d0c22a44404f55c0..3393e306ab6543bce49d63b01642e0df85bba3b7 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -82,7 +82,7 @@ import net.minecraft.world.phys.shapes.Shapes;
@@ -2456,10 +2456,10 @@ index b7a74fa27e48ab74de474b5ec8024da04b090cf8..2dd2c5d416c55e5c560ce2e5e7889453
      }
  
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 3c05abbc5a83a536df8138f75e8450947889a25c..403ee4919a4b30b63bbbc8ccffeb6e2063903e22 100644
+index 14506a3f7d13d3b98eb869b117f1c1628a9de76c..3765dab9fa8e707208d6667b0a0000c9a38f2b6e 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -840,10 +840,12 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource {
+@@ -915,10 +915,12 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
              this.tickersInLevel.compute(blockEntity.getBlockPos(), (blockPos, existingTicker) -> {
                  TickingBlockEntity actualTicker = this.createTicker(blockEntity, ticker);
                  if (existingTicker != null) {
@@ -2472,7 +2472,7 @@ index 3c05abbc5a83a536df8138f75e8450947889a25c..403ee4919a4b30b63bbbc8ccffeb6e20
                      this.level.addBlockEntityTicker(result);
                      return result;
                  } else {
-@@ -942,14 +944,14 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource {
+@@ -1017,14 +1019,14 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
          void run(LevelChunk levelChunk);
      }
  

@@ -5,10 +5,10 @@ Subject: [PATCH] Configurable vanilla random
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index b5d9ff04cbf7770d41623041f6c4582db815c405..befa814dab4fe26b59f1694841b2f305425fa824 100644
+index 145175e4f0ce1e97b457218a19197039fc165130..edbf5a70769cf9b9cc5fa93c726261345e12e5f1 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -345,7 +345,7 @@ public abstract class Entity
+@@ -301,7 +301,7 @@ public abstract class Entity
      public double yOld;
      public double zOld;
      public boolean noPhysics;

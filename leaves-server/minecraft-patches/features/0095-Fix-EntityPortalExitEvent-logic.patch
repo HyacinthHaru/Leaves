@@ -5,10 +5,10 @@ Subject: [PATCH] Fix EntityPortalExitEvent logic
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 7d59a64b20fa16548dcec10779dfcdd82094f534..aca4dccd9c69ec92e8e2188a2ea8100c72e8bf20 100644
+index 2e8ea792ebc02eca8e53f6e8130b321ef2f7e8b4..21fdeae0a6e99ec040d33cf952de1a0f7d17fec2 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -4011,19 +4011,21 @@ public abstract class Entity
+@@ -4253,19 +4253,21 @@ public abstract class Entity
                  );
                  event.callEvent();
  

@@ -242,7 +242,7 @@ index 2629043e671641e6f79da27be898435f80f0b3b2..f5742db0c49c89a6a5f07f9bec60599b
          // Paper start - EntityEquipmentChangedEvent
          record EquipmentChangeImpl(org.bukkit.inventory.ItemStack oldItem, org.bukkit.inventory.ItemStack newItem) implements io.papermc.paper.event.entity.EntityEquipmentChangedEvent.EquipmentChange {
 diff --git a/net/minecraft/world/entity/decoration/ArmorStand.java b/net/minecraft/world/entity/decoration/ArmorStand.java
-index 4bc91fcddd6ae62508ce5fe5b24b67ba09b15155..a61cca3c774c414d4c82142f43b50dab07eacb43 100644
+index 797da96d7e3e6c447baafc6f209269b5a9646d93..ab28c7953cedef595276c2365195289b24b1ed6a 100644
 --- a/net/minecraft/world/entity/decoration/ArmorStand.java
 +++ b/net/minecraft/world/entity/decoration/ArmorStand.java
 @@ -93,7 +93,7 @@ public class ArmorStand extends LivingEntity {

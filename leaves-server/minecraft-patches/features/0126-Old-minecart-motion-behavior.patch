@@ -13,10 +13,10 @@ As part of: CPCA (https://github.com/liuyuexiaoyu1/carpet_pc_additon)
 Licensed under: MIT (https://mit-license.org)
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 06763725ab7a3a1b55eb66fed85faac71aab98c2..7c33b6461ae8695a88df13361b007d5967a8828c 100644
+index 1df2fa785f62b0f3bee497ebbc75b7aafbcb44c4..307dc7a703fcd91aa1510337399fa81f7ac27dbf 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -4142,7 +4142,7 @@ public abstract class Entity
+@@ -4384,7 +4384,7 @@ public abstract class Entity
                  transition.relatives().contains(Relative.Y) ? 0.0 : passengerOffset.y(),
                  transition.relatives().contains(Relative.Z) ? 0.0 : passengerOffset.z()
              );

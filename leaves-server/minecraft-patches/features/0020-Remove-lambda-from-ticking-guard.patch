@@ -6,10 +6,10 @@ Subject: [PATCH] Remove lambda from ticking guard
 This patch is Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index a952f6d25561b2c52c492163d179e6051f9fd385..7f5c691c1a663c4ca62e5bb6f61220ab9664ae91 100644
+index abdfeb26685b165bed0157a22bb4c8a01f3dc1b1..280d29d584f4fb35a8486a6f8ea2ff5d805eb449 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
-@@ -651,7 +651,23 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -908,7 +908,24 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
                                      }
  
                                      profiler.push("tick");
@@ -27,6 +27,7 @@ index a952f6d25561b2c52c492163d179e6051f9fd385..7f5c691c1a663c4ca62e5bb6f61220ab
 +                                            entity.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.DISCARD);
 +                                            // Paper end - Prevent block entity and entity crashes
 +                                        }
++                                        this.moonrise$midTickTasks(); // Paper - rewrite chunk system
 +                                    } else {
 +                                        this.guardEntityTick(this::tickNonPassenger, entity);
 +                                    }

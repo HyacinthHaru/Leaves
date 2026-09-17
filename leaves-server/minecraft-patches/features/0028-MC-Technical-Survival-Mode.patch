@@ -6,10 +6,10 @@ Subject: [PATCH] MC Technical Survival Mode
 Will automatically overwrite some configuration after startup
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 81bfa84cc98e37310583e5ed57f802478cb722bd..d6e031bd5ba94f4a66cda4cbd9893730a878220d 100644
+index 9c0a49680080d6d59208bfa1cc8df92cf5933d52..9247ec7b9c289b96f597fbef776b1e25e77e4e02 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1770,7 +1770,7 @@ public class ServerPlayer extends Player {
+@@ -1800,7 +1800,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      public boolean isInvulnerableTo(final ServerLevel level, final DamageSource source) {
          // Paper start - disable player cramming
          return (super.isInvulnerableTo(level, source) || this.isChangingDimension() && !source.is(DamageTypes.ENDER_PEARL) || !this.connection.hasClientLoaded())
@@ -19,7 +19,7 @@ index 81bfa84cc98e37310583e5ed57f802478cb722bd..d6e031bd5ba94f4a66cda4cbd9893730
      }
  
 diff --git a/net/minecraft/world/entity/ai/behavior/AcquirePoi.java b/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
-index 81ad9099d2325a07b0b853b99e1d67b0caebd951..134d059591df0ef7ee6326f8837f7ba05378edd1 100644
+index e2eb02d8a0a9481be2308c9052582591bc4f9850..ae8512e3aa1371f4a98536af12e2d9701cc3d6c4 100644
 --- a/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 +++ b/net/minecraft/world/entity/ai/behavior/AcquirePoi.java
 @@ -78,7 +78,7 @@ public class AcquirePoi {

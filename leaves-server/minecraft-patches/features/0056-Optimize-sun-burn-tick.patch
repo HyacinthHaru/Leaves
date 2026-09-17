@@ -6,10 +6,10 @@ Subject: [PATCH] Optimize sun burn tick
 This patch is Powered by Gale(https://github.com/GaleMC/Gale)
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 2adb3c5bd09726431cf507def7774dced00fbea2..b75285b077bea06f4212d70c5b7179e5cfbf6569 100644
+index 2faa58266d49f224f635d6f8687049b225eb0a2a..2fd98018515a5e1418526e1514278ea5040778eb 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -2165,11 +2165,23 @@ public abstract class Entity
+@@ -2318,11 +2318,23 @@ public abstract class Entity
  
      @Deprecated
      public float getLightLevelDependentMagicValue() {
