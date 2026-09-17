@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Thu, 20 Jul 2023 21:13:28 +0800
+Subject: [PATCH] Skip entity move if movement is zero
+
+This patch is Powered by Gale(https://github.com/GaleMC/Gale)
+
+diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
+index adbb3e057a067231ea5db9a907c18b2cc93e60de..fc736afa53519136c6048065f6797ca7c2ab7ff5 100644
+--- a/net/minecraft/world/entity/Entity.java
++++ b/net/minecraft/world/entity/Entity.java
+@@ -284,6 +284,7 @@ public abstract class Entity
+     public float yRotO;
+     public float xRotO;
+     private AABB bb = INITIAL_AABB;
++    private boolean boundingBoxChanged = false; // Leaves - skip entity move if movement is zero
+     public boolean onGround;
+     public boolean horizontalCollision;
+     public boolean verticalCollision;
+@@ -1158,6 +1159,13 @@ public abstract class Entity
+     // Paper end - detailed watchdog information
+ 
+     public void move(final MoverType moverType, Vec3 delta) {
++        // Leaves start - skip entity move if movement is zero
++        if (org.leavesmc.leaves.LeavesConfig.performance.skipEntityMoveIfMovementIsZero) {
++            if (!this.boundingBoxChanged && delta.equals(Vec3.ZERO)) {
++                return;
++            }
++        }
++        // Leaves end - skip entity move if movement is zero
+         if (SharedConstants.IS_RUNNING_IN_IDE && !moverType.isServerAndClientSimulated() && !this.canSimulateMovement()) {
+             throw (IllegalStateException)Util.pauseInIde(
+                 new IllegalStateException("Attempted to move entity on a logical side not permitted to simulate movement")
+@@ -4754,6 +4762,7 @@ public abstract class Entity
+     }
+ 
+     public final void setBoundingBox(final AABB bb) {
++        if (!this.bb.equals(bb)) this.boundingBoxChanged = true; // Leaves - skip entity move if movement is zero
+         // CraftBukkit start - block invalid bounding boxes
+         double minX = bb.minX,
+                 minY = bb.minY,

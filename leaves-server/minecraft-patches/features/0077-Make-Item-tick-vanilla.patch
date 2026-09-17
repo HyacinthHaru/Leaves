@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: violetc <58360096+s-yh-china@users.noreply.github.com>
+Date: Mon, 30 Oct 2023 10:43:44 +0800
+Subject: [PATCH] Make Item tick vanilla
+
+
+diff --git a/net/minecraft/world/entity/item/ItemEntity.java b/net/minecraft/world/entity/item/ItemEntity.java
+index 2940e5b74b1ad77c7d5b3bc2c4435a69244ebdc3..b347a875e07bdd55a404d242718daf4c81d33b2a 100644
+--- a/net/minecraft/world/entity/item/ItemEntity.java
++++ b/net/minecraft/world/entity/item/ItemEntity.java
+@@ -135,6 +135,9 @@ public class ItemEntity extends Entity implements TraceableEntity {
+     // Paper start - EAR 2
+     @Override
+     public void inactiveTick() {
++        // Leaves start - vanilla
++        this.tick();
++        /*
+         super.inactiveTick();
+         if (this.pickupDelay > 0 && this.pickupDelay != 32767) {
+             this.pickupDelay--;
+@@ -152,6 +155,8 @@ public class ItemEntity extends Entity implements TraceableEntity {
+             // CraftBukkit end
+             this.discard(org.bukkit.event.entity.EntityRemoveEvent.Cause.DESPAWN); // CraftBukkit - add Bukkit remove cause
+         }
++         */
++        // Leaves end - vanilla
+     }
+     // Paper end - EAR 2
+ 

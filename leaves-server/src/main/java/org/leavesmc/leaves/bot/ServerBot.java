@@ -101,8 +101,6 @@ public class ServerBot extends ServerPlayer {
 
     public int removeTaskId = -1;
 
-    public long lastSave; // Leaves - 26.3: ServerPlayer#lastSave dropped upstream
-
     public ServerBot(MinecraftServer server, ServerLevel world, GameProfile profile) {
         super(server, world, profile, ClientInformation.createDefault());
         this.entityData.set(Player.DATA_PLAYER_MODE_CUSTOMISATION, (byte) -2);

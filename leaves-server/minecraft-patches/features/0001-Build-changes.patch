@@ -18,10 +18,10 @@ index 0a2694f731b1118d99e728e5065f0157700ba035..94d6be332e0493e97aa1e19e72afc040
      private static final org.slf4j.Logger LOGGER = com.mojang.logging.LogUtils.getLogger();
  
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 43ceb70d1e0c577f5e48fad0ea1e1d4ad36d84c6..4755eb9907abad5819211fdd53cad98ec2250104 100644
+index d6500e28e6b50912718e0b75ee495f279acd2ee0..b9ed2565c1dcb0dc7b00e9afc0f0fb6edb834ee0 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1267,7 +1267,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1273,7 +1273,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  LOGGER.info("*************************************************************************************");
                  LOGGER.info("This is the first time you're starting this server.");
                  LOGGER.info("It's recommended you read our 'Getting Started' documentation for guidance.");
@@ -30,7 +30,7 @@ index 43ceb70d1e0c577f5e48fad0ea1e1d4ad36d84c6..4755eb9907abad5819211fdd53cad98e
                  LOGGER.info("*************************************************************************************");
              }
              // Paper end - Add onboarding message for initial server start
-@@ -1910,7 +1910,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1928,7 +1928,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      }
  
      public String getServerModName() {

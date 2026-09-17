@@ -6,10 +6,10 @@ Subject: [PATCH] Config to disable method profiler
 This patch is Powered by Pufferfish(https://github.com/pufferfish-gg/Pufferfish)
 
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 87a951fca1da44431a5c143e11695912cd9481e6..c19ac703c09ba5b2cb7a0ae6c4acb0767a196fc8 100644
+index a609fe7faf609a1adbc7024b3f39015a6241112b..d097d5c7e45fedeae892d3653abbcc575822fc37 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1323,7 +1323,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1328,7 +1328,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
                  // Paper - improve tick loop - done above
  

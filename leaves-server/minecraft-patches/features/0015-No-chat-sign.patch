@@ -99,7 +99,7 @@ index 5eb7d46bf0d84720662125711fa7b544e9299446..d0c9d71b6bb05ae6d5b463f4d0847a75
          private static final String PREFIX = "data:image/png;base64,";
          public static final Codec<ServerStatus.Favicon> CODEC = Codec.STRING.comapFlatMap(string -> {
 diff --git a/net/minecraft/server/dedicated/DedicatedServer.java b/net/minecraft/server/dedicated/DedicatedServer.java
-index df16785becfbf683fe3e3ef66c7451b4caee7a97..b845017e0f43207cf955a66abb473422fac6aab9 100644
+index 3408c65183c3d188a0b05bc2b8680a8a7ba72229..791a7d2632e41c62c8e3fc8bde2f4f631f0672d4 100644
 --- a/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -773,7 +773,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
@@ -112,10 +112,10 @@ index df16785becfbf683fe3e3ef66c7451b4caee7a97..b845017e0f43207cf955a66abb473422
      }
  
 diff --git a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-index 7abe3b0fe6d6944d55de60f8f35398f3de73c82c..cbd6973c399996683e6ed80d549370d2eda9c495 100644
+index 5c0073b9d7759877ad28b5ebbb32ac33db37a67c..e1148e6d5f0e7862af9208f679ade391f54ae01a 100644
 --- a/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
-@@ -289,10 +289,25 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+@@ -316,10 +316,25 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
      }
  
      public void send(final Packet<?> packet) {
@@ -144,10 +144,10 @@ index 7abe3b0fe6d6944d55de60f8f35398f3de73c82c..cbd6973c399996683e6ed80d549370d2
          if (packet == null) {
              return;
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index d6155ba418c1969959a41d3ac25bf93f39517577..631ff4873743db2030e6544e186dc1a825a6d232 100644
+index 76f706eedf360a7d6ad11f5362444726ea8590bf..36701e84857f1a8b0ac140a407ad1920d4b6181b 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -1176,7 +1176,7 @@ public abstract class PlayerList {
+@@ -1191,7 +1191,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(final PlayerChatMessage message) {

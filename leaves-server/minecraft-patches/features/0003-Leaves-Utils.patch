@@ -5,18 +5,18 @@ Subject: [PATCH] Leaves Utils
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 963a7759bbae44a9c23fab36bd2954d652ffcb28..173acc1d43296af11828ab21d2de710e2095a717 100644
+index ef72b4a4b8fa2f6ebcfb59b2dd0466bce028a1ed..c44f8801380a39d2f715b9bf349164619810d504 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -389,6 +389,7 @@ public abstract class Entity
-     public int totalEntityAge; // Paper - age-like counter for all entities
-     public final io.papermc.paper.entity.activation.ActivationType activationType = io.papermc.paper.entity.activation.ActivationType.activationTypeFor(this); // Paper - EAR 2/tracking ranges
+@@ -398,6 +398,7 @@ public abstract class Entity
+     }
+     // Paper end - EAR 2
      // CraftBukkit end
 +    private net.minecraft.nbt.CompoundTag leavesData = new net.minecraft.nbt.CompoundTag(); // Leaves - Leaves ex data
  
      // Paper start
      public final AABB getBoundingBoxAt(double x, double y, double z) {
-@@ -2805,6 +2806,7 @@ public abstract class Entity
+@@ -2832,6 +2833,7 @@ public abstract class Entity
                  output.putBoolean("Paper.FreezeLock", true);
              }
              // Paper end
@@ -24,7 +24,7 @@ index 963a7759bbae44a9c23fab36bd2954d652ffcb28..173acc1d43296af11828ab21d2de710e
          } catch (Throwable t) {
              CrashReport report = CrashReport.forThrowable(t, "Saving entity NBT");
              CrashReportCategory category = report.addCategory("Entity being saved");
-@@ -2934,6 +2936,7 @@ public abstract class Entity
+@@ -2961,6 +2963,7 @@ public abstract class Entity
              }
              freezeLocked = input.getBooleanOr("Paper.FreezeLock", false);
              // Paper end
@@ -32,7 +32,7 @@ index 963a7759bbae44a9c23fab36bd2954d652ffcb28..173acc1d43296af11828ab21d2de710e
          } catch (Throwable t) {
              CrashReport report = CrashReport.forThrowable(t, "Loading entity NBT");
              CrashReportCategory category = report.addCategory("Entity being loaded");
-@@ -4771,7 +4774,7 @@ public abstract class Entity
+@@ -4798,7 +4801,7 @@ public abstract class Entity
          return this.is(EntityTypeTags.DEFLECTS_PROJECTILES) ? ProjectileDeflection.REVERSE : ProjectileDeflection.NONE;
      }
  
@@ -41,7 +41,7 @@ index 963a7759bbae44a9c23fab36bd2954d652ffcb28..173acc1d43296af11828ab21d2de710e
          return null;
      }
  
-@@ -5592,4 +5595,10 @@ public abstract class Entity
+@@ -5624,4 +5627,10 @@ public abstract class Entity
          return ((ServerLevel) this.level()).isPositionEntityTicking(this.blockPosition());
      }
      // Paper end
