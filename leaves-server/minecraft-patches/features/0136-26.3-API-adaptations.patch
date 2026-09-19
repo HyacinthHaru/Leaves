@@ -9,10 +9,10 @@ mechanical EntityType->EntityTypes / knockback / login-packet adaptations that
 used to live here have been folded back into their owning feature patches.
 
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
-index 7be743d80ae36ef03759a036d8d1987995552ccd..6f471377637118bfc66946ec67e6bb6bb3f7b90b 100644
+index dfd94abea059bdc9442cda77b87ba85b6b19810b..cd1b769d6abf91ffc1bc8d3c8b0628c1001eb5b3 100644
 --- a/net/minecraft/server/level/ChunkMap.java
 +++ b/net/minecraft/server/level/ChunkMap.java
-@@ -947,7 +947,7 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+@@ -982,7 +982,7 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
          return this.entityMap.containsKey(id);
      }
  
@@ -22,7 +22,7 @@ index 7be743d80ae36ef03759a036d8d1987995552ccd..6f471377637118bfc66946ec67e6bb6b
          // Paper start - ignore and warn about illegal addEntity calls instead of crashing server
          if (!entity.valid || entity.level() != this.level || this.entityMap.containsKey(entity.getId())) {
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 2b45acdb78a9217dc3a2111bc9e91450871c7533..c02b7d5b74a27d61be3422dc9537117b01f29124 100644
+index 06a1de6af9b579b3cb6720b8561b45b9426914ab..a3d74d2ea22a45c4930e5eaa3e60195179f42e52 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -194,7 +194,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -35,7 +35,7 @@ index 2b45acdb78a9217dc3a2111bc9e91450871c7533..c02b7d5b74a27d61be3422dc9537117b
      public final io.papermc.paper.world.saveddata.PaperLevelOverrides serverLevelData; // Paper - type
      private final EntityTickList entityTickList = new EntityTickList();
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 2505d74b0318863f04d7d455e58c7620e24a63e7..56a96d5d54580474f9eaa63b05701fed7de97099 100644
+index 3df7acf68dcc9147a4fee3376e443aec7fe2a99d..ffce0e42141f12440b63666131e975456e29f8c1 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -255,7 +255,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -74,7 +74,7 @@ index 507a12f558a1d6d82f1952f8420857c01d8bee41..fde7e12b6cfad5ccc9dcf55202f86f6f
      private final Abilities abilities = new Abilities();
      public int experienceLevel = 0;
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index c43756e6c58d0ff7ac8964508dacf5c67b76eee3..b7bcaade4d02c8af9909c8f33881c0427cc34aa1 100644
+index 93d62f312eb43d02a1dba0fefa23e5ef4ce9ea2f..d3f66546b5b2f7d383e61416e0f4acb46ebdba37 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -134,7 +134,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl

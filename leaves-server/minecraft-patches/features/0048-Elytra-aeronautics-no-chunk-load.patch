@@ -5,10 +5,10 @@ Subject: [PATCH] Elytra aeronautics no chunk load
 
 
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
-index f96e5cf9f7d9ca4a25d621b9fd646915829beb8d..7be743d80ae36ef03759a036d8d1987995552ccd 100644
+index 94aff7a843963254890fccda34e2cdafe5f16854..dfd94abea059bdc9442cda77b87ba85b6b19810b 100644
 --- a/net/minecraft/server/level/ChunkMap.java
 +++ b/net/minecraft/server/level/ChunkMap.java
-@@ -856,7 +856,8 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+@@ -891,7 +891,8 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
      }
  
      private boolean skipPlayer(final ServerPlayer player) {
@@ -18,7 +18,7 @@ index f96e5cf9f7d9ca4a25d621b9fd646915829beb8d..7be743d80ae36ef03759a036d8d19879
      }
  
      private void updatePlayerStatus(final ServerPlayer player, final boolean added) {
-@@ -890,6 +891,7 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
+@@ -925,6 +926,7 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
      }
  
      public void move(final ServerPlayer player) {
@@ -27,7 +27,7 @@ index f96e5cf9f7d9ca4a25d621b9fd646915829beb8d..7be743d80ae36ef03759a036d8d19879
  
          SectionPos oldSection = player.getLastSectionPos();
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 6008a0c7dca570f30cb5f2f4f45171d1031ab1b6..a763db50e804ed568af7ee182ac09732375cd54c 100644
+index ac56966af4ab4e4dc29a4e60ad9467957eea0780..781b46340bcee0bebfe2a5ba5ebe9998d731252c 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -941,6 +941,10 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -42,7 +42,7 @@ index 6008a0c7dca570f30cb5f2f4f45171d1031ab1b6..a763db50e804ed568af7ee182ac09732
              profiler.pop();
              } // Paper - option to disable ticking
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 39e85a431affc9ddce2e0c9ce7400aac5d025c45..eaab781ed2657361af8991ec2d236f7a61b025f6 100644
+index 59745d7344d0b09959b18ec60db9c558c716f9ae..7cf789c1b18c64bc6a12eae66a81b426d5b47c44 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -623,7 +623,7 @@ public class ServerGamePacketListenerImpl
@@ -54,16 +54,16 @@ index 39e85a431affc9ddce2e0c9ce7400aac5d025c45..eaab781ed2657361af8991ec2d236f7a
                      !level.areChunksLoadedForMove(this.player.getBoundingBox().expandTowards(new Vec3(targetX, targetY, targetZ).subtract(this.player.position()))) ||
                          !level.areChunksLoadedForMove(vehicle.getBoundingBox().expandTowards(new Vec3(targetX, targetY, targetZ).subtract(vehicle.position())))
                  )) {
-@@ -1637,6 +1637,7 @@ public class ServerGamePacketListenerImpl
- 
-                 // Paper start - Add fail move event
-                 boolean allowMovement = this.player.noPhysics || this.player.isSleeping() || (!movedWrongly || !level.noCollision(this.player, oldAABB)) && !this.isEntityCollidingWithAnythingNew(level, this.player, oldAABB, targetX, targetY, targetZ);
+@@ -1682,6 +1682,7 @@ public class ServerGamePacketListenerImpl
+                         allowMovement = !this.hasNewCollision(level, this.player, oldAABB, newBox);
+                     } // else: no collision at all detected, why do we care?
+                 }
 +                allowMovement = allowMovement || player.elytraAeronauticsNoChunk; // Leaves - Elytra aeronautics
+                 // Paper end - optimise out extra getCubes
                  if (!allowMovement) {
                      io.papermc.paper.event.player.PlayerFailMoveEvent event = fireFailMove(io.papermc.paper.event.player.PlayerFailMoveEvent.FailReason.CLIPPED_INTO_BLOCK,
-                         targetX, targetY, targetZ, targetYRot, targetXRot, false);
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index f9a5083da26909ced8311b47b9bb675c28cb67f2..61e6ecbce5b4dff80c1f48881b8abc046e4bd2ad 100644
+index 0191ef3ccb95c2d6986ab61ccad3b747b112e5d9..5990f82f692d6e493c6b2d1d76ca63e7438c0f46 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1193,7 +1193,13 @@ public abstract class Entity

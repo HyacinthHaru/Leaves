@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable MC-67
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index bf45ef25866ad37a80dea379df2a8c3c9108aef6..34d5052ad10c1a596a0bbc8dc0ab3fbce62ee6d1 100644
+index c866cdf2b8a50e7a3ec2e6747b93a626d25efff2..2c806bd53f720ab994969f7ba087a35ad2c2bfa8 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -4486,6 +4486,7 @@ public abstract class Entity

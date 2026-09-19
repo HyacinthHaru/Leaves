@@ -6,7 +6,7 @@ Subject: [PATCH] InstantBlockUpdater Reintroduced
 This patch is Powered by Carpet-TIS-Addition(https://github.com/plusls/Carpet-TIS-Addition)
 
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 7383cf70bbdc7ed00d56adaea63743545250da06..1b6180314520d2ce6333dbaf344a666cc63c054d 100644
+index f33bed6dbaf6e63f1bc2c9d1bdc0aec89f0faf86..0ad28a5314b3635fa5e3712aa363df3162ffd315 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -946,12 +946,13 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -30,7 +30,7 @@ index 7383cf70bbdc7ed00d56adaea63743545250da06..1b6180314520d2ce6333dbaf344a666c
          this.debugSynchronizers.tick(this.server.debugSubscribers());
          profiler.pop();
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index a1da101177a5a4fb2b4ba5e34be165daf4d147fb..8a1e47454a77c650599d45f8d072a7ccc697dd5d 100644
+index 21878bd770f6c0bc10dd0a67be5bd94d7e16f741..3c7100e4b40e0f4d2a8ba0d98fdb5ce6309ead0a 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -118,7 +118,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
@@ -42,7 +42,7 @@ index a1da101177a5a4fb2b4ba5e34be165daf4d147fb..8a1e47454a77c650599d45f8d072a7cc
      private final List<TickingBlockEntity> pendingBlockEntityTickers = Lists.newArrayList();
      private boolean tickingBlockEntities;
      protected final Thread thread;
-@@ -865,7 +865,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -867,7 +867,13 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
          this.thread = Thread.currentThread();
          this.biomeManager = new BiomeManager(this, biomeZoomSeed);
          this.isDebug = isDebug;

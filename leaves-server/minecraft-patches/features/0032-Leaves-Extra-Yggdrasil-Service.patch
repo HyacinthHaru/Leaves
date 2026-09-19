@@ -5,10 +5,10 @@ Subject: [PATCH] Leaves Extra Yggdrasil Service
 
 
 diff --git a/net/minecraft/server/Main.java b/net/minecraft/server/Main.java
-index c22cc4387e7cc5da7d38ee14ed7f187b5d9507f4..edfe90e31b7b691bc5702925a8c5fc141be2e1c2 100644
+index aa7f2ba4d931f98ce15c52dc2b99f07504149582..0acf415f9391545d5ab69fbe5c3b1c58daf49b4f 100644
 --- a/net/minecraft/server/Main.java
 +++ b/net/minecraft/server/Main.java
-@@ -181,7 +181,7 @@ public class Main {
+@@ -190,7 +190,7 @@ public class Main {
                  universePath = new File(bukkitConfiguration.getString("settings.world-container", "."));
              }
              // Paper end - fix SPIGOT-5824
@@ -18,7 +18,7 @@ index c22cc4387e7cc5da7d38ee14ed7f187b5d9507f4..edfe90e31b7b691bc5702925a8c5fc14
              ManagementServer jsonRpcServer = JsonRpc.create(settings, notificationManager);
              String levelName = Optional.ofNullable((String) options.valueOf("world")).orElse(settings.getProperties().levelName); // CraftBukkit
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index d097d5c7e45fedeae892d3653abbcc575822fc37..11e70c77609095531c6e3e1f57162b7a64413d31 100644
+index 45087c8da75b04c6afa3994e9d220c36ba14e137..fb63efda791718fa934cd968e6adb3bb3bdf1da3 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
 @@ -252,7 +252,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa

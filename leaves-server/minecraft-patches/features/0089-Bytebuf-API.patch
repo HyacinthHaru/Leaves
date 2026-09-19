@@ -5,7 +5,7 @@ Subject: [PATCH] Bytebuf API
 
 
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 9f53fce438e5aa0c53df288d46b808d5f6c2b7be..ac84145cad1eecb11da2e03d36430e3dc4e30b7e 100644
+index 51b74ce639bb0553c5111f24bd5963d7dc0923fb..1da36fbf7939a4fc3874b140db76b6aafd476736 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -296,6 +296,13 @@ public abstract class PlayerList {

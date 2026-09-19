@@ -5,10 +5,10 @@ Subject: [PATCH] Old hopper suckin behavior
 
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index a0b735da64fbc058972875f4952a3cf7152c1e68..ab3c68fb87878c32fd601aeacf1add573770582d 100644
+index 0e16303a856f644ae10772349446912e4a56441e..7189bb94cd30b1f77bb567535f8001fe9ca6bd8b 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -356,8 +356,8 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -565,8 +565,8 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              return false;
          } else {
              boolean isBlocked = hopper.isGridAligned()

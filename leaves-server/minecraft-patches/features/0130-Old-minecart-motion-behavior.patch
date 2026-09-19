@@ -13,7 +13,7 @@ As part of: CPCA (https://github.com/liuyuexiaoyu1/carpet_pc_additon)
 Licensed under: MIT (https://mit-license.org)
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 0a9164d7cfff3d9aac22954c33c496c6dd347ffd..7d14871cec4be8efb97e48175f367e528444754f 100644
+index 38f61132dede1d69c1286603da540a7b5e62215a..7f10d7f714fa552609408c33ccbbe326db09d0cc 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -4411,7 +4411,7 @@ public abstract class Entity

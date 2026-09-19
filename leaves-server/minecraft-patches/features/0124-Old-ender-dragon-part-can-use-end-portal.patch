@@ -26,7 +26,7 @@ This patch is Powered by CrystalCarpetAddition(https://github.com/Crystal0404/Cr
  */
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 0e11865fb5144d675d12c3827dad0b8cd9376d96..8e284432ccf8f50e8a6e0bd19aa1f6659f8a108b 100644
+index 5799b46bad150fb3ca12d5a95383d4f6330caae4..8030588317718d0b82919f7e4be83e6cd85e34a9 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -203,7 +203,7 @@ public abstract class Entity

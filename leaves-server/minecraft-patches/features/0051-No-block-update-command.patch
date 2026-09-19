@@ -5,10 +5,10 @@ Subject: [PATCH] No block update command
 
 
 diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
-index 33c0fc183a7e4aa2f7a811d442fb5861454e1d74..044e6e443edddf90d14e6257a4eb8e730cbef969 100644
+index 6c37a115ef496415ba81193fba434712627e223a..0ea5f0014327f5461f5ab49c599c6746ae0355d4 100644
 --- a/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/net/minecraft/server/level/ServerPlayerGameMode.java
-@@ -430,7 +430,7 @@ public class ServerPlayerGameMode {
+@@ -431,7 +431,7 @@ public class ServerPlayerGameMode {
          org.bukkit.block.BlockState bState = bblock.getState();
          this.level.captureDrops = new java.util.ArrayList<>();
          // CraftBukkit end
@@ -18,10 +18,10 @@ index 33c0fc183a7e4aa2f7a811d442fb5861454e1d74..044e6e443edddf90d14e6257a4eb8e73
          if (SharedConstants.DEBUG_BLOCK_BREAK) {
              LOGGER.info("server broke {} {} -> {}", pos, adjustedState, this.level.getBlockState(pos));
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index 8a1e47454a77c650599d45f8d072a7ccc697dd5d..2a32e69880e596381637736df4adc106e2c4af57 100644
+index 3c7100e4b40e0f4d2a8ba0d98fdb5ce6309ead0a..4fcaaff2573ee91888b18a7bd19a19a8c72300f1 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -1049,7 +1049,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1052,7 +1052,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
      }
  
      @Override
@@ -35,7 +35,7 @@ index 8a1e47454a77c650599d45f8d072a7ccc697dd5d..2a32e69880e596381637736df4adc106
          // CraftBukkit start - tree generation
          if (this.captureTreeGeneration) {
              // Paper start - Protect Bedrock and End Portal/Frames from being destroyed
-@@ -1149,6 +1154,11 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1153,6 +1158,11 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
  
      // CraftBukkit start - Split off from above in order to directly send client and physic updates
      public void notifyAndUpdatePhysics(BlockPos pos, LevelChunk chunk, BlockState oldState, BlockState blockState, BlockState newState, @Block.UpdateFlags int updateFlags, int updateLimit) {
@@ -47,7 +47,7 @@ index 8a1e47454a77c650599d45f8d072a7ccc697dd5d..2a32e69880e596381637736df4adc106
          if (newState == blockState) {
              if (oldState != newState) {
                  this.setBlocksDirty(pos, oldState, newState);
-@@ -1167,6 +1177,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -1171,6 +1181,12 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
  
              if ((updateFlags & Block.UPDATE_KNOWN_SHAPE) == 0 && updateLimit > 0) {
                  int neighbourUpdateFlags = updateFlags & ~(Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_NEIGHBORS);

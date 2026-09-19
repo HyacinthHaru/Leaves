@@ -6,10 +6,10 @@ Subject: [PATCH] Modify merge ItemEntity logic
 Add followTickSequenceMerge to modify merge items, due to Paper's modification of the merge radius, when the merge radius is large and stacks containing many items get stuck in an unexpected position, individual items may never reach their destination. This configuration option is added to fix this behavior.
 
 diff --git a/net/minecraft/world/entity/item/ItemEntity.java b/net/minecraft/world/entity/item/ItemEntity.java
-index ed48762e610191b2c038e8435d5c6b466597fee6..82e35a9a6de89ce43c06561724add28330f0c372 100644
+index 1853182c0d333da9d687d762de4ce456dbf7b45f..16bcae3bb1d43f173589848d1a46b66a3ab614f7 100644
 --- a/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/net/minecraft/world/entity/item/ItemEntity.java
-@@ -306,7 +306,7 @@ public class ItemEntity extends Entity implements TraceableEntity, ChangePublish
+@@ -298,7 +298,7 @@ public class ItemEntity extends Entity implements TraceableEntity, ChangePublish
          ItemStack thisItemStack = this.getItem();
          ItemStack otherItemStack = other.getItem();
          if (Objects.equals(this.target, other.target) && areMergable(thisItemStack, otherItemStack)) {

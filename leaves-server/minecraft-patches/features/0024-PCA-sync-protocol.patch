@@ -34,10 +34,10 @@ index c91631e7544dd913e03e5c46d85f0250389d4082..cfc5d310bb3c8c13922bb6a5c2138650
  
      @Override
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 30f681ba31c3b7997ef0d1d6153e9339fb4b2d3b..63f0def3e1100283a480a2ed49629025df8c0fe3 100644
+index 86f005e755f58f9f6a674a5065444fa08ae9ec08..8941fe049dd4b4ccc8b6695ce6a1dceab4678b13 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -162,6 +162,11 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -200,6 +200,11 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              if (changed) {
                  entity.setCooldown(level.spigotConfig.hopperTransfer); // Spigot
                  setChanged(level, pos, state);

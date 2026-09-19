@@ -37,10 +37,10 @@ index a1eb08f07da427ae246bb9f794ba8598270ba745..9289f50dd7eea391624e54a59d0f9cdb
          if (count > maxAllowedCount) {
              throw TOO_MANY_ITEMS.create(maxAllowedCount, prototypeItemStack.getDisplayName());
 diff --git a/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index f01fede96872749f1ac664d0c53c2ef3617bed0e..8f15562eeec3340145f4ed6c8a247c19c52233fb 100644
+index 572b28fa8df0f441c07c5728e5b95c0337b189c0..29583629912757e8af26fc508cccb5a8fe14fca9 100644
 --- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -3095,7 +3095,7 @@ public class ServerGamePacketListenerImpl
+@@ -3174,7 +3174,7 @@ public class ServerGamePacketListenerImpl
                                              } else if (slot.mayPlace(cursor)) {
                                                  if (ItemStack.isSameItemSameComponents(clickedItem, cursor)) {
                                                      int toPlace = packet.buttonNum() == 0 ? cursor.getCount() : 1;
@@ -49,7 +49,7 @@ index f01fede96872749f1ac664d0c53c2ef3617bed0e..8f15562eeec3340145f4ed6c8a247c19
                                                      toPlace = Math.min(toPlace, slot.container.getMaxStackSize() - clickedItem.getCount());
                                                      if (toPlace == 1) {
                                                          action = InventoryAction.PLACE_ONE;
-@@ -3131,7 +3131,7 @@ public class ServerGamePacketListenerImpl
+@@ -3210,7 +3210,7 @@ public class ServerGamePacketListenerImpl
                                                  }
                                              } else if (ItemStack.isSameItemSameComponents(cursor, clickedItem)) {
                                                  if (clickedItem.getCount() >= 0) {
@@ -58,7 +58,7 @@ index f01fede96872749f1ac664d0c53c2ef3617bed0e..8f15562eeec3340145f4ed6c8a247c19
                                                          // As of 1.5, this is result slots only
                                                          action = InventoryAction.PICKUP_ALL;
                                                      }
-@@ -3348,6 +3348,7 @@ public class ServerGamePacketListenerImpl
+@@ -3427,6 +3427,7 @@ public class ServerGamePacketListenerImpl
                          this.player.containerMenu.broadcastFullState();
                      } else {
                          this.player.containerMenu.broadcastChanges();
@@ -66,7 +66,7 @@ index f01fede96872749f1ac664d0c53c2ef3617bed0e..8f15562eeec3340145f4ed6c8a247c19
                      }
                      if (packet.buttonNum() == Inventory.SLOT_OFFHAND && this.player.containerMenu != this.player.inventoryMenu) this.player.containerSynchronizer.sendOffHandSlotChange(); // Paper - update offhand data when the player is clicking in an inventory not their own as the sychronizer does not include offhand slots
                      if (io.papermc.paper.configuration.GlobalConfiguration.get().unsupportedSettings.updateEquipmentOnPlayerActions) this.player.detectEquipmentUpdates(); // Paper - Force update attributes.
-@@ -3459,7 +3460,7 @@ public class ServerGamePacketListenerImpl
+@@ -3538,7 +3539,7 @@ public class ServerGamePacketListenerImpl
              }
  
              boolean validSlot = packet.slotNum() >= 1 && packet.slotNum() <= 45;
@@ -75,7 +75,7 @@ index f01fede96872749f1ac664d0c53c2ef3617bed0e..8f15562eeec3340145f4ed6c8a247c19
              if (drop || (validSlot && !ItemStack.matches(this.player.inventoryMenu.getSlot(packet.slotNum()).getItem(), packet.itemStack()))) { // Insist on valid slot
                  // CraftBukkit start - Call click event
                  org.bukkit.inventory.InventoryView inventory = this.player.inventoryMenu.getBukkitView();
-@@ -3501,6 +3502,7 @@ public class ServerGamePacketListenerImpl
+@@ -3580,6 +3581,7 @@ public class ServerGamePacketListenerImpl
                  this.player.inventoryMenu.getSlot(packet.slotNum()).setByPlayer(itemStack);
                  this.player.inventoryMenu.setRemoteSlot(packet.slotNum(), itemStack);
                  this.player.inventoryMenu.broadcastChanges();
@@ -123,10 +123,10 @@ index 073a3bbf1b1db7eac83cf35412543f370fa089ee..0f412551685a8ea76be3b389e0782e57
          if (diff > 0) {
              targetStack.grow(diff);
 diff --git a/net/minecraft/world/entity/item/ItemEntity.java b/net/minecraft/world/entity/item/ItemEntity.java
-index ed893f66f5eed97abc4ee3a5da0b5c9d88859ac3..634609d73200970b3755dacc9b81e2c889c6784f 100644
+index 8b10b2121b61892eb4f98533c7df1ba549cdc64f..35b6242de12001d5c24708088ab5e4425d6f3798 100644
 --- a/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/net/minecraft/world/entity/item/ItemEntity.java
-@@ -279,10 +279,15 @@ public class ItemEntity extends Entity implements TraceableEntity {
+@@ -271,10 +271,15 @@ public class ItemEntity extends Entity implements TraceableEntity {
  
      private boolean isMergable() {
          ItemStack item = this.getItem();
@@ -144,7 +144,7 @@ index ed893f66f5eed97abc4ee3a5da0b5c9d88859ac3..634609d73200970b3755dacc9b81e2c8
          ItemStack otherItemStack = other.getItem();
          if (Objects.equals(this.target, other.target) && areMergable(thisItemStack, otherItemStack)) {
 diff --git a/net/minecraft/world/entity/player/Inventory.java b/net/minecraft/world/entity/player/Inventory.java
-index 92ac98fb970b242cef59eb42e02dc03b69b89006..5ae8cdfffeee4cbb9dc16f4ff6ec44db1512f354 100644
+index 59dc40b542b537ef08b06cf1209a2b9866358431..282ccfc3b6a422bdccaf65446186db625983e763 100644
 --- a/net/minecraft/world/entity/player/Inventory.java
 +++ b/net/minecraft/world/entity/player/Inventory.java
 @@ -168,10 +168,12 @@ public class Inventory implements Container, Nameable {
@@ -199,10 +199,10 @@ index 92ac98fb970b242cef59eb42e02dc03b69b89006..5ae8cdfffeee4cbb9dc16f4ff6ec44db
                  serverPlayer.connection.send(this.createInventoryUpdatePacket(slot));
              }
 diff --git a/net/minecraft/world/entity/player/StackedItemContents.java b/net/minecraft/world/entity/player/StackedItemContents.java
-index ffaa8e450a11a01060b6847d1b66a76323f9d8ba..4419eb2996639c7d60b96204b4ded9d8883c8016 100644
+index 1ace17d8fc7e7b8b4722a1889d49233c0ec55e20..d146f02338852810679a45bff932d9d68ee86d60 100644
 --- a/net/minecraft/world/entity/player/StackedItemContents.java
 +++ b/net/minecraft/world/entity/player/StackedItemContents.java
-@@ -18,7 +18,7 @@ public class StackedItemContents {
+@@ -36,7 +36,7 @@ public class StackedItemContents {
      }
  
      public void accountStack(final ItemStack itemStack) {
@@ -353,7 +353,7 @@ index 0e86b025bad2c336cc360c2ce764dad0a75de1b6..1873b9376df57ff73d2a1583b60a512c
  
      public @Nullable Identifier getNoItemIcon() {
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index 30a326c2428f0e716cf43d618be8420fa5e6f467..8ebcf0bf8d9c077ecc4caf58481e269d8bac4394 100644
+index 17dfe25432bf094cc062f9a92c53665897cb098d..65e617816b19400823ffce902c4894df0d2dafb3 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
 @@ -156,7 +156,7 @@ public final class ItemStack implements DataComponentHolder, ItemInstance {
@@ -440,7 +440,7 @@ index c2f8479eef826efca3ed2993973b2cfc2c51ed00..3ca2234bb2952e09856f766af5329d8b
      }
  
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 63f0def3e1100283a480a2ed49629025df8c0fe3..60665de04407971753a4d51a69ac787ec4bb8b6c 100644
+index 584f0dd5b37f8dc4247fe6d78fa8e2cc414af83e..c1b876d3066d179deef08beb7b97222afd47f89c 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -114,7 +114,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
@@ -452,7 +452,7 @@ index 63f0def3e1100283a480a2ed49629025df8c0fe3..60665de04407971753a4d51a69ac787e
      }
  
      @Override
-@@ -440,9 +440,9 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -585,9 +585,9 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              if (current.isEmpty()) {
                  // Spigot start - SPIGOT-6693, SimpleContainer#setItem
                  ItemStack leftover = ItemStack.EMPTY; // Paper - Make hoppers respect inventory max stack size
@@ -463,4 +463,4 @@ index 63f0def3e1100283a480a2ed49629025df8c0fe3..60665de04407971753a4d51a69ac787e
 +                    itemStack = itemStack.split(Math.min(container.getMaxStackSize(), itemStack.getMaxStackSize())); // Leaves - item over-stack util
                  }
                  // Spigot end
-                 container.setItem(slot, itemStack);
+                 ignoreBlockEntityUpdates = true; // Paper - Perf: Optimize Hoppers

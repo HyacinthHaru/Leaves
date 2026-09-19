@@ -6,10 +6,10 @@ Subject: [PATCH] MC Technical Survival Mode
 Will automatically overwrite some configuration after startup
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 4963f2d246f0b71ca9bb2690ae385014b5d95d23..6ff68b9e3c5543e17129cbba3301cf09bad87287 100644
+index 02c01641e0ec92a2946f5e16aa846240f1a2074f..f367a451349b60a95ba5c163c89ad5c975c0ea8f 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1801,7 +1801,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1806,7 +1806,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      public boolean isInvulnerableTo(final ServerLevel level, final DamageSource source) {
          // Paper start - disable player cramming
          return (super.isInvulnerableTo(level, source) || this.isChangingDimension() && !source.is(DamageTypes.ENDER_PEARL) || !this.connection.hasClientLoaded())
@@ -58,10 +58,10 @@ index df35f161c3e487872075a5833463e9b12914a2b5..c44e02c9151e03ae3f53b0ef113d1b54
          this.applyGravity();
          this.move(MoverType.SELF, this.getDeltaMovement());
 diff --git a/net/minecraft/world/level/NaturalSpawner.java b/net/minecraft/world/level/NaturalSpawner.java
-index 87119421a9edd5a3306759f415a315828aaa13c6..39df2e3a765841b9051f1b86424e8cb81d7b5ad4 100644
+index 06c63a3429d010546c8b9de610cbae7bf6bb6935..f2f12a283a63098f744f1c59f0ac97b3c66cc464 100644
 --- a/net/minecraft/world/level/NaturalSpawner.java
 +++ b/net/minecraft/world/level/NaturalSpawner.java
-@@ -77,7 +77,7 @@ public final class NaturalSpawner {
+@@ -89,7 +89,7 @@ public final class NaturalSpawner {
                  MobCategory category = entity.getType().getCategory();
                  if (category != MobCategory.MISC) {
                      // Paper start - Only count natural spawns
@@ -83,3 +83,25 @@ index cfc5d310bb3c8c13922bb6a5c2138650005ed5f1..27588b906682a415fc69fd8063bc982f
                      data.exitTickCounter = data.occupant.minTicksInHive / 2;
                  }
                  // Paper end - Fix bees aging inside; use exitTickCounter to keep actual bee life
+diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+index 8941fe049dd4b4ccc8b6695ce6a1dceab4678b13..584f0dd5b37f8dc4247fe6d78fa8e2cc414af83e 100644
+--- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
++++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
+@@ -266,7 +266,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+                 origItemStack.setCount(originalItemCount);
+             }
+         }
+-        if (foundItem && level.paperConfig().hopper.cooldownWhenFull) { // Inventory was full - cooldown
++        if (foundItem && level.paperConfig().hopper.cooldownWhenFull && !org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode) { // Inventory was full - cooldown // Leaves - mc technical survival mode
+             hopper.setCooldown(level.spigotConfig.hopperTransfer);
+         }
+         return false;
+@@ -307,7 +307,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+         }
+         origItemStack.setCount(originalItemCount);
+ 
+-        if (level.paperConfig().hopper.cooldownWhenFull) {
++        if (level.paperConfig().hopper.cooldownWhenFull && !org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode) { // Leaves - mc technical survival mode
+             applyCooldown(hopper);
+         }
+ 

@@ -5,7 +5,7 @@ Subject: [PATCH] Allow Inf NaN values in entity motions
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index d8a76c91c7eff0ac59fc68aaffd585514b6d3d3a..0a9164d7cfff3d9aac22954c33c496c6dd347ffd 100644
+index 76f5cf941a53d8de950ebe524ecddf050df7c4ae..38f61132dede1d69c1286603da540a7b5e62215a 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -2528,7 +2528,7 @@ public abstract class Entity

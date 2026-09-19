@@ -5,7 +5,7 @@ Subject: [PATCH] Fix block place desync due to update suppression
 
 
 diff --git a/net/minecraft/world/item/ItemStack.java b/net/minecraft/world/item/ItemStack.java
-index 1629cc5f7b3ae06196d8349a7778ec89dab8f603..01e479e0cac2b6e628c20e05804e42b7f00e926f 100644
+index b3b6e1791332c7a5f6104854e1142311463cea35..4581b121f56d7967dacc9dcd08000b8bc918a294 100644
 --- a/net/minecraft/world/item/ItemStack.java
 +++ b/net/minecraft/world/item/ItemStack.java
 @@ -396,8 +396,18 @@ public final class ItemStack implements DataComponentHolder, ItemInstance {
@@ -176,7 +176,7 @@ index 736f5fd76f4a86ab16740904b5c0823413d65cd2..a4e92f3011675def546d99eedc3fda2e
      protected void loadAdditional(final ValueInput input) {
          super.loadAdditional(input);
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index ab3c68fb87878c32fd601aeacf1add573770582d..8f777d32be626255d636a8267286dc98b3967e8d 100644
+index 7189bb94cd30b1f77bb567535f8001fe9ca6bd8b..105d93fdeb7f17ac48a50ab03e053723c4831dce 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -78,6 +78,16 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen

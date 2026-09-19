@@ -84,10 +84,10 @@ index 6c05b9276bdc267a36376f6c64592a50e4b2b36e..faee912129c2cc6303b494523efcee59
                      result.add(player);
                      if (result.size() >= limit) {
 diff --git a/net/minecraft/server/MinecraftServer.java b/net/minecraft/server/MinecraftServer.java
-index 9fe7c86682dd64bcce88994e40091bfa0837245c..f0683631fddaf01f0397bd5442ab3e3c71bd798a 100644
+index 54d71e63cc3a0e9139e015224b4f5530dca380d5..c789d13f5bc58114b5021a9730bc8380c43244fb 100644
 --- a/net/minecraft/server/MinecraftServer.java
 +++ b/net/minecraft/server/MinecraftServer.java
-@@ -1725,7 +1725,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1726,7 +1726,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
      }
  
      private ServerStatus.Players buildPlayerStatus() {
@@ -96,7 +96,7 @@ index 9fe7c86682dd64bcce88994e40091bfa0837245c..f0683631fddaf01f0397bd5442ab3e3c
          int maxPlayers = this.getMaxPlayers();
          if (this.hidesOnlinePlayers()) {
              return new ServerStatus.Players(maxPlayers, players.size(), List.of());
-@@ -1938,7 +1938,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1940,7 +1940,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
      @Override
      public int getPlayerCount() {
@@ -105,7 +105,7 @@ index 9fe7c86682dd64bcce88994e40091bfa0837245c..f0683631fddaf01f0397bd5442ab3e3c
      }
  
      public String[] getPlayerNames() {
-@@ -2160,7 +2160,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2162,7 +2162,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
          int count = 0;
  
@@ -114,7 +114,7 @@ index 9fe7c86682dd64bcce88994e40091bfa0837245c..f0683631fddaf01f0397bd5442ab3e3c
              // Paper start - Expand PlayerGameModeChangeEvent
              org.bukkit.event.player.PlayerGameModeChangeEvent event = player.setGameMode(gameType, org.bukkit.event.player.PlayerGameModeChangeEvent.Cause.DEFAULT_GAMEMODE, null);
              if (event == null || event.isCancelled()) {
-@@ -2329,7 +2329,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2331,7 +2331,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
                  if (Thread.currentThread() != this.serverThread) return; // Paper
                  // Paper start - we don't need to save everything, just advancements
                  // this.getPlayerList().saveAll();
@@ -123,7 +123,7 @@ index 9fe7c86682dd64bcce88994e40091bfa0837245c..f0683631fddaf01f0397bd5442ab3e3c
                      player.getAdvancements().save();
                  }
                  // Paper end - we don't need to save everything, just advancements
-@@ -2464,7 +2464,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -2466,7 +2466,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              PlayerList playerList = this.getPlayerList();
              UserWhiteList whiteList = playerList.getWhiteList();
  
@@ -285,7 +285,7 @@ index 37c9f983ae89c497f44a1b7967d741abf909e0a0..d7fb2505f2a86ca0d81f144624ef2e1a
  
              this.setListData(players);
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index a763db50e804ed568af7ee182ac09732375cd54c..aef3d033de9f57836d62cbb13c3fe43edd696505 100644
+index 781b46340bcee0bebfe2a5ba5ebe9998d731252c..9bca8bb1de37aa5ee6342e55bc51c5b0d84eeea0 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -3149,7 +3149,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -307,7 +307,7 @@ index a763db50e804ed568af7ee182ac09732375cd54c..aef3d033de9f57836d62cbb13c3fe43e
                  }
                  // Leaves end - skip
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 19d56fff66d1e3563b5b1b78f80311b6763cde77..9f53fce438e5aa0c53df288d46b808d5f6c2b7be 100644
+index 51c26bc8803504967505f036cda2a7a8138c42b0..51b74ce639bb0553c5111f24bd5963d7dc0923fb 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -131,6 +131,7 @@ public abstract class PlayerList {
