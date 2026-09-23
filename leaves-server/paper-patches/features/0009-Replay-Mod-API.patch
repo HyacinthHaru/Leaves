@@ -5,10 +5,10 @@ Subject: [PATCH] Replay Mod API
 
 
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index 8c3a9ebebcbc75f9587e620834cbc727ddc1cc49..cada376607f03da0e23005498c5c2fdefbf8f2b8 100644
+index 8fdde45e8a64cbeb29d062bd0ffdee536efa8033..c299e4195bed169c36efa75bf25095305471c883 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-@@ -42,7 +42,7 @@ class PaperEventManager {
+@@ -41,7 +41,7 @@ class PaperEventManager {
          }
  
          // Leaves start - skip bot
@@ -63,10 +63,10 @@ index 0df0970883af88090f80bd64e0f2a820f3aca1b5..69bd2110ac752f86276af15ca1dd48aa
          // Special case complex part, since there is no extra entity type for them
          if (entity instanceof EnderDragonPart complexPart) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 6d8399017e696be3bb794a0c012e25d4a3072c68..b1c63c955d7d4eeec298870bcbef053bd758b4ef 100644
+index f11ad0f2cdbb128dfa1f572903ad1b16b80c3e87..de83cbc631536aba76733e7cac0ea6b6780e3c14 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2054,7 +2054,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+@@ -2059,7 +2059,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
  
      @Override
      public boolean canSee(Player player) {

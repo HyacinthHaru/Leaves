@@ -30,12 +30,12 @@ index 6d0eb7c55856aff671204ddf390b2a1123b1441a..36f47ba41357773ef0b40b4a90040eec
 +    // Leaves end - Bytebuf API
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b1c63c955d7d4eeec298870bcbef053bd758b4ef..1eb60cdd0228aa67bff105380cac5a5503ffcddf 100644
+index de83cbc631536aba76733e7cac0ea6b6780e3c14..e8da6f28df74145a99c20b6313b0cfad4fd7b512 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -3392,4 +3392,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
-         this.getHandle().fixedPose = false;
-         this.getHandle().updatePlayerPose();
+@@ -3402,4 +3402,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
+     public PlayerPostEffects postEffects() {
+         return new PaperPlayerPostEffects(this.getHandle());
      }
 +
 +    // Leaves start - Bytebuf API

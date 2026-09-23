@@ -5,10 +5,10 @@ Subject: [PATCH] Leaves Fakeplayer
 
 
 diff --git a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-index a1c9726d25479b5326fe2fa2b0f5a98d6b2da4c5..8c3a9ebebcbc75f9587e620834cbc727ddc1cc49 100644
+index 8b7a15af1eb2cc0318e26d7199c8e684de63cd72..8fdde45e8a64cbeb29d062bd0ffdee536efa8033 100644
 --- a/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
 +++ b/src/main/java/io/papermc/paper/plugin/manager/PaperEventManager.java
-@@ -41,6 +41,22 @@ class PaperEventManager {
+@@ -40,6 +40,22 @@ class PaperEventManager {
              throw new IllegalStateException(event.getEventName() + " may only be triggered synchronously.");
          }
  
@@ -85,7 +85,7 @@ index 70686fe07897fe75c6cb45617ca0ecc001ff827a..2193ec2f68ad510e0e40cfbc64212ede
 +    // Leaves end - Bot API
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d6ec28fd0f10a501a0db9621baaaffb568cc6ae3..c03d06898a5419929942d5c80b58d3303f226672 100644
+index a26249fbae41b8915ab8b3e876485213ab992599..6aeed69b7fdbf6f213a61c091d4f0d5c3f59c8ea 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -248,7 +248,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
@@ -97,7 +97,7 @@ index d6ec28fd0f10a501a0db9621baaaffb568cc6ae3..c03d06898a5419929942d5c80b58d330
      }
  
      @Override
-@@ -1114,9 +1114,9 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1113,9 +1113,9 @@ public class CraftWorld extends CraftRegionAccessor implements World {
  
      @Override
      public List<Player> getPlayers() {
@@ -109,7 +109,7 @@ index d6ec28fd0f10a501a0db9621baaaffb568cc6ae3..c03d06898a5419929942d5c80b58d330
              HumanEntity bukkitEntity = human.getBukkitEntity();
  
              if ((bukkitEntity != null) && (bukkitEntity instanceof Player)) {
-@@ -1609,7 +1609,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1608,7 +1608,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
      public void playSound(final net.kyori.adventure.sound.Sound sound) {
          org.spigotmc.AsyncCatcher.catchOp("play sound"); // Paper
          final long seed = sound.seed().orElseGet(this.world.getRandom()::nextLong);
@@ -118,7 +118,7 @@ index d6ec28fd0f10a501a0db9621baaaffb568cc6ae3..c03d06898a5419929942d5c80b58d330
              player.connection.send(io.papermc.paper.adventure.PaperAdventure.asSoundPacket(sound, player.getX(), player.getY(), player.getZ(), seed, null));
          }
      }
-@@ -1637,7 +1637,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1636,7 +1636,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          org.spigotmc.AsyncCatcher.catchOp("play sound"); // Paper
          final long seed = sound.seed().orElseGet(this.getHandle().getRandom()::nextLong);
          if (emitter == net.kyori.adventure.sound.Sound.Emitter.self()) {
@@ -127,7 +127,7 @@ index d6ec28fd0f10a501a0db9621baaaffb568cc6ae3..c03d06898a5419929942d5c80b58d330
                  player.connection.send(io.papermc.paper.adventure.PaperAdventure.asSoundPacket(sound, player, seed, null));
              }
          } else if (emitter instanceof CraftEntity craftEntity) {
-@@ -1753,7 +1753,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1752,7 +1752,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
              Preconditions.checkArgument(particle.getDataType().isInstance(data), "data (%s) should be %s", data.getClass(), particle.getDataType());
          }
          this.getHandle().sendParticlesSource(
