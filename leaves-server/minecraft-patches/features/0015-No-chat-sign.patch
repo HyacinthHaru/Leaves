@@ -144,10 +144,10 @@ index 5c0073b9d7759877ad28b5ebbb32ac33db37a67c..e1148e6d5f0e7862af9208f679ade391
          if (packet == null) {
              return;
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 76f706eedf360a7d6ad11f5362444726ea8590bf..36701e84857f1a8b0ac140a407ad1920d4b6181b 100644
+index e86082acbd769134785a1a63300ce9d0088408b4..4472fd1b6f65f43d274caa717a0dd3240b94213e 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
-@@ -1191,7 +1191,7 @@ public abstract class PlayerList {
+@@ -1194,7 +1194,7 @@ public abstract class PlayerList {
      }
  
      public boolean verifyChatTrusted(final PlayerChatMessage message) {

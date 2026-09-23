@@ -6,10 +6,10 @@ Subject: [PATCH] MC Technical Survival Mode
 Will automatically overwrite some configuration after startup
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 02c01641e0ec92a2946f5e16aa846240f1a2074f..f367a451349b60a95ba5c163c89ad5c975c0ea8f 100644
+index 40f6c62ecef4745dc3c45204a2f237069f9a45a6..68ed2ae421c188f2047a9386d19341bde5dbbd65 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
-@@ -1806,7 +1806,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1819,7 +1819,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
      public boolean isInvulnerableTo(final ServerLevel level, final DamageSource source) {
          // Paper start - disable player cramming
          return (super.isInvulnerableTo(level, source) || this.isChangingDimension() && !source.is(DamageTypes.ENDER_PEARL) || !this.connection.hasClientLoaded())

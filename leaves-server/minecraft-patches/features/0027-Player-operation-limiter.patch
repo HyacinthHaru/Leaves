@@ -6,7 +6,7 @@ Subject: [PATCH] Player operation limiter
 This patch is Powered by plusls-carpet-addition(https://github.com/plusls/plusls-carpet-addition)
 
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 410f52ac15d00b0947ee86fefa4db6bf627bd25a..02c01641e0ec92a2946f5e16aa846240f1a2074f 100644
+index 7154e48c0df1faec7d03247e6a51605f3e39ffcf..40f6c62ecef4745dc3c45204a2f237069f9a45a6 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -446,6 +446,10 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -28,7 +28,7 @@ index 410f52ac15d00b0947ee86fefa4db6bf627bd25a..02c01641e0ec92a2946f5e16aa846240
          this.gameMode.tick();
          this.wardenSpawnTracker.tick();
          if (this.damageCooldownTime > 0) {
-@@ -3190,4 +3195,31 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -3203,4 +3208,31 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          return (org.bukkit.craftbukkit.entity.CraftPlayer) super.getBukkitEntity();
      }
      // CraftBukkit end
@@ -61,10 +61,10 @@ index 410f52ac15d00b0947ee86fefa4db6bf627bd25a..02c01641e0ec92a2946f5e16aa846240
 +    // Leaves end - player operation limiter
  }
 diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
-index 2ec5cc549ccaf5ecdf991241cfa2fc11cdec6aaa..6c37a115ef496415ba81193fba434712627e223a 100644
+index a901aa6547c52643d11249c201688341e2961f01..68213b3ebfcefd32d28a45cf389598892d071af2 100644
 --- a/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/net/minecraft/server/level/ServerPlayerGameMode.java
-@@ -349,6 +349,19 @@ public class ServerPlayerGameMode {
+@@ -350,6 +350,19 @@ public class ServerPlayerGameMode {
      }
  
      public void destroyAndAck(final BlockPos pos, final int sequence, final String exitId) {

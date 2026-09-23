@@ -103,7 +103,7 @@ index 3ee35885ea1f997bb5a36dd8d5f83b168883ba61..90bf5e76e1de86d0c4e721946fcca930
          this.bits = bits;
          this.values = values;
 diff --git a/net/minecraft/world/level/chunk/PalettedContainer.java b/net/minecraft/world/level/chunk/PalettedContainer.java
-index 9c4eb6c151307240f3fa7f5053d48bded003edbe..efc399d47300b97f7e47c158cf8ada1c3a31e6da 100644
+index 55037971b2631100ac5fd5fd8157adbbc0604d36..cef50352e69e86abd00525985bf5531329363f97 100644
 --- a/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/net/minecraft/world/level/chunk/PalettedContainer.java
 @@ -23,6 +23,22 @@ import net.minecraft.util.ZeroBitStorage;
@@ -129,8 +129,8 @@ index 9c4eb6c151307240f3fa7f5053d48bded003edbe..efc399d47300b97f7e47c158cf8ada1c
      private static final int MIN_PALETTE_BITS = 0;
      public volatile PalettedContainer.Data<T> data; // Paper - optimise collisions - public
      private final Strategy<T> strategy;
-@@ -348,6 +364,45 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
-     public synchronized PalettedContainerRO.PackedData<T> pack(final Strategy<T> strategy) { // Paper - synchronize
+@@ -370,6 +386,45 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+         // Paper start - optimise PalettedContainer packing
          this.acquire();
  
 +        // Leaves start - Gale - Lithium - faster chunk serialization
@@ -173,9 +173,9 @@ index 9c4eb6c151307240f3fa7f5053d48bded003edbe..efc399d47300b97f7e47c158cf8ada1c
 +        }
 +        // Leaves end - Gale - Lithium - faster chunk serialization
          try {
-             BitStorage currentStorage = this.data.storage;
-             Palette<T> currentPalette = this.data.palette;
-@@ -424,13 +479,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+             final PalettedContainer.Data<T> data = this.data;
+ 
+@@ -498,13 +553,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
  
      @Override
      public void count(final PalettedContainer.CountConsumer<T> output) {

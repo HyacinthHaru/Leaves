@@ -5,10 +5,10 @@ Subject: [PATCH] No block update command
 
 
 diff --git a/net/minecraft/server/level/ServerPlayerGameMode.java b/net/minecraft/server/level/ServerPlayerGameMode.java
-index 6c37a115ef496415ba81193fba434712627e223a..0ea5f0014327f5461f5ab49c599c6746ae0355d4 100644
+index 68213b3ebfcefd32d28a45cf389598892d071af2..7e9bdd65be85f180055261a8970d0d23fe4dddfc 100644
 --- a/net/minecraft/server/level/ServerPlayerGameMode.java
 +++ b/net/minecraft/server/level/ServerPlayerGameMode.java
-@@ -431,7 +431,7 @@ public class ServerPlayerGameMode {
+@@ -432,7 +432,7 @@ public class ServerPlayerGameMode {
          org.bukkit.block.BlockState bState = bblock.getState();
          this.level.captureDrops = new java.util.ArrayList<>();
          // CraftBukkit end

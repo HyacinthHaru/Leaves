@@ -249,7 +249,7 @@ index 3ed912fb19e1dfda7987fcf4b504aff5abccc46c..94aff7a843963254890fccda34e2cdaf
              }
          }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 1c4cbe6d74e616c8c997609f5ae073afd054ce7e..c13a6898eb3d2e9db7751a82ebb45873f87ebd0e 100644
+index 18a677b9f9cf21588d92ce1afef1946bc31b247c..16afdde0dd7ef748df2ed25c7e0ee868c40c5b37 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -239,6 +239,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -306,7 +306,7 @@ index 1c4cbe6d74e616c8c997609f5ae073afd054ce7e..c13a6898eb3d2e9db7751a82ebb45873
                  ServerLevel.this.updateSleepingPlayerList();
              }
 diff --git a/net/minecraft/server/level/ServerPlayer.java b/net/minecraft/server/level/ServerPlayer.java
-index 4227d7b652b989bb86bff6960545c323dc535e46..410f52ac15d00b0947ee86fefa4db6bf627bd25a 100644
+index 23b3a82ab3e1c6abc85000d9285470cb12300a6b..7154e48c0df1faec7d03247e6a51605f3e39ffcf 100644
 --- a/net/minecraft/server/level/ServerPlayer.java
 +++ b/net/minecraft/server/level/ServerPlayer.java
 @@ -236,7 +236,7 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
@@ -336,7 +336,7 @@ index 4227d7b652b989bb86bff6960545c323dc535e46..410f52ac15d00b0947ee86fefa4db6bf
          AABB aabb = new AABB(this.blockPosition()).inflate(32.0, 10.0, 32.0);
          this.level()
              .getEntitiesOfClass(Mob.class, aabb, EntitySelector.NO_SPECTATORS)
-@@ -1601,6 +1601,11 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
+@@ -1614,6 +1614,11 @@ public class ServerPlayer extends Player implements ca.spottedleaf.moonrise.patc
          this.lastSentHealth = -1.0F;
          this.lastSentFood = -1;
          this.teleportSpectators(transition, oldLevel);
@@ -414,7 +414,7 @@ index fb2c627a74e37f1270274d93d87f1262547dfd59..07e755ecbf55a18b63407483f91be88b
  
      // Paper start - utility method for common conversion back to the game profile
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 590aad336c4ef736d502583b942d846686a12a84..bd6dae0a4bdc2460f4dddfb30079bbf944e09db9 100644
+index 6472d94603551e7dd9ea4b18569177cb61da7440..e86082acbd769134785a1a63300ce9d0088408b4 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -250,6 +250,19 @@ public abstract class PlayerList {
@@ -485,7 +485,7 @@ index 590aad336c4ef736d502583b942d846686a12a84..bd6dae0a4bdc2460f4dddfb30079bbf9
      }
  
      public void broadcast(
-@@ -1243,7 +1273,13 @@ public abstract class PlayerList {
+@@ -1246,7 +1276,13 @@ public abstract class PlayerList {
      }
  
      public @Nullable ServerPlayer getPlayer(final UUID uuid) {

@@ -93,7 +93,7 @@ index 5dbb2849f32ac3418f8fdf76c04022d7e9dc165b..5c0073b9d7759877ad28b5ebbb32ac33
              bridge.removeChannel(channel);
          }
 diff --git a/net/minecraft/server/players/PlayerList.java b/net/minecraft/server/players/PlayerList.java
-index 42fd84f078eb3268d820de8f211e78023eab85f9..cbef5940042d644f715a5f728fbb82bc7a53546a 100644
+index a7f589970a04e520eb5cbe6dfeb333bc9cd479a8..5c66e506a622b39e4a81beead8d57ba384516751 100644
 --- a/net/minecraft/server/players/PlayerList.java
 +++ b/net/minecraft/server/players/PlayerList.java
 @@ -248,6 +248,8 @@ public abstract class PlayerList {
@@ -113,7 +113,7 @@ index 42fd84f078eb3268d820de8f211e78023eab85f9..cbef5940042d644f715a5f728fbb82bc
          // Paper end - Fix kick event leave message not being sent
          ServerLevel level = player.level();
          player.awardStat(Stats.LEAVE_GAME);
-@@ -1295,5 +1298,6 @@ public abstract class PlayerList {
+@@ -1298,5 +1301,6 @@ public abstract class PlayerList {
              player.connection.send(recipes);
              player.getRecipeBook().sendInitialRecipeBook(player);
          }
