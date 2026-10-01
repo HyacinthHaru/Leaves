@@ -162,7 +162,7 @@
      systemProperty("net.kyori.adventure.text.warnWhenLegacyFormattingDetected", true)
      if (providers.gradleProperty("paper.runDisableWatchdog").getOrElse("false") == "true") {
          systemProperty("disable.watchdog", true)
-@@ -309,29 +_,20 @@
+@@ -309,25 +_,20 @@
      classpath(tasks.createBundlerJar.flatMap { it.outputZip })
      mainClass.set(null as String?)
  }
@@ -200,8 +200,4 @@
 +    mainClass = "org.leavesmc.leaves.config.GlobalConfigCreator"
 +    classpath(sourceSets.main.map { it.runtimeClasspath })
  }
--
--tasks.named("publishToFill") {
--    notCompatibleWithConfigurationCache("Holds an HttpClient in a task field")
--}
 +// Leaves end - create config file
