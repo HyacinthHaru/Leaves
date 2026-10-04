@@ -5,14 +5,13 @@ Subject: [PATCH] Vanilla hopper
 
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 6dd2a4645f6327046a96d6903e10e5bee84ac21a..0e16303a856f644ae10772349446912e4a56441e 100644
+index d8060ad9f092d2f524170f8f692d236fb56ddb7f..be1de78f91d78541cfbfd3dda8bf3910786f61b1 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -298,36 +298,55 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -298,41 +298,60 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          ItemStack movedItem = origItemStack;
          final int originalItemCount = origItemStack.getCount();
          final int movedItemCount = Math.min(level.spigotConfig.hopperAmount, originalItemCount);
--        container.setChanged(); // original logic always marks source inv as changed even if no move happens.
 -        movedItem.setCount(movedItemCount);
 -
 -        if (!skipPullModeEventFire) {
@@ -40,7 +39,6 @@ index 6dd2a4645f6327046a96d6903e10e5bee84ac21a..0e16303a856f644ae10772349446912e
 -        }
 +            container.setItem(i, movedItem);
 +        } else {
-+            container.setChanged(); // original logic always marks source inv as changed even if no move happens.
 +            movedItem.setCount(movedItemCount);
  
 -        final ItemStack remainingItem = addItem(container, hopper, movedItem, null);
@@ -66,6 +64,8 @@ index 6dd2a4645f6327046a96d6903e10e5bee84ac21a..0e16303a856f644ae10772349446912e
 -            ignoreBlockEntityUpdates = false;
 -            container.setChanged();
 -            return true;
+-        }
+-        origItemStack.setCount(originalItemCount);
 +            final ItemStack remainingItem = addItem(container, hopper, movedItem, null);
 +            final int remainingItemCount = remainingItem.getCount();
 +            if (remainingItemCount != movedItemCount) {
@@ -74,7 +74,10 @@ index 6dd2a4645f6327046a96d6903e10e5bee84ac21a..0e16303a856f644ae10772349446912e
 +                if (!origItemStack.isEmpty()) {
 +                    origItemStack.setCount(originalItemCount - movedItemCount + remainingItemCount);
 +                }
-+
+ 
+-        Container updatedContainer = container;
+-        if (container instanceof net.minecraft.world.CompoundContainer compoundContainer) {
+-            updatedContainer = i >= compoundContainer.container1.getContainerSize() ? compoundContainer.container2 : compoundContainer.container1;
 +                ignoreBlockEntityUpdates = true;
 +                container.setItem(i, origItemStack);
 +                ignoreBlockEntityUpdates = false;
@@ -82,8 +85,14 @@ index 6dd2a4645f6327046a96d6903e10e5bee84ac21a..0e16303a856f644ae10772349446912e
 +                return true;
 +            }
 +            origItemStack.setCount(originalItemCount);
++
++            Container updatedContainer = container;
++            if (container instanceof net.minecraft.world.CompoundContainer compoundContainer) {
++                updatedContainer = i >= compoundContainer.container1.getContainerSize() ? compoundContainer.container2 : compoundContainer.container1;
++            }
++            updatedContainer.setChanged();
          }
--        origItemStack.setCount(originalItemCount);
+-        updatedContainer.setChanged();
 +        // Leaves end - fix vanilla hopper
  
          if (level.paperConfig().hopper.cooldownWhenFull && !org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode) { // Leaves - mc technical survival mode

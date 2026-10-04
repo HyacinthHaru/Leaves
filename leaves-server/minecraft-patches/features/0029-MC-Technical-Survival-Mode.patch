@@ -84,7 +84,7 @@ index cfc5d310bb3c8c13922bb6a5c2138650005ed5f1..27588b906682a415fc69fd8063bc982f
                  }
                  // Paper end - Fix bees aging inside; use exitTickCounter to keep actual bee life
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 8941fe049dd4b4ccc8b6695ce6a1dceab4678b13..584f0dd5b37f8dc4247fe6d78fa8e2cc414af83e 100644
+index c5cc9ff1dcaaf7aebd17ce06d5cb8c482eebcc68..02eafa0fb4dbe2e0b670a4f4597a2149576b5fd1 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -266,7 +266,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
@@ -96,9 +96,9 @@ index 8941fe049dd4b4ccc8b6695ce6a1dceab4678b13..584f0dd5b37f8dc4247fe6d78fa8e2cc
              hopper.setCooldown(level.spigotConfig.hopperTransfer);
          }
          return false;
-@@ -307,7 +307,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -312,7 +312,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          }
-         origItemStack.setCount(originalItemCount);
+         updatedContainer.setChanged();
  
 -        if (level.paperConfig().hopper.cooldownWhenFull) {
 +        if (level.paperConfig().hopper.cooldownWhenFull && !org.leavesmc.leaves.LeavesConfig.modify.mcTechnicalMode) { // Leaves - mc technical survival mode

@@ -53,7 +53,7 @@ index 4472fd1b6f65f43d274caa717a0dd3240b94213e..c1381c68c000649da16b19615da6e2c1
          }
  
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index 715e030a4e3d588c2cb7dc95daf7cfd4b6a84ee5..c5360fdc6157af8ef5d4aa3ca06fa4b1ff44a0c9 100644
+index 7a35378ee53d03bcef217b1755b1958d6aa652e9..39a54cd06dd6b69d3bf2a3b6060311e67391b5ad 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -276,7 +276,7 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
@@ -63,7 +63,7 @@ index 715e030a4e3d588c2cb7dc95daf7cfd4b6a84ee5..c5360fdc6157af8ef5d4aa3ca06fa4b1
 -    private BlockPos lastPos;
 +    public BlockPos lastPos; // Leaves - private -> public
      private Optional<BlockPos> lastClimbablePos = Optional.empty();
-     private @Nullable DamageSource lastDamageSource;
+     protected @Nullable DamageSource lastDamageSource; // Paper - Backport MC-311924 fix
      private long lastDamageStamp;
 diff --git a/net/minecraft/world/level/block/NetherPortalBlock.java b/net/minecraft/world/level/block/NetherPortalBlock.java
 index 28ab25af5929991622629f056f32b1184853cb24..67a069bfdbe6edfec6c6913469b62a130d74a052 100644
