@@ -100,7 +100,7 @@
      runtimeOnly("com.mysql:mysql-connector-j:9.2.0")
      runtimeOnly("com.lmax:disruptor:3.4.4")
 @@ -159,26 +_,36 @@
-     implementation("me.lucko:spark-paper:1.10.180")
+     implementation("me.lucko:spark-paper:1.10.191")
  }
  
 +// Leaves start - hide irrelevant compilation warnings
@@ -143,7 +143,7 @@
              "Build-Time" to buildTime.toString(),
              "Git-Branch" to gitBranch,
 @@ -237,7 +_,7 @@
-     jvmArgumentProviders.add(provider)
+     )
  }
  
 -val generatedDir: java.nio.file.Path = layout.projectDirectory.dir("src/generated/java").asFile.toPath()

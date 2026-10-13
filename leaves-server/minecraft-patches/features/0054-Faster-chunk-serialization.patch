@@ -13,10 +13,10 @@ As part of: Lithium (https://github.com/CaffeineMC/lithium)
 Licensed under: LGPL-3.0 (https://www.gnu.org/licenses/lgpl-3.0.html)
 
 diff --git a/net/minecraft/util/BitStorage.java b/net/minecraft/util/BitStorage.java
-index ffe51944b729e52f9ef3a6cbc0f93e96052a5b7c..317fc724160ce5748b7e8fc03bc8cc618472361e 100644
+index a8205af32cf1f19670b8aa140727528eafb0e940..11a50ff2a71f94477226d6986ac38803e56d332a 100644
 --- a/net/minecraft/util/BitStorage.java
 +++ b/net/minecraft/util/BitStorage.java
-@@ -40,4 +40,6 @@ public interface BitStorage extends ca.spottedleaf.moonrise.patches.block_counti
+@@ -59,4 +59,6 @@ public interface BitStorage extends ca.spottedleaf.moonrise.patches.block_counti
          return ret;
      }
      // Paper end - block counting
@@ -24,10 +24,10 @@ index ffe51944b729e52f9ef3a6cbc0f93e96052a5b7c..317fc724160ce5748b7e8fc03bc8cc61
 +    <T> void compact(net.minecraft.world.level.chunk.Palette<T> srcPalette, net.minecraft.world.level.chunk.Palette<T> dstPalette, short[] out, net.minecraft.world.level.chunk.PalettedContainer<T> resizeHandler); // Leaves - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/util/SimpleBitStorage.java b/net/minecraft/util/SimpleBitStorage.java
-index ff663f8b15c10662ee39c8f27140d8fcda9de715..11e6cbbabc2404b61d9e34a84c28ee9048bfd72f 100644
+index bc48900cc4aa557852a9279649aac4e336f32007..cb4313d5bb29c7e631f1544f0c838ae39a0dd737 100644
 --- a/net/minecraft/util/SimpleBitStorage.java
 +++ b/net/minecraft/util/SimpleBitStorage.java
-@@ -479,4 +479,35 @@ public class SimpleBitStorage implements BitStorage {
+@@ -508,4 +508,35 @@ public class SimpleBitStorage implements BitStorage {
              super(message);
          }
      }
@@ -64,10 +64,10 @@ index ff663f8b15c10662ee39c8f27140d8fcda9de715..11e6cbbabc2404b61d9e34a84c28ee90
 +    // Leaves end - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/util/ZeroBitStorage.java b/net/minecraft/util/ZeroBitStorage.java
-index a6b5e56465a867a830a920cb4745ee85190b2f0a..cb9d4e0ae75311281b0c2f0100ca1b699777726b 100644
+index 6111ecdfaac7c003859040d49d91cc7413ad9482..ca9ef1720ccc732880057012f80d0f234b4e0e40 100644
 --- a/net/minecraft/util/ZeroBitStorage.java
 +++ b/net/minecraft/util/ZeroBitStorage.java
-@@ -85,4 +85,6 @@ public class ZeroBitStorage implements BitStorage {
+@@ -92,4 +92,6 @@ public class ZeroBitStorage implements BitStorage {
          return ret;
      }
      // Paper end - block counting
@@ -75,19 +75,10 @@ index a6b5e56465a867a830a920cb4745ee85190b2f0a..cb9d4e0ae75311281b0c2f0100ca1b69
 +    @Override public <T> void compact(net.minecraft.world.level.chunk.Palette<T> srcPalette, net.minecraft.world.level.chunk.Palette<T> dstPalette, short[] out, net.minecraft.world.level.chunk.PalettedContainer<T> resizeHandler) {} // Leaves - Gale - Lithium - faster chunk serialization
  }
 diff --git a/net/minecraft/world/level/chunk/HashMapPalette.java b/net/minecraft/world/level/chunk/HashMapPalette.java
-index 3ee35885ea1f997bb5a36dd8d5f83b168883ba61..90bf5e76e1de86d0c4e721946fcca930c9ba9b15 100644
+index fde0a0e4b2a3b2bd4f2ac893703c70dd55b1ddc2..b783d481062e0a590eeb3224e0ec88fc9e261996 100644
 --- a/net/minecraft/world/level/chunk/HashMapPalette.java
 +++ b/net/minecraft/world/level/chunk/HashMapPalette.java
-@@ -14,7 +14,7 @@ public class HashMapPalette<T> implements Palette<T>, ca.spottedleaf.moonrise.pa
- 
-     // Paper start - optimise palette reads
-     @Override
--    public final T[] moonrise$getRawPalette(final ca.spottedleaf.moonrise.patches.fast_palette.FastPaletteData<T> container) {
-+    public T[] moonrise$getRawPalette(final ca.spottedleaf.moonrise.patches.fast_palette.FastPaletteData<T> container) { // Leaves - Leaf - Lithium - faster hash palette - public final -> public
-         return ((ca.spottedleaf.moonrise.patches.fast_palette.FastPalette<T>)this.values).moonrise$getRawPalette(container);
-     }
-     // Paper end - optimise palette reads
-@@ -28,6 +28,14 @@ public class HashMapPalette<T> implements Palette<T>, ca.spottedleaf.moonrise.pa
+@@ -21,6 +21,14 @@ public class HashMapPalette<T> implements Palette<T> {
          this(bits, CrudeIncrementalIntIdentityHashBiMap.create((1 << bits) + 1)); // Paper - Perf: Avoid unnecessary resize operation in CrudeIncrementalIntIdentityHashBiMap
      }
  
@@ -103,7 +94,7 @@ index 3ee35885ea1f997bb5a36dd8d5f83b168883ba61..90bf5e76e1de86d0c4e721946fcca930
          this.bits = bits;
          this.values = values;
 diff --git a/net/minecraft/world/level/chunk/PalettedContainer.java b/net/minecraft/world/level/chunk/PalettedContainer.java
-index 55037971b2631100ac5fd5fd8157adbbc0604d36..cef50352e69e86abd00525985bf5531329363f97 100644
+index f49af3efc36d2448e006a721ea4f9a4518aea418..e632ef4b30aba823a136724f46a28833e5fe6744 100644
 --- a/net/minecraft/world/level/chunk/PalettedContainer.java
 +++ b/net/minecraft/world/level/chunk/PalettedContainer.java
 @@ -23,6 +23,22 @@ import net.minecraft.util.ZeroBitStorage;
@@ -128,8 +119,8 @@ index 55037971b2631100ac5fd5fd8157adbbc0604d36..cef50352e69e86abd00525985bf55313
 +
      private static final int MIN_PALETTE_BITS = 0;
      public volatile PalettedContainer.Data<T> data; // Paper - optimise collisions - public
-     private final Strategy<T> strategy;
-@@ -370,6 +386,45 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+     public final Strategy<T> strategy; // Paper - optimise chunk generation - public
+@@ -348,6 +364,45 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
          // Paper start - optimise PalettedContainer packing
          this.acquire();
  
@@ -175,7 +166,7 @@ index 55037971b2631100ac5fd5fd8157adbbc0604d36..cef50352e69e86abd00525985bf55313
          try {
              final PalettedContainer.Data<T> data = this.data;
  
-@@ -498,13 +553,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
+@@ -476,13 +531,37 @@ public class PalettedContainer<T> implements PaletteResize<T>, PalettedContainer
  
      @Override
      public void count(final PalettedContainer.CountConsumer<T> output) {
