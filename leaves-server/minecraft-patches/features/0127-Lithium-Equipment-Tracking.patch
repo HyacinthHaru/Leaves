@@ -195,7 +195,7 @@ index 1aa888376784dfc9ddd9c4e2493031ff2a564b59..6a4bbaf6c7422921bfb844dd057dff75
 +    // Leaves end - Lithium - equipment tracking
  }
 diff --git a/net/minecraft/world/entity/LivingEntity.java b/net/minecraft/world/entity/LivingEntity.java
-index ac2895451e2cd7c9f8532e2a3c4a5f6d8d01010c..fe83ca36a94e8d842bfe0b98e6f13576d10d6146 100644
+index b2794f12cf474f91881bc9ea3f198ee2c3cb151d..4f11baa19ef00d268ff4483f2bcf0fccd3344243 100644
 --- a/net/minecraft/world/entity/LivingEntity.java
 +++ b/net/minecraft/world/entity/LivingEntity.java
 @@ -448,9 +448,17 @@ public abstract class LivingEntity extends Entity implements Attackable, Waypoin
@@ -242,7 +242,7 @@ index ac2895451e2cd7c9f8532e2a3c4a5f6d8d01010c..fe83ca36a94e8d842bfe0b98e6f13576
          // Paper start - EntityEquipmentChangedEvent
          record EquipmentChangeImpl(org.bukkit.inventory.ItemStack oldItem, org.bukkit.inventory.ItemStack newItem) implements io.papermc.paper.event.entity.EntityEquipmentChangedEvent.EquipmentChange {
 diff --git a/net/minecraft/world/entity/decoration/ArmorStand.java b/net/minecraft/world/entity/decoration/ArmorStand.java
-index 797da96d7e3e6c447baafc6f209269b5a9646d93..ab28c7953cedef595276c2365195289b24b1ed6a 100644
+index 9c5dce5eb06a63536d95da3477571fd24aec93ec..d66e343818b8d7811a3d340938d4dff1e2c8797e 100644
 --- a/net/minecraft/world/entity/decoration/ArmorStand.java
 +++ b/net/minecraft/world/entity/decoration/ArmorStand.java
 @@ -93,7 +93,7 @@ public class ArmorStand extends LivingEntity {
@@ -264,4 +264,4 @@ index 797da96d7e3e6c447baafc6f209269b5a9646d93..ab28c7953cedef595276c2365195289b
 +                if (org.leavesmc.leaves.LeavesConfig.performance.equipmentTracking) this.noTickEquipmentDirty = false;  // Leaves - Lithium - equipment tracking
              }
  
-             return;
+             // Still tick for death, otherwise leaves permanent entities

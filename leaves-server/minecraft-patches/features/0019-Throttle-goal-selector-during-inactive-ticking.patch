@@ -5,22 +5,15 @@ Subject: [PATCH] Throttle goal selector during inactive ticking
 
 
 diff --git a/net/minecraft/world/entity/Mob.java b/net/minecraft/world/entity/Mob.java
-index 648826138efdc48487c78133893394c9e4908d3f..cad6c58ff35c7f60580e816a6beb3ad464c32935 100644
+index 92ce15b22517bda5033e6377c76abaa6a9d68d03..9fc8b946bcd3c8e501f77385f0a1b816cc43d799 100644
 --- a/net/minecraft/world/entity/Mob.java
 +++ b/net/minecraft/world/entity/Mob.java
-@@ -216,12 +216,14 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
-         return this.lookControl;
-     }
- 
-+    int inactiveTickDisableCounter = 0; // Leaves - throttle inactive goal selector ticking
-     // Paper start
-     @Override
+@@ -224,7 +224,7 @@ public abstract class Mob extends LivingEntity implements Targeting, EquipmentUs
      public void inactiveTick() {
          super.inactiveTick();
          if (!this.aware) return; // Paper - Do not tick AI for inactive unaware mobs
--        if (this.goalSelector.inactiveTick()) {
-+        boolean isThrottled = org.leavesmc.leaves.LeavesConfig.performance.throttleInactiveGoalSelectorTick && (inactiveTickDisableCounter++ % 20 != 0); // Leaves - throttle inactive goal selector ticking
-+        if (this.goalSelector.inactiveTick() && !isThrottled) { // Leaves - throttle inactive goal selector ticking
+-        final boolean isThrottled = this.level().paperConfig().entities.behavior.inactiveMobGoalSelectorThrottleRate.enabled() && inactiveTickDisableCounter++ % this.level().paperConfig().entities.behavior.inactiveMobGoalSelectorThrottleRate.intValue() != 0; // Paper - Throttle inactive goal selector ticking
++        final boolean isThrottled = org.leavesmc.leaves.LeavesConfig.performance.throttleInactiveGoalSelectorTick ? (inactiveTickDisableCounter++ % 20 != 0) : this.level().paperConfig().entities.behavior.inactiveMobGoalSelectorThrottleRate.enabled() && inactiveTickDisableCounter++ % this.level().paperConfig().entities.behavior.inactiveMobGoalSelectorThrottleRate.intValue() != 0; // Paper - Throttle inactive goal selector ticking // Leaves - throttle inactive goal selector ticking
+         if (this.goalSelector.inactiveTick() && !isThrottled) {
              this.goalSelector.tick();
          }
-         if (this.targetSelector.inactiveTick()) {

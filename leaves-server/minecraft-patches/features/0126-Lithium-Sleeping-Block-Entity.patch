@@ -86,7 +86,7 @@ index d8cacf975c2c35e5fe7370bd5b007fbe0d4bd031..335e52e61606fb1a13f984026ead1044
          }
      }
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index 54f8143ec7891cc2546b9011c55fec79cf96f0d7..06a1de6af9b579b3cb6720b8561b45b9426914ab 100644
+index ad7c0bbd4066c5445eafc7785c12da4f07876d93..65b61252b825e8c7d80d33b96ecf1ebf1441e635 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -2843,6 +2843,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -111,7 +111,7 @@ index 99449ab429ce545cf8f6f72bd1baad83b1461365..b3585aee0393142366e583fc2c8fb207
  
      int getContainerSize();
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 8030588317718d0b82919f7e4be83e6cd85e34a9..76f5cf941a53d8de950ebe524ecddf050df7c4ae 100644
+index 9b59151c0a3cb4d54c6e7bfa431514b9c5ef2534..b0b50244761df8a091aebc8135a4ba85adaad010 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -328,7 +328,7 @@ public abstract class Entity
@@ -123,7 +123,7 @@ index 8030588317718d0b82919f7e4be83e6cd85e34a9..76f5cf941a53d8de950ebe524ecddf05
      private final VecDeltaCodec packetPositionCodec = new VecDeltaCodec();
      public boolean needsSync;
      public boolean syncPosition;
-@@ -5281,6 +5281,19 @@ public abstract class Entity
+@@ -5277,6 +5277,19 @@ public abstract class Entity
              this.setBoundingBox(this.makeBoundingBox());
          }
          // Paper end - Block invalid positions and bounding box
@@ -144,7 +144,7 @@ index 8030588317718d0b82919f7e4be83e6cd85e34a9..76f5cf941a53d8de950ebe524ecddf05
  
      public void checkDespawn() {
 diff --git a/net/minecraft/world/entity/item/ItemEntity.java b/net/minecraft/world/entity/item/ItemEntity.java
-index 0d06b68d9f7bf4d02562bbe2c351c2f9e7b24be7..1853182c0d333da9d687d762de4ce456dbf7b45f 100644
+index 1c618bcf9b832d7e5b22923750f30b7e41166779..74d08d167c97e42c116c851ca840cc8f4608e2c1 100644
 --- a/net/minecraft/world/entity/item/ItemEntity.java
 +++ b/net/minecraft/world/entity/item/ItemEntity.java
 @@ -36,8 +36,12 @@ import net.minecraft.world.level.storage.ValueInput;
@@ -611,7 +611,7 @@ index 2cc394a000562e06448205e456aafc857d740e7c..37c5d59a9a36640d1d239ef2da957b84
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java b/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
-index f860fcc8d102bd4b231396281294ae6e790afc2b..a389f48dedd8b33e615ace2d200ca3f48d86761d 100644
+index da4ca2b223941d75960e05e7a7a65a0b2a78b37c..fe78411b0f60b96c93472afe74eea46c8c986c2c 100644
 --- a/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity.java
 @@ -44,7 +44,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ints.ResolvableIn
@@ -639,7 +639,7 @@ index f860fcc8d102bd4b231396281294ae6e790afc2b..a389f48dedd8b33e615ace2d200ca3f4
      }
  
      private static void consumeFuel(final ServerLevel level, final BlockPos pos, final NonNullList<ItemStack> items, final ItemStack fuel) {
-@@ -544,4 +546,53 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
+@@ -549,4 +551,53 @@ public abstract class AbstractFurnaceBlockEntity extends BaseContainerBlockEntit
              this.getRecipesToAwardAndPopExperience(serverLevel, Vec3.atCenterOf(pos));
          }
      }
@@ -694,7 +694,7 @@ index f860fcc8d102bd4b231396281294ae6e790afc2b..a389f48dedd8b33e615ace2d200ca3f4
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/entity/BarrelBlockEntity.java b/net/minecraft/world/level/block/entity/BarrelBlockEntity.java
-index ec70066fff5bf41d4a18ab89e6c538bab4ff343f..53555a62ff89a3bedc6366aa12f118fa7daf25ac 100644
+index 4b63c995aa1460e0a5023fcbfb35cff36d587208..c7fdfd46836234d5db14e5056a394bb93aeeed44 100644
 --- a/net/minecraft/world/level/block/entity/BarrelBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/BarrelBlockEntity.java
 @@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
@@ -1139,7 +1139,7 @@ index 3bd910ae83694a6d19f53dcc4b74598ec0b62b17..662a147b8c4396ce12fef449ecaa82d0
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/entity/ChestBlockEntity.java b/net/minecraft/world/level/block/entity/ChestBlockEntity.java
-index b0deb060e8931ff0614bde10fafcc0e96d68e824..b336454dfe8715ab36c0ab988dc93096e9d3f584 100644
+index 4b918b53ab0d95a95b68a980a0921c4fa8926f67..76c4f409452dffd5ddb36089d3774eb9b70e37d3 100644
 --- a/net/minecraft/world/level/block/entity/ChestBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/ChestBlockEntity.java
 @@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.properties.ChestType;
@@ -1359,7 +1359,7 @@ index a4e92f3011675def546d99eedc3fda2e26cdd0ef..3214b21bf42394e44051b878c2f5c0e5
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/entity/EnderChestBlockEntity.java b/net/minecraft/world/level/block/entity/EnderChestBlockEntity.java
-index 6109d8da984b398bb1eb6cd6ab9a55f0511a615c..74d5e40485514e2bfd97339f33c959cf8428ea8b 100644
+index c669d0ad531fc43bb7799bd011ed73ccf7b6244a..80614ca6a6207278bc91b7f5a402bb08b268b3f5 100644
 --- a/net/minecraft/world/level/block/entity/EnderChestBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/EnderChestBlockEntity.java
 @@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Blocks;
@@ -1370,7 +1370,7 @@ index 6109d8da984b398bb1eb6cd6ab9a55f0511a615c..74d5e40485514e2bfd97339f33c959cf
 +public class EnderChestBlockEntity extends BlockEntity implements LidBlockEntity, org.leavesmc.leaves.lithium.common.block.entity.SleepingBlockEntity { // Leaves - Lithium Sleeping Block Entity
      private final ChestLidController chestLidController = new ChestLidController();
      public final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
-         // Paper start - delay open/close callbacks
+         // Paper start - delay close callbacks
 @@ -66,11 +66,13 @@ public class EnderChestBlockEntity extends BlockEntity implements LidBlockEntity
  
      public static void lidAnimateTick(final Level level, final BlockPos pos, final BlockState state, final EnderChestBlockEntity entity) {
@@ -1423,7 +1423,7 @@ index 6109d8da984b398bb1eb6cd6ab9a55f0511a615c..74d5e40485514e2bfd97339f33c959cf
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659894927b0 100644
+index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc9c17aa8e 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -27,8 +27,29 @@ import net.minecraft.world.level.storage.ValueInput;
@@ -1489,7 +1489,7 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
                  return true;
              }
          }
-@@ -481,12 +512,20 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -473,12 +504,20 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              }
          }
          // Leaves end - hopper counter
@@ -1511,7 +1511,7 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
          if (isFullContainer(container, direction)) {
              return false;
          }
-@@ -561,10 +600,18 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -585,10 +624,18 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      public static boolean suckInItems(final Level level, final Hopper hopper) {
          BlockPos blockPos = BlockPos.containing(hopper.getLevelX(), hopper.getLevelY() + 1.0, hopper.getLevelZ());
          BlockState blockState = level.getBlockState(blockPos);
@@ -1528,10 +1528,10 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
 +                }
 +            }
 +            // Leaves end - Lithium Sleeping Block Entity
+             final long disallowedSlots = callPrepareTransferEvent(level, container, hopper, false); // Paper - Add PrepareHopperTransferEvent
  
              for (int slot : getSlots(container, direction)) {
-                 if (tryTakeInItemFromSlot(hopper, container, slot, direction, level)) { // Spigot
-@@ -578,7 +625,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -604,7 +651,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
                  && (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.oldHopperSuckInBehavior && blockState.isCollisionShapeFullBlock(level, blockPos))
                  && !blockState.is(BlockTags.DOES_NOT_BLOCK_HOPPERS); // Leaves - oldHopperSuckInBehavior
              if (!isBlocked) {
@@ -1540,7 +1540,7 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
                      if (addItem(hopper, entity)) {
                          return true;
                      }
-@@ -701,7 +748,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -727,7 +774,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      // CraftBukkit start
      private static @Nullable Container runHopperInventorySearchEvent(
@@ -1549,7 +1549,7 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
          org.bukkit.craftbukkit.block.CraftBlock hopper,
          org.bukkit.craftbukkit.block.CraftBlock searchLocation,
          org.bukkit.event.inventory.HopperInventorySearchEvent.ContainerType containerType
-@@ -827,6 +874,19 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -853,6 +900,19 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      }
  
      public void setCooldown(final int time) {
@@ -1569,7 +1569,7 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
          this.cooldownTime = time;
      }
  
-@@ -846,6 +906,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -872,6 +932,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      @Override
      protected void setItems(final NonNullList<ItemStack> items) {
          this.items = items;
@@ -1577,7 +1577,7 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
      }
  
      public static void entityInside(final Level level, final BlockPos pos, final BlockState blockState, final Entity entity, final HopperBlockEntity hopper) {
-@@ -860,4 +921,757 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -886,4 +947,761 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      protected AbstractContainerMenu createMenu(final int containerId, final Inventory inventory) {
          return new HopperMenu(containerId, inventory, this);
      }
@@ -2236,9 +2236,11 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
 +        skipPushModeEventFire = skipHopperEvents;
 +        //noinspection ConstantConditions
 +        if (!(hopperBlockEntity.insertInventory == insertInventory && hopperBlockEntity.insertStackList.getFullSlots() == hopperBlockEntity.insertStackList.size())) {
++            final long disallowedSlots = callPrepareTransferEvent(world, hopperBlockEntity, insertInventory, true);
 +            Direction fromDirection = hopperBlockEntity.facing.getOpposite();
 +            int size = hopperStackList.size();
 +            for (int i = 0; i < size; ++i) {
++                if (isSlotDisallowed(disallowedSlots, i)) continue;
 +                ItemStack transferStack = hopperStackList.get(i);
 +                if (!transferStack.isEmpty()) {
 +                    if (!skipPushModeEventFire && canTakeItemFromContainer(insertInventory, hopperBlockEntity, transferStack, i, Direction.DOWN)) {
@@ -2297,8 +2299,10 @@ index 105d93fdeb7f17ac48a50ab03e053723c4831dce..621c4bb4f13185a9d2230492c5579659
 +
 +        int[] availableSlots = from instanceof WorldlyContainer ? ((WorldlyContainer) from).getSlotsForFace(Direction.DOWN) : null;
 +        int fromSize = availableSlots != null ? availableSlots.length : from.getContainerSize();
++        final long disallowedSlots = callPrepareTransferEvent(world, from, to, false);
 +        for (int i = 0; i < fromSize; i++) {
 +            int fromSlot = availableSlots != null ? availableSlots[i] : i;
++            if (isSlotDisallowed(disallowedSlots, fromSlot)) continue;
 +            ItemStack itemStack = fromStackList.get(fromSlot);
 +            if (!itemStack.isEmpty() && canTakeItemFromContainer(to, from, itemStack, fromSlot, Direction.DOWN)) {
 +                if (!skipPullModeEventFire) {
@@ -2413,7 +2417,7 @@ index 34f368916233fc9e8982e8f54df786e23ac58bc9..ba1d58266f3078f894ffa7314f9a76ff
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 1df61e76c24f213caf61a0b3d0c22a44404f55c0..3393e306ab6543bce49d63b01642e0df85bba3b7 100644
+index 228c15e06e107f47f036db2418967a759784ae25..f421060ac40b530c1cc305ca8ac4d7980930c9ad 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -82,7 +82,7 @@ import net.minecraft.world.phys.shapes.Shapes;
@@ -2434,10 +2438,10 @@ index 1df61e76c24f213caf61a0b3d0c22a44404f55c0..3393e306ab6543bce49d63b01642e0df
      }
  
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 973f7bd48b1e7fbc255c310bbfc5a21926c872b2..b1878c200d06e85d2fcc464d392f3da96ab6b7a0 100644
+index fda97723f47b4671028cfdcfdfebe2d484bbf422..919de07045a5c458aea8950e1e55180a2b922935 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -915,10 +915,12 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -920,10 +920,12 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
              this.tickersInLevel.compute(blockEntity.getBlockPos(), (blockPos, existingTicker) -> {
                  TickingBlockEntity actualTicker = this.createTicker(blockEntity, ticker);
                  if (existingTicker != null) {
@@ -2450,7 +2454,7 @@ index 973f7bd48b1e7fbc255c310bbfc5a21926c872b2..b1878c200d06e85d2fcc464d392f3da9
                      this.level.addBlockEntityTicker(result);
                      return result;
                  } else {
-@@ -1017,14 +1019,14 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -1022,14 +1024,14 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
          void run(LevelChunk levelChunk);
      }
  

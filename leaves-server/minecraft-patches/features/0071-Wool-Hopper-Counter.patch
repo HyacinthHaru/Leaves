@@ -6,7 +6,7 @@ Subject: [PATCH] Wool Hopper Counter
 This patch is Powered by fabric-carpet(https://github.com/gnembon/fabric-carpet)
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index c1b876d3066d179deef08beb7b97222afd47f89c..6dd2a4645f6327046a96d6903e10e5bee84ac21a 100644
+index 71ced1427118149e62803d3882c82d52946ea863..440d0d7943f3355cb31cabf0ea0b71f37b15a919 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -197,8 +197,30 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
@@ -40,7 +40,7 @@ index c1b876d3066d179deef08beb7b97222afd47f89c..6dd2a4645f6327046a96d6903e10e5be
                  setChanged(level, pos, state);
                      // Leaves start - pca
                      if (org.leavesmc.leaves.LeavesConfig.protocol.pca.enable) {
-@@ -423,6 +445,13 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -415,6 +437,13 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      // Paper end - Perf: Optimize Hoppers
  
      private static boolean ejectItems(final Level level, final BlockPos blockPos, final HopperBlockEntity self) {
@@ -54,7 +54,7 @@ index c1b876d3066d179deef08beb7b97222afd47f89c..6dd2a4645f6327046a96d6903e10e5be
          Container container = getAttachedContainer(level, blockPos, self);
          if (container == null) {
              return false;
-@@ -436,6 +465,26 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -428,6 +457,26 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          return hopperPush(level, container, direction, self); // Paper - Perf: Optimize Hoppers
      }
  
@@ -78,10 +78,10 @@ index c1b876d3066d179deef08beb7b97222afd47f89c..6dd2a4645f6327046a96d6903e10e5be
 +    }
 +    // Leaves end - hopper counter
 +
-     private static int[] getSlots(final Container container, final Direction direction) {
-         if (container instanceof WorldlyContainer worldlyContainer) {
-             return worldlyContainer.getSlotsForFace(direction);
-@@ -521,6 +570,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+     // Paper start - Add PrepareHopperTransferEvent
+     private static long callPrepareTransferEvent(final Level level, final Container source, final Container destination, final boolean didSourceInitiate) {
+         if (io.papermc.paper.event.inventory.PrepareHopperTransferEvent.getHandlerList().getRegisteredListeners().length == 0 || level.paperConfig().hopper.disableMoveEvent || source.isEmpty()) {
+@@ -547,6 +596,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      }
  
      public static boolean addItem(final Container container, final ItemEntity entity) {
