@@ -593,6 +593,28 @@ index fc3fcb07cec78126c1bf7ae37065db7a5cfa232f..83d60c530a54f07264e2d160b3cb3983
      @Override
      protected void tick(final BlockState state, final ServerLevel level, final BlockPos pos, final RandomSource random) {
          if (state.getValue(SHRIEKING)) {
+diff --git a/net/minecraft/world/level/block/ShelfBlock.java b/net/minecraft/world/level/block/ShelfBlock.java
+index 683e94d86b1e0eb0a287608270ec8e36cdef6ae3..e9201fd43c9d4a8dc99c0d51996dd74e4d0874eb 100644
+--- a/net/minecraft/world/level/block/ShelfBlock.java
++++ b/net/minecraft/world/level/block/ShelfBlock.java
+@@ -91,6 +91,17 @@ public class ShelfBlock extends BaseEntityBlock implements SelectableSlotContain
+         builder.add(FACING, POWERED, SIDE_CHAIN_PART, WATERLOGGED);
+     }
+ 
++    // Leaves start - behaviour 1.21.1-
++    @Override
++    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
++        Containers.dropContentsOnDestroy(state, newState, level, pos);
++        super.onRemove(state, level, pos, newState, isMoving);
++        if (!state.is(newState.getBlock())) {
++            this.updateNeighborsAfterPoweringDown(level, pos, state);
++        }
++    }
++    // Leaves end - behaviour 1.21.1-
++
+     @Override
+     protected void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel level, final BlockPos pos, final boolean movedByPiston) {
+         Containers.updateNeighboursAfterDestroy(state, level, pos);
 diff --git a/net/minecraft/world/level/block/ShulkerBoxBlock.java b/net/minecraft/world/level/block/ShulkerBoxBlock.java
 index 52eda38b5cf1d7e8278f19136c9e12cbc4a81db4..9da05b48377f0f8e257a4c394661f1f3cc9a2ea8 100644
 --- a/net/minecraft/world/level/block/ShulkerBoxBlock.java
@@ -732,7 +754,7 @@ index c00cbfa4d0238ae42a91023a29d674ae98de6400..899ed80405935bcbb3a43b1203a1693c
      protected void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel level, final BlockPos pos, final boolean movedByPiston) {
          BlockPos basePos = pos.relative(state.getValue(FACING).getOpposite());
 diff --git a/net/minecraft/world/level/block/state/BlockBehaviour.java b/net/minecraft/world/level/block/state/BlockBehaviour.java
-index 1e755949257c7a9dfbd0f4921e7336aa915dba90..1df61e76c24f213caf61a0b3d0c22a44404f55c0 100644
+index b6b3dc5411f55830c6f09adb1bfb5b7ee4f5864d..228c15e06e107f47f036db2418967a759784ae25 100644
 --- a/net/minecraft/world/level/block/state/BlockBehaviour.java
 +++ b/net/minecraft/world/level/block/state/BlockBehaviour.java
 @@ -162,6 +162,15 @@ public abstract class BlockBehaviour implements FeatureElement {
@@ -751,7 +773,7 @@ index 1e755949257c7a9dfbd0f4921e7336aa915dba90..1df61e76c24f213caf61a0b3d0c22a44
      protected void affectNeighborsAfterRemoval(final BlockState state, final ServerLevel level, final BlockPos pos, final boolean movedByPiston) {
      }
  
-@@ -898,6 +907,12 @@ public abstract class BlockBehaviour implements FeatureElement {
+@@ -951,6 +960,12 @@ public abstract class BlockBehaviour implements FeatureElement {
              // CraftBukkit end
          }
  
@@ -765,10 +787,10 @@ index 1e755949257c7a9dfbd0f4921e7336aa915dba90..1df61e76c24f213caf61a0b3d0c22a44
              this.getBlock().affectNeighborsAfterRemoval(this.asState(), level, pos, movedByPiston);
          }
 diff --git a/net/minecraft/world/level/chunk/LevelChunk.java b/net/minecraft/world/level/chunk/LevelChunk.java
-index 1862b5fa8428bd531ee9a712e5550d5232c0b9b6..19eb078ec09c83e9113bb8edce58e505584a8b54 100644
+index 49f11156bf4c02b89b2b074b0a315a23ad10aed1..097386d060368cc4ce9eae4d3bcf20e256bc0d13 100644
 --- a/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -402,6 +402,8 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -407,6 +407,8 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
          boolean blockChanged = !oldState.is(newBlock);
          boolean movedByPiston = (flags & Block.UPDATE_MOVE_BY_PISTON) != 0;
          boolean sideEffects = (flags & Block.UPDATE_SKIP_BLOCK_ENTITY_SIDEEFFECTS) == 0;
@@ -777,7 +799,7 @@ index 1862b5fa8428bd531ee9a712e5550d5232c0b9b6..19eb078ec09c83e9113bb8edce58e505
          if (blockChanged && oldState.hasBlockEntity() && !state.shouldChangedStateKeepBlockEntity(oldState)) {
              if (!this.level.isClientSide() && sideEffects) {
                  BlockEntity blockEntity = this.level.getBlockEntity(pos);
-@@ -418,6 +420,10 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
+@@ -423,6 +425,10 @@ public class LevelChunk extends ChunkAccess implements DebugValueSource, ca.spot
              && ((flags & Block.UPDATE_NEIGHBORS) != 0 || movedByPiston)) {
              oldState.affectNeighborsAfterRemoval(serverLevel, pos, movedByPiston);
          }

@@ -6,7 +6,7 @@ Subject: [PATCH] Dont send useless entity packets
 This patch is Powered by Purpur(https://github.com/PurpurMC/Purpur)
 
 diff --git a/net/minecraft/server/level/ServerEntity.java b/net/minecraft/server/level/ServerEntity.java
-index e46f95b19da1c14f240ec6697f22b5e220e0a835..9560fc5607c111cf870775688525a04c72fb1503 100644
+index e46f95b19da1c14f240ec6697f22b5e220e0a835..b62697055cde66874d5d0624347b169f67070456 100644
 --- a/net/minecraft/server/level/ServerEntity.java
 +++ b/net/minecraft/server/level/ServerEntity.java
 @@ -189,6 +189,11 @@ public class ServerEntity {
@@ -21,20 +21,22 @@ index e46f95b19da1c14f240ec6697f22b5e220e0a835..9560fc5607c111cf870775688525a04c
  
                  if (this.entity.needsSync || this.trackDelta || this.entity instanceof LivingEntity livingEntity && livingEntity.isFallFlying()) {
                      Vec3 movement = this.entity.getDeltaMovement();
-@@ -341,6 +346,21 @@ public class ServerEntity {
+@@ -341,6 +346,23 @@ public class ServerEntity {
          this.positionCodec.setBase(this.entity.position());
      }
  
 +    // Leaves start - dont send useless entity packets
 +    private boolean isUselessPacket(final Packet<?> possibleUselessPacket) {
-+        if (possibleUselessPacket instanceof ClientboundMoveEntityPacket packet) {
-+            if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.Pos) {
-+                return VecDelta.ZERO.equals(packet.getPositionDelta());
-+            } else if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.PosRot) {
-+                return VecDelta.ZERO.equals(packet.getPositionDelta()) && packet.getYRot() == 0 && packet.getXRot() == 0;
-+            } else if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.Rot) {
-+                return packet.getYRot() == 0 && packet.getXRot() == 0;
++        if (possibleUselessPacket instanceof ClientboundMoveEntityPacket.Pos packet) {
++            if (packet.getPositionDelta() instanceof VecDelta.Stepped stepped) {
++                for (VecDelta.Stepped.DeltaStep step : stepped.steps()) {
++                    if (step.xa() != 0 || step.ya() != 0 || step.za() != 0) {
++                        return false;
++                    }
++                }
++                return true;
 +            }
++            return VecDelta.ZERO.equals(packet.getPositionDelta());
 +        }
 +        return false;
 +    }

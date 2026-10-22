@@ -1,12 +1,17 @@
 package org.leavesmc.leaves.bot;
 
+import ca.spottedleaf.dataconverter.minecraft.MCDataConverter;
+import ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry;
+import ca.spottedleaf.dataconverter.minecraft.util.Version;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.level.storage.LevelStorageSource;
@@ -80,10 +85,17 @@ public class BotDataStorage {
     }
 
     public Optional<ValueInput> load(@NotNull ServerBot bot, ProblemReporter reporter) {
-        return this.load(bot.nameAndId().name(), bot.nameAndId().id().toString()).map(nbt -> {
+        String name = bot.nameAndId().name();
+        File file = new File(this.botDir, bot.nameAndId().id() + ".dat");
+        return this.load(name, file).flatMap(nbt -> {
             ValueInput valueInput = TagValueInput.create(reporter, bot.registryAccess(), nbt);
             bot.load(valueInput);
-            return valueInput;
+            if (!file.delete()) {
+                BotDataStorage.LOGGER.warn("Failed to delete fakeplayer data for {}", name);
+                return Optional.empty();
+            }
+            this.removeSavedData(name);
+            return Optional.of(valueInput);
         });
     }
 
@@ -92,19 +104,15 @@ public class BotDataStorage {
         this.saveBotList();
     }
 
-    private Optional<CompoundTag> load(String name, String uuid) {
-        File file = new File(this.botDir, uuid + ".dat");
+    private Optional<CompoundTag> load(String name, File file) {
         if (!file.exists() || !file.isFile()) {
             LOGGER.warn("Failed to load bot {}, the file {} DOES NOT EXIST!", name, file);
             return Optional.empty();
         }
         try {
-            Optional<CompoundTag> optional = Optional.of(NbtIo.readCompressed(file.toPath(), NbtAccounter.unlimitedHeap()));
-            if (!file.delete()) {
-                throw new IOException("Failed to delete fakeplayer data");
-            }
-            this.removeSavedData(name);
-            return optional;
+            CompoundTag tag = NbtIo.readCompressed(file.toPath(), NbtAccounter.unlimitedHeap());
+            int version = NbtUtils.getDataVersion(tag);
+            return Optional.of(MCDataConverter.convertTag(MCTypeRegistry.PLAYER, DataFixTypes.PLAYER, tag, version, Version.getCurrentVersion()));
         } catch (Exception exception) {
             BotDataStorage.LOGGER.warn("Failed to load fakeplayer data for {}", name);
         }

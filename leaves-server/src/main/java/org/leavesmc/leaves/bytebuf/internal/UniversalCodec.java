@@ -92,6 +92,10 @@ public class UniversalCodec {
             StreamCodec codec = isConfigStage ? ClientboundCustomPayloadPacket.CONFIG_STREAM_CODEC : ClientboundCustomPayloadPacket.GAMEPLAY_STREAM_CODEC;
             return (Packet<?>) codec.decode(buf);
         }
-        return (Packet<?>) CODEC_MAP.get(type).decode(buf);
+        StreamCodec codec = CODEC_MAP.get(type);
+        if (codec == null) {
+            throw new IllegalArgumentException("Unsupported packet type: " + type.id());
+        }
+        return (Packet<?>) codec.decode(buf);
     }
 }

@@ -50,6 +50,9 @@ public class BBORProtocol implements LeavesProtocol {
 
     @ProtocolHandler.Ticker
     public static void tick() {
+        if (!initialized) {
+            initAllPlayer();
+        }
         for (var playerEntry : players.entrySet()) {
             sendBoundingToPlayer(playerEntry.getKey(), playerEntry.getValue());
         }
@@ -93,6 +96,9 @@ public class BBORProtocol implements LeavesProtocol {
     }
 
     public static void onChunkLoaded(@NotNull LevelChunk chunk) {
+        if (!LeavesConfig.protocol.bborProtocol) {
+            return;
+        }
         Map<String, StructureStart> structures = new HashMap<>();
         final Registry<Structure> structureFeatureRegistry = chunk.getLevel().registryAccess().lookupOrThrow(Registries.STRUCTURE);
         for (var es : chunk.getAllStarts().entrySet()) {
@@ -109,14 +115,14 @@ public class BBORProtocol implements LeavesProtocol {
         for (var entry : structures.entrySet()) {
             StructureStart structureStart = entry.getValue();
             if (structureStart == null) {
-                return;
+                continue;
             }
 
             String type = "structure:" + entry.getKey();
             BoundingBox bb = structureStart.getBoundingBox();
             BBoundingBox boundingBox = buildStructure(bb, type);
             if (cache.containsKey(boundingBox)) {
-                return;
+                continue;
             }
 
             Set<BBoundingBox> structureBoundingBoxes = new HashSet<>();
@@ -172,6 +178,11 @@ public class BBORProtocol implements LeavesProtocol {
     }
 
     public static void initAllPlayer() {
+        for (ServerLevel level : MinecraftServer.getServer().getAllLevels()) {
+            for (LevelChunk chunk : level.getChunkSource().fullChunks.values()) {
+                onChunkLoaded(chunk);
+            }
+        }
         for (ServerPlayer player : MinecraftServer.getServer().getPlayerList().getPlayers()) {
             onPlayerLoggedIn(player);
         }

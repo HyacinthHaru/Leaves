@@ -5,7 +5,7 @@ Subject: [PATCH] Shave snow layers
 
 
 diff --git a/net/minecraft/core/component/BlockTransformer.java b/net/minecraft/core/component/BlockTransformer.java
-index 90cc5370be87f4f9d1d52e997f79d6d8f6232647..5e977e08c1ea7e24aa9c660eeaaa48318fe18cb4 100644
+index 90cc5370be87f4f9d1d52e997f79d6d8f6232647..725d818b2c6765aef80ce9d0b383d5e51e503ea9 100644
 --- a/net/minecraft/core/component/BlockTransformer.java
 +++ b/net/minecraft/core/component/BlockTransformer.java
 @@ -59,6 +59,30 @@ public record BlockTransformer(List<BlockTransformer.BlockTransformData> transfo
@@ -13,7 +13,7 @@ index 90cc5370be87f4f9d1d52e997f79d6d8f6232647..5e977e08c1ea7e24aa9c660eeaaa4831
          BlockPos pos = context.getClickedPos();
          Level level = context.getLevel();
 +        // Leaves start - shaveSnowLayers
-+        if (org.leavesmc.leaves.LeavesConfig.modify.shaveSnowLayers && context.getItemInHand().is(net.minecraft.tags.ItemTags.SHOVELS)) {
++        if (org.leavesmc.leaves.LeavesConfig.modify.shaveSnowLayers && context.getItemInHand().is(net.minecraft.tags.ItemTags.SHOVELS) && context.getClickedFace() != Direction.DOWN) {
 +            BlockState blockState = level.getBlockState(pos);
 +            if (blockState.is(net.minecraft.world.level.block.Blocks.SNOW)) {
 +                int layers = blockState.getValue(net.minecraft.world.level.block.SnowLayerBlock.LAYERS);

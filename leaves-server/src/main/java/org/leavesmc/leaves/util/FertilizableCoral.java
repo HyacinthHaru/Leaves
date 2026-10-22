@@ -6,6 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.AquaticFeatures;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.levelgen.feature.CoralClawFeature;
 import net.minecraft.world.level.levelgen.feature.CoralTreeFeature;
 import net.minecraft.world.level.levelgen.feature.CuboidPlacement;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.OverlayFeature;
 import net.minecraft.world.level.levelgen.feature.SimpleBlockFeature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.placement.BlockPredicateFilter;
@@ -69,7 +71,10 @@ public interface FertilizableCoral extends BonemealableBlock {
                 BlockPredicate.matchesBlocks(Direction.UP, Blocks.WATER)
             )
         );
-        Holder<Feature> blockFeature = Holder.direct(new SimpleBlockFeature(BlockStateProvider.of(properBlock)));
+        Holder<Feature> blockFeature = Holder.direct(new OverlayFeature(HolderSet.direct(
+            Holder.direct(new PlacedFeature(Holder.direct(new SimpleBlockFeature(BlockStateProvider.of(properBlock))), List.of())),
+            Holder.direct(new PlacedFeature(worldIn.registryAccess().lookupOrThrow(Registries.FEATURE).getOrThrow(AquaticFeatures.CORAL_BLOCK_DECORATION), List.of()))
+        )));
         Holder<PlacedFeature> placedBlock = Holder.direct(new PlacedFeature(blockFeature, List.of(coralAllowed)));
 
         PlacedFeature coral = switch (random.nextInt(3)) {

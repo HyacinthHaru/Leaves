@@ -133,35 +133,39 @@ public class ServuxLitematicsProtocol implements LeavesProtocol {
         if (!hasPermission(player)) {
             return;
         }
-        BlockEntity be = player.level().getBlockEntity(pos);
-        CompoundTag tag = be != null ? be.saveWithFullMetadata(MinecraftServer.getServer().registryAccess()) : new CompoundTag();
-        ServuxLitematicaPayload payload = new ServuxLitematicaPayload(ServuxLitematicaPayloadType.PACKET_S2C_BLOCK_NBT_RESPONSE_SIMPLE);
-        payload.pos = pos;
-        payload.nbt = tag;
-        encodeServerData(player, payload);
+        MinecraftServer.getServer().scheduleOnMain(() -> {
+            BlockEntity be = player.level().getBlockEntity(pos);
+            CompoundTag tag = be != null ? be.saveWithFullMetadata(MinecraftServer.getServer().registryAccess()) : new CompoundTag();
+            ServuxLitematicaPayload payload = new ServuxLitematicaPayload(ServuxLitematicaPayloadType.PACKET_S2C_BLOCK_NBT_RESPONSE_SIMPLE);
+            payload.pos = pos;
+            payload.nbt = tag;
+            encodeServerData(player, payload);
+        });
     }
 
     public static void onEntityRequest(ServerPlayer player, int entityId) {
         if (!hasPermission(player)) {
             return;
         }
-        Entity entity = player.level().getEntity(entityId);
-        if (entity == null) {
-            return;
-        }
-        CompoundTag tag = new CompoundTag();
-        ServuxLitematicaPayload payload = new ServuxLitematicaPayload(ServuxLitematicaPayloadType.PACKET_S2C_ENTITY_NBT_RESPONSE_SIMPLE);
-        payload.entityId = entityId;
-        if (entity instanceof net.minecraft.world.entity.player.Player) {
-            Identifier loc = EntityType.getKey(entity.getType());
-            tag = TagUtil.saveEntity(entity);
-            tag.putString("id", loc.toString());
-            payload.nbt = tag;
-            encodeServerData(player, payload);
-        } else if (TagUtil.saveEntityAsPassenger(entity, tag)) {
-            payload.nbt = tag;
-            encodeServerData(player, payload);
-        }
+        MinecraftServer.getServer().scheduleOnMain(() -> {
+            Entity entity = player.level().getEntity(entityId);
+            if (entity == null) {
+                return;
+            }
+            CompoundTag tag = new CompoundTag();
+            ServuxLitematicaPayload payload = new ServuxLitematicaPayload(ServuxLitematicaPayloadType.PACKET_S2C_ENTITY_NBT_RESPONSE_SIMPLE);
+            payload.entityId = entityId;
+            if (entity instanceof net.minecraft.world.entity.player.Player) {
+                Identifier loc = EntityType.getKey(entity.getType());
+                tag = TagUtil.saveEntity(entity);
+                tag.putString("id", loc.toString());
+                payload.nbt = tag;
+                encodeServerData(player, payload);
+            } else if (TagUtil.saveEntityAsPassenger(entity, tag)) {
+                payload.nbt = tag;
+                encodeServerData(player, payload);
+            }
+        });
     }
 
     public static void onBulkEntityRequest(ServerPlayer player, ChunkPos chunkPos, CompoundTag req) {
@@ -169,60 +173,62 @@ public class ServuxLitematicsProtocol implements LeavesProtocol {
             return;
         }
 
-        ServerLevel world = player.level();
-        ChunkAccess chunk = world.getChunk(chunkPos.x(), chunkPos.z(), ChunkStatus.FULL, false);
+        MinecraftServer.getServer().scheduleOnMain(() -> {
+            ServerLevel world = player.level();
+            ChunkAccess chunk = world.getChunk(chunkPos.x(), chunkPos.z(), ChunkStatus.FULL, false);
 
-        if (chunk == null) {
-            return;
-        }
-        if (!req.contains("Task") || req.getStringOr("Task", "").equals("BulkEntityRequest")) {
-            ServuxProtocol.LOGGER.debug("litematic_data: Sending Bulk NBT Data for ChunkPos [{}] to player {}", chunkPos, player.getName().getString());
+            if (chunk == null) {
+                return;
+            }
+            if (!req.contains("Task") || req.getStringOr("Task", "").equals("BulkEntityRequest")) {
+                ServuxProtocol.LOGGER.debug("litematic_data: Sending Bulk NBT Data for ChunkPos [{}] to player {}", chunkPos, player.getName().getString());
 
-            long timeStart = System.currentTimeMillis();
-            ListTag tileList = new ListTag();
-            ListTag entityList = new ListTag();
-            int minY = req.getIntOr("minY", -64);
-            int maxY = req.getIntOr("maxY", 319);
-            BlockPos pos1 = new BlockPos(chunkPos.getMinBlockX(), minY, chunkPos.getMinBlockZ());
-            BlockPos pos2 = new BlockPos(chunkPos.getMaxBlockX(), maxY, chunkPos.getMaxBlockZ());
-            AABB bb = AABB.encapsulatingFullBlocks(pos1, pos2);
-            Set<BlockPos> teSet = chunk.getBlockEntitiesPos();
-            List<Entity> entities = world.getEntitiesOfClass(Entity.class, bb, e -> !(e instanceof Player));
-            for (BlockPos tePos : teSet) {
-                if ((tePos.getX() < chunkPos.getMinBlockX() || tePos.getX() > chunkPos.getMaxBlockX()) ||
-                    (tePos.getZ() < chunkPos.getMinBlockZ() || tePos.getZ() > chunkPos.getMaxBlockZ()) ||
-                    (tePos.getY() < minY || tePos.getY() > maxY)) {
-                    continue;
+                long timeStart = System.currentTimeMillis();
+                ListTag tileList = new ListTag();
+                ListTag entityList = new ListTag();
+                int minY = req.getIntOr("minY", -64);
+                int maxY = req.getIntOr("maxY", 319);
+                BlockPos pos1 = new BlockPos(chunkPos.getMinBlockX(), minY, chunkPos.getMinBlockZ());
+                BlockPos pos2 = new BlockPos(chunkPos.getMaxBlockX(), maxY, chunkPos.getMaxBlockZ());
+                AABB bb = AABB.encapsulatingFullBlocks(pos1, pos2);
+                Set<BlockPos> teSet = chunk.getBlockEntitiesPos();
+                List<Entity> entities = world.getEntitiesOfClass(Entity.class, bb, e -> !(e instanceof Player));
+                for (BlockPos tePos : teSet) {
+                    if ((tePos.getX() < chunkPos.getMinBlockX() || tePos.getX() > chunkPos.getMaxBlockX()) ||
+                        (tePos.getZ() < chunkPos.getMinBlockZ() || tePos.getZ() > chunkPos.getMaxBlockZ()) ||
+                        (tePos.getY() < minY || tePos.getY() > maxY)) {
+                        continue;
+                    }
+
+                    BlockEntity be = world.getBlockEntity(tePos);
+                    CompoundTag beTag = TagUtil.saveTileWithId(be);
+                    tileList.add(beTag);
                 }
 
-                BlockEntity be = world.getBlockEntity(tePos);
-                CompoundTag beTag = TagUtil.saveTileWithId(be);
-                tileList.add(beTag);
-            }
+                for (Entity entity : entities) {
+                    CompoundTag entTag = new CompoundTag();
 
-            for (Entity entity : entities) {
-                CompoundTag entTag = new CompoundTag();
-
-                if (TagUtil.saveEntity(entity, entTag)) {
-                    Vec3 posVec = new Vec3(entity.getX() - pos1.getX(), entity.getY() - pos1.getY(), entity.getZ() - pos1.getZ());
-                    NbtUtils.writeEntityPositionToTag(posVec, entTag);
-                    entTag.putInt("entityId", entity.getId());
-                    entityList.add(entTag);
+                    if (TagUtil.saveEntity(entity, entTag)) {
+                        Vec3 posVec = new Vec3(entity.getX() - pos1.getX(), entity.getY() - pos1.getY(), entity.getZ() - pos1.getZ());
+                        NbtUtils.writeEntityPositionToTag(posVec, entTag);
+                        entTag.putInt("entityId", entity.getId());
+                        entityList.add(entTag);
+                    }
                 }
+
+                CompoundTag output = new CompoundTag();
+                output.putString("Task", "BulkEntityReply");
+                output.put("TileEntities", tileList);
+                output.put("Entities", entityList);
+                output.putInt("chunkX", chunkPos.x());
+                output.putInt("chunkZ", chunkPos.z());
+                ServuxProtocol.LOGGER.debug("process bulk entity used: {}ms", System.currentTimeMillis() - timeStart);
+
+                ServuxLitematicaPayload send = new ServuxLitematicaPayload(ServuxLitematicaPayloadType.PACKET_S2C_NBT_RESPONSE_START);
+                send.nbt.merge(output);
+                encodeServerData(player, send);
             }
-
-            CompoundTag output = new CompoundTag();
-            output.putString("Task", "BulkEntityReply");
-            output.put("TileEntities", tileList);
-            output.put("Entities", entityList);
-            output.putInt("chunkX", chunkPos.x());
-            output.putInt("chunkZ", chunkPos.z());
-            ServuxProtocol.LOGGER.debug("process bulk entity used: {}ms", System.currentTimeMillis() - timeStart);
-
-            ServuxLitematicaPayload send = new ServuxLitematicaPayload(ServuxLitematicaPayloadType.PACKET_S2C_NBT_RESPONSE_START);
-            send.nbt.merge(output);
-            encodeServerData(player, send);
-        }
+        });
     }
 
     public static void handleClientPasteRequest(ServerPlayer player, @NotNull CompoundTag tags) {

@@ -5,10 +5,10 @@ Subject: [PATCH] Vanilla hopper
 
 
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index d8060ad9f092d2f524170f8f692d236fb56ddb7f..be1de78f91d78541cfbfd3dda8bf3910786f61b1 100644
+index 440d0d7943f3355cb31cabf0ea0b71f37b15a919..bbb8d194f5700ae041992ddd1526ca7bdd2e52a5 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-@@ -298,41 +298,60 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -300,41 +300,60 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
          ItemStack movedItem = origItemStack;
          final int originalItemCount = origItemStack.getCount();
          final int movedItemCount = Math.min(level.spigotConfig.hopperAmount, originalItemCount);
@@ -22,7 +22,7 @@ index d8060ad9f092d2f524170f8f692d236fb56ddb7f..be1de78f91d78541cfbfd3dda8bf3910
 -                // No plugin could have relied on the behavior of false as the other call
 -                // site for IMIE did not exhibit the same behavior
 +        // Leaves start - fix vanilla hopper
-+        if (org.leavesmc.leaves.LeavesConfig.fix.vanillaHopper && movedItem.getCount() <= movedItemCount) {
++        if (org.leavesmc.leaves.LeavesConfig.fix.vanillaHopper && movedItem.getCount() == 1) {
 +            if (!skipPullModeEventFire) {
 +                movedItem = callPullMoveEvent(hopper, container, movedItem);
 +                if (movedItem == null) { // cancelled

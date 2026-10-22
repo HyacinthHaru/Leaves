@@ -448,7 +448,7 @@ index 4581b121f56d7967dacc9dcd08000b8bc918a294..e32b2db3ef707c155b844445ede36498
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index d09ef3621c7818db0ebf6cf6978da01ea3a42f58..93d62f312eb43d02a1dba0fefa23e5ef4ce9ea2f 100644
+index d6a92e129e73afa75cc4350c9567d38aa2866408..bd2a165f984b078fac37ef2b114e5dc3b107edaf 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
 @@ -1187,6 +1187,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
@@ -1249,7 +1249,7 @@ index 8967c271678a8ee8d4f79fb40eeaf646af192010..d2f1916f0d7a2c2319d05f71b341acfd
 +    @Override public boolean lithium$itemInsertionTestRequiresStackSize1() {return true;} // Leaves - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/entity/CrafterBlockEntity.java b/net/minecraft/world/level/block/entity/CrafterBlockEntity.java
-index 6ad1e1113f78a4e3fe03a08e9f6c18241aa6f124..22d8a77fb677b0cd924e0a1d149f15e1b8f5992a 100644
+index 6ad1e1113f78a4e3fe03a08e9f6c18241aa6f124..46ee3e2ea48b8be6596934e2c89e1042fed2a228 100644
 --- a/net/minecraft/world/level/block/entity/CrafterBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/CrafterBlockEntity.java
 @@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
@@ -1269,7 +1269,7 @@ index 6ad1e1113f78a4e3fe03a08e9f6c18241aa6f124..22d8a77fb677b0cd924e0a1d149f15e1
      }
  
      @Override
-@@ -279,6 +280,7 @@ public class CrafterBlockEntity extends RandomizableContainerBlockEntity impleme
+@@ -279,10 +280,12 @@ public class CrafterBlockEntity extends RandomizableContainerBlockEntity impleme
                  level.setBlockAndUpdate(blockPos, blockState.setValue(CrafterBlock.CRAFTING, false));
              }
          }
@@ -1277,7 +1277,12 @@ index 6ad1e1113f78a4e3fe03a08e9f6c18241aa6f124..22d8a77fb677b0cd924e0a1d149f15e1
      }
  
      public void setCraftingTicksRemaining(final int maxCraftingTicks) {
-@@ -301,4 +303,43 @@ public class CrafterBlockEntity extends RandomizableContainerBlockEntity impleme
+         this.craftingTicksRemaining = maxCraftingTicks;
++        if (org.leavesmc.leaves.LeavesConfig.performance.sleepingBlockEntity && this.isSleeping() && this.level != null) this.wakeUpNow(); // Leaves - Lithium Sleeping Block Entity
+     }
+ 
+     public int getRedstoneSignal() {
+@@ -301,4 +304,43 @@ public class CrafterBlockEntity extends RandomizableContainerBlockEntity impleme
      private boolean slotCanBeDisabled(final int slotId) {
          return slotId > -1 && slotId < 9 && this.items.get(slotId).isEmpty();
      }
@@ -1423,7 +1428,7 @@ index c669d0ad531fc43bb7799bd011ed73ccf7b6244a..80614ca6a6207278bc91b7f5a402bb08
 +    // Leaves end - Lithium Sleeping Block Entity
  }
 diff --git a/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc9c17aa8e 100644
+index 7648e889bb9fcf69cffb1007904fdac95492c28f..e82fd52193745341bd1ee51931e47356cf833508 100644
 --- a/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -27,8 +27,29 @@ import net.minecraft.world.level.storage.ValueInput;
@@ -1489,7 +1494,15 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
                  return true;
              }
          }
-@@ -473,12 +504,20 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -423,6 +454,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+     private static void applyCooldown(final Hopper hopper) {
+         if (hopper instanceof HopperBlockEntity blockEntity && blockEntity.getLevel() != null) {
+             blockEntity.setCooldown(blockEntity.getLevel().spigotConfig.hopperTransfer);
++            blockEntity.skipNextSleepCheckAfterCooldown = true; // Leaves - Lithium Sleeping Block Entity
+         }
+     }
+ 
+@@ -473,12 +505,20 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              }
          }
          // Leaves end - hopper counter
@@ -1511,7 +1524,7 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
          if (isFullContainer(container, direction)) {
              return false;
          }
-@@ -585,10 +624,18 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -585,10 +625,18 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      public static boolean suckInItems(final Level level, final Hopper hopper) {
          BlockPos blockPos = BlockPos.containing(hopper.getLevelX(), hopper.getLevelY() + 1.0, hopper.getLevelZ());
          BlockState blockState = level.getBlockState(blockPos);
@@ -1531,7 +1544,7 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
              final long disallowedSlots = callPrepareTransferEvent(level, container, hopper, false); // Paper - Add PrepareHopperTransferEvent
  
              for (int slot : getSlots(container, direction)) {
-@@ -604,7 +651,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -604,7 +652,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
                  && (!org.leavesmc.leaves.LeavesConfig.modify.oldMC.oldHopperSuckInBehavior && blockState.isCollisionShapeFullBlock(level, blockPos))
                  && !blockState.is(BlockTags.DOES_NOT_BLOCK_HOPPERS); // Leaves - oldHopperSuckInBehavior
              if (!isBlocked) {
@@ -1540,7 +1553,7 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
                      if (addItem(hopper, entity)) {
                          return true;
                      }
-@@ -727,7 +774,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -727,7 +775,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      // CraftBukkit start
      private static @Nullable Container runHopperInventorySearchEvent(
@@ -1549,7 +1562,7 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
          org.bukkit.craftbukkit.block.CraftBlock hopper,
          org.bukkit.craftbukkit.block.CraftBlock searchLocation,
          org.bukkit.event.inventory.HopperInventorySearchEvent.ContainerType containerType
-@@ -853,6 +900,19 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -853,6 +901,19 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      }
  
      public void setCooldown(final int time) {
@@ -1569,7 +1582,7 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
          this.cooldownTime = time;
      }
  
-@@ -872,6 +932,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -872,6 +933,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      @Override
      protected void setItems(final NonNullList<ItemStack> items) {
          this.items = items;
@@ -1577,7 +1590,7 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
      }
  
      public static void entityInside(final Level level, final BlockPos pos, final BlockState blockState, final Entity entity, final HopperBlockEntity hopper) {
-@@ -886,4 +947,761 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -886,4 +948,773 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      protected AbstractContainerMenu createMenu(final int containerId, final Inventory inventory) {
          return new HopperMenu(containerId, inventory, this);
      }
@@ -2243,14 +2256,18 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
 +                if (isSlotDisallowed(disallowedSlots, i)) continue;
 +                ItemStack transferStack = hopperStackList.get(i);
 +                if (!transferStack.isEmpty()) {
++                    ItemStack origItemStack = transferStack;
 +                    if (!skipPushModeEventFire && canTakeItemFromContainer(insertInventory, hopperBlockEntity, transferStack, i, Direction.DOWN)) {
-+                        transferStack = callPushMoveEvent(insertInventory, transferStack, hopperBlockEntity);
++                        transferStack = callPushMoveEvent(insertInventory, transferStack.copyWithCount(1), hopperBlockEntity);
 +                        if (transferStack == null) { // cancelled
 +                            break;
 +                        }
 +                    }
 +                    boolean transferSuccess = HopperHelper.tryMoveSingleItem(insertInventory, transferStack, fromDirection);
 +                    if (transferSuccess) {
++                        if (transferStack != origItemStack) {
++                            origItemStack.shrink(1);
++                        }
 +                        if (insertInventoryWasEmptyHopperNotDisabled) {
 +                            HopperBlockEntity receivingHopper = (HopperBlockEntity) insertInventory;
 +                            int k = 8;
@@ -2266,6 +2283,10 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
 +                        return true;
 +                    }
 +                }
++            }
++            if (disallowedSlots != 0) {
++                hopperBlockEntity.shouldCheckSleep = false;
++                return false;
 +            }
 +        }
 +        hopperBlockEntity.myModCountAtLastInsert = hopperStackList.getModCount();
@@ -2306,7 +2327,7 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
 +            ItemStack itemStack = fromStackList.get(fromSlot);
 +            if (!itemStack.isEmpty() && canTakeItemFromContainer(to, from, itemStack, fromSlot, Direction.DOWN)) {
 +                if (!skipPullModeEventFire) {
-+                    itemStack = callPullMoveEvent(to, from, itemStack);
++                    itemStack = callPullMoveEvent(to, from, itemStack.copyWithCount(1));
 +                    if (itemStack == null) { // cancelled
 +                        return true;
 +                    }
@@ -2330,6 +2351,10 @@ index c21a3df33aa7ab5f1303fad4acf658315aa1c137..2f956333bdec4f9017df9f64d50a5acc
 +                //calling setStack is necessary due to its side effects (markDirty in LootableContainerBlockEntity)
 +                from.setItem(fromSlot, restoredStack);
 +            }
++        }
++        if (disallowedSlots != 0) {
++            hopperBlockEntity.shouldCheckSleep = false;
++            return false;
 +        }
 +        hopperBlockEntity.myModCountAtLastExtract = hopperStackList.getModCount();
 +        if (fromStackList != null) {
