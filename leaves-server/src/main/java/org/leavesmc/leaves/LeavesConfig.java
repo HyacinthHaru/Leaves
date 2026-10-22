@@ -39,6 +39,8 @@ import org.leavesmc.leaves.protocol.bladeren.BladerenProtocol.LeavesFeatureSet;
 import org.leavesmc.leaves.protocol.rei.REIServerProtocol;
 import org.leavesmc.leaves.protocol.servux.logger.DataLogger;
 import org.leavesmc.leaves.protocol.syncmatica.SyncmaticaProtocol;
+import org.leavesmc.leaves.region.blinear.data.BufferedLinearRegionFileFlusher;
+import org.leavesmc.leaves.region.blinear.enums.EnumRegionFormat;
 import org.leavesmc.leaves.util.LeavesUpdateHelper;
 import org.leavesmc.leaves.util.MathUtils;
 import org.leavesmc.leaves.util.McTechnicalModeHelper;
@@ -1214,6 +1216,54 @@ public final class LeavesConfig {
 
         @GlobalConfig("leaves-packet-event")
         public boolean leavesPacketEvent = false;
+    }
+
+    public static RegionConfig region = new RegionConfig();
+
+    @GlobalConfigCategory("region")
+    public static class RegionConfig {
+
+        @GlobalConfig(value = "format", lock = true)
+        public EnumRegionFormat format = EnumRegionFormat.ANVIL;
+
+        public BLinearConfig blinear = new BLinearConfig();
+
+        @GlobalConfigCategory("blinear")
+        public static class BLinearConfig {
+
+            @GlobalConfig(value = "compression-level", lock = true, validator = CompressionLevelValidator.class)
+            public int compressionLevel = 1;
+
+            private static class CompressionLevelValidator extends IntConfigValidator {
+                @Override
+                public void verify(Integer old, Integer value) throws IllegalArgumentException {
+                    if (value < 1 || value > 22) {
+                        throw new IllegalArgumentException("blinear.compression-level need between 1 and 22");
+                    }
+                }
+            }
+
+            @GlobalConfig(value = "io-flush-delay-ms", lock = true)
+            public int ioFlushDelayMs = 3000;
+
+            @GlobalConfig(value = "io-thread-count", lock = true)
+            public int ioThreadCount = 6;
+
+            public BufferedLinearRegionFileFlusher flusher = null;
+
+            public synchronized void startFlusher() {
+                if (this.flusher == null) {
+                    this.flusher = new BufferedLinearRegionFileFlusher(this.ioThreadCount, 20, this.ioFlushDelayMs);
+                }
+            }
+
+            public void closeFlusherIfEnabled() {
+                if (this.flusher != null) {
+                    LeavesLogger.LOGGER.info("Shutting down buffered linear flusher threads for 60 seconds");
+                    this.flusher.shutdown();
+                }
+            }
+        }
     }
 
     public static FixConfig fix = new FixConfig();

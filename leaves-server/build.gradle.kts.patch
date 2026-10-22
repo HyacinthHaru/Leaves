@@ -75,13 +75,18 @@
  configurations.named(log4jPlugins.compileClasspathConfigurationName) {
      extendsFrom(configurations.compileClasspath.get())
  }
-@@ -109,7 +_,14 @@
+@@ -109,7 +_,19 @@
  }
  
  dependencies {
 -    implementation(project(":paper-api"))
 +    implementation(project(":leaves-api")) // Leaves - build change
 +    implementation("commons-lang:commons-lang:2.6") // Leaves - build change
++    // Leaves start - BLinear
++    implementation("com.github.luben:zstd-jni:1.5.4-1")
++    // lz4-java is provided by mache (at.yawk.lz4:lz4-java) since Paper 26.1 - Leaves
++    implementation("net.openhft:zero-allocation-hashing:0.16")
++    // Leaves end - BLinear
 +    // Leaves start - leaves plugin
 +    implementation("org.spongepowered:configurate-gson:4.2.0-SNAPSHOT") {
 +        exclude(group = "com.google.code.gson", module = "gson")
