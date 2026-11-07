@@ -5,11 +5,12 @@
  import io.papermc.paperweight.attribute.DevBundleOutput
  import io.papermc.paperweight.util.*
  import java.time.Instant
-@@ -7,21 +_,33 @@
+@@ -7,35 +_,43 @@
      `java-library`
      `maven-publish`
      idea
 -    id("io.papermc.paperweight.core")
+-    id("io.papermc.paperweight.paper-checkstyle")
 -    id("io.papermc.fill.gradle") version "1.0.14"
 +    id("org.leavesmc.leavesweight.core") // Leaves - build change
  }
@@ -18,7 +19,7 @@
 +val leavesMavenPublicUrl = "https://repo.leavesmc.org/snapshots/" // Leaves - build change
  
  dependencies {
-     mache("io.papermc:mache:26.3+build.1")
+     mache("io.papermc:mache:26.3+build.2")
 -    paperclip("io.papermc:paperclip:3.0.4")
 +    leavesclip("org.leavesmc:leavesclip:3.0.10") // Leaves - build change
  }
@@ -43,7 +44,13 @@
      updatingMinecraft {
          //oldPaperCommit = "e5fe71723e2ffde7cc9fafc085ac3bb73e63175e"
      }
-@@ -31,6 +_,7 @@
+ }
+ 
+-paperCheckstyle {
+-    directoriesToSkipFile = layout.projectDirectory.file(".checkstyle/ignored_directories.txt")
+-}
+-
+ tasks.generateDevelopmentBundle {
      libraryRepositories.addAll(
          "https://repo.maven.apache.org/maven2/",
          paperMavenPublicUrl,
